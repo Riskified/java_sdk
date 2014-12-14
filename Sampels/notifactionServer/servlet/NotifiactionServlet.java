@@ -31,7 +31,7 @@ public class NotifiactionServlet  extends HttpServlet {
 	            out.println("<HTML><BODY>Merchant Received Notification For Order " + notification.id + " with status " + notification.status +  " and description " + notification.description + "</BODY></HTML>");
 			
 			} catch (Exception e) {
-				out.println("<HTML><BODY>Merchant couldn't parse notification message</BODY></HTML>");
+				resp.sendError(500, "<HTML><BODY>Merchant couldn't parse notification message</BODY></HTML>");
 				e.printStackTrace();
 			}
 
