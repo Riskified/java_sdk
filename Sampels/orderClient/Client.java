@@ -1,7 +1,8 @@
-package riskified;
+package orderClient;
 
 import java.util.Date;
 
+import riskified.RiskifiedClient;
 import models.Address;
 import models.ArrayOrders;
 import models.CancelOrder;
@@ -18,7 +19,7 @@ public class Client {
     	order.id = "1";
     	order.created_at = new Date();
     	Address billing = new Address();
-    	billing.address1 = "bla bla";
+    	billing.address1 = "Tel Aviv";
     	order.billing_address = billing;
     	order.shipping_address = billing;
     	
@@ -41,8 +42,8 @@ public class Client {
     	
     	refund.order.refunds.add(refundDetail);
 
-		String authKey = "26faa0eb6eacf889e300944c297640b68789b11c";  	
-		String shopUrl = "test.pass.com";
+		String authKey = "123";  	
+		String shopUrl = "shop.com";
 		RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);
 		Response res;
 		try {
