@@ -6,17 +6,16 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class SampleServer {
 
-    public static void main(String[] args) throws Exception
-    {
-        Server server = new Server(8080);
-        ServletContextHandler myContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        
-        myContext.setContextPath("/");
-        server.setHandler(myContext);
-        
-        myContext.addServlet(new ServletHolder(new NotifiactionServlet("123")),"/*");
+  public static void main(String[] args) throws Exception {
+    Server server = new Server(8080);
+    ServletContextHandler myContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        server.start();
-        server.join();
-    }
+    myContext.setContextPath("/");
+    server.setHandler(myContext);
+
+    myContext.addServlet(new ServletHolder(new NotifiactionServlet("123")), "/*");
+
+    server.start();
+    server.join();
+  }
 }
