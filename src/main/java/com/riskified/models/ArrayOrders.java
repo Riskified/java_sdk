@@ -1,8 +1,6 @@
 package main.java.com.riskified.models;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

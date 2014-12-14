@@ -2,19 +2,14 @@ package notifactionServer.socket;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-import main.java.com.riskified.notifications.Notification;
-import main.java.com.riskified.notifications.NotificationFormmater;
 import main.java.com.riskified.notifications.Notification.NotificationOrder;
-
-import com.google.gson.Gson;
+import main.java.com.riskified.notifications.NotificationFormmater;
 
 public class HTTPPOSTServer extends Thread {
 		

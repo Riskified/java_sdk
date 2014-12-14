@@ -1,7 +1,5 @@
 package main.java.com.riskified.models;
 
-import java.util.ArrayList;
-
 import main.java.com.riskified.JSONFormmater;
 
 

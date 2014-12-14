@@ -1,6 +1,5 @@
 package notifactionServer.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.InvalidKeyException;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.com.riskified.notifications.Notification;
-import main.java.com.riskified.notifications.NotificationFormmater;
 import main.java.com.riskified.notifications.Notification.NotificationOrder;
+import main.java.com.riskified.notifications.NotificationFormmater;
 
 public class NotifiactionServlet  extends HttpServlet {
 
