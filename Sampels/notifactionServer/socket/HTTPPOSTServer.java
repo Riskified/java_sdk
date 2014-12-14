@@ -10,9 +10,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-import notifications.Notification;
-import notifications.Notification.NotificationOrder;
-import notifications.NotificationFormmater;
+import main.java.com.riskified.notifications.Notification;
+import main.java.com.riskified.notifications.NotificationFormmater;
+import main.java.com.riskified.notifications.Notification.NotificationOrder;
 
 import com.google.gson.Gson;
 

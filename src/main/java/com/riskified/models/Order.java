@@ -1,7 +1,7 @@
 /**
  * 
  */
-package models;
+package main.java.com.riskified.models;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import riskified.JSONFormmater;
+import main.java.com.riskified.JSONFormmater;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

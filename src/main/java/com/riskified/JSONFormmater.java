@@ -1,4 +1,4 @@
-package riskified;
+package main.java.com.riskified;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;

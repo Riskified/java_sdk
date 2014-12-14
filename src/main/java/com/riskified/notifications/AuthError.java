@@ -1,4 +1,4 @@
-package notifications;
+package main.java.com.riskified.notifications;
 
 public class AuthError extends Exception {
 

@@ -1,8 +1,8 @@
-package models;
+package main.java.com.riskified.models;
 
 import java.util.ArrayList;
 
-import riskified.JSONFormmater;
+import main.java.com.riskified.JSONFormmater;
 
 
 public class Refund implements JsonObject {

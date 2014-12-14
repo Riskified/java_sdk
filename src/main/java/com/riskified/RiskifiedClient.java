@@ -1,4 +1,4 @@
-package riskified;
+package main.java.com.riskified;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -11,12 +11,12 @@ import java.util.Formatter;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import models.ArrayOrders;
-import models.CancelOrder;
-import models.JsonObject;
-import models.Order;
-import models.Refund;
-import models.Response;
+import main.java.com.riskified.models.ArrayOrders;
+import main.java.com.riskified.models.CancelOrder;
+import main.java.com.riskified.models.JsonObject;
+import main.java.com.riskified.models.Order;
+import main.java.com.riskified.models.Refund;
+import main.java.com.riskified.models.Response;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -28,6 +28,7 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
+
 public class RiskifiedClient {
 	
 	private final static String baseUrl = "http://localhost:3000" ;
@@ -35,15 +36,9 @@ public class RiskifiedClient {
 	private String shopUrl;
 	private Mac encoder;
 		
-	public RiskifiedClient(String shopUrl, String authKey){
+	public RiskifiedClient(String shopUrl, String authKey) throws InvalidKeyException, NoSuchAlgorithmException{
 		this.shopUrl = shopUrl;
-		
-		try {
-			encoder = createSHA256Key(authKey);
-		} catch (InvalidKeyException | NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		encoder = createSHA256Key(authKey);
 	}
 	
 

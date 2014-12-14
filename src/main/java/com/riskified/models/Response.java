@@ -1,4 +1,4 @@
-package models;
+package main.java.com.riskified.models;
 
 public class Response {
 	public int status;

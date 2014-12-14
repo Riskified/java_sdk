@@ -1,4 +1,4 @@
-package models;
+package main.java.com.riskified.models;
 
 import java.util.ArrayList;
 import java.util.Date;

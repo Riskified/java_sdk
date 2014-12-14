@@ -2,15 +2,15 @@ package orderClient;
 
 import java.util.Date;
 
-import riskified.RiskifiedClient;
-import models.Address;
-import models.ArrayOrders;
-import models.CancelOrder;
-import models.Order;
-import models.Refund;
-import models.RefundDetails;
-import models.RefundOrder;
-import models.Response;
+import main.java.com.riskified.RiskifiedClient;
+import main.java.com.riskified.models.Address;
+import main.java.com.riskified.models.ArrayOrders;
+import main.java.com.riskified.models.CancelOrder;
+import main.java.com.riskified.models.Order;
+import main.java.com.riskified.models.Refund;
+import main.java.com.riskified.models.RefundDetails;
+import main.java.com.riskified.models.RefundOrder;
+import main.java.com.riskified.models.Response;
 
 
 public class Client {
@@ -44,9 +44,10 @@ public class Client {
 
 		String authKey = "123";  	
 		String shopUrl = "shop.com";
-		RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);
 		Response res;
 		try {
+			RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);
+			
 			res = client.createOrder(order);
 			if (res.status == 200) {
 				System.out.println(res.order.id);

@@ -3,21 +3,23 @@ package notifactionServer.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notifications.Notification;
-import notifications.Notification.NotificationOrder;
-import notifications.NotificationFormmater;
+import main.java.com.riskified.notifications.Notification;
+import main.java.com.riskified.notifications.NotificationFormmater;
+import main.java.com.riskified.notifications.Notification.NotificationOrder;
 
 public class NotifiactionServlet  extends HttpServlet {
 
 	private NotificationFormmater formatter;
 
-	public NotifiactionServlet(String authKey) {
+	public NotifiactionServlet(String authKey) throws InvalidKeyException, NoSuchAlgorithmException {
 		formatter = new NotificationFormmater(authKey);
 	}
 	

@@ -1,4 +1,4 @@
-package notifications;
+package main.java.com.riskified.notifications;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,15 +18,9 @@ public class NotificationFormmater {
 	private Mac encoder;
 	Gson gson;
 
-	public NotificationFormmater(String authKey) {
+	public NotificationFormmater(String authKey) throws InvalidKeyException, NoSuchAlgorithmException {
 		gson = new Gson();
-		
-		try {
-			encoder = createSHA256Key(authKey);
-		} catch (InvalidKeyException | NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		encoder = createSHA256Key(authKey);
 	}
 	
 	/**
