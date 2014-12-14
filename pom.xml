@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.riskified</groupId>
-  <artifactId>riskified</artifactId>
+  <artifactId>riskified-sdk</artifactId>
   <version>0.1</version>
   
   <dependencies>
@@ -25,4 +25,12 @@
 
   </dependencies>
  
+  <organization>
+  	<name>Riskified</name>
+  	<url>http://www.riskified.com/</url>
+  </organization>
+  <issueManagement>
+  	<system>GitHub</system>
+  	<url>https://github.com/Riskified/java_sdk/issues</url>
+  </issueManagement>
 </project>
