@@ -46,15 +46,10 @@ public class Client {
       RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);
 
       res = client.createOrder(order);
-      if (res.status == 200) {
-        System.out.println(res.order.id);
-        System.out.println(res.order.status);
-        System.out.println(res.order.description);
-      } else {
-        System.out.println(res.status);
-        System.out.println(res.error.message);
-      }
-
+      System.out.println(res.order.id);
+      System.out.println(res.order.status);
+      System.out.println(res.order.description);
+        
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

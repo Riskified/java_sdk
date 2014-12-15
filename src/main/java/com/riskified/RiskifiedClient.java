@@ -20,6 +20,7 @@ import main.java.com.riskified.models.Response;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -142,31 +143,35 @@ public class RiskifiedClient {
   private Response postOrder(Object data, String url) throws Exception {
     HttpPost request = createPostRequest(url);
     addDataToRequest(data, request);
-
     HttpResponse response;
-    DefaultHttpClient client = null;
-    try {
-      client = new DefaultHttpClient();
-      response = client.execute(request);
-      HttpEntity entity = response.getEntity();
-      if (response.getStatusLine().getStatusCode() == 500) {
-        throw new Exception();
-      }
-      String responseString = EntityUtils.toString(entity, "UTF-8");
-      Gson gson = new Gson();
-      Response res = gson.fromJson(responseString, Response.class);
-      res.status = response.getStatusLine().getStatusCode();
-      return res;
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } finally  {
-      if (client != null) {
-        client.close();
-      }
+     DefaultHttpClient client = new DefaultHttpClient();
+    response = client.execute(request);
+    String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+    client.close();
+    int status = response.getStatusLine().getStatusCode();
+    switch (status) {
+      case 200: 
+        return getResponseObject(postBody);
+      case 400:
+        throw new HttpResponseException(500, postBody);
+      case 401:
+        throw new HttpResponseException(500, postBody);
+      case 404:
+        throw new HttpResponseException(500, postBody);
+      default:
+        throw new HttpResponseException(500, "connect Riskified support");
     }
-    return null;
+  }
 
+  /**
+   * @param postBody
+   * @return
+   * @throws IOException
+   */
+  private Response getResponseObject(String postBody) throws IOException {
+    Gson gson = new Gson();
+    Response res = gson.fromJson(postBody, Response.class);
+    return res;
   }
 
 
