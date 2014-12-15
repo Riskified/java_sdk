@@ -15,7 +15,6 @@ import main.java.com.riskified.models.CancelOrder;
 import main.java.com.riskified.models.JsonObject;
 import main.java.com.riskified.models.Order;
 import main.java.com.riskified.models.OrderWrapper;
-import main.java.com.riskified.models.Refund;
 import main.java.com.riskified.models.RefundOrder;
 import main.java.com.riskified.models.Response;
 

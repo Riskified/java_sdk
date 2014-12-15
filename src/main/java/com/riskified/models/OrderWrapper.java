@@ -6,7 +6,7 @@ public class OrderWrapper<T> implements JsonObject {
   
   T order;
   
-  public OrderWrapper (T data) {
+  public OrderWrapper(T data) {
     order = data;
   }
 

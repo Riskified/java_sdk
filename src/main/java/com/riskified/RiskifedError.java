@@ -4,11 +4,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class RiskifedError extends Exception {
 
-  public RiskifedError(Exception e){
-    super(e);
+  public RiskifedError(Exception ex) {
+    super(ex);
   }
 
-  public RiskifedError(NoSuchAlgorithmException e) {
-    super(e);
+  public RiskifedError(NoSuchAlgorithmException ex) {
+    super(ex);
   }
 }
