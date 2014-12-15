@@ -13,14 +13,14 @@ import main.java.com.riskified.models.RefundOrder;
 import main.java.com.riskified.models.Response;
 
 public class Client {
-  public static void main(String[] args) {
+  public static void main(String[] arg) {
     Order order = new Order();
     order.id = "1";
-    order.created_at = new Date();
+    order.createdAt = new Date();
     Address billing = new Address();
     billing.address1 = "Tel Aviv";
-    order.billing_address = billing;
-    order.shipping_address = billing;
+    order.billingAddress = billing;
+    order.shippingAddress = billing;
 
     ArrayOrders orders = new ArrayOrders();
     orders.orders.add(order);
@@ -28,21 +28,21 @@ public class Client {
 
     CancelOrder cancel = new CancelOrder();
     cancel.id = "omer";
-    cancel.cancel_reason = "test";
-    cancel.cancelled_at = new Date();
+    cancel.cancelReason = "test";
+    cancel.cancelledAt = new Date();
 
     Refund refund = new Refund();
     refund.order = new RefundOrder();
     refund.order.id = "omer";
     RefundDetails refundDetail = new RefundDetails();
-    refundDetail.refund_id = "omer1";
+    refundDetail.refundId = "omer1";
     refundDetail.amount = (float) 200;
     refundDetail.currency = "USD";
 
     refund.order.refunds.add(refundDetail);
 
-    String authKey = "123";
-    String shopUrl = "shop.com";
+    String authKey = "26faa0eb6eacf889e300944c297640b68789b11c";
+    String shopUrl = "test.pass.com";
     Response res;
     try {
       RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);

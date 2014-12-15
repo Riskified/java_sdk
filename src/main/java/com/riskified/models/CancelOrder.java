@@ -6,8 +6,8 @@ import main.java.com.riskified.JSONFormmater;
 
 public class CancelOrder implements JsonObject {
   public String id;
-  public String cancel_reason;
-  public Date cancelled_at;
+  public String cancelReason;
+  public Date cancelledAt;
 
   @Override
   public String toJson() {

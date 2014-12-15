@@ -3,8 +3,8 @@ package main.java.com.riskified.models;
 import java.util.Date;
 
 public class RefundDetails {
-  public String refund_id;
-  public Date refunded_at;
+  public String refundId;
+  public Date refundedAt;
   public Float amount;
   public String currency;
   public String reason;

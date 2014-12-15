@@ -5,5 +5,5 @@ public class ShippingLines {
   String title;
   String code;
   String source;
-  TaxLines tax_lines;
+  TaxLines taxLines;
 }

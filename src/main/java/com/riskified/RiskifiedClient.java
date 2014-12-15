@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Formatter;
 
 import javax.crypto.Mac;
@@ -71,13 +70,15 @@ public class RiskifiedClient {
     return postOrder((JsonObject) orders, url);
   }
 
-  private Response postOrder(JsonObject order, String url) throws Exception {
+  private Response postOrder(JsonObject data, String url) throws Exception {
     HttpPost request = createPostRequest(url);
-    addOrderToRequest(order, request);
+    addOrderToRequest(data, request);
 
     HttpResponse response;
+    DefaultHttpClient client = null;
     try {
-      response = new DefaultHttpClient().execute(request);
+      client = new DefaultHttpClient();
+      response = client.execute(request);
       HttpEntity entity = response.getEntity();
       if (response.getStatusLine().getStatusCode() == 500) {
         throw new Exception();
@@ -90,13 +91,13 @@ public class RiskifiedClient {
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    } finally  {
+      if (client != null) {
+        client.close();
+      }
     }
     return null;
 
-  }
-
-  private Response postOrder(ArrayList<Order> order, String url) {
-    return null;
   }
 
   /**

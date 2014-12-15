@@ -7,7 +7,7 @@ public class Notification {
   public class NotificationOrder {
     public String id;
     public String status;
-    public String old_status;
+    public String oldStatus;
     public String description;
 
   }

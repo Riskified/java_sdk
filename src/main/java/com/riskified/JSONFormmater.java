@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -15,7 +16,7 @@ import com.google.gson.JsonSerializer;
 public class JSONFormmater {
 
   public static String toJson(Object obj) {
-    Gson gson = new GsonBuilder().setPrettyPrinting()
+    Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .registerTypeAdapter(Date.class, new DateTimeSerializer()).create();
     return gson.toJson(obj);
   }

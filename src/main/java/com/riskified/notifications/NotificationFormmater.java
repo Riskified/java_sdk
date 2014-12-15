@@ -38,8 +38,9 @@ public class NotificationFormmater {
 
   public Notification toObject(String postBody, String hash) throws AuthError {
     String calcHash = createSHA256(postBody);
-    if (!hash.equals(calcHash))
+    if (!hash.equals(calcHash)) {
       throw new AuthError(hash, calcHash);
+    }
     return gson.fromJson(postBody, Notification.class);
   }
 
@@ -85,8 +86,9 @@ public class NotificationFormmater {
     StringBuffer jb = new StringBuffer();
     String line = null;
     BufferedReader reader = req.getReader();
-    while ((line = reader.readLine()) != null)
+    while ((line = reader.readLine()) != null) {
       jb.append(line);
+    }
     return jb;
   }
 

@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class Customer {
   String email;
-  String first_name;
-  String last_name;
-  Date created_at;
-  Date updated_at;
+  String firstName;
+  String lastName;
+  Date createdAt;
+  Date updatedAt;
   String id;
-  String group_id;
-  String group_name;
+  String groupId;
+  String groupName;
   String note;
-  Integer orders_count;
-  Boolean verified_email;
-  Boolean accepts_marketing;
-  String last_order_id;
-  String last_order_name;
+  Integer ordersCount;
+  Boolean verifiedEmail;
+  Boolean acceptsMarketing;
+  String lastOrderId;
+  String lastOrderName;
   String state;
-  Float total_spent;
+  Float totalSpent;
   String tags;
-  Address default_address;
+  Address defaultAddress;
 }
