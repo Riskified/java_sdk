@@ -39,7 +39,7 @@ import com.google.gson.Gson;
  */
 public class RiskifiedClient {
 
-  private static final String baseUrl = "http://localhost:3000";
+  private static final String baseUrl = "http://sandbox.riskified.com";
 
   private String shopUrl;
   private Mac encoder;
