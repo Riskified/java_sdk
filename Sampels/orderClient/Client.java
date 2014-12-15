@@ -41,7 +41,7 @@ public class Client {
 
     refund.order.refunds.add(refundDetail);
 
-    String authKey = "26faa0eb6eacf889e300944c297640b68789b11c";
+    String authKey = "123";
     String shopUrl = "test.pass.com";
     Response res;
     try {

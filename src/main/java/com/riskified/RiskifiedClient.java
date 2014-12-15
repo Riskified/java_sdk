@@ -14,7 +14,9 @@ import main.java.com.riskified.models.ArrayOrders;
 import main.java.com.riskified.models.CancelOrder;
 import main.java.com.riskified.models.JsonObject;
 import main.java.com.riskified.models.Order;
+import main.java.com.riskified.models.OrderWrapper;
 import main.java.com.riskified.models.Refund;
+import main.java.com.riskified.models.RefundOrder;
 import main.java.com.riskified.models.Response;
 
 import org.apache.http.HttpEntity;
@@ -27,6 +29,12 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
+
+/**
+ * Riskified API Client
+ * The client implements the API for Riskified as described in:
+ * http://apiref.riskified.com/
+ */
 public class RiskifiedClient {
 
   private static final String baseUrl = "http://localhost:3000";
@@ -34,37 +42,100 @@ public class RiskifiedClient {
   private String shopUrl;
   private Mac encoder;
 
+  /**
+   * @param shopUrl The shop url you use to login to Riskified
+   * @param authKey From the advance settings in Riskified web site
+   * @throws InvalidKeyException If the given authKey is inappropriate for initializing this MAC
+   * @throws NoSuchAlgorithmException There is a problem with
+   * @throws RiskifedError 
+   */
   public RiskifiedClient(String shopUrl, String authKey) throws InvalidKeyException,
-      NoSuchAlgorithmException {
+      NoSuchAlgorithmException, RiskifedError {
     this.shopUrl = shopUrl;
     encoder = createSHA256Key(authKey);
   }
 
+  /**
+   * Send a new order to Riskified
+   * Depending on your current plan, the newly created order might not be submitted automatically for review.
+   * @param order An order to create 
+   * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null
+   * @return 
+   * @throws Exception
+   */
   public Response createOrder(Order order) throws Exception {
     String url = baseUrl + "/api/create";
     return postOrder((JsonObject) order, url);
   }
 
+  /**
+   * Submit a new or existing order to Riskified for review
+   * Forces the order to be submitted for review, regardless of your current plan.
+   * @param order An order to submit for review.
+   * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null.
+   * @return
+   * @throws Exception
+   */
   public Response submitOrder(Order order) throws Exception {
     String url = baseUrl + "/api/submit";
     return postOrder((JsonObject) order, url);
   }
 
+  /**
+   * Update details of an existing order.
+   * Orders are differentiated by their id field. To update an existing order, include its id and any up-to-date data.
+   * @param order A (possibly incomplete) order to update
+   * The order must have an id field referencing an existing order and at least one additional field to update.
+   * @return
+   * @throws Exception
+   */
   public Response updateOrder(Order order) throws Exception {
     String url = baseUrl + "/api/update";
     return postOrder((JsonObject) order, url);
   }
 
+  /**
+   * Mark a previously submitted order as cancelled.
+   * If the order has not yet been reviewed, it is excluded from future review.
+   * If the order has already been reviewed and approved, cancelling it will also trigger a full refund on any associated charges.
+   * An order can only be cancelled during a relatively short time window after its creation.
+   * @param order The order to cancel
+   * @see CancelOrder
+   * @return
+   * @throws Exception
+   */
   public Response cancelOrder(CancelOrder order) throws Exception {
     String url = baseUrl + "/api/cancel";
     return postOrder((JsonObject) order, url);
   }
 
-  public Response refundOrder(Refund order) throws Exception {
+  /**
+   * Issue a partial refund for an existing order.
+   * Any associated charges will be updated to reflect the new order total amount.
+   * @param order The refund Order
+   * @see Refund
+   * @return
+   * @throws Exception
+   */
+  public Response refundOrder(RefundOrder order) throws Exception {
     String url = baseUrl + "/api/refund";
-    return postOrder((JsonObject) order, url);
+    return postOrder((JsonObject) new OrderWrapper<RefundOrder>(order), url);
   }
 
+  /**
+   * Send an array (batch) of existing/historical orders to Riskified.
+   * Use the financial_status field to provide information regarding each order status:
+   * * 'approved' - approved orders
+   * * 'declined-fraud' - declined orders (refunded or voided) as suspected fraud
+   * * 'declined' - declined orders (refunded or voided) without connection to fraud
+   * * 'chargeback' - orders that received a chargeback
+   * 
+   * Orders sent will be used to build analysis models to better analyze newly received orders.
+   * 
+   * @param orders - A list of historical orders to send
+   * @return
+   * @throws Exception
+   */
   public Response historicalOrder(ArrayOrders orders) throws Exception {
     String url = baseUrl + "/api/historical";
     return postOrder((JsonObject) orders, url);
@@ -100,25 +171,20 @@ public class RiskifiedClient {
 
   }
 
-  /**
-   * @param authKey
-   * @return
-   * @throws NoSuchAlgorithmException
-   * @throws InvalidKeyException
-   */
-  private Mac createSHA256Key(String authKey) throws NoSuchAlgorithmException, InvalidKeyException {
+
+  private Mac createSHA256Key(String authKey) throws InvalidKeyException, RiskifedError {
     Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
-    Mac mac = Mac.getInstance(sk.getAlgorithm());
+    Mac mac;
+    try {
+      mac = Mac.getInstance(sk.getAlgorithm());
+    } catch (NoSuchAlgorithmException e) {
+      throw new RiskifedError(e);
+    }
     mac.init(sk);
     return mac;
   }
 
-  /**
-   * @param order
-   * @param postRequest
-   * @param hmac
-   * @throws UnsupportedEncodingException
-   */
+
   private void addOrderToRequest(JsonObject order, HttpPost postRequest) {
     String hmac = createSHA256ForOrder(order);
     postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
@@ -134,11 +200,7 @@ public class RiskifiedClient {
     }
   }
 
-  /**
-   * @param url
-   * @param shopUrl
-   * @return
-   */
+
   private HttpPost createPostRequest(String url) {
     HttpPost postRequest = new HttpPost(url);
     postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
@@ -146,20 +208,13 @@ public class RiskifiedClient {
     return postRequest;
   }
 
-  /**
-   * @param <T>
-   * @param order
-   * @return
-   * @throws NoSuchAlgorithmException
-   * @throws InvalidKeyException
-   * @throws IllegalStateException
-   */
+
   private String createSHA256ForOrder(JsonObject order) {
     final byte[] hmac = encoder.doFinal(order.toJson().getBytes());
     return toHexString(hmac);
   }
 
-  public static String toHexString(byte[] bytes) {
+  private static String toHexString(byte[] bytes) {
     StringBuilder sb = new StringBuilder(bytes.length * 2);
 
     Formatter formatter = new Formatter(sb);

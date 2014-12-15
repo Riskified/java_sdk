@@ -4,6 +4,10 @@ import java.util.Date;
 
 import main.java.com.riskified.JSONFormmater;
 
+/**
+ * Cancel Order details
+ * @see http://apiref.riskified.com/curl/#actions-cancel
+ */
 public class CancelOrder implements JsonObject {
   public String id;
   public String cancelReason;
