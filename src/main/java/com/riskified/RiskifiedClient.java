@@ -20,10 +20,13 @@ import main.java.com.riskified.models.Response;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -140,14 +143,13 @@ public class RiskifiedClient {
     return postOrder(orders, url);
   }
 
-  private Response postOrder(Object data, String url) throws Exception {
+  private Response postOrder(Object data, String url) throws ClientProtocolException, IOException, HttpResponseException {
     HttpPost request = createPostRequest(url);
     addDataToRequest(data, request);
     HttpResponse response;
-     DefaultHttpClient client = new DefaultHttpClient();
+    HttpClient client = HttpClientBuilder.create().build();
     response = client.execute(request);
     String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-    client.close();
     int status = response.getStatusLine().getStatusCode();
     switch (status) {
       case 200: 
