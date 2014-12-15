@@ -40,7 +40,7 @@ public class Client {
     refund.refunds.add(refundDetail);
 
     String authKey = "123";
-    String shopUrl = "test.pass.com";
+    String shopUrl = "shop.url";
     Response res;
     try {
       RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);

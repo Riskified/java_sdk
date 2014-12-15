@@ -8,14 +8,9 @@ import main.java.com.riskified.JSONFormmater;
  * Cancel Order details
  * @see http://apiref.riskified.com/curl/#actions-cancel
  */
-public class CancelOrder implements JsonObject {
+public class CancelOrder {
   public String id;
   public String cancelReason;
   public Date cancelledAt;
-
-  @Override
-  public String toJson() {
-    return JSONFormmater.toJson(this);
-  }
 
 }

@@ -10,7 +10,7 @@ import main.java.com.riskified.JSONFormmater;
  * @author omer
  *
  */
-public class Order implements JsonObject {
+public class Order {
 
   public Order() {
     lineItems = new ArrayList<LineItems>();
@@ -73,9 +73,5 @@ public class Order implements JsonObject {
   public List<ShippingLines> shippingLines;
   public List<Attributes> noteAttributes;
   public List<TaxLines> taxLines;
-
-  public String toJson() {
-    return JSONFormmater.toJson(this);
-  }
 
 }

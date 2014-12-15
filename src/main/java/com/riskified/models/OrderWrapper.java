@@ -1,18 +1,12 @@
 package main.java.com.riskified.models;
 
-import main.java.com.riskified.JSONFormmater;
 
-public class OrderWrapper<T> implements JsonObject {
+public class OrderWrapper<T> {
   
   T order;
   
   public OrderWrapper(T data) {
     order = data;
-  }
-
-  @Override
-  public String toJson() {
-    return JSONFormmater.toJson(this);
   }
 
 }

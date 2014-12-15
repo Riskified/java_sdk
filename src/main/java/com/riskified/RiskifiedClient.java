@@ -12,7 +12,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import main.java.com.riskified.models.ArrayOrders;
 import main.java.com.riskified.models.CancelOrder;
-import main.java.com.riskified.models.JsonObject;
 import main.java.com.riskified.models.Order;
 import main.java.com.riskified.models.OrderWrapper;
 import main.java.com.riskified.models.RefundOrder;
@@ -64,7 +63,7 @@ public class RiskifiedClient {
    */
   public Response createOrder(Order order) throws Exception {
     String url = baseUrl + "/api/create";
-    return postOrder((JsonObject) order, url);
+    return postOrder(order, url);
   }
 
   /**
@@ -77,7 +76,7 @@ public class RiskifiedClient {
    */
   public Response submitOrder(Order order) throws Exception {
     String url = baseUrl + "/api/submit";
-    return postOrder((JsonObject) order, url);
+    return postOrder(order, url);
   }
 
   /**
@@ -90,7 +89,7 @@ public class RiskifiedClient {
    */
   public Response updateOrder(Order order) throws Exception {
     String url = baseUrl + "/api/update";
-    return postOrder((JsonObject) order, url);
+    return postOrder(order, url);
   }
 
   /**
@@ -105,7 +104,7 @@ public class RiskifiedClient {
    */
   public Response cancelOrder(CancelOrder order) throws Exception {
     String url = baseUrl + "/api/cancel";
-    return postOrder((JsonObject) order, url);
+    return postOrder(order, url);
   }
 
   /**
@@ -118,7 +117,7 @@ public class RiskifiedClient {
    */
   public Response refundOrder(RefundOrder order) throws Exception {
     String url = baseUrl + "/api/refund";
-    return postOrder((JsonObject) new OrderWrapper<RefundOrder>(order), url);
+    return postOrder(new OrderWrapper<RefundOrder>(order), url);
   }
 
   /**
@@ -137,12 +136,12 @@ public class RiskifiedClient {
    */
   public Response historicalOrder(ArrayOrders orders) throws Exception {
     String url = baseUrl + "/api/historical";
-    return postOrder((JsonObject) orders, url);
+    return postOrder(orders, url);
   }
 
-  private Response postOrder(JsonObject data, String url) throws Exception {
+  private Response postOrder(Object data, String url) throws Exception {
     HttpPost request = createPostRequest(url);
-    addOrderToRequest(data, request);
+    addDataToRequest(data, request);
 
     HttpResponse response;
     DefaultHttpClient client = null;
@@ -184,13 +183,14 @@ public class RiskifiedClient {
   }
 
 
-  private void addOrderToRequest(JsonObject order, HttpPost postRequest) {
-    String hmac = createSHA256ForOrder(order);
+  private void addDataToRequest(Object data, HttpPost postRequest) {
+    String jsonData = JSONFormmater.toJson(data);
+    String hmac = createSHA256ForOrder(jsonData);
     postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
 
     StringEntity input;
     try {
-      input = new StringEntity(order.toJson());
+      input = new StringEntity(jsonData);
       input.setContentType("application/json");
       postRequest.setEntity(input);
     } catch (UnsupportedEncodingException e) {
@@ -208,8 +208,8 @@ public class RiskifiedClient {
   }
 
 
-  private String createSHA256ForOrder(JsonObject order) {
-    final byte[] hmac = encoder.doFinal(order.toJson().getBytes());
+  private String createSHA256ForOrder(String data) {
+    final byte[] hmac = encoder.doFinal(data.getBytes());
     return toHexString(hmac);
   }
 
