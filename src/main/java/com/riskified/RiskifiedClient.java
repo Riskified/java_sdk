@@ -1,11 +1,15 @@
 package main.java.com.riskified;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
+import java.util.Properties;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,7 +21,6 @@ import main.java.com.riskified.models.OrderWrapper;
 import main.java.com.riskified.models.RefundOrder;
 import main.java.com.riskified.models.Response;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,7 +28,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
@@ -39,10 +41,29 @@ import com.google.gson.Gson;
  */
 public class RiskifiedClient {
 
-  private static final String baseUrl = "http://sandbox.riskified.com";
+  private String baseUrl;
 
   private String shopUrl;
   private Mac encoder;
+  
+  public RiskifiedClient() throws FileNotFoundException, IOException, InvalidKeyException, RiskifedError {
+    Properties properties = new Properties();
+    properties.load(new FileReader(new File(".",
+        "src/main/resources/riskified_sdk.properties")));
+    String shopUrl = properties.getProperty("shopUrl");
+    String authKey = properties.getProperty("authKey");
+    String environment = properties.getProperty("environment");
+    if (environment == "debug") {
+      String url = properties.getProperty("debugRiskifiedHostUrl");
+      if (url.isEmpty()) {
+        init(shopUrl, authKey, "http://localhost:3000");
+      } else {
+        init(shopUrl, authKey, url);
+      }
+    } else {
+      init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
+    }
+  }
 
   /**
    * @param shopUrl The shop url you use to login to Riskified
@@ -51,12 +72,35 @@ public class RiskifiedClient {
    * @throws NoSuchAlgorithmException There is a problem with
    * @throws RiskifedError 
    */
-  public RiskifiedClient(String shopUrl, String authKey) throws InvalidKeyException,
-      NoSuchAlgorithmException, RiskifedError {
+  public RiskifiedClient(String shopUrl, String authKey) throws InvalidKeyException, RiskifedError {
+    init(shopUrl, authKey, "http://localhost:3000");
+  }
+  
+  public RiskifiedClient(String shopUrl, String authKey, String environment) throws InvalidKeyException, RiskifedError {
+    init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
+  }
+  
+  public void setBseUrl(String baseUrl){
+    this.baseUrl = baseUrl;
+  }
+  
+  private static String getBaseUrlFromEnvironment(String environment) {
+    switch (environment) {
+      case "sandbox":
+        return "http://sandbox.riskified.com";
+      case "production":
+        return "http://wh.riskified.com";
+      default:
+        return "http://localhost:3000";  
+    }
+    
+  }
+  
+  public void init(String shopUrl, String authKey,String baseUrl) throws InvalidKeyException, RiskifedError{
+    this.baseUrl = baseUrl;
     this.shopUrl = shopUrl;
     encoder = createSHA256Key(authKey);
   }
-
   /**
    * Send a new order to Riskified
    * Depending on your current plan, the newly created order might not be submitted automatically for review.

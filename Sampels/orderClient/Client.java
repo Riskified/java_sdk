@@ -88,7 +88,7 @@ public class Client {
     String shopUrl = "shop.url";
     Response res;
     try {
-      RiskifiedClient client = new RiskifiedClient(shopUrl, authKey);
+      RiskifiedClient client = new RiskifiedClient();
 
       res = client.createOrder(order);
       System.out.println(res.order.id);
