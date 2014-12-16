@@ -39,7 +39,7 @@ import com.google.gson.Gson;
  */
 public class RiskifiedClient {
 
-  private static final String baseUrl = "http://sandbox.riskifeid.com";
+  private static final String baseUrl = "http://sandbox.riskified.com";
 
   private String shopUrl;
   private Mac encoder;
