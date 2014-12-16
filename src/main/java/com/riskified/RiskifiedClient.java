@@ -49,7 +49,7 @@ public class RiskifiedClient {
   public RiskifiedClient() throws FileNotFoundException, IOException, InvalidKeyException, RiskifedError {
     Properties properties = new Properties();
     properties.load(new FileReader(new File(".",
-        "src/main/resources/riskified_sdk.properties")));
+        "src/riskified_sdk.properties")));
     String shopUrl = properties.getProperty("shopUrl");
     String authKey = properties.getProperty("authKey");
     String environment = properties.getProperty("environment");
