@@ -61,6 +61,10 @@ public class Client {
     order.shippingAddress.province = "New York";
     order.shippingAddress.provinceCode = "NY";
     order.shippingAddress.zip = "64155"; 
+    
+    Order updateOrder = new Order();
+    updateOrder.id = order.id;
+    updateOrder.email = "another.email@example.com";
 
     ArrayOrders orders = new ArrayOrders();
     orders.orders.add(order);
@@ -72,12 +76,12 @@ public class Client {
     cancel.cancelledAt = new Date();
 
     RefundOrder refund = new RefundOrder();
-    refund.id = "omer";
+    refund.id = order.id;
     RefundDetails refundDetail = new RefundDetails();
-    refundDetail.refundId = "omer1";
-    refundDetail.amount = (float) 200;
+    refundDetail.refundId = "refund_001";
+    refundDetail.amount = 33.12;
     refundDetail.currency = "USD";
-
+    refundDetail.reason = "Product Missing";
     refund.refunds.add(refundDetail);
 
     String authKey = "123";
