@@ -39,7 +39,7 @@ import com.google.gson.Gson;
  */
 public class RiskifiedClient {
 
-  private static final String baseUrl = "http://sandbox.riskified.com";
+  private static final String baseUrl = "http://sandbox.riskifeid.com";
 
   private String shopUrl;
   private Mac encoder;
@@ -67,7 +67,7 @@ public class RiskifiedClient {
    */
   public Response createOrder(Order order) throws Exception {
     String url = baseUrl + "/api/create";
-    return postOrder(order, url);
+    return postOrder(new OrderWrapper<Order>(order), url);
   }
 
   /**
@@ -80,7 +80,7 @@ public class RiskifiedClient {
    */
   public Response submitOrder(Order order) throws Exception {
     String url = baseUrl + "/api/submit";
-    return postOrder(order, url);
+    return postOrder(new OrderWrapper<Order>(order), url);
   }
 
   /**
@@ -93,7 +93,7 @@ public class RiskifiedClient {
    */
   public Response updateOrder(Order order) throws Exception {
     String url = baseUrl + "/api/update";
-    return postOrder(order, url);
+    return postOrder(new OrderWrapper<Order>(order), url);
   }
 
   /**
@@ -108,7 +108,7 @@ public class RiskifiedClient {
    */
   public Response cancelOrder(CancelOrder order) throws Exception {
     String url = baseUrl + "/api/cancel";
-    return postOrder(order, url);
+    return postOrder(new OrderWrapper<CancelOrder>(order), url);
   }
 
   /**
