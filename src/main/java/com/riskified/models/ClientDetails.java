@@ -1,8 +1,8 @@
 package main.java.com.riskified.models;
 
 public class ClientDetails {
-  String acceptLanguage;
-  String browserIp;
-  String userAgent;
-  String sessionHash;
+  public String acceptLanguage;
+  public String browserIp;
+  public String userAgent;
+  public String sessionHash;
 }
