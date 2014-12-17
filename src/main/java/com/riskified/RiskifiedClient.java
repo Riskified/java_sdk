@@ -51,10 +51,7 @@ public class RiskifiedClient {
    * use configuration file: "src/riskified_sdk.properties"
    * uses the keys: shopUrl, authKey, environment, debugRiskifiedHostUrl
    * see full doc on GitHub
-   * @throws FileNotFoundException When the config file not in "src/riskified_sdk.properties"
-   * @throws IOException
-   * @throws InvalidKeyException
-   * @throws RiskifedError
+   * @throws RiskifedError When there was a critical error, look at the exception to see more data
    */
   public RiskifiedClient() throws RiskifedError {
     Properties properties = new Properties();
@@ -79,24 +76,28 @@ public class RiskifiedClient {
       init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
     }
   }
-
+  
   /**
+   * Riskified API client
+   * don't use config file
    * @param shopUrl The shop url you use to login to Riskified
    * @param authKey From the advance settings in Riskified web site
+   * @param environment The Riskifed environment (sandbox / production)
    * @throws InvalidKeyException If the given authKey is inappropriate for initializing this MAC
    * @throws NoSuchAlgorithmException There is a problem with
    * @throws RiskifedError 
    */
-  public RiskifiedClient(String shopUrl, String authKey) throws RiskifedError {
-    init(shopUrl, authKey, "http://localhost:3000");
-  }
-  
   public RiskifiedClient(String shopUrl, String authKey, String environment) throws RiskifedError {
     init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
   }
   
-  public void setBseUrl(String baseUrl){
-    this.baseUrl = baseUrl;
+  /**
+   * Change the Riskified server url
+   * You shouldn't use this regular
+   * @param baseUrl the new server url
+   */
+  public void setBseUrl(String url){
+    this.baseUrl = url;
   }
   
   private static String getBaseUrlFromEnvironment(String environment) {
@@ -111,18 +112,22 @@ public class RiskifiedClient {
     
   }
   
-  public void init(String shopUrl, String authKey,String baseUrl) throws RiskifedError{
+  private void init(String shopUrl, String authKey,String baseUrl) throws RiskifedError{
     this.baseUrl = baseUrl;
     this.shopUrl = shopUrl;
     encoder = createSHA256Key(authKey);
   }
+  
   /**
    * Send a new order to Riskified
    * Depending on your current plan, the newly created order might not be submitted automatically for review.
    * @param order An order to create 
    * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null
-   * @return 
-   * @throws Exception
+   * @see Response
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200
    */
   public Response createOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/create";
@@ -134,8 +139,11 @@ public class RiskifiedClient {
    * Forces the order to be submitted for review, regardless of your current plan.
    * @param order An order to submit for review.
    * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null.
-   * @return
-   * @throws Exception
+   * @see Response
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200   
    */
   public Response submitOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/submit";
@@ -147,8 +155,11 @@ public class RiskifiedClient {
    * Orders are differentiated by their id field. To update an existing order, include its id and any up-to-date data.
    * @param order A (possibly incomplete) order to update
    * The order must have an id field referencing an existing order and at least one additional field to update.
-   * @return
-   * @throws Exception
+   * @see Response
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200   
    */
   public Response updateOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/update";
@@ -162,8 +173,11 @@ public class RiskifiedClient {
    * An order can only be cancelled during a relatively short time window after its creation.
    * @param order The order to cancel
    * @see CancelOrder
-   * @return
-   * @throws Exception
+   * @see Response
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200   
    */
   public Response cancelOrder(CancelOrder order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/cancel";
@@ -175,8 +189,11 @@ public class RiskifiedClient {
    * Any associated charges will be updated to reflect the new order total amount.
    * @param order The refund Order
    * @see Refund
-   * @return
-   * @throws Exception
+   * @see Response
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200   
    */
   public Response refundOrder(RefundOrder order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/refund";
@@ -193,16 +210,18 @@ public class RiskifiedClient {
    * 
    * Orders sent will be used to build analysis models to better analyze newly received orders.
    * 
-   * @param orders - A list of historical orders to send
-   * @return
-   * @throws Exception
+   * @param orders A list of historical orders to send
+   * @return Response object, including the status from Riskified server
+   * @throws ClientProtocolException in case of a problem or the connection was aborted
+   * @throws IOException in case of an http protocol error
+   * @throws HttpResponseException The server respond status wasn't 200
    */
   public Response historicalOrder(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/historical";
     return postOrder(orders, url);
   }
 
-  private Response postOrder(Object data, String url) throws ClientProtocolException, IOException, HttpResponseException {
+  private Response postOrder(Object data, String url) throws ClientProtocolException, IOException {
     HttpPost request = createPostRequest(url);
     addDataToRequest(data, request);
     HttpResponse response;
@@ -224,11 +243,6 @@ public class RiskifiedClient {
     }
   }
 
-  /**
-   * @param postBody
-   * @return
-   * @throws IOException
-   */
   private Response getResponseObject(String postBody) throws IOException {
     Gson gson = new Gson();
     Response res = gson.fromJson(postBody, Response.class);
