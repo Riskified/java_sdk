@@ -46,10 +46,25 @@ public class RiskifiedClient {
   private String shopUrl;
   private Mac encoder;
   
-  public RiskifiedClient() throws FileNotFoundException, IOException, InvalidKeyException, RiskifedError {
+  /**
+   * Riskified API client
+   * use configuration file: "src/riskified_sdk.properties"
+   * uses the keys: shopUrl, authKey, environment, debugRiskifiedHostUrl
+   * see full doc on GitHub
+   * @throws FileNotFoundException When the config file not in "src/riskified_sdk.properties"
+   * @throws IOException
+   * @throws InvalidKeyException
+   * @throws RiskifedError
+   */
+  public RiskifiedClient() throws RiskifedError {
     Properties properties = new Properties();
-    properties.load(new FileReader(new File(".",
-        "src/riskified_sdk.properties")));
+    try {
+      properties.load(new FileReader(new File(".",
+          "src/riskified_sdk.properties")));
+    } catch (IOException e) {
+      throw new RiskifedError("There was an error reading the config file in: src/riskified_sdk.properties");
+    }
+    
     String shopUrl = properties.getProperty("shopUrl");
     String authKey = properties.getProperty("authKey");
     String environment = properties.getProperty("environment");
@@ -72,11 +87,11 @@ public class RiskifiedClient {
    * @throws NoSuchAlgorithmException There is a problem with
    * @throws RiskifedError 
    */
-  public RiskifiedClient(String shopUrl, String authKey) throws InvalidKeyException, RiskifedError {
+  public RiskifiedClient(String shopUrl, String authKey) throws RiskifedError {
     init(shopUrl, authKey, "http://localhost:3000");
   }
   
-  public RiskifiedClient(String shopUrl, String authKey, String environment) throws InvalidKeyException, RiskifedError {
+  public RiskifiedClient(String shopUrl, String authKey, String environment) throws RiskifedError {
     init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
   }
   
@@ -96,7 +111,7 @@ public class RiskifiedClient {
     
   }
   
-  public void init(String shopUrl, String authKey,String baseUrl) throws InvalidKeyException, RiskifedError{
+  public void init(String shopUrl, String authKey,String baseUrl) throws RiskifedError{
     this.baseUrl = baseUrl;
     this.shopUrl = shopUrl;
     encoder = createSHA256Key(authKey);
@@ -109,7 +124,7 @@ public class RiskifiedClient {
    * @return 
    * @throws Exception
    */
-  public Response createOrder(Order order) throws Exception {
+  public Response createOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/create";
     return postOrder(new OrderWrapper<Order>(order), url);
   }
@@ -122,7 +137,7 @@ public class RiskifiedClient {
    * @return
    * @throws Exception
    */
-  public Response submitOrder(Order order) throws Exception {
+  public Response submitOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/submit";
     return postOrder(new OrderWrapper<Order>(order), url);
   }
@@ -135,7 +150,7 @@ public class RiskifiedClient {
    * @return
    * @throws Exception
    */
-  public Response updateOrder(Order order) throws Exception {
+  public Response updateOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/update";
     return postOrder(new OrderWrapper<Order>(order), url);
   }
@@ -143,14 +158,14 @@ public class RiskifiedClient {
   /**
    * Mark a previously submitted order as cancelled.
    * If the order has not yet been reviewed, it is excluded from future review.
-   * If the order has already been reviewed and approved, cancelling it will also trigger a full refund on any associated charges.
+   * If the order has already been reviewed and approved, canceling it will also trigger a full refund on any associated charges.
    * An order can only be cancelled during a relatively short time window after its creation.
    * @param order The order to cancel
    * @see CancelOrder
    * @return
    * @throws Exception
    */
-  public Response cancelOrder(CancelOrder order) throws Exception {
+  public Response cancelOrder(CancelOrder order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/cancel";
     return postOrder(new OrderWrapper<CancelOrder>(order), url);
   }
@@ -163,7 +178,7 @@ public class RiskifiedClient {
    * @return
    * @throws Exception
    */
-  public Response refundOrder(RefundOrder order) throws Exception {
+  public Response refundOrder(RefundOrder order) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/refund";
     return postOrder(new OrderWrapper<RefundOrder>(order), url);
   }
@@ -182,7 +197,7 @@ public class RiskifiedClient {
    * @return
    * @throws Exception
    */
-  public Response historicalOrder(ArrayOrders orders) throws Exception {
+  public Response historicalOrder(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException {
     String url = baseUrl + "/api/historical";
     return postOrder(orders, url);
   }
@@ -221,7 +236,7 @@ public class RiskifiedClient {
   }
 
 
-  private Mac createSHA256Key(String authKey) throws InvalidKeyException, RiskifedError {
+  private Mac createSHA256Key(String authKey) throws RiskifedError {
     Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
     Mac mac;
     try {
@@ -229,7 +244,11 @@ public class RiskifiedClient {
     } catch (NoSuchAlgorithmException e) {
       throw new RiskifedError(e);
     }
-    mac.init(sk);
+    try {
+      mac.init(sk);
+    } catch (InvalidKeyException e) {
+      throw new RiskifedError(e);
+    }
     return mac;
   }
 
