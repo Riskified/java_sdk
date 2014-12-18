@@ -43,7 +43,7 @@ public class RiskifiedClient {
 
     /**
      * Riskified API client
-     * use configuration file: "src/riskified_sdk.properties"
+     * use configuration file: "src/main/resources/riskified_sdk.properties"
      * uses the keys: shopUrl, authKey, environment, debugRiskifiedHostUrl
      * see full doc on GitHub
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
@@ -53,7 +53,7 @@ public class RiskifiedClient {
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("riskified_sdk.properties"));
         } catch (IOException e) {
-            throw new RiskifedError("There was an error reading the config file in: src/riskified_sdk.properties");
+            throw new RiskifedError("There was an error reading the config file in: src/main/resources/riskified_sdk.properties");
         }
 
         String shopUrl = properties.getProperty("shopUrl");
