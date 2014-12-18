@@ -1,40 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.riskified</groupId>
-    <artifactId>riskified-sdk</artifactId>
-    <version>0.1</version>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.3.6</version>
-        </dependency>
-        
-                <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>9.3.0.M1</version>
-        </dependency>
-
-    </dependencies>
-
-
-    <organization>
-        <name>Riskified</name>
-        <url>http://www.riskified.com/</url>
-    </organization>
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/Riskified/java_sdk/issues</url>
-    </issueManagement>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>riskified-java-sdk</groupId>
+  <artifactId>com.riskified</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source/>
+          <target/>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>riskified-sdk</module>
+  	<module>riskified-sample</module>
+  </modules>
 </project>
