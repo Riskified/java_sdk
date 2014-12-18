@@ -1,7 +1,7 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 public class TaxLines {
-  public Float price;
-  public Float rate;
-  public String title;
+    public Float price;
+    public Float rate;
+    public String title;
 }

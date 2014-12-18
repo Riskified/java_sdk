@@ -1,16 +1,46 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 import java.util.Date;
-
-import main.java.com.riskified.JSONFormmater;
 
 /**
  * Cancel Order details
  * @see http://apiref.riskified.com/curl/#actions-cancel
  */
 public class CancelOrder {
-  public String id;
-  public String cancelReason;
-  public Date cancelledAt;
+    private String id;
+    private String cancelReason;
+    private Date cancelledAt;
 
+    @Override
+    public String toString() {
+        return "CancelOrder{" +
+                "id='" + id + '\'' +
+                ", cancelReason='" + cancelReason + '\'' +
+                ", cancelledAt=" + cancelledAt +
+                '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCancelReason() {
+        return cancelReason;
+    }
+
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
+    }
+
+    public Date getCancelledAt() {
+        return cancelledAt;
+    }
+
+    public void setCancelledAt(Date cancelledAt) {
+        this.cancelledAt = cancelledAt;
+    }
 }

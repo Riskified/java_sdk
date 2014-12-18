@@ -1,21 +1,88 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 public class PaypalPaymentDetails implements IPaymentDetails {
-  
-  public String payerEmail;
-  public String payerStatus;
-  public String payerAddressStatus;
-  public String protectionEligibility;
-  public String paymentStatus;
-  public String pendingReason;
-  public String authorizationId;
-  
-  public PaypalPaymentDetails(String payerEmail, String payerStatus, String payerAddressStatus, String protectionEligibility){
-    this.payerEmail = payerEmail;
-    this.payerStatus = payerStatus;
-    this.payerAddressStatus = payerAddressStatus;
-    this.protectionEligibility = protectionEligibility;
-  }
-  
 
+    private String payerEmail;
+    private String payerStatus;
+    private String payerAddressStatus;
+    private String protectionEligibility;
+    private String paymentStatus;
+    private String pendingReason;
+    private String authorizationId;
+
+    public PaypalPaymentDetails(String payerEmail, String payerStatus, String payerAddressStatus, String protectionEligibility) {
+        this.payerEmail = payerEmail;
+        this.payerStatus = payerStatus;
+        this.payerAddressStatus = payerAddressStatus;
+        this.protectionEligibility = protectionEligibility;
+    }
+
+    @Override
+    public String toString() {
+        return "PaypalPaymentDetails{" +
+                "payerEmail='" + payerEmail + '\'' +
+                ", payerStatus='" + payerStatus + '\'' +
+                ", payerAddressStatus='" + payerAddressStatus + '\'' +
+                ", protectionEligibility='" + protectionEligibility + '\'' +
+                ", paymentStatus='" + paymentStatus + '\'' +
+                ", pendingReason='" + pendingReason + '\'' +
+                ", authorizationId='" + authorizationId + '\'' +
+                '}';
+    }
+
+    public String getPayerEmail() {
+        return payerEmail;
+    }
+
+    public void setPayerEmail(String payerEmail) {
+        this.payerEmail = payerEmail;
+    }
+
+    public String getPayerStatus() {
+        return payerStatus;
+    }
+
+    public void setPayerStatus(String payerStatus) {
+        this.payerStatus = payerStatus;
+    }
+
+    public String getPayerAddressStatus() {
+        return payerAddressStatus;
+    }
+
+    public void setPayerAddressStatus(String payerAddressStatus) {
+        this.payerAddressStatus = payerAddressStatus;
+    }
+
+    public String getProtectionEligibility() {
+        return protectionEligibility;
+    }
+
+    public void setProtectionEligibility(String protectionEligibility) {
+        this.protectionEligibility = protectionEligibility;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPendingReason() {
+        return pendingReason;
+    }
+
+    public void setPendingReason(String pendingReason) {
+        this.pendingReason = pendingReason;
+    }
+
+    public String getAuthorizationId() {
+        return authorizationId;
+    }
+
+    public void setAuthorizationId(String authorizationId) {
+        this.authorizationId = authorizationId;
+    }
 }
