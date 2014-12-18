@@ -1,5 +1,5 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 public interface IPaymentDetails {
-  
+
 }

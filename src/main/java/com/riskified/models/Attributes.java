@@ -1,6 +1,30 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 public class Attributes {
-  public String name;
-  public String value;
+    private String name;
+    private String value;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Attributes{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

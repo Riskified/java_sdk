@@ -1,16 +1,12 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 import java.util.ArrayList;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.util.List;
 
 public class ArrayOrders {
+    public List<Order> orders;
 
-  public ArrayList<Order> orders;
-
-  public ArrayOrders() {
-    orders = new ArrayList<Order>();
-  }
-
+    public ArrayOrders() {
+        orders = new ArrayList<Order>();
+    }
 }

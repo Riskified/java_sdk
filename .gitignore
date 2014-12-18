@@ -4,3 +4,6 @@ bin/*
 target/*
 .settings/*
 doc/*
+*.iml
+.classpath
+.project

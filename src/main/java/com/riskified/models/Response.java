@@ -1,12 +1,13 @@
-package main.java.com.riskified.models;
+package com.riskified.models;
 
 public class Response {
-  public ResOreder order;
-  
-  public class ResOreder {
-    public String id;
-    public String status;
-    public String description;
-  }
+    private ResOrder order;
 
+    public ResOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(ResOrder order) {
+        this.order = order;
+    }
 }
