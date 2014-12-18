@@ -19,8 +19,8 @@ import java.util.Date;
 public class Client {
     public static void main(String[] arg) {
         Order order = new Order();
-        order.setId("b1234");
-        order.setName("#b1234");
+        order.setId("1234");
+        order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setClosedAt(null);
@@ -74,7 +74,7 @@ public class Client {
         orders.orders.add(order);
 
         CancelOrder cancel = new CancelOrder();
-        cancel.setId("omer");
+        cancel.setId(order.getId());
         cancel.setCancelReason("test");
         cancel.setCancelledAt(new Date());
 
@@ -87,12 +87,11 @@ public class Client {
         refundDetail.setReason("Product Missing");
         refund.setRefunds(Arrays.asList(refundDetail));
 
-        String authKey = "123";
-        String shopUrl = "shop.url";
         Response res;
         try {
             RiskifiedClient client = new RiskifiedClient();
             res = client.createOrder(order);
+            //System.out.println(res.getReceived()); // for historicalOrders only
             System.out.println(res.getOrder().getId());
             System.out.println(res.getOrder().getStatus());
             System.out.println(res.getOrder().getDescription());

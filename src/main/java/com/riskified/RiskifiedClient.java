@@ -7,6 +7,7 @@ import com.riskified.models.Order;
 import com.riskified.models.OrderWrapper;
 import com.riskified.models.RefundOrder;
 import com.riskified.models.Response;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -19,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -221,15 +223,9 @@ public class RiskifiedClient {
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      */
-    public Response historicalOrder(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException {
+    public Response historicalOrders(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException {
         String url = baseUrl + "/api/historical";
         return postOrder(orders, url);
-    }
-
-    public Response historicalOrder(Order order) throws IOException {
-        ArrayOrders arrayOrders = new ArrayOrders();
-        arrayOrders.orders.add(order);
-        return historicalOrder(arrayOrders);
     }
 
     private Response postOrder(Object data, String url) throws ClientProtocolException, IOException {
