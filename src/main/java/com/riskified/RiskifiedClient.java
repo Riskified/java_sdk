@@ -1,6 +1,7 @@
 package com.riskified;
 
 import com.google.gson.Gson;
+import com.riskified.RiskifedError;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.CancelOrder;
 import com.riskified.models.Order;

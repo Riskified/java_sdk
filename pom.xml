@@ -7,11 +7,6 @@
     <version>0.1</version>
 
     <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -24,33 +19,15 @@
             <artifactId>httpclient</artifactId>
             <version>4.3.6</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.3.0.M1</version>
-        </dependency>
-
-        <dependency>
+        
+                <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>9.3.0.M1</version>
         </dependency>
 
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 
     <organization>
         <name>Riskified</name>
