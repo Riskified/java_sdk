@@ -1,13 +1,15 @@
 package com.riskified;
 
-import com.google.gson.Gson;
-import com.riskified.RiskifedError;
-import com.riskified.models.ArrayOrders;
-import com.riskified.models.CancelOrder;
-import com.riskified.models.Order;
-import com.riskified.models.OrderWrapper;
-import com.riskified.models.RefundOrder;
-import com.riskified.models.Response;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
+import java.util.Properties;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -19,16 +21,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
-import java.util.Properties;
+import com.google.gson.Gson;
+import com.riskified.models.ArrayOrders;
+import com.riskified.models.CancelOrder;
+import com.riskified.models.Order;
+import com.riskified.models.OrderWrapper;
+import com.riskified.models.RefundOrder;
+import com.riskified.models.Response;
 
 
 /**
@@ -87,15 +86,14 @@ public class RiskifiedClient {
     }
 
     private static String getBaseUrlFromEnvironment(String environment) {
-        switch (environment) {
-            case "sandbox":
-                return "http://sandbox.riskified.com";
-            case "production":
-                return "http://wh.riskified.com";
-            default:
-                return "http://localhost:3000";
-        }
-
+    	if (environment == "sandbox") {
+    		return "http://sandbox.riskified.com";
+    	}
+    	if (environment == "production") {
+    		return "http://wh.riskified.com";
+    	}
+    	return "http://localhost:3000";
+        
     }
 
     private static String toHexString(byte[] bytes) {

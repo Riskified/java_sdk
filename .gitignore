@@ -1,3 +1,4 @@
+*/.settings/*
 .metadata/*
 .idea/*
 .DS_Store
@@ -11,3 +12,4 @@ doc/*
 lib/*
 */bin/
 */target/
+/target/
