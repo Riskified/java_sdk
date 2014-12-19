@@ -22,6 +22,16 @@ public class Customer {
     private String tags;
     private Address defaultAddress;
 
+    public Customer(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.createdAt = createdAt;
+        this.verifiedEmail = verifiedEmail;
+        this.ordersCount = ordersCount;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -50,32 +60,16 @@ public class Customer {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
@@ -88,10 +82,6 @@ public class Customer {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getGroupId() {
@@ -122,16 +112,8 @@ public class Customer {
         return ordersCount;
     }
 
-    public void setOrdersCount(Integer ordersCount) {
-        this.ordersCount = ordersCount;
-    }
-
     public Boolean getVerifiedEmail() {
         return verifiedEmail;
-    }
-
-    public void setVerifiedEmail(Boolean verifiedEmail) {
-        this.verifiedEmail = verifiedEmail;
     }
 
     public Boolean getAcceptsMarketing() {

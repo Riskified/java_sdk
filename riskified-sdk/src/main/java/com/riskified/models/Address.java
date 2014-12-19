@@ -17,53 +17,33 @@ public class Address {
     private Float latitude;
     private Float longitude;
 
-    public Address(String firstName, String lastName, String city, String phone, String country, String countryCode) {
+    public Address(String firstName, String lastName, String address1, String city, String phone, String country) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
         this.phone = phone;
         this.country = country;
-        this.countryCode = countryCode;
+        this.address1 = address1;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getCountry() {
         return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getCountryCode() {
@@ -92,10 +72,6 @@ public class Address {
 
     public String getAddress1() {
         return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
     }
 
     public String getAddress2() {
