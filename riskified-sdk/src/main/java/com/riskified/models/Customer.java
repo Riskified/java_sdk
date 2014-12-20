@@ -3,22 +3,172 @@ package com.riskified.models;
 import java.util.Date;
 
 public class Customer {
-    public String email;
-    public String firstName;
-    public String lastName;
-    public Date createdAt;
-    public Date updatedAt;
-    public String id;
-    public String groupId;
-    public String groupName;
-    public String note;
-    public Integer ordersCount;
-    public Boolean verifiedEmail;
-    public Boolean acceptsMarketing;
-    public String lastOrderId;
-    public String lastOrderName;
-    public String state;
-    public Float totalSpent;
-    public String tags;
-    public Address defaultAddress;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private Date createdAt;
+    private Date updatedAt;
+    private String id;
+    private String groupId;
+    private String groupName;
+    private String note;
+    private Integer ordersCount;
+    private Boolean verifiedEmail;
+    private Boolean acceptsMarketing;
+    private String lastOrderId;
+    private String lastOrderName;
+    private String state;
+    private Float totalSpent;
+    private String tags;
+    private Address defaultAddress;
+
+    public Customer(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.createdAt = createdAt;
+        this.verifiedEmail = verifiedEmail;
+        this.ordersCount = ordersCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", id='" + id + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", groupName='" + groupName + '\'' +
+                ", note='" + note + '\'' +
+                ", ordersCount=" + ordersCount +
+                ", verifiedEmail=" + verifiedEmail +
+                ", acceptsMarketing=" + acceptsMarketing +
+                ", lastOrderId='" + lastOrderId + '\'' +
+                ", lastOrderName='" + lastOrderName + '\'' +
+                ", state='" + state + '\'' +
+                ", totalSpent=" + totalSpent +
+                ", tags='" + tags + '\'' +
+                ", defaultAddress=" + defaultAddress +
+                '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Integer getOrdersCount() {
+        return ordersCount;
+    }
+
+    public Boolean getVerifiedEmail() {
+        return verifiedEmail;
+    }
+
+    public Boolean getAcceptsMarketing() {
+        return acceptsMarketing;
+    }
+
+    public void setAcceptsMarketing(Boolean acceptsMarketing) {
+        this.acceptsMarketing = acceptsMarketing;
+    }
+
+    public String getLastOrderId() {
+        return lastOrderId;
+    }
+
+    public void setLastOrderId(String lastOrderId) {
+        this.lastOrderId = lastOrderId;
+    }
+
+    public String getLastOrderName() {
+        return lastOrderName;
+    }
+
+    public void setLastOrderName(String lastOrderName) {
+        this.lastOrderName = lastOrderName;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Float getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(Float totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public Address getDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(Address defaultAddress) {
+        this.defaultAddress = defaultAddress;
+    }
 }
