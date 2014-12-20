@@ -77,8 +77,6 @@ public class RiskifiedClient {
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
      * @param environment The Riskifed environment (sandbox / production)
-     * @throws InvalidKeyException If the given authKey is inappropriate for initializing this MAC
-     * @throws NoSuchAlgorithmException There is a problem with
      * @throws RiskifedError
      */
     public RiskifiedClient(String shopUrl, String authKey, String environment) throws RiskifedError {

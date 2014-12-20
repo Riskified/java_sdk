@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * Cancel Order details
- * @see http://apiref.riskified.com/curl/#actions-cancel
  */
 public class CancelOrder {
     private String id;
