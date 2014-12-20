@@ -39,7 +39,7 @@ public class RiskifiedClient {
 
     private String baseUrl;
     private String shopUrl;
-    private Mac encoder;
+    private SHA256Handler sha256Handler;
 
     /**
      * Riskified API client
@@ -94,18 +94,7 @@ public class RiskifiedClient {
         
     }
 
-    private static String toHexString(byte[] bytes) {
-        StringBuilder sb = new StringBuilder(bytes.length * 2);
 
-        Formatter formatter = new Formatter(sb);
-        for (byte b : bytes) {
-            formatter.format("%02x", b);
-        }
-
-        formatter.close();
-
-        return sb.toString();
-    }
 
     /**
      * Change the Riskified server url
@@ -119,7 +108,7 @@ public class RiskifiedClient {
     private void init(String shopUrl, String authKey, String baseUrl) throws RiskifedError {
         this.baseUrl = baseUrl;
         this.shopUrl = shopUrl;
-        encoder = createSHA256Key(authKey);
+        this.sha256Handler = new SHA256Handler(authKey);
     }
 
     /**
@@ -253,25 +242,11 @@ public class RiskifiedClient {
         return res;
     }
 
-    private Mac createSHA256Key(String authKey) throws RiskifedError {
-        Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
-        Mac mac;
-        try {
-            mac = Mac.getInstance(sk.getAlgorithm());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RiskifedError(e);
-        }
-        try {
-            mac.init(sk);
-        } catch (InvalidKeyException e) {
-            throw new RiskifedError(e);
-        }
-        return mac;
-    }
+
 
     private void addDataToRequest(Object data, HttpPost postRequest) {
         String jsonData = JSONFormmater.toJson(data);
-        String hmac = createSHA256ForOrder(jsonData);
+        String hmac = sha256Handler.createSHA256(jsonData);
         postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
 
         StringEntity input;
@@ -292,8 +267,5 @@ public class RiskifiedClient {
         return postRequest;
     }
 
-    private String createSHA256ForOrder(String data) {
-        final byte[] hmac = encoder.doFinal(data.getBytes());
-        return toHexString(hmac);
-    }
+
 }

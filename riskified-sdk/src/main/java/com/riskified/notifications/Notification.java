@@ -4,7 +4,7 @@ public class Notification {
 
     private NotificationOrder order;
 
-    private static class NotificationOrder {
+    public static class NotificationOrder {
         private String id;
         private String status;
         private String oldStatus;

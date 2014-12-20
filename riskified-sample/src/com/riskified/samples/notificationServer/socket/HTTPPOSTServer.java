@@ -1,7 +1,7 @@
 package com.riskified.samples.notificationServer.socket;
 
 import com.riskified.notifications.Notification.NotificationOrder;
-import com.riskified.notifications.NotificationFormater;
+import com.riskified.notifications.NotificationHandler;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -61,10 +61,10 @@ public class HTTPPOSTServer extends Thread {
                         break;
                     }
                 }
-                NotificationFormater formatter = new NotificationFormater("26faa0eb6eacf889e300944c297640b68789b11c");
-                NotificationOrder notification = formatter.toObject(body, hash).order;
-                sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order" + notification.id
-                        + "with status" + notification.status + "and description " + notification.description
+                NotificationHandler formatter = new NotificationHandler("26faa0eb6eacf889e300944c297640b68789b11c");
+                NotificationOrder notification = formatter.toObject(body, hash).getOrder();
+                sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
+                        + " with status " + notification.getStatus() + " and description " + notification.getDescription()
                         + "</BODY></HTML>");
 
             }

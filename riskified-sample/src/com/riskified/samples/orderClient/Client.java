@@ -45,9 +45,9 @@ public class Client {
 
         order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
 
-        Address address = new Address("John", "Doe", "108 Main Street", "Kansas Computers", "United States", "US");
-        address.setPhone("1234567");
-        address.setCity("NYC");
+        Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
         address.setName("John Doe");
         address.setAddress2("Apartment 12");
         address.setProvince("New York");
@@ -55,23 +55,23 @@ public class Client {
         address.setZip("64155");
         order.setBillingAddress(address);
 
-        address = new Address("John", "Doe", "108 Main Street", "Kansas Computers", "United States", "US");
-        address.setPhone("1234567");
-        address.setCity("NYC");
+        address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
         address.setName("John Doe");
         address.setAddress2("Apartment 12");
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setShippingAddress(address);
 
         Order updateOrder = new Order();
         updateOrder.setId(order.getId());
         updateOrder.setEmail("another.email@example.com");
 
         ArrayOrders orders = new ArrayOrders();
-        orders.orders.add(order);
-        orders.orders.add(order);
+        orders.getOrders().add(order);
+        orders.getOrders().add(order);
 
         CancelOrder cancel = new CancelOrder();
         cancel.setId(order.getId());
