@@ -41,35 +41,6 @@ public class LineItem {
         this.sku = sku;
     }
 
-    @Override
-    public String toString() {
-        return "LineItem{" +
-                "price=" + price +
-                ", quantity=" + quantity +
-                ", title='" + title + '\'' +
-                ", sku='" + sku + '\'' +
-                ", productId='" + productId + '\'' +
-                ", fulfillmentService='" + fulfillmentService + '\'' +
-                ", fulfillmentStatus='" + fulfillmentStatus + '\'' +
-                ", grams=" + grams +
-                ", id='" + id + '\'' +
-                ", variantId='" + variantId + '\'' +
-                ", variantTitle='" + variantTitle + '\'' +
-                ", variantInventoryManagement='" + variantInventoryManagement + '\'' +
-                ", vendor='" + vendor + '\'' +
-                ", name='" + name + '\'' +
-                ", requiresShipping=" + requiresShipping +
-                ", taxable=" + taxable +
-                ", productExists=" + productExists +
-                ", properties=" + properties +
-                ", taxLines=" + taxLines +
-                ", eventSubCategoryName='" + eventSubCategoryName + '\'' +
-                ", eventName='" + eventName + '\'' +
-                ", eventSectionName='" + eventSectionName + '\'' +
-                ", eventDate=" + eventDate +
-                '}';
-    }
-
     public double getPrice() {
         return price;
     }

@@ -11,18 +11,7 @@ public class ShippingLine {
         this.price = price;
         this.title = title;
     }
-
-    @Override
-    public String toString() {
-        return "ShippingLine{" +
-                "price=" + price +
-                ", title='" + title + '\'' +
-                ", code='" + code + '\'' +
-                ", source='" + source + '\'' +
-                ", taxLines=" + taxLines +
-                '}';
-    }
-
+    
     public double getPrice() {
         return price;
     }

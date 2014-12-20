@@ -10,15 +10,6 @@ public class CancelOrder {
     private String cancelReason;
     private Date cancelledAt;
 
-    @Override
-    public String toString() {
-        return "CancelOrder{" +
-                "id='" + id + '\'' +
-                ", cancelReason='" + cancelReason + '\'' +
-                ", cancelledAt=" + cancelledAt +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

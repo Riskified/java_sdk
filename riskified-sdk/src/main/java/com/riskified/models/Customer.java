@@ -32,30 +32,6 @@ public class Customer {
         this.ordersCount = ordersCount;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", id='" + id + '\'' +
-                ", groupId='" + groupId + '\'' +
-                ", groupName='" + groupName + '\'' +
-                ", note='" + note + '\'' +
-                ", ordersCount=" + ordersCount +
-                ", verifiedEmail=" + verifiedEmail +
-                ", acceptsMarketing=" + acceptsMarketing +
-                ", lastOrderId='" + lastOrderId + '\'' +
-                ", lastOrderName='" + lastOrderName + '\'' +
-                ", state='" + state + '\'' +
-                ", totalSpent=" + totalSpent +
-                ", tags='" + tags + '\'' +
-                ", defaultAddress=" + defaultAddress +
-                '}';
-    }
-
     public String getEmail() {
         return email;
     }

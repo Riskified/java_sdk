@@ -16,11 +16,4 @@ public class OrderWrapper<T> {
     public void setOrder(T order) {
         this.order = order;
     }
-
-    @Override
-    public String toString() {
-        return "OrderWrapper{" +
-                "order=" + order +
-                '}';
-    }
 }

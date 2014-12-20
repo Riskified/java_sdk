@@ -25,12 +25,4 @@ public class DiscountCodes {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
-    @Override
-    public String toString() {
-        return "DiscountCodes{" +
-                "code='" + code + '\'' +
-                ", amount=" + amount +
-                '}';
-    }
 }

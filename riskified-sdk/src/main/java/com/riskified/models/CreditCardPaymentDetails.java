@@ -16,18 +16,6 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.creditCardCompany = creditCardCompany;
     }
 
-    @Override
-    public String toString() {
-        return "CreditCardPaymentDetails{" +
-                "creditCardBin='" + creditCardBin + '\'' +
-                ", avsResultCode='" + avsResultCode + '\'' +
-                ", cvvResultCode='" + cvvResultCode + '\'' +
-                ", creditCardNumber='" + creditCardNumber + '\'' +
-                ", creditCardCompany='" + creditCardCompany + '\'' +
-                ", authorization_id='" + authorization_id + '\'' +
-                '}';
-    }
-
     public String getCreditCardBin() {
         return creditCardBin;
     }

@@ -17,19 +17,6 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.protectionEligibility = protectionEligibility;
     }
 
-    @Override
-    public String toString() {
-        return "PaypalPaymentDetails{" +
-                "payerEmail='" + payerEmail + '\'' +
-                ", payerStatus='" + payerStatus + '\'' +
-                ", payerAddressStatus='" + payerAddressStatus + '\'' +
-                ", protectionEligibility='" + protectionEligibility + '\'' +
-                ", paymentStatus='" + paymentStatus + '\'' +
-                ", pendingReason='" + pendingReason + '\'' +
-                ", authorizationId='" + authorizationId + '\'' +
-                '}';
-    }
-
     public String getPayerEmail() {
         return payerEmail;
     }

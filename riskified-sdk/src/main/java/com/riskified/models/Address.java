@@ -121,25 +121,4 @@ public class Address {
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", city='" + city + '\'' +
-                ", phone='" + phone + '\'' +
-                ", country='" + country + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", name='" + name + '\'' +
-                ", company='" + company + '\'' +
-                ", address1='" + address1 + '\'' +
-                ", address2='" + address2 + '\'' +
-                ", province='" + province + '\'' +
-                ", provinceCode='" + provinceCode + '\'' +
-                ", zip='" + zip + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
-    }
 }

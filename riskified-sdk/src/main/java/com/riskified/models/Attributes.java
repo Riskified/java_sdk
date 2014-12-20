@@ -19,12 +19,4 @@ public class Attributes {
     public void setValue(String value) {
         this.value = value;
     }
-
-    @Override
-    public String toString() {
-        return "Attributes{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
-    }
 }

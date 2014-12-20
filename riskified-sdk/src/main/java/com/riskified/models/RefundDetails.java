@@ -48,15 +48,4 @@ public class RefundDetails {
     public void setReason(String reason) {
         this.reason = reason;
     }
-
-    @Override
-    public String toString() {
-        return "RefundDetails{" +
-                "refundId='" + refundId + '\'' +
-                ", refundedAt=" + refundedAt +
-                ", amount=" + amount +
-                ", currency='" + currency + '\'' +
-                ", reason='" + reason + '\'' +
-                '}';
-    }
 }

@@ -27,12 +27,4 @@ public class RefundOrder {
     public void setRefunds(List<RefundDetails> refunds) {
         this.refunds = refunds;
     }
-
-    @Override
-    public String toString() {
-        return "RefundOrder{" +
-                "id='" + id + '\'' +
-                ", refunds=" + refunds +
-                '}';
-    }
 }

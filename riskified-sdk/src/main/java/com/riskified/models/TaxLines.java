@@ -5,15 +5,6 @@ public class TaxLines {
     private Float rate;
     private String title;
 
-    @Override
-    public String toString() {
-        return "TaxLines{" +
-                "price=" + price +
-                ", rate=" + rate +
-                ", title='" + title + '\'' +
-                '}';
-    }
-
     public Float getPrice() {
         return price;
     }
