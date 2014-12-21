@@ -77,7 +77,7 @@ public class RiskifiedClient {
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
      * @param environment The Riskifed environment (sandbox / production)
-     * @throws RiskifedError
+     * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, String environment) throws RiskifedError {
         init(shopUrl, authKey, getBaseUrlFromEnvironment(environment));
