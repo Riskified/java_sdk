@@ -1,11 +1,11 @@
 package com.riskified.models;
 
-public class DiscountCodes {
+public class DiscountCode {
 
     private String code;
     private double amount;
 
-    public DiscountCodes(double amount, String code) {
+    public DiscountCode(double amount, String code) {
         this.code = code;
         this.amount = amount;
     }

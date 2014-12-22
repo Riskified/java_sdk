@@ -59,7 +59,7 @@ public class Order {
     private Address billingAddress;
     private IPaymentDetails paymentDetails;
     private ClientDetails clientDetails;
-    private List<DiscountCodes> discountCodes;
+    private List<DiscountCode> discountCodes;
     private List<ShippingLine> shippingLines;
     private List<Attributes> noteAttributes;
     private List<TaxLines> taxLines;
@@ -67,7 +67,7 @@ public class Order {
     public Order() {
         lineItems = new ArrayList<LineItem>();
         additionalEmails = new ArrayList<String>();
-        discountCodes = new ArrayList<DiscountCodes>();
+        discountCodes = new ArrayList<DiscountCode>();
         shippingLines = new ArrayList<ShippingLine>();
         noteAttributes = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLines>();
@@ -465,11 +465,11 @@ public class Order {
         this.clientDetails = clientDetails;
     }
 
-    public List<DiscountCodes> getDiscountCodes() {
+    public List<DiscountCode> getDiscountCodes() {
         return discountCodes;
     }
 
-    public void setDiscountCodes(List<DiscountCodes> discountCodes) {
+    public void setDiscountCodes(List<DiscountCode> discountCodes) {
         this.discountCodes = discountCodes;
     }
 

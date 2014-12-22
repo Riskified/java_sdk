@@ -11,7 +11,7 @@ public class LineItem {
     private Integer quantity;
     private String title;
     private String sku;
-    private String productId;
+    private int productId;
     private String fulfillmentService;
     private String fulfillmentStatus;
     private Float grams;
@@ -31,7 +31,7 @@ public class LineItem {
     private String eventSectionName;
     private Date eventDate;
 
-    public LineItem(double price, int quantity, String title, String productId, String sku) {
+    public LineItem(double price, int quantity, String title, int productId, String sku) {
         properties = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLines>();
         this.price = price;
@@ -73,11 +73,11 @@ public class LineItem {
         this.sku = sku;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

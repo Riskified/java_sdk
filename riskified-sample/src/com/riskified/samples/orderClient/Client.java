@@ -1,11 +1,12 @@
 package com.riskified.samples.orderClient;
 
+import com.riskified.RiskifedError;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.Address;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.CancelOrder;
 import com.riskified.models.CreditCardPaymentDetails;
-import com.riskified.models.DiscountCodes;
+import com.riskified.models.DiscountCode;
 import com.riskified.models.LineItem;
 import com.riskified.models.Order;
 import com.riskified.models.RefundDetails;
@@ -13,8 +14,12 @@ import com.riskified.models.RefundOrder;
 import com.riskified.models.Response;
 import com.riskified.models.ShippingLine;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
 
 public class Client {
     public static void main(String[] arg) {
@@ -36,10 +41,10 @@ public class Client {
         order.setReferringSite("google.com");
 
         order.setLineItems(Arrays.asList(
-                new LineItem(100, 1, "ACME Widget", "101", "ABCD"),
-                new LineItem(200, 4, "ACME Spring", "202", "EFGH")));
+                new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
+                new LineItem(200, 4, "ACME Spring", 202, "EFGH")));
 
-        order.setDiscountCodes(Arrays.asList(new DiscountCodes(19.95, "12")));
+        order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
@@ -87,17 +92,21 @@ public class Client {
         refundDetail.setReason("Product Missing");
         refund.setRefunds(Arrays.asList(refundDetail));
 
-        Response res;
-        try {
-            RiskifiedClient client = new RiskifiedClient();
-            res = client.createOrder(order);
-            //System.out.println(res.getReceived()); // for historicalOrders only
-            System.out.println(res.getOrder().getId());
-            System.out.println(res.getOrder().getStatus());
-            System.out.println(res.getOrder().getDescription());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+		try {
+			RiskifiedClient client = new RiskifiedClient();
+			Response res = client.createOrder(order);
+			System.out.println(res.getOrder().getId());
+	        System.out.println(res.getOrder().getStatus());
+	        System.out.println(res.getOrder().getDescription());         
+		} catch (RiskifedError e) {
+			e.printStackTrace();
+		} catch (HttpResponseException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
     }
 }
