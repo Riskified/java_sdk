@@ -59,7 +59,7 @@ public class RiskifiedClient {
         String shopUrl = properties.getProperty("shopUrl");
         String authKey = properties.getProperty("authKey");
         String environment = properties.getProperty("environment");
-        if (environment == "debug") {
+        if (environment.equals("debug")) {
             String url = properties.getProperty("debugRiskifiedHostUrl");
             if (url.isEmpty()) {
                 init(shopUrl, authKey, "http://localhost:3000");
@@ -84,10 +84,10 @@ public class RiskifiedClient {
     }
 
     private static String getBaseUrlFromEnvironment(String environment) {
-    	if (environment == "sandbox") {
+    	if (environment.equals("sandbox")) {
     		return "http://sandbox.riskified.com";
     	}
-    	if (environment == "production") {
+    	if (environment.equals("production")) {
     		return "http://wh.riskified.com";
     	}
     	return "http://localhost:3000";
