@@ -13,14 +13,14 @@ To build sdk and samples:
 *	Run `mvn install` to build sdk jar and sample.
 
 
-Maven:
+Maven dependency excerpt:
 ----------------
+```xml
 <dependency>
 	<groupId>com.riskified</groupId>
 	<artifactId>riskified-sdk</artifactId>
 	<version>0.2.1</version>
 </dependency>
-		
-
+```
 
 
