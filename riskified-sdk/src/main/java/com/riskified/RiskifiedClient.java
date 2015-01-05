@@ -222,15 +222,16 @@ public class RiskifiedClient {
         response = client.execute(request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
+        Response responseObject = getResponseObject(postBody);
         switch (status) {
             case 200:
                 return getResponseObject(postBody);
             case 400:
-                throw new HttpResponseException(500, postBody);
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
             case 401:
-                throw new HttpResponseException(500, postBody);
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
             case 404:
-                throw new HttpResponseException(500, postBody);
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
             default:
                 throw new HttpResponseException(500, "Contact Riskified support");
         }
