@@ -19,7 +19,7 @@ Maven dependency excerpt:
 <dependency>
 	<groupId>com.riskified</groupId>
 	<artifactId>riskified-sdk</artifactId>
-	<version>0.2.1</version>
+	<version>0.2.2.2</version>
 </dependency>
 ```
 
