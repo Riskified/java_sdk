@@ -1,7 +1,7 @@
 package com.riskified.models;
 
 public class ShippingLine {
-    private double price;
+    private Double price;
     private String title;
     private String code;
     private String source;

@@ -7,11 +7,11 @@ import java.util.jar.Attributes;
 
 public class LineItem {
 
-    private double price;
+    private Double price;
     private Integer quantity;
     private String title;
     private String sku;
-    private int productId;
+    private Integer productId;
     private String fulfillmentService;
     private String fulfillmentStatus;
     private Float grams;

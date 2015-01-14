@@ -16,7 +16,7 @@ public class Order {
     private Date updatedAt;
     private String currency;
     private String gateway;
-    private double totalPrice;
+    private Double totalPrice;
     private String browserIp;
     private Customer customer;
     private List<LineItem> lineItems;
@@ -43,13 +43,13 @@ public class Order {
     private String sourceIdentifier;
     private String sourceName;
     private String sourceUrl;
-    private double subtotalPrice;
+    private Double subtotalPrice;
     private Boolean taxesIncluded;
-    private double totalDiscounts;
-    private double totalLineItemsPrice;
-    private double totalPriceUsd;
-    private double totalTax;
-    private double totalWeight;
+    private Double totalDiscounts;
+    private Double totalLineItemsPrice;
+    private Double totalPriceUsd;
+    private Double totalTax;
+    private Double totalWeight;
     private String userId;
     private String processingMethod;
     private String checkoutId;

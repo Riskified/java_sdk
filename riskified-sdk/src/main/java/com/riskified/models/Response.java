@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Response {
     private ResOrder order;
-    private int received;
+    private Integer received;
     private List<String> warnings;
     private Error error;
 

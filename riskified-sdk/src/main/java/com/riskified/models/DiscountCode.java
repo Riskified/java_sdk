@@ -3,7 +3,7 @@ package com.riskified.models;
 public class DiscountCode {
 
     private String code;
-    private double amount;
+    private Double amount;
 
     public DiscountCode(double amount, String code) {
         this.code = code;

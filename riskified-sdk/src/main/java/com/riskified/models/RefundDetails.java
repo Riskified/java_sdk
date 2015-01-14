@@ -5,7 +5,7 @@ import java.util.Date;
 public class RefundDetails {
     private String refundId;
     private Date refundedAt;
-    private double amount;
+    private Double amount;
     private String currency;
     private String reason;
 
