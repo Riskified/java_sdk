@@ -18,6 +18,7 @@ import com.riskified.models.Order;
 import com.riskified.models.RefundDetails;
 import com.riskified.models.RefundOrder;
 import com.riskified.models.Response;
+import com.riskified.models.Seller;
 import com.riskified.models.ShippingLine;
 import com.riskified.models.SocialDetails;
 
@@ -160,14 +161,23 @@ public class Client {
 
 	private static FulfillmentOrder generateFulfillmentOrder() {
 		List<FulfillmentDetails> fulfillments = new ArrayList<FulfillmentDetails>();
-        FulfillmentDetails fulfilmentDetails1 = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
-        fulfillments.add(fulfilmentDetails1);
+        FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
+        
+        fulfilmentDetails.setLineItems(Arrays.asList(
+                new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
+                new LineItem(200, 4, "ACME Spring", 202, "EFGH")));
+        
+        fulfilmentDetails.setTrackingCompany("UPS");
+        fulfilmentDetails.setTrackingNumbers("11X63b");
+        
+        fulfillments.add(fulfilmentDetails);
         FulfillmentOrder fulfillmentOrder = new FulfillmentOrder("1235", fulfillments);
 		return fulfillmentOrder;
 	}
 
 	private static CheckoutOrder generateCheckoutOrder() {
 		CheckoutOrder order = new CheckoutOrder();
+		
 		order.setId("1235");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
@@ -241,9 +251,13 @@ public class Client {
         customer.getSocial().add(social);
         order.setCustomer(customer);
         
+        LineItem lineItem = new LineItem(200, 4, "ACME Spring", 202, "EFGH");
+        Seller seller = new Seller(customer);
+        seller.setPriceNegotiated(true);
+        seller.setStartingPrice(400);
         order.setLineItems(Arrays.asList(
                 new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-                new LineItem(200, 4, "ACME Spring", 202, "EFGH")));
+                lineItem));
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
@@ -276,14 +290,12 @@ public class Client {
 	}
 
 	private static CheckoutDeniedOrder generateCheckoutDeniedOrder() {
-		CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder();
-        checkoutDeniedOrder.setId("1234");
         
-        AuthorizationError authorizationError = new AuthorizationError();
-        authorizationError.setErrorCode("invalid_number");
-        authorizationError.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
+        AuthorizationError authorizationError = new AuthorizationError("invalid_number", new Date(114, 01, 10, 11, 00, 00));
+        authorizationError.setMessage("Checkout denied reason: invalid number for creadit card.");
         
-        checkoutDeniedOrder.setAuthorizationError(authorizationError);
+        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("1234", authorizationError);
+        
 		return checkoutDeniedOrder;
 	}
 }

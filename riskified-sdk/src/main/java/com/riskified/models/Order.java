@@ -10,9 +10,7 @@ import java.util.List;
  */
 public class Order extends BaseOrder {
 
-	public Order()
-	{
-		super();
+	public Order() {
 	}
 	
 }

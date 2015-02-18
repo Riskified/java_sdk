@@ -7,6 +7,11 @@ public class Seller {
 	private boolean priceNegotiated;
 	private float startingPrice;
 	
+	public Seller(Customer customer)
+	{
+		this.customer = customer;
+	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}

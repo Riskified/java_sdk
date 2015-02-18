@@ -9,6 +9,12 @@ public class AuthorizationError {
 	private String errorCode;
     private Date createdAt;
 
+    public AuthorizationError(String errorCode, Date createdAt)
+    {
+    	this.errorCode = errorCode;
+    	this.createdAt = createdAt;
+    }
+    
     public String getMessage() {
         return message;
     }

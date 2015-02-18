@@ -6,6 +6,11 @@ public class CheckoutDeniedOrder {
 	private String id;
 	private AuthorizationError authorizationError;
 
+	public CheckoutDeniedOrder(String id, AuthorizationError authorizationError) {
+		this.id = id;
+		this.authorizationError = authorizationError;
+	}
+	
     public String getId() {
         return id;
     }
