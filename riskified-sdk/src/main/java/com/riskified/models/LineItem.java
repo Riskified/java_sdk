@@ -30,8 +30,11 @@ public class LineItem {
     private String eventName;
     private String eventSectionName;
     private Date eventDate;
+    private String condition;
+    private Seller seller;
+    
 
-    public LineItem(double price, int quantity, String title, int productId, String sku) {
+	public LineItem(double price, int quantity, String title, int productId, String sku) {
         properties = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLines>();
         this.price = price;
@@ -73,6 +76,14 @@ public class LineItem {
         this.sku = sku;
     }
 
+    public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+    
     public int getProductId() {
         return productId;
     }
@@ -177,7 +188,15 @@ public class LineItem {
         this.productExists = productExists;
     }
 
-    public List<Attributes> getProperties() {
+    public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+	public List<Attributes> getProperties() {
         return properties;
     }
 

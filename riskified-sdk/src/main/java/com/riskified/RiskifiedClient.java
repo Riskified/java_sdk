@@ -24,6 +24,10 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.CancelOrder;
+import com.riskified.models.CheckoutDeniedOrder;
+import com.riskified.models.CheckoutOrder;
+import com.riskified.models.CheckoutOrderWrapper;
+import com.riskified.models.FulfillmentOrder;
 import com.riskified.models.Order;
 import com.riskified.models.OrderWrapper;
 import com.riskified.models.RefundOrder;
@@ -61,7 +65,7 @@ public class RiskifiedClient {
         String environment = properties.getProperty("environment");
         if (environment.equals("debug")) {
             String url = properties.getProperty("debugRiskifiedHostUrl");
-            if (url.isEmpty()) {
+            if (url == null || url.isEmpty()) {
                 init(shopUrl, authKey, "http://localhost:3000");
             } else {
                 init(shopUrl, authKey, url);
@@ -111,6 +115,35 @@ public class RiskifiedClient {
         this.sha256Handler = new SHA256Handler(authKey);
     }
 
+
+    /**
+     * Send a new checkout order to Riskified
+     * @param Checkout order to create (Checkout order has the same fields like Order but all fields are optional)
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     */
+    public Response checkoutOrder(CheckoutOrder order) throws ClientProtocolException, IOException, HttpResponseException {
+        String url = baseUrl + "/api/checkout_create";
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
+    }
+    
+    /**
+     * Mark a previously checkout order has been denied.
+     * @param Checkout denied order details, mark as denied and also can specify why it was denied.
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     */
+    public Response checkoutDeniedOrder(CheckoutDeniedOrder order) throws ClientProtocolException, IOException, HttpResponseException {
+        String url = baseUrl + "/api/checkout_denied";
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutDeniedOrder>(order), url);
+    }
+    
     /**
      * Send a new order to Riskified
      * Depending on your current plan, the newly created order might not be submitted automatically for review.
@@ -194,6 +227,21 @@ public class RiskifiedClient {
     }
 
     /**
+     * Mark a previously submitted order that is was fulfilled.
+     * @param Fulfillment order details
+     * @see FulfillmentOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     */
+    public Response fulfillOrder(FulfillmentOrder order) throws ClientProtocolException, IOException, HttpResponseException {
+        String url = baseUrl + "/api/fulfill";
+        return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
+    }
+    
+    /**
      * Send an array (batch) of existing/historical orders to Riskified.
      * Use the financial_status field to provide information regarding each order status:
      * * 'approved' - approved orders
@@ -214,6 +262,31 @@ public class RiskifiedClient {
         return postOrder(orders, url);
     }
 
+    private Response postCheckoutOrder(Object data, String url) throws ClientProtocolException, IOException {
+        HttpPost request = createPostRequest(url);
+        addDataToRequest(data, request);
+        HttpResponse response;
+        HttpClient client = HttpClientBuilder.create().build();
+        response = client.execute(request);
+        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+        postBody = postBody.replace("\"checkout\":", "\"order\":");
+        int status = response.getStatusLine().getStatusCode();
+        Response responseObject = getResponseObject(postBody);
+        switch (status) {
+        case 200:
+            return getResponseObject(postBody);
+        case 400:
+            throw new HttpResponseException(500, responseObject.getError().getMessage());
+        case 401:
+            throw new HttpResponseException(500, responseObject.getError().getMessage());
+        case 404:
+            throw new HttpResponseException(500, responseObject.getError().getMessage());
+        default:
+            throw new HttpResponseException(500, "Contact Riskified support");
+    }
+    
+    }
+    
     private Response postOrder(Object data, String url) throws ClientProtocolException, IOException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
@@ -236,12 +309,13 @@ public class RiskifiedClient {
                 throw new HttpResponseException(500, "Contact Riskified support");
         }
     }
-
+    
     private Response getResponseObject(String postBody) throws IOException {
         Gson gson = new Gson();
         Response res = gson.fromJson(postBody, Response.class);
         return res;
     }
+    
 
 
 

@@ -1,6 +1,8 @@
 package com.riskified.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Customer {
     private String email;
@@ -21,7 +23,8 @@ public class Customer {
     private Float totalSpent;
     private String tags;
     private Address defaultAddress;
-
+    private List<SocialDetails> social;
+    
     public Customer(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
         this.email = email;
         this.firstName = firstName;
@@ -30,6 +33,7 @@ public class Customer {
         this.createdAt = createdAt;
         this.verifiedEmail = verifiedEmail;
         this.ordersCount = ordersCount;
+        this.setSocial(new ArrayList<SocialDetails>());
     }
 
     public String getEmail() {
@@ -147,4 +151,13 @@ public class Customer {
     public void setDefaultAddress(Address defaultAddress) {
         this.defaultAddress = defaultAddress;
     }
+
+	public List<SocialDetails> getSocial() {
+		return social;
+	}
+
+	public void setSocial(List<SocialDetails> social) {
+		this.social = social;
+	}
+
 }
