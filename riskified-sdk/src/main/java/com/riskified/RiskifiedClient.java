@@ -27,6 +27,7 @@ import com.riskified.models.CancelOrder;
 import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CheckoutOrder;
 import com.riskified.models.CheckoutOrderWrapper;
+import com.riskified.models.CheckoutResponse;
 import com.riskified.models.FulfillmentOrder;
 import com.riskified.models.Order;
 import com.riskified.models.OrderWrapper;
@@ -44,6 +45,7 @@ import com.riskified.validations.Validation;
  */
 public class RiskifiedClient {
 	private Validation validationType;
+	private Environment environmentType;
     private String baseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
@@ -68,7 +70,7 @@ public class RiskifiedClient {
         String environment = properties.getProperty("environment");
         String validation = properties.getProperty("validation");
         
-        Validation validationType;
+        
         if(validation.equals("none")) {
         	validationType = Validation.none;
         }
@@ -79,7 +81,17 @@ public class RiskifiedClient {
         	validationType = Validation.all;
         }
         
-        if (environment.equals("debug")) {
+        if(environment.equals("debug")) {
+        	environmentType = Environment.debug;
+        }
+        else if(environment.equals("production")) {
+        	environmentType = Environment.production;
+        }
+        else {
+        	environmentType = Environment.sandbox;
+        }
+        
+        if (environmentType == Environment.debug) {
             String url = properties.getProperty("debugRiskifiedHostUrl");
             if (url == null || url.isEmpty()) {
                 init(shopUrl, authKey, "http://localhost:3000", validationType);
@@ -87,7 +99,7 @@ public class RiskifiedClient {
                 init(shopUrl, authKey, url, validationType);
             }
         } else {
-            init(shopUrl, authKey, getBaseUrlFromEnvironment(environment), validationType);
+            init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), validationType);
         }
     }
 
@@ -99,8 +111,8 @@ public class RiskifiedClient {
      * @param environment The Riskifed environment (sandbox / production)
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, String environment) throws RiskifedError {
-        init(shopUrl, authKey, getBaseUrlFromEnvironment(environment), Validation.all);
+    public RiskifiedClient(String shopUrl, String authKey, Environment environmentType) throws RiskifedError {
+        init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), Validation.all);
     }
     
     /**
@@ -111,15 +123,15 @@ public class RiskifiedClient {
      * @param environment The Riskifed environment (sandbox / production)
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, String environment, Validation validationType) throws RiskifedError {
-        init(shopUrl, authKey, getBaseUrlFromEnvironment(environment), validationType);
+    public RiskifiedClient(String shopUrl, String authKey, Environment environmentType, Validation validationType) throws RiskifedError {
+        init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), validationType);
     }
 
-    private static String getBaseUrlFromEnvironment(String environment) {
-    	if (environment.equals("sandbox")) {
+    private static String getBaseUrlFromEnvironment(Environment environmentType) {
+    	if (environmentType == Environment.sandbox) {
     		return "http://sandbox.riskified.com";
     	}
-    	if (environment.equals("production")) {
+    	if (environmentType == Environment.production) {
     		return "http://wh.riskified.com";
     	}
     	return "http://localhost:3000";
@@ -347,12 +359,13 @@ public class RiskifiedClient {
         HttpClient client = HttpClientBuilder.create().build();
         response = client.execute(request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-        postBody = postBody.replace("\"checkout\":", "\"order\":");
         int status = response.getStatusLine().getStatusCode();
-        Response responseObject = getResponseObject(postBody);
+        
+        Response responseObject = getCheckoutResponseObject(postBody);
+        
         switch (status) {
         case 200:
-            return getResponseObject(postBody);
+            return responseObject;
         case 400:
             throw new HttpResponseException(500, responseObject.getError().getMessage());
         case 401:
@@ -376,7 +389,7 @@ public class RiskifiedClient {
         Response responseObject = getResponseObject(postBody);
         switch (status) {
             case 200:
-                return getResponseObject(postBody);
+                return responseObject;
             case 400:
                 throw new HttpResponseException(500, responseObject.getError().getMessage());
             case 401:
@@ -394,7 +407,12 @@ public class RiskifiedClient {
         return res;
     }
     
-
+    private CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
+        Gson gson = new Gson();
+        CheckoutResponse res = gson.fromJson(postBody, CheckoutResponse.class);
+        res.setOrder(res.getCheckout());
+        return res;
+    }
 
 
     private void addDataToRequest(Object data, HttpPost postRequest) {

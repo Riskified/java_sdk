@@ -9,7 +9,6 @@ public class CheckoutOrder extends BaseOrder {
 	public CheckoutOrder() {
 		
 	}
-
 	
 
 }

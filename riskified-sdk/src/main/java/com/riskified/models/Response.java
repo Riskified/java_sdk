@@ -3,11 +3,22 @@ package com.riskified.models;
 import java.util.List;
 
 public class Response {
-    private ResOrder order;
-    private Integer received;
-    private List<String> warnings;
-    private Error error;
+    protected ResOrder order;
+    protected Integer received;
+    protected List<String> warnings;
+    protected Error error;
 
+    public Response()
+    {
+    	
+    }
+    public Response(CheckoutResponse checkoutResponse) {
+    	this.order = checkoutResponse.getCheckout();
+    	this.received = checkoutResponse.getReceived();
+    	this.warnings = checkoutResponse.getWarnings();
+    	this.error = checkoutResponse.getError();
+    }
+    
     public ResOrder getOrder() {
         return order;
     }

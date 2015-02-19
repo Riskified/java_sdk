@@ -1,5 +1,6 @@
 package com.riskified.samples.orderClient;
 
+import com.riskified.Environment;
 import com.riskified.RiskifedError;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.Address;
@@ -56,7 +57,7 @@ public class Client {
         FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder();
         
 		try {
-			//RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", "debug");
+			//RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.debug);
 			RiskifiedClient client = new RiskifiedClient();
 			
 			
