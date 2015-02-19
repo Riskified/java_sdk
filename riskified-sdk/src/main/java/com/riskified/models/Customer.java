@@ -44,20 +44,25 @@ public class Customer implements IValidated {
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.emailAddressWellFormed(this.email, "Email");
-		Validate.stringNotNullOrEmpty(this.firstName, "First Name");
-		Validate.stringNotNullOrEmpty(this.lastName, "Last Name");
-		Validate.stringNotNullOrEmpty(this.id, "Id");
-		Validate.notNull(this.createdAt, "Created At");
-		Validate.notNull(this.verifiedEmail, "Verified Email");
+    	if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this.email, "Email");
+			Validate.stringNotNullOrEmpty(this.firstName, "First Name");
+			Validate.stringNotNullOrEmpty(this.lastName, "Last Name");
+			Validate.stringNotNullOrEmpty(this.id, "Id");
+			Validate.notNull(this.createdAt, "Created At");
+			Validate.notNull(this.verifiedEmail, "Verified Email");
+    	}
+    	
+    	if(this.email != null) {
+    		Validate.emailAddressWellFormed(email, "Email");
+    	}
 		
-		if(validationType == Validation.all) {
-			if(this.social != null) {
-				for(SocialDetails socialDetails : this.social) {
-					socialDetails.validate(validationType);
-				}
+		if(this.social != null) {
+			for(SocialDetails socialDetails : this.social) {
+				socialDetails.validate(validationType);
 			}
 		}
+		
 	}
     
     public String getEmail() {

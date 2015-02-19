@@ -23,11 +23,12 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
-    	
-		Validate.emailAddressWellFormed(this.payerEmail, "Payer Email");
-		Validate.stringNotNullOrEmpty(this.payerStatus, "Payer Status");
-		Validate.stringNotNullOrEmpty(this.payerAddressStatus, "Payer Address Status");
-		Validate.stringNotNullOrEmpty(this.protectionEligibility, "Protection Eligibility");
+    	if(validationType == validationType.all) {
+			Validate.emailAddressWellFormed(this.payerEmail, "Payer Email");
+			Validate.stringNotNullOrEmpty(this.payerStatus, "Payer Status");
+			Validate.stringNotNullOrEmpty(this.payerAddressStatus, "Payer Address Status");
+			Validate.stringNotNullOrEmpty(this.protectionEligibility, "Protection Eligibility");
+    	}
 		
 	}
 

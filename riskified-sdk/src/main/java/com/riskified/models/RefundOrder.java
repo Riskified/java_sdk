@@ -21,8 +21,12 @@ public class RefundOrder implements IValidated {
 			throws FieldBadFormatException {
 		
 		Validate.stringNotNullOrEmpty(this.id, "Id");
-		Validate.notNull(this.refunds, "Refunds");
+		
 		if(validationType == Validation.all) {
+			Validate.notNull(this.refunds, "Refunds");
+		}
+		
+		if(this.refunds != null) {
 			for(RefundDetails refundDetails : this.refunds) {
 				refundDetails.validate(validationType);
 			}

@@ -8,6 +8,6 @@ package com.riskified.validations;
  */
 public enum Validation {
 	none,
-	weak,
+	ignoreMissing,
 	all
 }

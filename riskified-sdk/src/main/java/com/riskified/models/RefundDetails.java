@@ -17,11 +17,18 @@ public class RefundDetails implements IValidated {
     
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
-		Validate.stringNotNullOrEmpty(this.refundId, "Refund Id");
-		Validate.notNull(this.refundedAt, "Refunded At");
-		Validate.notNull(this.amount, "Amount");
-		Validate.notNull(this.currency, "Currency");
-		Validate.notNull(this.reason, "Resean");
+    	if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this.refundId, "Refund Id");
+			Validate.notNull(this.refundedAt, "Refunded At");
+			Validate.notNull(this.amount, "Amount");
+			Validate.notNull(this.currency, "Currency");
+			Validate.notNull(this.reason, "Resean");
+    	}
+    	
+    	if(currency != null) {
+    		Validate.currencyCodeWellFormed(currency, "Currency");
+    	}
+    	
 		
 	}
     

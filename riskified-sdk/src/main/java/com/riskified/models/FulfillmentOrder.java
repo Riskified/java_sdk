@@ -22,10 +22,12 @@ public class FulfillmentOrder implements IValidated {
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.stringNotNullOrEmpty(this.id, "Id");
-		Validate.notNull(fulfillments, "Fulfillments");
-		
 		if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this.id, "Id");
+			Validate.notNull(fulfillments, "Fulfillments");
+		}
+		
+		if(this.fulfillments != null) {
 			for(FulfillmentDetails fulfillmentDetails : this.fulfillments) {
 				fulfillmentDetails.validate(validationType);
 			}

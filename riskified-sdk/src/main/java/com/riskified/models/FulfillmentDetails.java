@@ -31,11 +31,13 @@ public class FulfillmentDetails implements IValidated {
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-    	Validate.stringNotNullOrEmpty(fulfillmentId, "Fulfillment Id");
-    	Validate.notNull(this.createdAt, "Created At");
-    	Validate.stringNotNullOrEmpty(this.status, "Status");
+    	if(validationType == Validation.all) {
+	    	Validate.stringNotNullOrEmpty(fulfillmentId, "Fulfillment Id");
+	    	Validate.notNull(this.createdAt, "Created At");
+	    	Validate.stringNotNullOrEmpty(this.status, "Status");
+    	}
     	
-    	if(validationType == Validation.all && this.lineItems != null) {
+    	if(this.lineItems != null) {
 			for(LineItem lineItem : this.lineItems) {
 				lineItem.validate(validationType);
 			}

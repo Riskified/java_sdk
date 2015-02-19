@@ -34,12 +34,14 @@ public class Address implements IValidated {
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-    	Validate.stringNotNullOrEmpty(this.firstName, "First Name");
-    	Validate.stringNotNullOrEmpty(this.lastName, "last Name");
-    	Validate.stringNotNullOrEmpty(this.address1, "Address1");
-    	Validate.stringNotNullOrEmpty(this.country, "Country");
-    	Validate.stringNotNullOrEmpty(this.city, "City");
-    	Validate.stringNotNullOrEmpty(this.phone, "Phone");
+    	if(validationType == Validation.all) {
+	    	Validate.stringNotNullOrEmpty(this.firstName, "First Name");
+	    	Validate.stringNotNullOrEmpty(this.lastName, "last Name");
+	    	Validate.stringNotNullOrEmpty(this.address1, "Address1");
+	    	Validate.stringNotNullOrEmpty(this.country, "Country");
+	    	Validate.stringNotNullOrEmpty(this.city, "City");
+	    	Validate.stringNotNullOrEmpty(this.phone, "Phone");
+    	}
 		
 	}
     

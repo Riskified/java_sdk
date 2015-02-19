@@ -20,8 +20,10 @@ public class ShippingLine implements IValidated {
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-    	Validate.notNull(this.price, "Price");
-    	Validate.stringNotNullOrEmpty(this.title, "Title");
+    	if(validationType == Validation.all) {
+	    	Validate.notNull(this.price, "Price");
+	    	Validate.stringNotNullOrEmpty(this.title, "Title");
+    	}
 		
 	}
     

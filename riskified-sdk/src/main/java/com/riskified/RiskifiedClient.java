@@ -72,8 +72,8 @@ public class RiskifiedClient {
         if(validation.equals("none")) {
         	validationType = Validation.none;
         }
-        else if(validation.equals("weak")) {
-        	validationType = Validation.weak;
+        else if(validation.equals("ignoreMissing")) {
+        	validationType = Validation.ignoreMissing;
         }
         else {
         	validationType = Validation.all;
@@ -165,7 +165,7 @@ public class RiskifiedClient {
      */
     public Response checkoutOrder(CheckoutOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
-        validate(order);
+        validate(order, Validation.ignoreMissing);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
     
@@ -239,7 +239,7 @@ public class RiskifiedClient {
         	validate(order);
         }
         else {
-        	validate(order, Validation.weak);
+        	validate(order, Validation.ignoreMissing);
         }
         return postOrder(new OrderWrapper<Order>(order), url);
     }
@@ -257,7 +257,7 @@ public class RiskifiedClient {
      */
     public Response updateOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
-        validate(order, Validation.weak);
+        validate(order, Validation.ignoreMissing);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
 

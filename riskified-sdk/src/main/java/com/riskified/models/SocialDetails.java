@@ -32,8 +32,10 @@ public class SocialDetails implements IValidated {
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.stringNotNullOrEmpty(this.network, "Network");
-		Validate.stringNotNullOrEmpty(this.publicUsername, "Public Username");
+		if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this.network, "Network");
+			Validate.stringNotNullOrEmpty(this.publicUsername, "Public Username");
+		}
 		
 	}
 	

@@ -52,19 +52,18 @@ public class LineItem implements IValidated {
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.notNull(this.price, "Price");
-		Validate.notNull(this.quantity, "Quantity");
-		Validate.stringNotNullOrEmpty(this.title, "Title");
-		Validate.notNull(this.productId, "Product Id");
-		Validate.notNull(this.sku, "Sku");
-		
 		if(validationType == Validation.all) {
-			if(seller != null)
-			{
-				seller.validate(validationType);
-			}
+			Validate.notNull(this.price, "Price");
+			Validate.notNull(this.quantity, "Quantity");
+			Validate.stringNotNullOrEmpty(this.title, "Title");
+			Validate.notNull(this.productId, "Product Id");
+			Validate.notNull(this.sku, "Sku");
 		}
 		
+		if(seller != null)
+		{
+			seller.validate(validationType);
+		}
 		
 	}
 	
