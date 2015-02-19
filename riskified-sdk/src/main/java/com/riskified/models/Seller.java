@@ -1,6 +1,11 @@
 package com.riskified.models;
 
-public class Seller {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class Seller implements IValidated {
 
 	private Customer customer;
 	private int correspondence;
@@ -35,5 +40,15 @@ public class Seller {
 	}
 	public void setStartingPrice(float startingPrice) {
 		this.startingPrice = startingPrice;
+	}
+
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.notNull(this.customer, "seller.Customer");
+		if(validationType == Validation.all) {
+			customer.validate(validationType);
+		}
+		
 	}
 }

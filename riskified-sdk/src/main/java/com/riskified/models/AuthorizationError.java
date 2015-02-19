@@ -2,7 +2,12 @@ package com.riskified.models;
 
 import java.util.Date;
 
-public class AuthorizationError {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class AuthorizationError implements IValidated {
 
 
 	private String message;
@@ -38,4 +43,12 @@ public class AuthorizationError {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.stringNotNullOrEmpty(errorCode, "Error Code");
+		Validate.notNull(createdAt, "Created At");
+		
+	}
 }

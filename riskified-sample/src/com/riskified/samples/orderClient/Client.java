@@ -21,6 +21,8 @@ import com.riskified.models.Response;
 import com.riskified.models.Seller;
 import com.riskified.models.ShippingLine;
 import com.riskified.models.SocialDetails;
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.Validation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +34,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 public class Client {
-    public static void main(String[] arg) {
+    public static void main(String[] arg) throws FieldBadFormatException {
+    	
+    	
+    	
     	
     	CheckoutOrder checkoutOrder = generateCheckoutOrder();
         
@@ -136,6 +141,7 @@ public class Client {
         refund.setId(order.getId());
         RefundDetails refundDetail = new RefundDetails();
         refundDetail.setRefundId("refund_001");
+        refundDetail.setRefundedAt(new Date(114, 01, 10, 11, 00, 00));
         refundDetail.setAmount(33.12);
         refundDetail.setCurrency("USD");
         refundDetail.setReason("Product Missing");
@@ -233,12 +239,12 @@ public class Client {
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
-        order.setClosedAt(null);
+        order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setCurrency("CAD");
         order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
-        order.setTotalPrice(113.23);
+        order.setTotalPrice(120.22);
         order.setTotalDiscounts(5);
         order.setCartToken("1sdaf23j212");
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));

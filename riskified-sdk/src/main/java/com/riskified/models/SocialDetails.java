@@ -1,6 +1,11 @@
 package com.riskified.models;
 
-public class SocialDetails {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class SocialDetails implements IValidated {
 
 	private String network;
 	private String publicUsername;
@@ -13,10 +18,23 @@ public class SocialDetails {
 	private int followed;
 	private int posts;
 	
+	public SocialDetails(String network, String publicUserName) {
+		this.network = network;
+		this.publicUsername = publicUserName;
+	}
+	
 	public SocialDetails(String network, String publicUserName, String accountUrl) {
 		this.network = network;
 		this.publicUsername = publicUserName;
 		this.accountUrl = accountUrl;
+	}
+	
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.stringNotNullOrEmpty(this.network, "Network");
+		Validate.stringNotNullOrEmpty(this.publicUsername, "Public Username");
+		
 	}
 	
 	public String getNetwork() {
@@ -98,5 +116,7 @@ public class SocialDetails {
 	public void setPosts(int posts) {
 		this.posts = posts;
 	}
+
+	
 
 }

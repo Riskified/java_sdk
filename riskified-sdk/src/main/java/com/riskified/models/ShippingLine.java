@@ -1,6 +1,11 @@
 package com.riskified.models;
 
-public class ShippingLine {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class ShippingLine implements IValidated {
     private Double price;
     private String title;
     private String code;
@@ -11,6 +16,14 @@ public class ShippingLine {
         this.price = price;
         this.title = title;
     }
+    
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+    	Validate.notNull(this.price, "Price");
+    	Validate.stringNotNullOrEmpty(this.title, "Title");
+		
+	}
     
     public double getPrice() {
         return price;
@@ -51,4 +64,6 @@ public class ShippingLine {
     public void setTaxLines(TaxLines taxLines) {
         this.taxLines = taxLines;
     }
+
+	
 }

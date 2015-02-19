@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Customer {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class Customer implements IValidated {
     private String email;
     private String firstName;
     private String lastName;
@@ -36,6 +41,25 @@ public class Customer {
         this.setSocial(new ArrayList<SocialDetails>());
     }
 
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.emailAddressWellFormed(this.email, "Email");
+		Validate.stringNotNullOrEmpty(this.firstName, "First Name");
+		Validate.stringNotNullOrEmpty(this.lastName, "Last Name");
+		Validate.stringNotNullOrEmpty(this.id, "Id");
+		Validate.notNull(this.createdAt, "Created At");
+		Validate.notNull(this.verifiedEmail, "Verified Email");
+		
+		if(validationType == Validation.all) {
+			if(this.social != null) {
+				for(SocialDetails socialDetails : this.social) {
+					socialDetails.validate(validationType);
+				}
+			}
+		}
+	}
+    
     public String getEmail() {
         return email;
     }
@@ -159,5 +183,7 @@ public class Customer {
 	public void setSocial(List<SocialDetails> social) {
 		this.social = social;
 	}
+
+	
 
 }

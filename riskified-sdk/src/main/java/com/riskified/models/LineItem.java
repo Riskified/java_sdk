@@ -5,7 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.jar.Attributes;
 
-public class LineItem {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class LineItem implements IValidated {
 
     private Double price;
     private Integer quantity;
@@ -35,8 +40,8 @@ public class LineItem {
     
 
 	public LineItem(double price, int quantity, String title, int productId, String sku) {
-        properties = new ArrayList<Attributes>();
-        taxLines = new ArrayList<TaxLines>();
+        this.properties = new ArrayList<Attributes>();
+        this.taxLines = new ArrayList<TaxLines>();
         this.price = price;
         this.quantity = quantity;
         this.title = title;
@@ -44,6 +49,25 @@ public class LineItem {
         this.sku = sku;
     }
 
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.notNull(this.price, "Price");
+		Validate.notNull(this.quantity, "Quantity");
+		Validate.stringNotNullOrEmpty(this.title, "Title");
+		Validate.notNull(this.productId, "Product Id");
+		Validate.notNull(this.sku, "Sku");
+		
+		if(validationType == Validation.all) {
+			if(seller != null)
+			{
+				seller.validate(validationType);
+			}
+		}
+		
+		
+	}
+	
     public double getPrice() {
         return price;
     }
@@ -243,4 +267,6 @@ public class LineItem {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+
+	
 }

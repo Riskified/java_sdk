@@ -1,5 +1,7 @@
 package com.riskified.models;
 
-public interface IPaymentDetails {
+import com.riskified.validations.IValidated;
+
+public interface IPaymentDetails extends IValidated {
 
 }

@@ -4,63 +4,66 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class BaseOrder {
+import com.riskified.validations.IValidated;
 
-	private String id;
-    private String email;
-    private Date createdAt;
-    private Date updatedAt;
-    private String currency;
-    private String gateway;
-    private Double totalPrice;
-    private String browserIp;
-    private Customer customer;
-    private List<LineItem> lineItems;
-    private String name;
-    private List<String> additionalEmails;
-    private String note;
-    private String number;
-    private String orderNumber;
-    private String cancelReason;
-    private Date cancelledAt;
-    private Date closedAt;
-    private String cartToken;
-    private String checkoutToken;
-    private String token;
-    private String referringSite;
-    private Boolean confirmed;
-    private Boolean buyerAcceptsMarketing;
-    private String financialStatus;
-    private String fulfillmentStatus;
-    private String landingSite;
-    private String landingSiteRef;
-    private String locationId;
-    private String source;
-    private String sourceIdentifier;
-    private String sourceName;
-    private String sourceUrl;
-    private Double subtotalPrice;
-    private Boolean taxesIncluded;
-    private Double totalDiscounts;
-    private Double totalLineItemsPrice;
-    private Double totalPriceUsd;
-    private Double totalTax;
-    private Double totalWeight;
-    private String userId;
-    private String processingMethod;
-    private String checkoutId;
-    private String tags;
-    private String vendorId;
-    private String vendorName;
-    private Address shippingAddress;
-    private Address billingAddress;
-    private IPaymentDetails paymentDetails;
-    private ClientDetails clientDetails;
-    private List<DiscountCode> discountCodes;
-    private List<ShippingLine> shippingLines;
-    private List<Attributes> noteAttributes;
-    private List<TaxLines> taxLines;
+public abstract class BaseOrder implements IValidated {
 
+	protected String id;
+    protected String email;
+    protected Date createdAt;
+    protected Date updatedAt;
+    protected String currency;
+    protected String gateway;
+    protected Double totalPrice;
+    protected String browserIp;
+    protected Customer customer;
+    protected List<LineItem> lineItems;
+    protected String name;
+    protected List<String> additionalEmails;
+    protected String note;
+    protected String number;
+    protected String orderNumber;
+    protected String cancelReason;
+    protected Date cancelledAt;
+    protected Date closedAt;
+    protected String cartToken;
+    protected String checkoutToken;
+    protected String token;
+    protected String referringSite;
+    protected Boolean confirmed;
+    protected Boolean buyerAcceptsMarketing;
+    protected String financialStatus;
+    protected String fulfillmentStatus;
+    protected String landingSite;
+    protected String landingSiteRef;
+    protected String locationId;
+    protected String source;
+    protected String sourceIdentifier;
+    protected String sourceName;
+    protected String sourceUrl;
+    protected Double subtotalPrice;
+    protected Boolean taxesIncluded;
+    protected Double totalDiscounts;
+    protected Double totalLineItemsPrice;
+    protected Double totalPriceUsd;
+    protected Double totalTax;
+    protected Double totalWeight;
+    protected String userId;
+    protected String processingMethod;
+    protected String checkoutId;
+    protected String tags;
+    protected String vendorId;
+    protected String vendorName;
+    protected Address shippingAddress;
+    protected Address billingAddress;
+    protected IPaymentDetails paymentDetails;
+    protected ClientDetails clientDetails;
+    protected List<DiscountCode> discountCodes;
+    protected List<ShippingLine> shippingLines;
+    protected List<Attributes> noteAttributes;
+    protected List<TaxLines> taxLines;
+
+    
     public BaseOrder() {
         lineItems = new ArrayList<LineItem>();
         additionalEmails = new ArrayList<String>();
@@ -69,6 +72,8 @@ public abstract class BaseOrder {
         noteAttributes = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLines>();
     }
+    
+    
 
     public String getId() {
         return id;

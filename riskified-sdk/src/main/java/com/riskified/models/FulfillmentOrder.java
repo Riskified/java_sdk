@@ -2,7 +2,12 @@ package com.riskified.models;
 
 import java.util.List;
 
-public class FulfillmentOrder {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class FulfillmentOrder implements IValidated {
 
 	private String id;
 	private List<FulfillmentDetails> fulfillments;
@@ -13,6 +18,20 @@ public class FulfillmentOrder {
 		this.id = id;
 		this.fulfillments = fulfillments;
 	}
+	
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		Validate.stringNotNullOrEmpty(this.id, "Id");
+		Validate.notNull(fulfillments, "Fulfillments");
+		
+		if(validationType == Validation.all) {
+			for(FulfillmentDetails fulfillmentDetails : this.fulfillments) {
+				fulfillmentDetails.validate(validationType);
+			}
+		}
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -25,6 +44,7 @@ public class FulfillmentOrder {
 	public void setFulfillments(List<FulfillmentDetails> fulfillments) {
 		this.fulfillments = fulfillments;
 	}
+	
 	
 	
 }

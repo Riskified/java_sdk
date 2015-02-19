@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FulfillmentDetails {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class FulfillmentDetails implements IValidated {
 
 	private String fulfillmentId;
 	private Date createdAt;
@@ -23,6 +28,20 @@ public class FulfillmentDetails {
     	lineItems = new ArrayList<LineItem>();
     }
 
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+    	Validate.stringNotNullOrEmpty(fulfillmentId, "Fulfillment Id");
+    	Validate.notNull(this.createdAt, "Created At");
+    	Validate.stringNotNullOrEmpty(this.status, "Status");
+    	
+    	if(validationType == Validation.all && this.lineItems != null) {
+			for(LineItem lineItem : this.lineItems) {
+				lineItem.validate(validationType);
+			}
+		}
+	}
+    
 	public String getFulfillmentId() {
 		return fulfillmentId;
 	}
@@ -71,5 +90,7 @@ public class FulfillmentDetails {
 	public void setReceipt(String receipt) {
 		this.receipt = receipt;
 	}
+
+	
 	
 }
