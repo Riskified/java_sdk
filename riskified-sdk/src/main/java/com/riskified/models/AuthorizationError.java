@@ -48,8 +48,8 @@ public class AuthorizationError implements IValidated {
 			throws FieldBadFormatException {
 		
 		if(validationType == Validation.all) {
-			Validate.stringNotNullOrEmpty(errorCode, "Error Code");
-			Validate.notNull(createdAt, "Created At");
+			Validate.stringNotNullOrEmpty(this, errorCode, "Error Code");
+			Validate.notNull(this, createdAt, "Created At");
 		}
 		
 	}

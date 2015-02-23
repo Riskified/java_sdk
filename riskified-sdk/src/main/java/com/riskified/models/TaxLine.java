@@ -1,6 +1,6 @@
 package com.riskified.models;
 
-public class TaxLines {
+public class TaxLine {
     private Float price;
     private Float rate;
     private String title;

@@ -11,6 +11,7 @@ import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CheckoutOrder;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.Customer;
+import com.riskified.models.DecisionOrder;
 import com.riskified.models.DiscountCode;
 import com.riskified.models.FulfillmentDetails;
 import com.riskified.models.FulfillmentOrder;
@@ -37,9 +38,6 @@ import org.apache.http.client.HttpResponseException;
 public class Client {
     public static void main(String[] arg) throws FieldBadFormatException {
     	
-    	
-    	
-    	
     	CheckoutOrder checkoutOrder = generateCheckoutOrder();
         
         CheckoutDeniedOrder checkoutDeniedOrder = generateCheckoutDeniedOrder();
@@ -56,10 +54,13 @@ public class Client {
         
         FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder();
         
+        DecisionOrder decisionOrder = generateDecisionOrder();
+        
 		try {
-			//RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.debug);
+			// Riskified client parameters can be set in the constructor, like this:
+			// RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.debug);
+			// Or according 'riskified_sdk.properties' configuration file, like this:
 			RiskifiedClient client = new RiskifiedClient();
-			
 			
 			Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 			
@@ -117,6 +118,14 @@ public class Client {
 	        System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
 	        System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
 	        
+			/*
+			Response resDecision = client.decisionOrder(decisionOrder);
+			System.out.println("decision order response:");
+			System.out.println("id: " + resDecision.getOrder().getId());
+	        System.out.println("status: " + resDecision.getOrder().getStatus());
+	        System.out.println("description: " + resDecision.getOrder().getDescription()); 
+	        */
+	        
 	        
 		} catch (RiskifedError e) {
 			e.printStackTrace();
@@ -129,6 +138,11 @@ public class Client {
 		}
 
     }
+
+	private static DecisionOrder generateDecisionOrder() {
+		DecisionOrder decisionOrder = new DecisionOrder("109232", "declined", new Date(114, 01, 10, 11, 00, 00), null);
+		return decisionOrder;
+	}
 
 	private static ArrayOrders generateHistoricalOrders(Order order) {
 		ArrayOrders orders = new ArrayOrders();

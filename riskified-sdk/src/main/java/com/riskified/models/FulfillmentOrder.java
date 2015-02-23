@@ -23,8 +23,8 @@ public class FulfillmentOrder implements IValidated {
 			throws FieldBadFormatException {
 		
 		if(validationType == Validation.all) {
-			Validate.stringNotNullOrEmpty(this.id, "Id");
-			Validate.notNull(fulfillments, "Fulfillments");
+			Validate.stringNotNullOrEmpty(this, this.id, "Id");
+			Validate.notNull(this, fulfillments, "Fulfillments");
 		}
 		
 		if(this.fulfillments != null) {

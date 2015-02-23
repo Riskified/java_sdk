@@ -19,8 +19,8 @@ public class DiscountCode implements IValidated {
 			throws FieldBadFormatException {
 		
 		if(validationType == Validation.all)
-		Validate.notNull(this.code, "Code");
-		Validate.notNull(this.amount, "Amount");
+		Validate.notNull(this, this.code, "Code");
+		Validate.notNull(this, this.amount, "Amount");
 		
 	}
 

@@ -28,6 +28,7 @@ import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CheckoutOrder;
 import com.riskified.models.CheckoutOrderWrapper;
 import com.riskified.models.CheckoutResponse;
+import com.riskified.models.DecisionOrder;
 import com.riskified.models.FulfillmentOrder;
 import com.riskified.models.Order;
 import com.riskified.models.OrderWrapper;
@@ -129,10 +130,10 @@ public class RiskifiedClient {
 
     private static String getBaseUrlFromEnvironment(Environment environmentType) {
     	if (environmentType == Environment.sandbox) {
-    		return "http://sandbox.riskified.com";
+    		return "https://sandbox.riskified.com";
     	}
     	if (environmentType == Environment.production) {
-    		return "http://wh.riskified.com";
+    		return "https://wh.riskified.com";
     	}
     	return "http://localhost:3000";
         
@@ -167,7 +168,7 @@ public class RiskifiedClient {
 
     /**
      * Send a new checkout order to Riskified
-     * @param Checkout order to create (Checkout order has the same fields like Order but all fields are optional)
+     * @param order The checkout order to create (Checkout order has the same fields like Order but all fields are optional)
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
@@ -183,7 +184,7 @@ public class RiskifiedClient {
     
     /**
      * Mark a previously checkout order has been denied.
-     * @param Checkout denied order details, mark as denied and also can specify why it was denied.
+     * @param order The checkout denied order details, mark as denied and also can specify why it was denied.
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
@@ -313,7 +314,7 @@ public class RiskifiedClient {
 
     /**
      * Mark a previously submitted order that is was fulfilled.
-     * @param Fulfillment order details
+     * @param order The fulfillment order details
      * @see FulfillmentOrder
      * @see Response
      * @return Response object, including the status from Riskified server
@@ -326,6 +327,23 @@ public class RiskifiedClient {
         String url = baseUrl + "/api/fulfill";
         validate(order);
         return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
+    }
+    
+    /**
+     * Set the decision made for order that was not submitted.
+     * @param order The decision order details
+     * @see DecisionOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException 
+     */
+    public Response decisionOrder(DecisionOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+        String url = baseUrl + "/api/decision";
+        validate(order);
+        return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
     
     /**
@@ -347,7 +365,7 @@ public class RiskifiedClient {
      */
     public Response historicalOrders(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
-        validate(orders);
+        validate(orders, Validation.ignoreMissing);
         return postOrder(orders, url);
     }
 
@@ -439,8 +457,8 @@ public class RiskifiedClient {
     }
     
     private void validate(IValidated objToValidated) throws FieldBadFormatException {
-    	if(validationType != Validation.none) {
-    		objToValidated.validate(validationType);
+    	if(this.validationType != Validation.none) {
+    		objToValidated.validate(this.validationType);
         }
     }
     private void validate(IValidated objToValidated, Validation validationType) throws FieldBadFormatException {

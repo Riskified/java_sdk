@@ -64,7 +64,7 @@ public abstract class BaseOrder implements IValidated {
     protected List<DiscountCode> discountCodes;
     protected List<ShippingLine> shippingLines;
     protected List<Attributes> noteAttributes;
-    protected List<TaxLines> taxLines;
+    protected List<TaxLine> taxLines;
 
     
     public BaseOrder() {
@@ -73,49 +73,49 @@ public abstract class BaseOrder implements IValidated {
         discountCodes = new ArrayList<DiscountCode>();
         shippingLines = new ArrayList<ShippingLine>();
         noteAttributes = new ArrayList<Attributes>();
-        taxLines = new ArrayList<TaxLines>();
+        taxLines = new ArrayList<TaxLine>();
     }
     
 
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.stringNotNullOrEmpty(this.id, "Id");
+		Validate.stringNotNullOrEmpty(this, this.id, "Id");
 		
 		if(validationType == Validation.all) { // Validated required fields
 			
-			Validate.stringNotNullOrEmpty(this.name, "Name");
-			Validate.stringNotNullOrEmpty(this.email, "Email");
-			Validate.notNull(this.createdAt, "Created At");
-			Validate.notNull(this.closedAt, "Closed At");
-			Validate.notNull(this.updatedAt, "Updated At");
-			Validate.stringNotNullOrEmpty(this.gateway, "Gateway");
-			Validate.stringNotNullOrEmpty(this.browserIp, "Browser IP");
-			Validate.notNull(this.totalPrice, "Total Price");
-			Validate.notNull(this.totalDiscounts, "Total Discounts");
-			Validate.notNull(this.lineItems, "Line Items");
-			Validate.notNull(this.discountCodes, "Discount Codes");
-			Validate.notNull(this.shippingLines, "Shipping Lines");
-			Validate.notNull(this.paymentDetails, "Payment Details");
-			Validate.notNull(this.customer, "Customer");
-			Validate.notNull(this.billingAddress, "Billing Address");
-			Validate.notNull(this.shippingAddress, "Shipping Address");
+			Validate.stringNotNullOrEmpty(this, this.name, "Name");
+			Validate.stringNotNullOrEmpty(this, this.email, "Email");
+			Validate.notNull(this, this.createdAt, "Created At");
+			Validate.notNull(this, this.closedAt, "Closed At");
+			Validate.notNull(this, this.updatedAt, "Updated At");
+			Validate.stringNotNullOrEmpty(this, this.gateway, "Gateway");
+			Validate.stringNotNullOrEmpty(this, this.browserIp, "Browser IP");
+			Validate.notNull(this, this.totalPrice, "Total Price");
+			Validate.notNull(this, this.totalDiscounts, "Total Discounts");
+			Validate.notNull(this, this.lineItems, "Line Items");
+			Validate.notNull(this, this.discountCodes, "Discount Codes");
+			Validate.notNull(this, this.shippingLines, "Shipping Lines");
+			Validate.notNull(this, this.paymentDetails, "Payment Details");
+			Validate.notNull(this, this.customer, "Customer");
+			Validate.notNull(this, this.billingAddress, "Billing Address");
+			Validate.notNull(this, this.shippingAddress, "Shipping Address");
 		}
 		
 		if(this.totalPrice != null) {
-			Validate.mustBePositive(this.totalPrice, "Total Price");
+			Validate.mustBePositive(this, this.totalPrice, "Total Price");
 		}
 		
 		if(this.browserIp != null) {
-			Validate.ipAddressWellFormed(this.browserIp, "Browser IP");
+			Validate.ipAddressWellFormed(this, this.browserIp, "Browser IP");
 		}
 		
 		if(this.currency != null) {
-			Validate.currencyCodeWellFormed(currency, "Currency");
+			Validate.currencyCodeWellFormed(this, currency, "Currency");
 		}
 		
 		if(this.email != null) {
-			Validate.emailAddressWellFormed(this.email, "Email");
+			Validate.emailAddressWellFormed(this, this.email, "Email");
 		}
 		
 		if(this.lineItems != null) {
@@ -585,11 +585,11 @@ public abstract class BaseOrder implements IValidated {
         this.noteAttributes = noteAttributes;
     }
 
-    public List<TaxLines> getTaxLines() {
+    public List<TaxLine> getTaxLines() {
         return taxLines;
     }
 
-    public void setTaxLines(List<TaxLines> taxLines) {
+    public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
 }

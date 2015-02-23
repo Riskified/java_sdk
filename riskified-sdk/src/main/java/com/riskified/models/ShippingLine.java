@@ -1,5 +1,8 @@
 package com.riskified.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
@@ -10,19 +13,20 @@ public class ShippingLine implements IValidated {
     private String title;
     private String code;
     private String source;
-    private TaxLines taxLines;
+    private List<TaxLine> taxLines;
 
     public ShippingLine(double price, String title) {
         this.price = price;
         this.title = title;
+        this.taxLines = new ArrayList<TaxLine>(); 
     }
     
     public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
     	if(validationType == Validation.all) {
-	    	Validate.notNull(this.price, "Price");
-	    	Validate.stringNotNullOrEmpty(this.title, "Title");
+	    	Validate.notNull(this, this.price, "Price");
+	    	Validate.stringNotNullOrEmpty(this, this.title, "Title");
     	}
 		
 	}
@@ -59,13 +63,15 @@ public class ShippingLine implements IValidated {
         this.source = source;
     }
 
-    public TaxLines getTaxLines() {
-        return taxLines;
-    }
+	public List<TaxLine> getTaxLines() {
+		return taxLines;
+	}
 
-    public void setTaxLines(TaxLines taxLines) {
-        this.taxLines = taxLines;
-    }
+	public void setTaxLines(List<TaxLine> taxLines) {
+		this.taxLines = taxLines;
+	}
+
+    
 
 	
 }

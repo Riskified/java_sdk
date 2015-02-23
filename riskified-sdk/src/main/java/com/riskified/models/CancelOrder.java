@@ -19,9 +19,9 @@ public class CancelOrder implements IValidated {
 			throws FieldBadFormatException {
     	
     	if(validationType == Validation.all) {
-			Validate.stringNotNullOrEmpty(this.id, "Id");
-			Validate.stringNotNullOrEmpty(this.cancelReason, "Cancel Reason");
-			Validate.notNull(this.cancelledAt, "Cancelled At");
+			Validate.stringNotNullOrEmpty(this, this.id, "Id");
+			Validate.stringNotNullOrEmpty(this, this.cancelReason, "Cancel Reason");
+			Validate.notNull(this, this.cancelledAt, "Cancelled At");
     	}
 		
 	}

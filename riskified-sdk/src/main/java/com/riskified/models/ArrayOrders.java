@@ -26,7 +26,7 @@ public class ArrayOrders implements IValidated {
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
 		
-		Validate.notNull(this.orders, "Orders");
+		Validate.notNull(this, this.orders, "Orders");
 		for(Order order : this.orders) {
 			order.validate(validationType);
 		}

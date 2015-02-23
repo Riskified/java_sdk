@@ -30,7 +30,7 @@ public class LineItem implements IValidated {
     private Boolean taxable;
     private Boolean productExists;
     private List<Attributes> properties;
-    private List<TaxLines> taxLines;
+    private List<TaxLine> taxLines;
     private String eventSubCategoryName;
     private String eventName;
     private String eventSectionName;
@@ -41,7 +41,7 @@ public class LineItem implements IValidated {
 
 	public LineItem(double price, int quantity, String title, int productId, String sku) {
         this.properties = new ArrayList<Attributes>();
-        this.taxLines = new ArrayList<TaxLines>();
+        this.taxLines = new ArrayList<TaxLine>();
         this.price = price;
         this.quantity = quantity;
         this.title = title;
@@ -53,11 +53,11 @@ public class LineItem implements IValidated {
 			throws FieldBadFormatException {
 		
 		if(validationType == Validation.all) {
-			Validate.notNull(this.price, "Price");
-			Validate.notNull(this.quantity, "Quantity");
-			Validate.stringNotNullOrEmpty(this.title, "Title");
-			Validate.notNull(this.productId, "Product Id");
-			Validate.notNull(this.sku, "Sku");
+			Validate.notNull(this, this.price, "Price");
+			Validate.notNull(this, this.quantity, "Quantity");
+			Validate.stringNotNullOrEmpty(this, this.title, "Title");
+			Validate.notNull(this, this.productId, "Product Id");
+			Validate.notNull(this, this.sku, "Sku");
 		}
 		
 		if(seller != null)
@@ -227,11 +227,11 @@ public class LineItem implements IValidated {
         this.properties = properties;
     }
 
-    public List<TaxLines> getTaxLines() {
+    public List<TaxLine> getTaxLines() {
         return taxLines;
     }
 
-    public void setTaxLines(List<TaxLines> taxLines) {
+    public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
 
