@@ -6,12 +6,14 @@ import com.riskified.RiskifiedClient;
 import com.riskified.models.Address;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.AuthorizationError;
+import com.riskified.models.AuthorizationErrorType;
 import com.riskified.models.CancelOrder;
 import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CheckoutOrder;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.Customer;
 import com.riskified.models.DecisionOrder;
+import com.riskified.models.DecisionType;
 import com.riskified.models.DiscountCode;
 import com.riskified.models.FulfillmentDetails;
 import com.riskified.models.FulfillmentOrder;
@@ -118,13 +120,15 @@ public class Client {
 	        System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
 	        System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
 	        
-			/*
+	        
 			Response resDecision = client.decisionOrder(decisionOrder);
+			
+			System.out.println("-----------------------------------------");
 			System.out.println("decision order response:");
 			System.out.println("id: " + resDecision.getOrder().getId());
 	        System.out.println("status: " + resDecision.getOrder().getStatus());
 	        System.out.println("description: " + resDecision.getOrder().getDescription()); 
-	        */
+	        
 	        
 	        
 		} catch (RiskifedError e) {
@@ -140,7 +144,7 @@ public class Client {
     }
 
 	private static DecisionOrder generateDecisionOrder() {
-		DecisionOrder decisionOrder = new DecisionOrder("109232", "declined", new Date(114, 01, 10, 11, 00, 00), null);
+		DecisionOrder decisionOrder = new DecisionOrder("109232", DecisionType.chargedbackFraud, new Date(114, 01, 10, 11, 00, 00), "Fraud + used proxy");
 		return decisionOrder;
 	}
 
@@ -312,8 +316,8 @@ public class Client {
 
 	private static CheckoutDeniedOrder generateCheckoutDeniedOrder() {
         
-        AuthorizationError authorizationError = new AuthorizationError("invalid_number", new Date(114, 01, 10, 11, 00, 00));
-        authorizationError.setMessage("Checkout denied reason: invalid number for creadit card.");
+        AuthorizationError authorizationError = new AuthorizationError(AuthorizationErrorType.expiredCard, new Date(114, 01, 10, 11, 00, 00));
+        authorizationError.setMessage("expired creadit card.");
         
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("1234", authorizationError);
         

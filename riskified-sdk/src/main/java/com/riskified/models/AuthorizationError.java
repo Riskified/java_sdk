@@ -11,10 +11,10 @@ public class AuthorizationError implements IValidated {
 
 
 	private String message;
-	private String errorCode;
+	private AuthorizationErrorType errorCode;
     private Date createdAt;
 
-    public AuthorizationError(String errorCode, Date createdAt)
+    public AuthorizationError(AuthorizationErrorType errorCode, Date createdAt)
     {
     	this.errorCode = errorCode;
     	this.createdAt = createdAt;
@@ -28,11 +28,11 @@ public class AuthorizationError implements IValidated {
         this.message = message;
     }
     
-    public String getErrorCode() {
+    public AuthorizationErrorType getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(AuthorizationErrorType errorCode) {
         this.errorCode = errorCode;
     }
     
@@ -48,7 +48,7 @@ public class AuthorizationError implements IValidated {
 			throws FieldBadFormatException {
 		
 		if(validationType == Validation.all) {
-			Validate.stringNotNullOrEmpty(this, errorCode, "Error Code");
+			Validate.notNull(this, errorCode, "Error Code");
 			Validate.notNull(this, createdAt, "Created At");
 		}
 		

@@ -11,11 +11,11 @@ public class DecisionOrder implements IValidated {
 
 
 	private String id;
-	private String decisionType;
+	private DecisionType decisionType;
 	private String reason;
 	private Date decidedAt;
 	
-	public DecisionOrder(String id, String decisionType, Date decidedAt, String reason) {
+	public DecisionOrder(String id, DecisionType decisionType, Date decidedAt, String reason) {
 		this.id = id;
 		this.decisionType = decisionType;
 		this.decidedAt = decidedAt;
@@ -29,7 +29,7 @@ public class DecisionOrder implements IValidated {
 		if(validationType == Validation.all) {
 			
 			Validate.stringNotNullOrEmpty(this, this.id, "Id");
-			Validate.stringNotNullOrEmpty(this, this.decisionType, "Decision Type");
+			Validate.notNull(this, this.decisionType, "Decision Type");
 			Validate.notNull(this, this.decidedAt, "Decided At");
 		}
 		
@@ -43,11 +43,11 @@ public class DecisionOrder implements IValidated {
 		this.id = id;
 	}
 
-	public String getDecisionType() {
+	public DecisionType getDecisionType() {
 		return decisionType;
 	}
 
-	public void setDecisionType(String decisionType) {
+	public void setDecisionType(DecisionType decisionType) {
 		this.decisionType = decisionType;
 	}
 
