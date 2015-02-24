@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
 public class PaypalPaymentDetails implements IPaymentDetails {
 
     private String payerEmail;
@@ -16,6 +20,17 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.payerAddressStatus = payerAddressStatus;
         this.protectionEligibility = protectionEligibility;
     }
+    
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+    	if(validationType == validationType.all) {
+			Validate.emailAddressWellFormed(this, this.payerEmail, "Payer Email");
+			Validate.stringNotNullOrEmpty(this, this.payerStatus, "Payer Status");
+			Validate.stringNotNullOrEmpty(this, this.payerAddressStatus, "Payer Address Status");
+			Validate.stringNotNullOrEmpty(this, this.protectionEligibility, "Protection Eligibility");
+    	}
+		
+	}
 
     public String getPayerEmail() {
         return payerEmail;
@@ -72,4 +87,6 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     public void setAuthorizationId(String authorizationId) {
         this.authorizationId = authorizationId;
     }
+
+	
 }

@@ -1,8 +1,15 @@
 package com.riskified.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Customer {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class Customer implements IValidated {
     private String email;
     private String firstName;
     private String lastName;
@@ -21,7 +28,8 @@ public class Customer {
     private Float totalSpent;
     private String tags;
     private Address defaultAddress;
-
+    private List<SocialDetails> social;
+    
     public Customer(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
         this.email = email;
         this.firstName = firstName;
@@ -30,8 +38,33 @@ public class Customer {
         this.createdAt = createdAt;
         this.verifiedEmail = verifiedEmail;
         this.ordersCount = ordersCount;
+        this.setSocial(new ArrayList<SocialDetails>());
     }
 
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+    	if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this, this.email, "Email");
+			Validate.stringNotNullOrEmpty(this, this.firstName, "First Name");
+			Validate.stringNotNullOrEmpty(this, this.lastName, "Last Name");
+			Validate.stringNotNullOrEmpty(this, this.id, "Id");
+			Validate.notNull(this, this.createdAt, "Created At");
+			Validate.notNull(this, this.verifiedEmail, "Verified Email");
+    	}
+    	
+    	if(this.email != null) {
+    		Validate.emailAddressWellFormed(this, email, "Email");
+    	}
+		
+		if(this.social != null) {
+			for(SocialDetails socialDetails : this.social) {
+				socialDetails.validate(validationType);
+			}
+		}
+		
+	}
+    
     public String getEmail() {
         return email;
     }
@@ -147,4 +180,15 @@ public class Customer {
     public void setDefaultAddress(Address defaultAddress) {
         this.defaultAddress = defaultAddress;
     }
+
+	public List<SocialDetails> getSocial() {
+		return social;
+	}
+
+	public void setSocial(List<SocialDetails> social) {
+		this.social = social;
+	}
+
+	
+
 }

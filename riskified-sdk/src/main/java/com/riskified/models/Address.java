@@ -1,6 +1,11 @@
 package com.riskified.models;
 
-public class Address {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class Address implements IValidated {
     private String firstName;
     private String lastName;
     private String city;
@@ -26,6 +31,25 @@ public class Address {
         this.address1 = address1;
     }
 
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+    	if(validationType == Validation.all) {
+	    	Validate.stringNotNullOrEmpty(this, this.firstName, "First Name");
+	    	Validate.stringNotNullOrEmpty(this, this.lastName, "last Name");
+	    	Validate.stringNotNullOrEmpty(this, this.address1, "Address1");
+	    	Validate.stringNotNullOrEmpty(this, this.country, "Country");
+	    	Validate.stringNotNullOrEmpty(this, this.city, "City");
+	    	Validate.stringNotNullOrEmpty(this, this.phone, "Phone");
+    	}
+    	
+    	if(this.countryCode != null) {
+    		Validate.countryCodeWellFormed(this, this.countryCode, "Country Code");
+    		Validate.provinceCodeWellFormed(this, this.provinceCode, "Province Code");
+    	}
+		
+	}
+    
     public String getFirstName() {
         return firstName;
     }
@@ -121,4 +145,6 @@ public class Address {
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
+
+	
 }

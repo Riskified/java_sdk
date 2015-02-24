@@ -1,6 +1,11 @@
 package com.riskified.models;
 
-public class DiscountCode {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class DiscountCode implements IValidated {
 
     private String code;
     private Double amount;
@@ -9,6 +14,15 @@ public class DiscountCode {
         this.code = code;
         this.amount = amount;
     }
+    
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		if(validationType == Validation.all)
+		Validate.notNull(this, this.code, "Code");
+		Validate.notNull(this, this.amount, "Amount");
+		
+	}
 
     public String getCode() {
         return code;
@@ -25,4 +39,5 @@ public class DiscountCode {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
 }

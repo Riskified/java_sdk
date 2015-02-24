@@ -2,14 +2,29 @@ package com.riskified.models;
 
 import java.util.Date;
 
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
 /**
  * Cancel Order details
  */
-public class CancelOrder {
+public class CancelOrder implements IValidated {
     private String id;
     private String cancelReason;
     private Date cancelledAt;
 
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+    	
+    	if(validationType == Validation.all) {
+			Validate.stringNotNullOrEmpty(this, this.id, "Id");
+			Validate.stringNotNullOrEmpty(this, this.cancelReason, "Cancel Reason");
+			Validate.notNull(this, this.cancelledAt, "Cancelled At");
+    	}
+		
+	}
     public String getId() {
         return id;
     }
@@ -33,4 +48,6 @@ public class CancelOrder {
     public void setCancelledAt(Date cancelledAt) {
         this.cancelledAt = cancelledAt;
     }
+
+	
 }

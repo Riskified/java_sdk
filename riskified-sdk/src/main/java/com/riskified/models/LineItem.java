@@ -5,7 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.jar.Attributes;
 
-public class LineItem {
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
+public class LineItem implements IValidated {
 
     private Double price;
     private Integer quantity;
@@ -25,15 +30,18 @@ public class LineItem {
     private Boolean taxable;
     private Boolean productExists;
     private List<Attributes> properties;
-    private List<TaxLines> taxLines;
+    private List<TaxLine> taxLines;
     private String eventSubCategoryName;
     private String eventName;
     private String eventSectionName;
     private Date eventDate;
+    private String condition;
+    private Seller seller;
+    
 
-    public LineItem(double price, int quantity, String title, int productId, String sku) {
-        properties = new ArrayList<Attributes>();
-        taxLines = new ArrayList<TaxLines>();
+	public LineItem(double price, int quantity, String title, int productId, String sku) {
+        this.properties = new ArrayList<Attributes>();
+        this.taxLines = new ArrayList<TaxLine>();
         this.price = price;
         this.quantity = quantity;
         this.title = title;
@@ -41,6 +49,24 @@ public class LineItem {
         this.sku = sku;
     }
 
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		
+		if(validationType == Validation.all) {
+			Validate.notNull(this, this.price, "Price");
+			Validate.notNull(this, this.quantity, "Quantity");
+			Validate.stringNotNullOrEmpty(this, this.title, "Title");
+			Validate.notNull(this, this.productId, "Product Id");
+			Validate.notNull(this, this.sku, "Sku");
+		}
+		
+		if(seller != null)
+		{
+			seller.validate(validationType);
+		}
+		
+	}
+	
     public double getPrice() {
         return price;
     }
@@ -73,6 +99,14 @@ public class LineItem {
         this.sku = sku;
     }
 
+    public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+    
     public int getProductId() {
         return productId;
     }
@@ -177,7 +211,15 @@ public class LineItem {
         this.productExists = productExists;
     }
 
-    public List<Attributes> getProperties() {
+    public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+	public List<Attributes> getProperties() {
         return properties;
     }
 
@@ -185,11 +227,11 @@ public class LineItem {
         this.properties = properties;
     }
 
-    public List<TaxLines> getTaxLines() {
+    public List<TaxLine> getTaxLines() {
         return taxLines;
     }
 
-    public void setTaxLines(List<TaxLines> taxLines) {
+    public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
 
@@ -224,4 +266,6 @@ public class LineItem {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+
+	
 }

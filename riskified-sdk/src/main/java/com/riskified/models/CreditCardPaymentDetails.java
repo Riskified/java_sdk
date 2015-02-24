@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.Validate;
+import com.riskified.validations.Validation;
+
 public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardBin;
     private String avsResultCode;
@@ -15,6 +19,17 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.creditCardNumber = creditCardNumber;
         this.creditCardCompany = creditCardCompany;
     }
+    
+    public void validate(Validation validationType)
+			throws FieldBadFormatException {
+		if(validationType == Validation.all) {
+	    	Validate.stringNotNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
+	    	Validate.stringNotNullOrEmpty(this, this.avsResultCode, "AVS Result Code");
+	    	Validate.stringNotNullOrEmpty(this, this.cvvResultCode, "CVV Result Code");
+	    	Validate.stringNotNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
+		}
+		
+	}
 
     public String getCreditCardBin() {
         return creditCardBin;
@@ -63,4 +78,6 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void setAuthorization_id(String authorization_id) {
         this.authorization_id = authorization_id;
     }
+
+	
 }
