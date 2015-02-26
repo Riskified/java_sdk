@@ -65,6 +65,7 @@ public class HTTPPOSTServer extends Thread {
                 NotificationOrder notification = formatter.toObject(body, hash).getOrder();
                 sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
                         + " with status " + notification.getStatus() + " and description " + notification.getDescription()
+                        + " Old Status was " + notification.getOldStatus()
                         + "</BODY></HTML>");
 
             }

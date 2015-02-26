@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.riskified.RiskifedError;
 import com.riskified.SHA256Handler;
 
@@ -23,7 +25,7 @@ public class NotificationHandler {
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
     public NotificationHandler(String authKey) throws RiskifedError {
-        gson = new Gson();
+        gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         this.sha256Handler = new SHA256Handler(authKey);
     }
 

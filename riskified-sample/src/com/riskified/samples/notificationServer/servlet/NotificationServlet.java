@@ -30,6 +30,7 @@ public class NotificationServlet extends HttpServlet {
 
             out.println("<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
                     + " with status " + notification.getStatus() + " and description " + notification.getDescription()
+                    + " Old Status was " + notification.getOldStatus()
                     + "</BODY></HTML>");
 
         } catch (Exception e) {
