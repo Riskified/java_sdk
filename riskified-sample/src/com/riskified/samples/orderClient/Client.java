@@ -12,6 +12,7 @@ import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CheckoutOrder;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.Customer;
+import com.riskified.models.DecisionDetails;
 import com.riskified.models.DecisionOrder;
 import com.riskified.models.DecisionType;
 import com.riskified.models.DiscountCode;
@@ -144,7 +145,11 @@ public class Client {
     }
 
 	private static DecisionOrder generateDecisionOrder() {
-		DecisionOrder decisionOrder = new DecisionOrder("109232", DecisionType.chargedbackFraud, new Date(114, 01, 10, 11, 00, 00), "Fraud + used proxy");
+		DecisionDetails decision = new DecisionDetails();
+		decision.setExternalStatus(DecisionType.chargedbackFraud);
+		decision.setReason("Fraud + used proxy");
+		decision.setDecidedAt(new Date(114, 01, 10, 11, 00, 00));
+		DecisionOrder decisionOrder = new DecisionOrder("1235", decision);
 		return decisionOrder;
 	}
 
