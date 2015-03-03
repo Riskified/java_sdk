@@ -65,6 +65,7 @@ public abstract class BaseOrder implements IValidated {
     protected List<ShippingLine> shippingLines;
     protected List<Attributes> noteAttributes;
     protected List<TaxLine> taxLines;
+    protected DecisionDetails decision;
 
     
     public BaseOrder() {
@@ -155,6 +156,10 @@ public abstract class BaseOrder implements IValidated {
 		
 		if(this.shippingAddress != null) {
 			this.shippingAddress.validate(validationType);
+		}
+		
+		if(this.decision != null) {
+			this.decision.validate(validationType);
 		}
 	}
 	
@@ -592,4 +597,14 @@ public abstract class BaseOrder implements IValidated {
     public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
+
+
+	public DecisionDetails getDecision() {
+		return decision;
+	}
+
+
+	public void setDecision(DecisionDetails decision) {
+		this.decision = decision;
+	}
 }

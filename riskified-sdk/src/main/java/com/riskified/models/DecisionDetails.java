@@ -19,6 +19,12 @@ public class DecisionDetails implements IValidated {
 	public DecisionDetails() {
 		
 	}
+	
+	public DecisionDetails(DecisionType externalStatus, Date decidedAt, String reason) {
+		this.externalStatus = externalStatus;
+		this.decidedAt = decidedAt;
+		this.reason = reason;
+	}
 
 	public void validate(Validation validationType)
 			throws FieldBadFormatException {
