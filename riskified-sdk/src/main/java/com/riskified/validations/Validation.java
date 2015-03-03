@@ -7,7 +7,7 @@ package com.riskified.validations;
  * All = All object (including inner objects) will be validated
  */
 public enum Validation {
-	none,
-	ignoreMissing,
-	all
+    none,
+    ignoreMissing,
+    all
 }

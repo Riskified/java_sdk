@@ -17,7 +17,7 @@ public class JSONFormmater {
 
     public static String toJson(Object obj) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Date.class, new DateTimeSerializer()).create();
+                                     .registerTypeAdapter(Date.class, new DateTimeSerializer()).create();
         return gson.toJson(obj);
     }
 
