@@ -8,14 +8,14 @@ import com.riskified.validations.Validation;
 
 public class CheckoutDeniedOrder implements IValidated {
 
-	private String id;
-	private AuthorizationError authorizationError;
+    private String id;
+    private AuthorizationError authorizationError;
 
-	public CheckoutDeniedOrder(String id, AuthorizationError authorizationError) {
-		this.id = id;
-		this.authorizationError = authorizationError;
-	}
-	
+    public CheckoutDeniedOrder(String id, AuthorizationError authorizationError) {
+        this.id = id;
+        this.authorizationError = authorizationError;
+    }
+
     public String getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class CheckoutDeniedOrder implements IValidated {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public AuthorizationError getAuthorizationError() {
         return authorizationError;
     }
@@ -32,19 +32,17 @@ public class CheckoutDeniedOrder implements IValidated {
         this.authorizationError = authorizationError;
     }
 
-	public void validate(Validation validationType) throws FieldBadFormatException {
-		
-		if(validationType == Validation.all) {
-			Validate.stringNotNullOrEmpty(this, this.id, "Id");
-			Validate.notNull(this, authorizationError, "Authorization Error");
-		}
-		if(this.authorizationError != null) {
-			authorizationError.validate(validationType);
-		}
-		
-		
-		
-		
-	}
-	
+    public void validate(Validation validationType) throws FieldBadFormatException {
+
+        if (validationType == Validation.all) {
+            Validate.stringNotNullOrEmpty(this, this.id, "Id");
+            Validate.notNull(this, authorizationError, "Authorization Error");
+        }
+        if (this.authorizationError != null) {
+            authorizationError.validate(validationType);
+        }
+
+
+    }
+
 }

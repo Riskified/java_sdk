@@ -1,17 +1,17 @@
 package com.riskified.models;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public abstract class BaseOrder implements IValidated {
 
-	protected String id;
+    protected String id;
     protected String email;
     protected Date createdAt;
     protected Date updatedAt;
@@ -67,7 +67,7 @@ public abstract class BaseOrder implements IValidated {
     protected List<TaxLine> taxLines;
     protected DecisionDetails decision;
 
-    
+
     public BaseOrder() {
         lineItems = new ArrayList<LineItem>();
         additionalEmails = new ArrayList<String>();
@@ -76,95 +76,93 @@ public abstract class BaseOrder implements IValidated {
         noteAttributes = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLine>();
     }
-    
 
-	public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		
-		Validate.stringNotNullOrEmpty(this, this.id, "Id");
-		
-		if(validationType == Validation.all) { // Validated required fields
-			
-			Validate.stringNotNullOrEmpty(this, this.name, "Name");
-			Validate.stringNotNullOrEmpty(this, this.email, "Email");
-			Validate.notNull(this, this.createdAt, "Created At");
-			Validate.notNull(this, this.closedAt, "Closed At");
-			Validate.notNull(this, this.updatedAt, "Updated At");
-			Validate.stringNotNullOrEmpty(this, this.gateway, "Gateway");
-			Validate.stringNotNullOrEmpty(this, this.browserIp, "Browser IP");
-			Validate.notNull(this, this.totalPrice, "Total Price");
-			Validate.notNull(this, this.totalDiscounts, "Total Discounts");
-			Validate.notNull(this, this.lineItems, "Line Items");
-			Validate.notNull(this, this.discountCodes, "Discount Codes");
-			Validate.notNull(this, this.shippingLines, "Shipping Lines");
-			Validate.notNull(this, this.paymentDetails, "Payment Details");
-			Validate.notNull(this, this.customer, "Customer");
-			Validate.notNull(this, this.billingAddress, "Billing Address");
-			Validate.notNull(this, this.shippingAddress, "Shipping Address");
-		}
-		
-		if(this.totalPrice != null) {
-			Validate.mustBePositive(this, this.totalPrice, "Total Price");
-		}
-		
-		if(this.browserIp != null) {
-			Validate.ipAddressWellFormed(this, this.browserIp, "Browser IP");
-		}
-		
-		if(this.currency != null) {
-			Validate.currencyCodeWellFormed(this, currency, "Currency");
-		}
-		
-		if(this.email != null) {
-			Validate.emailAddressWellFormed(this, this.email, "Email");
-		}
-		
-		if(this.lineItems != null) {
-			for(LineItem lineItem : this.lineItems) {
-				lineItem.validate(validationType);
-			}
-		}
-		
-		if(this.discountCodes != null) {
-			for(DiscountCode discountCode : this.discountCodes) {
-				discountCode.validate(validationType);
-			}
-		}
-		
-		
-		if(this.shippingLines != null) {
-			for(ShippingLine shippingLine : this.shippingLines) {
-				shippingLine.validate(validationType);
-			}
-		}
-		
-		
-		if(this.paymentDetails != null) {
-			this.paymentDetails.validate(validationType);
-		}
-		
-		
-		if(this.customer != null) {
-			this.customer.validate(validationType);
-		}
-		
-		
-		if(this.billingAddress != null) {
-			this.billingAddress.validate(validationType);
-		}
-		
-		
-		if(this.shippingAddress != null) {
-			this.shippingAddress.validate(validationType);
-		}
-		
-		if(this.decision != null) {
-			this.decision.validate(validationType);
-		}
-	}
-	
-    
-    
+
+    public void validate(Validation validationType)
+    throws FieldBadFormatException {
+
+        Validate.stringNotNullOrEmpty(this, this.id, "Id");
+
+        if (validationType == Validation.all) { // Validated required fields
+
+            Validate.stringNotNullOrEmpty(this, this.name, "Name");
+            Validate.stringNotNullOrEmpty(this, this.email, "Email");
+            Validate.notNull(this, this.createdAt, "Created At");
+            Validate.notNull(this, this.closedAt, "Closed At");
+            Validate.notNull(this, this.updatedAt, "Updated At");
+            Validate.stringNotNullOrEmpty(this, this.gateway, "Gateway");
+            Validate.stringNotNullOrEmpty(this, this.browserIp, "Browser IP");
+            Validate.notNull(this, this.totalPrice, "Total Price");
+            Validate.notNull(this, this.totalDiscounts, "Total Discounts");
+            Validate.notNull(this, this.lineItems, "Line Items");
+            Validate.notNull(this, this.discountCodes, "Discount Codes");
+            Validate.notNull(this, this.shippingLines, "Shipping Lines");
+            Validate.notNull(this, this.paymentDetails, "Payment Details");
+            Validate.notNull(this, this.customer, "Customer");
+            Validate.notNull(this, this.billingAddress, "Billing Address");
+            Validate.notNull(this, this.shippingAddress, "Shipping Address");
+        }
+
+        if (this.totalPrice != null) {
+            Validate.mustBePositive(this, this.totalPrice, "Total Price");
+        }
+
+        if (this.browserIp != null) {
+            Validate.ipAddressWellFormed(this, this.browserIp, "Browser IP");
+        }
+
+        if (this.currency != null) {
+            Validate.currencyCodeWellFormed(this, currency, "Currency");
+        }
+
+        if (this.email != null) {
+            Validate.emailAddressWellFormed(this, this.email, "Email");
+        }
+
+        if (this.lineItems != null) {
+            for (LineItem lineItem : this.lineItems) {
+                lineItem.validate(validationType);
+            }
+        }
+
+        if (this.discountCodes != null) {
+            for (DiscountCode discountCode : this.discountCodes) {
+                discountCode.validate(validationType);
+            }
+        }
+
+
+        if (this.shippingLines != null) {
+            for (ShippingLine shippingLine : this.shippingLines) {
+                shippingLine.validate(validationType);
+            }
+        }
+
+
+        if (this.paymentDetails != null) {
+            this.paymentDetails.validate(validationType);
+        }
+
+
+        if (this.customer != null) {
+            this.customer.validate(validationType);
+        }
+
+
+        if (this.billingAddress != null) {
+            this.billingAddress.validate(validationType);
+        }
+
+
+        if (this.shippingAddress != null) {
+            this.shippingAddress.validate(validationType);
+        }
+
+        if (this.decision != null) {
+            this.decision.validate(validationType);
+        }
+    }
+
 
     public String getId() {
         return id;
@@ -527,14 +525,14 @@ public abstract class BaseOrder implements IValidated {
     }
 
     public String getVendorName() {
-		return vendorName;
-	}
+        return vendorName;
+    }
 
-	public void setVendorName(String vendorName) {
-		this.vendorName = vendorName;
-	}
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
 
-	public Address getShippingAddress() {
+    public Address getShippingAddress() {
         return shippingAddress;
     }
 
@@ -599,12 +597,12 @@ public abstract class BaseOrder implements IValidated {
     }
 
 
-	public DecisionDetails getDecision() {
-		return decision;
-	}
+    public DecisionDetails getDecision() {
+        return decision;
+    }
 
 
-	public void setDecision(DecisionDetails decision) {
-		this.decision = decision;
-	}
+    public void setDecision(DecisionDetails decision) {
+        this.decision = decision;
+    }
 }

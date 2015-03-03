@@ -1,12 +1,12 @@
 package com.riskified.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RefundOrder implements IValidated {
 
@@ -17,23 +17,23 @@ public class RefundOrder implements IValidated {
         refunds = new ArrayList<RefundDetails>();
     }
 
-	public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		
-		Validate.stringNotNullOrEmpty(this, this.id, "Id");
-		
-		if(validationType == Validation.all) {
-			Validate.notNull(this, this.refunds, "Refunds");
-		}
-		
-		if(this.refunds != null) {
-			for(RefundDetails refundDetails : this.refunds) {
-				refundDetails.validate(validationType);
-			}
-		}
-		
-	}
-	
+    public void validate(Validation validationType)
+    throws FieldBadFormatException {
+
+        Validate.stringNotNullOrEmpty(this, this.id, "Id");
+
+        if (validationType == Validation.all) {
+            Validate.notNull(this, this.refunds, "Refunds");
+        }
+
+        if (this.refunds != null) {
+            for (RefundDetails refundDetails : this.refunds) {
+                refundDetails.validate(validationType);
+            }
+        }
+
+    }
+
     public String getId() {
         return id;
     }
