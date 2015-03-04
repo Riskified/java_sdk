@@ -7,7 +7,6 @@ import com.riskified.validations.Validation;
 
 public class DecisionOrder implements IValidated {
 
-
     private String id;
     private DecisionDetails decision;
 
@@ -18,8 +17,8 @@ public class DecisionOrder implements IValidated {
 
     public void validate(Validation validationType)
     throws FieldBadFormatException {
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.id, "Id");
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.id, "Id");
             Validate.notNull(this, this.decision, "Decision");
         }
         if (this.decision != null) {

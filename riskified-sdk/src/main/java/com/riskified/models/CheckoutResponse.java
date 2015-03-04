@@ -14,7 +14,6 @@ public class CheckoutResponse extends Response {
 
     public void setCheckout(ResOrder checkout) {
         this.checkout = checkout;
-        this.order = checkout;
+        setOrder(checkout);
     }
-
 }

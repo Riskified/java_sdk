@@ -34,8 +34,8 @@ public class CheckoutDeniedOrder implements IValidated {
 
     public void validate(Validation validationType) throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.id, "Id");
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.id, "Id");
             Validate.notNull(this, authorizationError, "Authorization Error");
         }
         if (this.authorizationError != null) {

@@ -15,10 +15,9 @@ public class RefundDetails implements IValidated {
     private String reason;
 
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.refundId, "Refund Id");
+    public void validate(Validation validationType) throws FieldBadFormatException {
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.refundId, "Refund Id");
             Validate.notNull(this, this.refundedAt, "Refunded At");
             Validate.notNull(this, this.amount, "Amount");
             Validate.notNull(this, this.currency, "Currency");
@@ -26,10 +25,8 @@ public class RefundDetails implements IValidated {
         }
 
         if (currency != null) {
-            Validate.currencyCodeWellFormed(this, currency, "Currency");
+            Validate.currencyCode(this, currency, "Currency");
         }
-
-
     }
 
     public String getRefundId() {

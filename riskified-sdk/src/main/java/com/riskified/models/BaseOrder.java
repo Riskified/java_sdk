@@ -10,62 +10,61 @@ import java.util.Date;
 import java.util.List;
 
 public abstract class BaseOrder implements IValidated {
-
-    protected String id;
-    protected String email;
-    protected Date createdAt;
-    protected Date updatedAt;
-    protected String currency;
-    protected String gateway;
-    protected Double totalPrice;
-    protected String browserIp;
-    protected Customer customer;
-    protected List<LineItem> lineItems;
-    protected String name;
-    protected List<String> additionalEmails;
-    protected String note;
-    protected String number;
-    protected String orderNumber;
-    protected String cancelReason;
-    protected Date cancelledAt;
-    protected Date closedAt;
-    protected String cartToken;
-    protected String checkoutToken;
-    protected String token;
-    protected String referringSite;
-    protected Boolean confirmed;
-    protected Boolean buyerAcceptsMarketing;
-    protected String financialStatus;
-    protected String fulfillmentStatus;
-    protected String landingSite;
-    protected String landingSiteRef;
-    protected String locationId;
-    protected String source;
-    protected String sourceIdentifier;
-    protected String sourceName;
-    protected String sourceUrl;
-    protected Double subtotalPrice;
-    protected Boolean taxesIncluded;
-    protected Double totalDiscounts;
-    protected Double totalLineItemsPrice;
-    protected Double totalPriceUsd;
-    protected Double totalTax;
-    protected Double totalWeight;
-    protected String userId;
-    protected String processingMethod;
-    protected String checkoutId;
-    protected String tags;
-    protected String vendorId;
-    protected String vendorName;
-    protected Address shippingAddress;
-    protected Address billingAddress;
-    protected IPaymentDetails paymentDetails;
-    protected ClientDetails clientDetails;
-    protected List<DiscountCode> discountCodes;
-    protected List<ShippingLine> shippingLines;
-    protected List<Attributes> noteAttributes;
-    protected List<TaxLine> taxLines;
-    protected DecisionDetails decision;
+    private String id;
+    private String email;
+    private Date createdAt;
+    private Date updatedAt;
+    private String currency;
+    private String gateway;
+    private Double totalPrice;
+    private String browserIp;
+    private Customer customer;
+    private List<LineItem> lineItems;
+    private String name;
+    private List<String> additionalEmails;
+    private String note;
+    private String number;
+    private String orderNumber;
+    private String cancelReason;
+    private Date cancelledAt;
+    private Date closedAt;
+    private String cartToken;
+    private String checkoutToken;
+    private String token;
+    private String referringSite;
+    private Boolean confirmed;
+    private Boolean buyerAcceptsMarketing;
+    private String financialStatus;
+    private String fulfillmentStatus;
+    private String landingSite;
+    private String landingSiteRef;
+    private String locationId;
+    private String source;
+    private String sourceIdentifier;
+    private String sourceName;
+    private String sourceUrl;
+    private Double subtotalPrice;
+    private Boolean taxesIncluded;
+    private Double totalDiscounts;
+    private Double totalLineItemsPrice;
+    private Double totalPriceUsd;
+    private Double totalTax;
+    private Double totalWeight;
+    private String userId;
+    private String processingMethod;
+    private String checkoutId;
+    private String tags;
+    private String vendorId;
+    private String vendorName;
+    private Address shippingAddress;
+    private Address billingAddress;
+    private IPaymentDetails paymentDetails;
+    private ClientDetails clientDetails;
+    private List<DiscountCode> discountCodes;
+    private List<ShippingLine> shippingLines;
+    private List<Attributes> noteAttributes;
+    private List<TaxLine> taxLines;
+    private DecisionDetails decision;
 
 
     public BaseOrder() {
@@ -77,21 +76,17 @@ public abstract class BaseOrder implements IValidated {
         taxLines = new ArrayList<TaxLine>();
     }
 
-
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
-
-        Validate.stringNotNullOrEmpty(this, this.id, "Id");
-
-        if (validationType == Validation.all) { // Validated required fields
-
-            Validate.stringNotNullOrEmpty(this, this.name, "Name");
-            Validate.stringNotNullOrEmpty(this, this.email, "Email");
+    public void validate(Validation validationType) throws FieldBadFormatException {
+        Validate.notNullOrEmpty(this, this.id, "Id");
+        if (validationType == Validation.ALL) {
+            // Validated required fields
+            Validate.notNullOrEmpty(this, this.name, "Name");
+            Validate.notNullOrEmpty(this, this.email, "Email");
             Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNull(this, this.closedAt, "Closed At");
             Validate.notNull(this, this.updatedAt, "Updated At");
-            Validate.stringNotNullOrEmpty(this, this.gateway, "Gateway");
-            Validate.stringNotNullOrEmpty(this, this.browserIp, "Browser IP");
+            Validate.notNullOrEmpty(this, this.gateway, "Gateway");
+            Validate.notNullOrEmpty(this, this.browserIp, "Browser IP");
             Validate.notNull(this, this.totalPrice, "Total Price");
             Validate.notNull(this, this.totalDiscounts, "Total Discounts");
             Validate.notNull(this, this.lineItems, "Line Items");
@@ -104,19 +99,19 @@ public abstract class BaseOrder implements IValidated {
         }
 
         if (this.totalPrice != null) {
-            Validate.mustBePositive(this, this.totalPrice, "Total Price");
+            Validate.isNumberNegativeOrZero(this, this.totalPrice, "Total Price");
         }
 
         if (this.browserIp != null) {
-            Validate.ipAddressWellFormed(this, this.browserIp, "Browser IP");
+            Validate.ipAddress(this, this.browserIp, "Browser IP");
         }
 
         if (this.currency != null) {
-            Validate.currencyCodeWellFormed(this, currency, "Currency");
+            Validate.currencyCode(this, currency, "Currency");
         }
 
         if (this.email != null) {
-            Validate.emailAddressWellFormed(this, this.email, "Email");
+            Validate.emailAddress(this, this.email, "Email");
         }
 
         if (this.lineItems != null) {
@@ -131,28 +126,23 @@ public abstract class BaseOrder implements IValidated {
             }
         }
 
-
         if (this.shippingLines != null) {
             for (ShippingLine shippingLine : this.shippingLines) {
                 shippingLine.validate(validationType);
             }
         }
 
-
         if (this.paymentDetails != null) {
             this.paymentDetails.validate(validationType);
         }
-
 
         if (this.customer != null) {
             this.customer.validate(validationType);
         }
 
-
         if (this.billingAddress != null) {
             this.billingAddress.validate(validationType);
         }
-
 
         if (this.shippingAddress != null) {
             this.shippingAddress.validate(validationType);
@@ -162,7 +152,6 @@ public abstract class BaseOrder implements IValidated {
             this.decision.validate(validationType);
         }
     }
-
 
     public String getId() {
         return id;
@@ -600,7 +589,6 @@ public abstract class BaseOrder implements IValidated {
     public DecisionDetails getDecision() {
         return decision;
     }
-
 
     public void setDecision(DecisionDetails decision) {
         this.decision = decision;

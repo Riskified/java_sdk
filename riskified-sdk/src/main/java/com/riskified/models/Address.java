@@ -31,23 +31,20 @@ public class Address implements IValidated {
         this.address1 = address1;
     }
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
-
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.firstName, "First Name");
-            Validate.stringNotNullOrEmpty(this, this.lastName, "last Name");
-            Validate.stringNotNullOrEmpty(this, this.address1, "Address1");
-            Validate.stringNotNullOrEmpty(this, this.country, "Country");
-            Validate.stringNotNullOrEmpty(this, this.city, "City");
-            Validate.stringNotNullOrEmpty(this, this.phone, "Phone");
+    public void validate(Validation validationType) throws FieldBadFormatException {
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.firstName, "First Name");
+            Validate.notNullOrEmpty(this, this.lastName, "last Name");
+            Validate.notNullOrEmpty(this, this.address1, "Address1");
+            Validate.notNullOrEmpty(this, this.country, "Country");
+            Validate.notNullOrEmpty(this, this.city, "City");
+            Validate.notNullOrEmpty(this, this.phone, "Phone");
         }
 
         if (this.countryCode != null) {
-            Validate.countryCodeWellFormed(this, this.countryCode, "Country Code");
-            Validate.provinceCodeWellFormed(this, this.provinceCode, "Province Code");
+            Validate.countryCode(this, this.countryCode, "Country Code");
+            Validate.provinceCode(this, this.provinceCode, "Province Code");
         }
-
     }
 
     public String getFirstName() {
@@ -145,6 +142,4 @@ public class Address implements IValidated {
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
-
-
 }

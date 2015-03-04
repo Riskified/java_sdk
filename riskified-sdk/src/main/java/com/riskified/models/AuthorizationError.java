@@ -8,8 +8,6 @@ import com.riskified.validations.Validation;
 import java.util.Date;
 
 public class AuthorizationError implements IValidated {
-
-
     private String message;
     private AuthorizationErrorType errorCode;
     private Date createdAt;
@@ -46,7 +44,7 @@ public class AuthorizationError implements IValidated {
     public void validate(Validation validationType)
     throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
             Validate.notNull(this, errorCode, "Error Code");
             Validate.notNull(this, createdAt, "Created At");
         }

@@ -26,17 +26,16 @@ public class DecisionDetails implements IValidated {
         this.reason = reason;
     }
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
+    public void validate(Validation validationType) throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
 
             Validate.notNull(this, this.externalStatus, "External Status");
             Validate.notNull(this, this.decidedAt, "Decided At");
         }
 
         if (currency != null) {
-            Validate.currencyCodeWellFormed(this, this.currency, "Currency");
+            Validate.currencyCode(this, this.currency, "Currency");
         }
 
     }

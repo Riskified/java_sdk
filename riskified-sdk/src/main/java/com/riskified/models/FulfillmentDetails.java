@@ -30,10 +30,10 @@ public class FulfillmentDetails implements IValidated {
     public void validate(Validation validationType)
     throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, fulfillmentId, "Fulfillment Id");
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, fulfillmentId, "Fulfillment Id");
             Validate.notNull(this, this.createdAt, "Created At");
-            Validate.stringNotNullOrEmpty(this, this.status, "Status");
+            Validate.notNullOrEmpty(this, this.status, "Status");
         }
 
         if (this.lineItems != null) {

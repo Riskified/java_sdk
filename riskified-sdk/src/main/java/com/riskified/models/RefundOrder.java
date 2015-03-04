@@ -20,9 +20,9 @@ public class RefundOrder implements IValidated {
     public void validate(Validation validationType)
     throws FieldBadFormatException {
 
-        Validate.stringNotNullOrEmpty(this, this.id, "Id");
+        Validate.notNullOrEmpty(this, this.id, "Id");
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
             Validate.notNull(this, this.refunds, "Refunds");
         }
 

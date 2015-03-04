@@ -21,14 +21,12 @@ public class ShippingLine implements IValidated {
         this.taxLines = new ArrayList<TaxLine>();
     }
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
+    public void validate(Validation validationType) throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
             Validate.notNull(this, this.price, "Price");
-            Validate.stringNotNullOrEmpty(this, this.title, "Title");
+            Validate.notNullOrEmpty(this, this.title, "Title");
         }
-
     }
 
     public double getPrice() {
@@ -70,6 +68,4 @@ public class ShippingLine implements IValidated {
     public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
-
-
 }

@@ -3,10 +3,10 @@ package com.riskified.models;
 import java.util.List;
 
 public class Response {
-    protected ResOrder order;
-    protected Integer received;
-    protected List<String> warnings;
-    protected Error error;
+    private ResOrder order;
+    private Integer received;
+    private List<String> warnings;
+    private Error error;
 
     public Response() {
 

@@ -41,20 +41,19 @@ public class Customer implements IValidated {
         this.setSocial(new ArrayList<SocialDetails>());
     }
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
+    public void validate(Validation validationType) throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.email, "Email");
-            Validate.stringNotNullOrEmpty(this, this.firstName, "First Name");
-            Validate.stringNotNullOrEmpty(this, this.lastName, "Last Name");
-            Validate.stringNotNullOrEmpty(this, this.id, "Id");
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.email, "Email");
+            Validate.notNullOrEmpty(this, this.firstName, "First Name");
+            Validate.notNullOrEmpty(this, this.lastName, "Last Name");
+            Validate.notNullOrEmpty(this, this.id, "Id");
             Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNull(this, this.verifiedEmail, "Verified Email");
         }
 
         if (this.email != null) {
-            Validate.emailAddressWellFormed(this, email, "Email");
+            Validate.emailAddress(this, email, "Email");
         }
 
         if (this.social != null) {
@@ -62,7 +61,6 @@ public class Customer implements IValidated {
                 socialDetails.validate(validationType);
             }
         }
-
     }
 
     public String getEmail() {

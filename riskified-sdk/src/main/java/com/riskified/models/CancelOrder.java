@@ -18,12 +18,11 @@ public class CancelOrder implements IValidated {
     public void validate(Validation validationType)
     throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
-            Validate.stringNotNullOrEmpty(this, this.id, "Id");
-            Validate.stringNotNullOrEmpty(this, this.cancelReason, "Cancel Reason");
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.id, "Id");
+            Validate.notNullOrEmpty(this, this.cancelReason, "Cancel Reason");
             Validate.notNull(this, this.cancelledAt, "Cancelled At");
         }
-
     }
 
     public String getId() {
@@ -49,6 +48,4 @@ public class CancelOrder implements IValidated {
     public void setCancelledAt(Date cancelledAt) {
         this.cancelledAt = cancelledAt;
     }
-
-
 }

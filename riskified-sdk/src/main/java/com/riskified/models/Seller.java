@@ -51,7 +51,7 @@ public class Seller implements IValidated {
     public void validate(Validation validationType)
     throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
             Validate.notNull(this, this.customer, "Customer");
         }
         if (customer != null) {

@@ -58,7 +58,7 @@ public class Client {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-            // RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.debug);
+            // RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.DEBUG);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
 

@@ -23,10 +23,9 @@ public class ArrayOrders implements IValidated {
         this.orders = orders;
     }
 
-    public void validate(Validation validationType)
-    throws FieldBadFormatException {
+    public void validate(Validation validationType) throws FieldBadFormatException {
 
-        if (validationType == Validation.all) {
+        if (validationType == Validation.ALL) {
             Validate.notNull(this, this.orders, "Orders");
         }
         if (this.orders != null) {
@@ -34,6 +33,5 @@ public class ArrayOrders implements IValidated {
                 order.validate(validationType);
             }
         }
-
     }
 }
