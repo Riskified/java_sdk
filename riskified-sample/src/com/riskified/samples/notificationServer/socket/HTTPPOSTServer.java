@@ -35,9 +35,9 @@ public class HTTPPOSTServer extends Thread {
             String httpMethod = tokenizer.nextToken();
 
             if (httpMethod.equals("GET")) {
-            	sendResponse(200, "ok");
+                sendResponse(200, "ok");
             }
-            
+
             if (httpMethod.equals("POST")) {
 
                 String userInput;
@@ -64,9 +64,9 @@ public class HTTPPOSTServer extends Thread {
                 NotificationHandler formatter = new NotificationHandler("26faa0eb6eacf889e300944c297640b68789b11c");
                 NotificationOrder notification = formatter.toObject(body, hash).getOrder();
                 sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
-                        + " with status " + notification.getStatus() + " and description " + notification.getDescription()
-                        + " Old Status was " + notification.getOldStatus()
-                        + "</BODY></HTML>");
+                + " with status " + notification.getStatus() + " and description " + notification.getDescription()
+                + " Old Status was " + notification.getOldStatus()
+                + "</BODY></HTML>");
 
             }
         } catch (Exception e) {

@@ -5,7 +5,7 @@ public class CheckoutOrderWrapper<T> {
     private T checkout;
 
     public CheckoutOrderWrapper(T data) {
-    	checkout = data;
+        checkout = data;
     }
 
     public T getOrder() {

@@ -2,6 +2,6 @@ package com.riskified.validations;
 
 public interface IValidated {
 
-	void validate(Validation validationType) throws FieldBadFormatException;
-	
+    void validate(Validation validationType) throws FieldBadFormatException;
+
 }
