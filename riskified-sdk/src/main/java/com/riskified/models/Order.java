@@ -5,7 +5,19 @@ package com.riskified.models;
  *
  */
 public class Order extends BaseOrder {
-    public Order() {
+	
+	public String checkoutId;
+	
+	public Order() {
 
     }
+
+    public String getCheckoutId() {
+		return checkoutId;
+	}
+
+	public void setCheckoutId(String checkoutId) {
+		this.checkoutId = checkoutId;
+	}
+
 }
