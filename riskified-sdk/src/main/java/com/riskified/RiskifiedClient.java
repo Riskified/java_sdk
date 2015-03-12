@@ -71,12 +71,16 @@ public class RiskifiedClient {
             validation = Validation.NONE;
         } else if (validationType.equals("IGNORE_MISSING")) {
             validation = Validation.IGNORE_MISSING;
+        } else if(validationType.equals("ALL")) {
+        	validation = Validation.ALL;
         }
 
         if (environmentType.equals("DEBUG")) {
             environment = Environment.DEBUG;
         } else if (environmentType.equals("PRODUCTION")) {
             environment = Environment.PRODUCTION;
+        } else if (environmentType.equals("SANDBOX")) {
+        	environment = Environment.SANDBOX;
         }
 
         if (environment == Environment.DEBUG) {
