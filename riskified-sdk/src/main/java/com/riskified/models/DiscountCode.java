@@ -14,15 +14,15 @@ public class DiscountCode implements IValidated {
         this.code = code;
         this.amount = amount;
     }
-    
-	public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		
-		if(validationType == Validation.all)
-		Validate.notNull(this, this.code, "Code");
-		Validate.notNull(this, this.amount, "Amount");
-		
-	}
+
+    public void validate(Validation validationType)
+    throws FieldBadFormatException {
+
+        if (validationType == Validation.ALL)
+            Validate.notNull(this, this.code, "Code");
+        Validate.notNull(this, this.amount, "Amount");
+
+    }
 
     public String getCode() {
         return code;

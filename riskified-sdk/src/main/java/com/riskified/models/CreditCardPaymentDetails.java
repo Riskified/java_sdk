@@ -19,17 +19,15 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.creditCardNumber = creditCardNumber;
         this.creditCardCompany = creditCardCompany;
     }
-    
-    public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		if(validationType == Validation.all) {
-	    	Validate.stringNotNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
-	    	Validate.stringNotNullOrEmpty(this, this.avsResultCode, "AVS Result Code");
-	    	Validate.stringNotNullOrEmpty(this, this.cvvResultCode, "CVV Result Code");
-	    	Validate.stringNotNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
-		}
-		
-	}
+
+    public void validate(Validation validationType) throws FieldBadFormatException {
+        if (validationType == Validation.ALL) {
+            Validate.notNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
+            Validate.notNullOrEmpty(this, this.avsResultCode, "AVS Result Code");
+            Validate.notNullOrEmpty(this, this.cvvResultCode, "CVV Result Code");
+            Validate.notNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
+        }
+    }
 
     public String getCreditCardBin() {
         return creditCardBin;
@@ -79,5 +77,5 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.authorization_id = authorization_id;
     }
 
-	
+
 }

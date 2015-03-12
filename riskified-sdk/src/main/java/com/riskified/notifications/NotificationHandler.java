@@ -1,15 +1,14 @@
 package com.riskified.notifications;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.riskified.RiskifedError;
 import com.riskified.SHA256Handler;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * Converting string / servlet to notifaction object.
@@ -17,7 +16,7 @@ import com.riskified.SHA256Handler;
  */
 public class NotificationHandler {
     private Gson gson;
-	private SHA256Handler sha256Handler;
+    private SHA256Handler sha256Handler;
 
     /**
      * Converting string / servlet to notifaction object.
@@ -37,10 +36,10 @@ public class NotificationHandler {
      * @throws AuthError the hash doesn't match the was calced sha256 for the string
      */
     public Notification toObject(String data, String hash) throws AuthError {
-    	if (sha256Handler.isHmacCorrect(data, hash))
-    		return gson.fromJson(data, Notification.class);
-    	else
-    		throw new AuthError(hash, sha256Handler.createSHA256(data));
+        if (sha256Handler.isHmacCorrect(data, hash))
+            return gson.fromJson(data, Notification.class);
+        else
+            throw new AuthError(hash, sha256Handler.createSHA256(data));
     }
 
     /**

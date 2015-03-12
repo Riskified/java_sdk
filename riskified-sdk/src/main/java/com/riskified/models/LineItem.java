@@ -1,14 +1,14 @@
 package com.riskified.models;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.jar.Attributes;
-
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.jar.Attributes;
 
 public class LineItem implements IValidated {
 
@@ -37,9 +37,9 @@ public class LineItem implements IValidated {
     private Date eventDate;
     private String condition;
     private Seller seller;
-    
 
-	public LineItem(double price, int quantity, String title, int productId, String sku) {
+
+    public LineItem(double price, int quantity, String title, int productId, String sku) {
         this.properties = new ArrayList<Attributes>();
         this.taxLines = new ArrayList<TaxLine>();
         this.price = price;
@@ -49,24 +49,23 @@ public class LineItem implements IValidated {
         this.sku = sku;
     }
 
-	public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		
-		if(validationType == Validation.all) {
-			Validate.notNull(this, this.price, "Price");
-			Validate.notNull(this, this.quantity, "Quantity");
-			Validate.stringNotNullOrEmpty(this, this.title, "Title");
-			Validate.notNull(this, this.productId, "Product Id");
-			Validate.notNull(this, this.sku, "Sku");
-		}
-		
-		if(seller != null)
-		{
-			seller.validate(validationType);
-		}
-		
-	}
-	
+    public void validate(Validation validationType)
+    throws FieldBadFormatException {
+
+        if (validationType == Validation.ALL) {
+            Validate.notNull(this, this.price, "Price");
+            Validate.notNull(this, this.quantity, "Quantity");
+            Validate.notNullOrEmpty(this, this.title, "Title");
+            Validate.notNull(this, this.productId, "Product Id");
+            Validate.notNull(this, this.sku, "Sku");
+        }
+
+        if (seller != null) {
+            seller.validate(validationType);
+        }
+
+    }
+
     public double getPrice() {
         return price;
     }
@@ -100,13 +99,13 @@ public class LineItem implements IValidated {
     }
 
     public String getCondition() {
-		return condition;
-	}
+        return condition;
+    }
 
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
-    
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
     public int getProductId() {
         return productId;
     }
@@ -212,14 +211,14 @@ public class LineItem implements IValidated {
     }
 
     public Seller getSeller() {
-		return seller;
-	}
+        return seller;
+    }
 
-	public void setSeller(Seller seller) {
-		this.seller = seller;
-	}
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 
-	public List<Attributes> getProperties() {
+    public List<Attributes> getProperties() {
         return properties;
     }
 
@@ -267,5 +266,5 @@ public class LineItem implements IValidated {
         this.eventDate = eventDate;
     }
 
-	
+
 }

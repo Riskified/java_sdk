@@ -1,26 +1,5 @@
 package com.riskified;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
-import java.util.Properties;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-
 import com.google.gson.Gson;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.CancelOrder;
@@ -37,6 +16,20 @@ import com.riskified.models.Response;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validation;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 
 
 /**
@@ -45,11 +38,14 @@ import com.riskified.validations.Validation;
  * http://apiref.riskified.com/
  */
 public class RiskifiedClient {
-	private Validation validationType;
-	private Environment environmentType;
+    private Validation validation = Validation.ALL;
+    private Environment environment = Environment.SANDBOX;
     private String baseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
+    private int requestTimeout = 10000;
+    private int connectionTimeout = 5000;
+    private String authKey;
 
     /**
      * Riskified API client
@@ -68,39 +64,26 @@ public class RiskifiedClient {
 
         String shopUrl = properties.getProperty("shopUrl");
         String authKey = properties.getProperty("authKey");
-        String environment = properties.getProperty("environment");
-        String validation = properties.getProperty("validation");
-        
-        
-        if(validation.equals("none")) {
-        	validationType = Validation.none;
+        String environmentType = properties.getProperty("environment");
+        String validationType = properties.getProperty("validation");
+
+        if (validationType.equals("NONE")) {
+            validation = Validation.NONE;
+        } else if (validationType.equals("IGNORE_MISSING")) {
+            validation = Validation.IGNORE_MISSING;
         }
-        else if(validation.equals("ignoreMissing")) {
-        	validationType = Validation.ignoreMissing;
+
+        if (environmentType.equals("DEBUG")) {
+            environment = Environment.DEBUG;
+        } else if (environmentType.equals("PRODUCTION")) {
+            environment = Environment.PRODUCTION;
         }
-        else {
-        	validationType = Validation.all;
-        }
-        
-        if(environment.equals("debug")) {
-        	environmentType = Environment.debug;
-        }
-        else if(environment.equals("production")) {
-        	environmentType = Environment.production;
-        }
-        else {
-        	environmentType = Environment.sandbox;
-        }
-        
-        if (environmentType == Environment.debug) {
-            String url = properties.getProperty("debugRiskifiedHostUrl");
-            if (url == null || url.isEmpty()) {
-                init(shopUrl, authKey, "http://localhost:3000", validationType);
-            } else {
-                init(shopUrl, authKey, url, validationType);
-            }
+
+        if (environment == Environment.DEBUG) {
+            String url = properties.getProperty("debugRiskifiedHostUrl", Utils.DEBUG_ENVIRONMENT);
+            init(shopUrl, authKey, url, validation);
         } else {
-            init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), validationType);
+            init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
         }
     }
 
@@ -109,79 +92,48 @@ public class RiskifiedClient {
      * don't use config file
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
-     * @param environment The Riskifed environment (sandbox / production)
+     * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Environment environmentType) throws RiskifedError {
-        init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), Validation.all);
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifedError {
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
     }
-    
+
     /**
      * Riskified API client
      * don't use config file
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
-     * @param environment The Riskifed environment (sandbox / production)
+     * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
      * @throws RiskifedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Environment environmentType, Validation validationType) throws RiskifedError {
-        init(shopUrl, authKey, getBaseUrlFromEnvironment(environmentType), validationType);
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifedError {
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
     }
 
-    private static String getBaseUrlFromEnvironment(Environment environmentType) {
-    	if (environmentType == Environment.sandbox) {
-    		return "https://sandbox.riskified.com";
-    	}
-    	if (environmentType == Environment.production) {
-    		return "https://wh.riskified.com";
-    	}
-    	return "http://localhost:3000";
-        
-    }
-
-
-
-    /**
-     * Change the Riskified server url
-     * You shouldn't use this regular
-     * @param url the new server url
-     */
-    public void setBaseUrl(String url) {
-        this.baseUrl = url;
-    }
-
-    public Validation getValidationType() {
-		return validationType;
-	}
-
-	public void setValidationType(Validation validationType) {
-		this.validationType = validationType;
-	}
-
-	private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifedError {
+    private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifedError {
         this.baseUrl = baseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
-        this.validationType = validationType;
+        this.validation = validationType;
     }
-
 
     /**
      * Send a new checkout order to Riskified
-     * @param order The checkout order to create (Checkout order has the same fields like Order but all fields are optional)
+     * @param order The checkout order to create (Checkout order has the same fields like Order but ALL fields are optional)
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response checkoutOrder(CheckoutOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
-        validate(order, Validation.ignoreMissing);
+        validate(order, Validation.IGNORE_MISSING);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
-    
+
     /**
      * Mark a previously checkout order has been denied.
      * @param order The checkout denied order details, mark as denied and also can specify why it was denied.
@@ -190,14 +142,14 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response checkoutDeniedOrder(CheckoutDeniedOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response checkoutDeniedOrder(CheckoutDeniedOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_denied";
         validate(order);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutDeniedOrder>(order), url);
     }
-    
+
     /**
      * Send a new order to Riskified
      * Depending on your current plan, the newly created order might not be submitted automatically for review.
@@ -208,9 +160,9 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response createOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response createOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/create";
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
@@ -226,13 +178,12 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response submitOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
-        
+    public Response submitOrder(Order order) throws IOException, FieldBadFormatException {
         return submitOrder(order, false);
     }
-    
+
     /**
      * Submit a new or existing order to Riskified for review
      * Forces the order to be submitted for review, regardless of your current plan.
@@ -244,18 +195,18 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response submitOrder(Order order, boolean shouldValidateLikeCreation) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response submitOrder(Order order, boolean shouldValidateLikeCreation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/submit";
-        if(shouldValidateLikeCreation) {
-        	validate(order);
-        }
-        else {
-        	validate(order, Validation.ignoreMissing);
+        if (shouldValidateLikeCreation) {
+            validate(order);
+        } else {
+            validate(order, Validation.IGNORE_MISSING);
         }
         return postOrder(new OrderWrapper<Order>(order), url);
     }
+
     /**
      * Update details of an existing order.
      * Orders are differentiated by their id field. To update an existing order, include its id and any up-to-date data.
@@ -266,11 +217,11 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response updateOrder(Order order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response updateOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
-        validate(order, Validation.ignoreMissing);
+        validate(order, Validation.IGNORE_MISSING);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
 
@@ -286,9 +237,9 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response cancelOrder(CancelOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response cancelOrder(CancelOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/cancel";
         validate(order);
         return postOrder(new OrderWrapper<CancelOrder>(order), url);
@@ -304,9 +255,9 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response refundOrder(RefundOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response refundOrder(RefundOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/refund";
         validate(order);
         return postOrder(new OrderWrapper<RefundOrder>(order), url);
@@ -321,14 +272,14 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response fulfillOrder(FulfillmentOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response fulfillOrder(FulfillmentOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/fulfill";
         validate(order);
         return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
     }
-    
+
     /**
      * Set the decision made for order that was not submitted.
      * @param order The decision order details
@@ -338,14 +289,14 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response decisionOrder(DecisionOrder order) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response decisionOrder(DecisionOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/decision";
         validate(order);
         return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
-    
+
     /**
      * Send an array (batch) of existing/historical orders to Riskified.
      * Use the financial_status field to provide information regarding each order status:
@@ -361,46 +312,49 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException 
+     * @throws FieldBadFormatException
      */
-    public Response historicalOrders(ArrayOrders orders) throws ClientProtocolException, IOException, HttpResponseException, FieldBadFormatException {
+    public Response historicalOrders(ArrayOrders orders) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
-        validate(orders, Validation.ignoreMissing);
+        validate(orders, Validation.IGNORE_MISSING);
         return postOrder(orders, url);
     }
 
-    private Response postCheckoutOrder(Object data, String url) throws ClientProtocolException, IOException, FieldBadFormatException {
-    	
-    	HttpPost request = createPostRequest(url);
-        addDataToRequest(data, request);
-        HttpResponse response;
-        HttpClient client = HttpClientBuilder.create().build();
-        response = client.execute(request);
-        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-        int status = response.getStatusLine().getStatusCode();
-        
-        Response responseObject = getCheckoutResponseObject(postBody);
-        
-        switch (status) {
-        case 200:
-            return responseObject;
-        case 400:
-            throw new HttpResponseException(500, responseObject.getError().getMessage());
-        case 401:
-            throw new HttpResponseException(500, responseObject.getError().getMessage());
-        case 404:
-            throw new HttpResponseException(500, responseObject.getError().getMessage());
-        default:
-            throw new HttpResponseException(500, "Contact Riskified support");
-    }
-    
-    }
-    
-    private Response postOrder(Object data, String url) throws ClientProtocolException, IOException {
+    private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
         HttpResponse response;
-        HttpClient client = HttpClientBuilder.create().build();
+        HttpClient client = constructHttpClient();
+        response = client.execute(request);
+        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+        int status = response.getStatusLine().getStatusCode();
+        Response responseObject = getCheckoutResponseObject(postBody);
+        switch (status) {
+            case 200:
+                return responseObject;
+            case 400:
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
+            case 401:
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
+            case 404:
+                throw new HttpResponseException(500, responseObject.getError().getMessage());
+            default:
+                throw new HttpResponseException(500, "Contact Riskified support");
+        }
+    }
+
+    private HttpClient constructHttpClient() {
+        RequestConfig.Builder requestBuilder = RequestConfig.custom().setConnectTimeout(connectionTimeout).setConnectionRequestTimeout(requestTimeout);
+        HttpClientBuilder builder = HttpClientBuilder.create();
+        builder.setDefaultRequestConfig(requestBuilder.build());
+        return builder.build();
+    }
+
+    private Response postOrder(Object data, String url) throws IOException {
+        HttpPost request = createPostRequest(url);
+        addDataToRequest(data, request);
+        HttpResponse response;
+        HttpClient client = constructHttpClient();
         response = client.execute(request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
@@ -418,20 +372,19 @@ public class RiskifiedClient {
                 throw new HttpResponseException(500, "Contact Riskified support");
         }
     }
-    
+
     private Response getResponseObject(String postBody) throws IOException {
         Gson gson = new Gson();
         Response res = gson.fromJson(postBody, Response.class);
         return res;
     }
-    
+
     private CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
         Gson gson = new Gson();
         CheckoutResponse res = gson.fromJson(postBody, CheckoutResponse.class);
         res.setOrder(res.getCheckout());
         return res;
     }
-
 
     private void addDataToRequest(Object data, HttpPost postRequest) {
         String jsonData = JSONFormmater.toJson(data);
@@ -444,7 +397,6 @@ public class RiskifiedClient {
             input.setContentType("application/json");
             postRequest.setEntity(input);
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -455,17 +407,118 @@ public class RiskifiedClient {
         postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
         return postRequest;
     }
-    
+
     private void validate(IValidated objToValidated) throws FieldBadFormatException {
-    	if(this.validationType != Validation.none) {
-    		objToValidated.validate(this.validationType);
+        if (this.validation != Validation.NONE) {
+            objToValidated.validate(this.validation);
         }
     }
+
     private void validate(IValidated objToValidated, Validation validationType) throws FieldBadFormatException {
-    	if(validationType != Validation.none) {
-    		objToValidated.validate(validationType);
+        if (validationType != Validation.NONE) {
+            objToValidated.validate(validationType);
         }
     }
 
+    public String getShopUrl() {
+        return shopUrl;
+    }
 
+    public int getRequestTimeout() {
+        return requestTimeout;
+    }
+
+    public int getConnectionTimeout() {
+        return connectionTimeout;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    /**
+     * Change the Riskified server url
+     * You shouldn't use this regular
+     * @param url the new server url
+     */
+    public void setBaseUrl(String url) {
+        this.baseUrl = url;
+    }
+
+    public Validation getValidation() {
+        return validation;
+    }
+
+    public void setValidation(Validation validation) {
+        this.validation = validation;
+    }
+
+    public static class RiskifiedClientBuilder {
+        private String shopUrl;
+        private String authKey;
+        private Environment environment;
+        private Integer requestTimeout;
+        private Integer connectionTimeout;
+        private Validation validation;
+
+        /**
+         * Required arguments to build a RiskifiedClient
+         * @param shopUrl
+         * @param authKey
+         * @param environment
+         */
+        public RiskifiedClientBuilder(String shopUrl, String authKey, Environment environment) {
+            this.shopUrl = shopUrl;
+            this.authKey = authKey;
+            this.environment = environment;
+        }
+
+        public RiskifiedClientBuilder setRequestTimeout(Integer requestTimeout) {
+            this.requestTimeout = requestTimeout;
+            return this;
+        }
+
+        public RiskifiedClientBuilder setConnectionTimeout(Integer connectionTimeout) {
+            this.connectionTimeout = connectionTimeout;
+            return this;
+        }
+
+        public RiskifiedClientBuilder setValidation(Validation validation) {
+            this.validation = validation;
+            return this;
+        }
+
+        public RiskifiedClient build() throws RiskifedError {
+            return new RiskifiedClient(this);
+        }
+    }
+
+    public RiskifiedClient(RiskifiedClientBuilder riskifiedClientBuilder) throws RiskifedError {
+        this.shopUrl = riskifiedClientBuilder.shopUrl;
+        this.authKey = riskifiedClientBuilder.authKey;
+        this.environment = riskifiedClientBuilder.environment;
+
+        if (riskifiedClientBuilder.validation != null) {
+            this.validation = riskifiedClientBuilder.validation;
+        }
+
+        if (riskifiedClientBuilder.requestTimeout != null) {
+            this.requestTimeout = riskifiedClientBuilder.requestTimeout;
+        }
+
+        if (riskifiedClientBuilder.connectionTimeout != null) {
+            this.connectionTimeout = riskifiedClientBuilder.connectionTimeout;
+        }
+
+        this.sha256Handler = new SHA256Handler(authKey);
+        this.baseUrl = Utils.getBaseUrlFromEnvironment(environment);
+    }
 }

@@ -20,17 +20,17 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.payerAddressStatus = payerAddressStatus;
         this.protectionEligibility = protectionEligibility;
     }
-    
+
     public void validate(Validation validationType)
-			throws FieldBadFormatException {
-    	if(validationType == validationType.all) {
-			Validate.emailAddressWellFormed(this, this.payerEmail, "Payer Email");
-			Validate.stringNotNullOrEmpty(this, this.payerStatus, "Payer Status");
-			Validate.stringNotNullOrEmpty(this, this.payerAddressStatus, "Payer Address Status");
-			Validate.stringNotNullOrEmpty(this, this.protectionEligibility, "Protection Eligibility");
-    	}
-		
-	}
+    throws FieldBadFormatException {
+        if (validationType == validationType.ALL) {
+            Validate.emailAddress(this, this.payerEmail, "Payer Email");
+            Validate.notNullOrEmpty(this, this.payerStatus, "Payer Status");
+            Validate.notNullOrEmpty(this, this.payerAddressStatus, "Payer Address Status");
+            Validate.notNullOrEmpty(this, this.protectionEligibility, "Protection Eligibility");
+        }
+
+    }
 
     public String getPayerEmail() {
         return payerEmail;
@@ -88,5 +88,5 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.authorizationId = authorizationId;
     }
 
-	
+
 }

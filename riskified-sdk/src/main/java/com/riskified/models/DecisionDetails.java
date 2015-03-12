@@ -1,96 +1,93 @@
 package com.riskified.models;
 
-import java.util.Date;
-
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
 
+import java.util.Date;
+
 public class DecisionDetails implements IValidated {
 
-	private DecisionType externalStatus;
-	private String reason;
-	private Date decidedAt;
-	private double amount;
-	private String currency;
-	private String notes;
-	
-	public DecisionDetails() {
-		
-	}
-	
-	public DecisionDetails(DecisionType externalStatus, Date decidedAt, String reason) {
-		this.externalStatus = externalStatus;
-		this.decidedAt = decidedAt;
-		this.reason = reason;
-	}
+    private DecisionType externalStatus;
+    private String reason;
+    private Date decidedAt;
+    private double amount;
+    private String currency;
+    private String notes;
 
-	public void validate(Validation validationType)
-			throws FieldBadFormatException {
-		
-		if(validationType == Validation.all) {
-			
-			Validate.notNull(this, this.externalStatus, "External Status");
-			Validate.notNull(this, this.decidedAt, "Decided At");
-		}
-		
-		if(currency != null) {
-			Validate.currencyCodeWellFormed(this, this.currency, "Currency");
-		}
-		
-	}
-	
-	
+    public DecisionDetails() {
 
-	public String getReason() {
-		return reason;
-	}
+    }
 
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
+    public DecisionDetails(DecisionType externalStatus, Date decidedAt, String reason) {
+        this.externalStatus = externalStatus;
+        this.decidedAt = decidedAt;
+        this.reason = reason;
+    }
 
-	public Date getDecidedAt() {
-		return decidedAt;
-	}
+    public void validate(Validation validationType) throws FieldBadFormatException {
 
-	public void setDecidedAt(Date decidedAt) {
-		this.decidedAt = decidedAt;
-	}
+        if (validationType == Validation.ALL) {
 
-	public double getAmount() {
-		return amount;
-	}
+            Validate.notNull(this, this.externalStatus, "External Status");
+            Validate.notNull(this, this.decidedAt, "Decided At");
+        }
 
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
+        if (currency != null) {
+            Validate.currencyCode(this, this.currency, "Currency");
+        }
 
-	public String getCurrency() {
-		return currency;
-	}
+    }
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
 
-	public String getNotes() {
-		return notes;
-	}
+    public String getReason() {
+        return reason;
+    }
 
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
-	public DecisionType getExternalStatus() {
-		return externalStatus;
-	}
+    public Date getDecidedAt() {
+        return decidedAt;
+    }
 
-	public void setExternalStatus(DecisionType externalStatus) {
-		this.externalStatus = externalStatus;
-	}
+    public void setDecidedAt(Date decidedAt) {
+        this.decidedAt = decidedAt;
+    }
 
-	
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public DecisionType getExternalStatus() {
+        return externalStatus;
+    }
+
+    public void setExternalStatus(DecisionType externalStatus) {
+        this.externalStatus = externalStatus;
+    }
+
 
 }

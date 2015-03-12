@@ -3,22 +3,22 @@ package com.riskified.models;
 import java.util.List;
 
 public class Response {
-    protected ResOrder order;
-    protected Integer received;
-    protected List<String> warnings;
-    protected Error error;
+    private ResOrder order;
+    private Integer received;
+    private List<String> warnings;
+    private Error error;
 
-    public Response()
-    {
-    	
+    public Response() {
+
     }
+
     public Response(CheckoutResponse checkoutResponse) {
-    	this.order = checkoutResponse.getCheckout();
-    	this.received = checkoutResponse.getReceived();
-    	this.warnings = checkoutResponse.getWarnings();
-    	this.error = checkoutResponse.getError();
+        this.order = checkoutResponse.getCheckout();
+        this.received = checkoutResponse.getReceived();
+        this.warnings = checkoutResponse.getWarnings();
+        this.error = checkoutResponse.getError();
     }
-    
+
     public ResOrder getOrder() {
         return order;
     }
@@ -27,13 +27,13 @@ public class Response {
         this.order = order;
     }
 
-	public int getReceived() {
-		return received;
-	}
+    public int getReceived() {
+        return received;
+    }
 
-	public void setReceived(int received) {
-		this.received = received;
-	}
+    public void setReceived(int received) {
+        this.received = received;
+    }
 
     public List<String> getWarnings() {
         return warnings;
