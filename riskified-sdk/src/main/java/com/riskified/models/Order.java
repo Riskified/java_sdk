@@ -12,12 +12,4 @@ public class Order extends BaseOrder {
 
     }
 
-    public String getCheckoutId() {
-		return checkoutId;
-	}
-
-	public void setCheckoutId(String checkoutId) {
-		this.checkoutId = checkoutId;
-	}
-
 }
