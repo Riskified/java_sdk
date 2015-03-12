@@ -6,8 +6,6 @@ package com.riskified.models;
  */
 public class Order extends BaseOrder {
 	
-	public String checkoutId;
-	
 	public Order() {
 
     }
