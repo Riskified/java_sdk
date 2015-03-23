@@ -142,7 +142,7 @@ public class Client {
 
     private static DecisionOrder generateDecisionOrder() {
         DecisionDetails decision = new DecisionDetails();
-        decision.setExternalStatus(DecisionType.chargedbackFraud);
+        decision.setExternalStatus(DecisionType.chargebackFraud);
         decision.setReason("Fraud + used proxy");
         decision.setDecidedAt(new Date(114, 01, 10, 11, 00, 00));
         DecisionOrder decisionOrder = new DecisionOrder("1235", decision);
