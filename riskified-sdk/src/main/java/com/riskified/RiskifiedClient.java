@@ -320,7 +320,7 @@ public class RiskifiedClient {
      */
     public Response historicalOrders(ArrayOrders orders) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
-        validate(orders, Validation.IGNORE_MISSING);
+        validate(orders, validation);
         return postOrder(orders, url);
     }
 
