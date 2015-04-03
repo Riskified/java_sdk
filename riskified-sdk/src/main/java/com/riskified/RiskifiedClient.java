@@ -134,7 +134,7 @@ public class RiskifiedClient {
      */
     public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
-        validate(order, Validation.IGNORE_MISSING);
+        validate(order, validation);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
 
@@ -206,7 +206,7 @@ public class RiskifiedClient {
         if (shouldValidateLikeCreation) {
             validate(order);
         } else {
-            validate(order, Validation.IGNORE_MISSING);
+            validate(order, validation);
         }
         return postOrder(new OrderWrapper<Order>(order), url);
     }
@@ -225,7 +225,7 @@ public class RiskifiedClient {
      */
     public Response updateOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
-        validate(order, Validation.IGNORE_MISSING);
+        validate(order, validation);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
 
@@ -320,7 +320,7 @@ public class RiskifiedClient {
      */
     public Response historicalOrders(ArrayOrders orders) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
-        validate(orders, Validation.IGNORE_MISSING);
+        validate(orders, validation);
         return postOrder(orders, url);
     }
 

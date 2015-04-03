@@ -34,15 +34,15 @@ public class Validate {
         }
     }
 
-    public static void countryCode(Object source, String currency, String fieldName) throws FieldBadFormatException {
-        if (currency.length() != 2 || !currency.matches("[A-Z]+")) {
-            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + currency + " is not a valid currency code (should be 2 capital letters).");
+    public static void countryCode(Object source, String countryCode, String fieldName) throws FieldBadFormatException {
+        if (countryCode == null || countryCode.length() != 2 || !countryCode.matches("[A-Z]+")) {
+            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + countryCode + " is not a valid countryCode code (should be 2 capital letters).");
         }
     }
 
-    public static void provinceCode(Object source, String currency, String fieldName) throws FieldBadFormatException {
-        if (currency.length() != 2 || !currency.matches("[A-Z]+")) {
-            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + currency + " is not a valid province code (should be 2 capital letters).");
+    public static void provinceCode(Object source, String provinceCode, String fieldName) throws FieldBadFormatException {
+        if (provinceCode == null || provinceCode.length() != 2 || !provinceCode.matches("[A-Z]+")) {
+            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + provinceCode + " is not a valid province code (should be 2 capital letters).");
         }
     }
 
