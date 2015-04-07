@@ -291,7 +291,7 @@ public class Client {
         travelLineItem.setArrivalCountryCode("IL");
         travelLineItem.setArrivalCity("Tel Aviv");
         travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5));
-        travelLineItem.setTravelTimeHours(5);
+        
         
         
         Seller seller = new Seller(customer);

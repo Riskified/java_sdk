@@ -37,6 +37,7 @@ public class LineItem implements IValidated {
     private Date eventDate;
     private String condition;
     private Seller seller;
+    private String brand;
 
 
     public LineItem(double price, int quantity, String title, int productId, String sku) {
@@ -265,6 +266,14 @@ public class LineItem implements IValidated {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 
 
 }

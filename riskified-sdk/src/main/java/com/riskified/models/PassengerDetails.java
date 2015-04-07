@@ -8,9 +8,10 @@ import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validation;
 
-public class PassengerDetails extends Customer {
+public class PassengerDetails implements IValidated {
 
-	
+	private String firstName;
+	private String lastName;
 	private Date birthDate;
 	private String passportNationality;
 	private String passportIssuer;
@@ -20,15 +21,12 @@ public class PassengerDetails extends Customer {
 	private double insurancePrice;
 	
 	public PassengerDetails() {
-		super();
+		
 	}
 	
-	public PassengerDetails(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
-		super(email, firstName, lastName, id, createdAt, verifiedEmail, ordersCount);
-	}
 
 	public void validate(Validation validationType) throws FieldBadFormatException {
-		super.validate(validationType);
+		
 	}
 	
 	public Date getBirthDate() {
@@ -85,6 +83,26 @@ public class PassengerDetails extends Customer {
 
 	public void setInsurancePrice(double insurancePrice) {
 		this.insurancePrice = insurancePrice;
+	}
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }
