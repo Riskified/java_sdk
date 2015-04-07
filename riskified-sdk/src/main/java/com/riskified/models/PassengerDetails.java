@@ -19,6 +19,8 @@ public class PassengerDetails implements IValidated {
 	private Date passportExpriationDate;
 	private String visa;
 	private double insurancePrice;
+	private String type;
+	private String frequentFlyerProgram;
 	
 	public PassengerDetails() {
 		
@@ -103,6 +105,26 @@ public class PassengerDetails implements IValidated {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public String getFrequentFlyerProgram() {
+		return frequentFlyerProgram;
+	}
+
+
+	public void setFrequentFlyerProgram(String frequentFlyerProgram) {
+		this.frequentFlyerProgram = frequentFlyerProgram;
 	}
 
 }
