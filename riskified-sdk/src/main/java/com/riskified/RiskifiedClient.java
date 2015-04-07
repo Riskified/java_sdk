@@ -134,7 +134,29 @@ public class RiskifiedClient {
      */
     public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
-        validate(order, Validation.IGNORE_MISSING);
+        
+        // Validation.ALL is not relevant when checkout.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+        
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
+    }
+    
+    /**
+     * Send a new checkout order to Riskified
+     * @param order The checkout order to create (Checkout order has the same fields like Order but ALL fields are optional)
+     * @param validation Determines what type of validation will take place
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response checkoutOrder(CheckoutOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/checkout_create";
+        validate(order, validation);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
 
@@ -151,6 +173,23 @@ public class RiskifiedClient {
     public Response checkoutDeniedOrder(CheckoutDeniedOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_denied";
         validate(order);
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutDeniedOrder>(order), url);
+    }
+    
+    /**
+     * Mark a previously checkout order has been denied.
+     * @param order The checkout denied order details, mark as denied and also can specify why it was denied.
+     * @param validation Determines what type of validation will take place
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response checkoutDeniedOrder(CheckoutDeniedOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/checkout_denied";
+        validate(order, validation);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutDeniedOrder>(order), url);
     }
 
@@ -171,6 +210,25 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
+    
+    /**
+     * Send a new order to Riskified
+     * Depending on your current plan, the newly created order might not be submitted automatically for review.
+     * @param order An order to create
+     * @param validation Determines what type of validation will take place
+     * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response createOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/create";
+        validate(order, validation);
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
 
     /**
      * Submit a new or existing order to Riskified for review
@@ -185,7 +243,7 @@ public class RiskifiedClient {
      * @throws FieldBadFormatException
      */
     public Response submitOrder(Order order) throws IOException, FieldBadFormatException {
-        return submitOrder(order, false);
+        return submitOrder(order);
     }
 
     /**
@@ -193,7 +251,7 @@ public class RiskifiedClient {
      * Forces the order to be submitted for review, regardless of your current plan.
      * @param order An order to submit for review.
      * Any missing fields (such as BIN number or AVS result code) that are unavailable during the time of the request should be skipped or passed as null.
-     * @param shouldValidateLikeCreation Mark if should validate the model of Order before submitting (should be true if the order is new and going to be created).
+     * @param validation Determines what type of validation will take place
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
@@ -201,13 +259,9 @@ public class RiskifiedClient {
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException
      */
-    public Response submitOrder(Order order, boolean shouldValidateLikeCreation) throws IOException, FieldBadFormatException {
+    public Response submitOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/submit";
-        if (shouldValidateLikeCreation) {
-            validate(order);
-        } else {
-            validate(order, Validation.IGNORE_MISSING);
-        }
+        validate(order, validation);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
 
@@ -225,7 +279,31 @@ public class RiskifiedClient {
      */
     public Response updateOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
-        validate(order, Validation.IGNORE_MISSING);
+        
+        // Validation.ALL is not relevant when updating.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+        
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
+    
+    /**
+     * Update details of an existing order.
+     * Orders are differentiated by their id field. To update an existing order, include its id and any up-to-date data.
+     * @param order A (possibly incomplete) order to update
+     * The order must have an id field referencing an existing order and at least one additional field to update.
+     * @param validation Determines what type of validation will take place
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response updateOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/update";
+        validate(order, validation);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
 
@@ -248,6 +326,27 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<CancelOrder>(order), url);
     }
+    
+    /**
+     * Mark a previously submitted order as cancelled.
+     * If the order has not yet been reviewed, it is excluded from future review.
+     * If the order has already been reviewed and approved, canceling it will also trigger a full refund on any associated charges.
+     * An order can only be cancelled during a relatively short time window after its creation.
+     * @param order The order to cancel
+     * @param validation Determines what type of validation will take place
+     * @see CancelOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response cancelOrder(CancelOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/cancel";
+        validate(order, validation);
+        return postOrder(new OrderWrapper<CancelOrder>(order), url);
+    }
 
     /**
      * Issue a partial refund for an existing order.
@@ -264,6 +363,25 @@ public class RiskifiedClient {
     public Response refundOrder(RefundOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/refund";
         validate(order);
+        return postOrder(new OrderWrapper<RefundOrder>(order), url);
+    }
+    
+    /**
+     * Issue a partial refund for an existing order.
+     * Any associated charges will be updated to reflect the new order total amount.
+     * @param order The refund Order
+     * @param validation Determines what type of validation will take place
+     * @see RefundOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response refundOrder(RefundOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/refund";
+        validate(order, validation);
         return postOrder(new OrderWrapper<RefundOrder>(order), url);
     }
 
@@ -283,6 +401,24 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
     }
+    
+    /**
+     * Mark a previously submitted order that is was fulfilled.
+     * @param order The fulfillment order details
+     * @param validation Determines what type of validation will take place
+     * @see FulfillmentOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response fulfillOrder(FulfillmentOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/fulfill";
+        validate(order, validation);
+        return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
+    }
 
     /**
      * Set the decision made for order that was not submitted.
@@ -300,14 +436,28 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
+    
+    /**
+     * Set the decision made for order that was not submitted.
+     * @param order The decision order details
+     * @param validation Determines what type of validation will take place
+     * @see DecisionOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response decisionOrder(DecisionOrder order, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/decision";
+        validate(order, validation);
+        return postOrder(new OrderWrapper<DecisionOrder>(order), url);
+    }
 
     /**
      * Send an array (batch) of existing/historical orders to Riskified.
-     * Use the financial_status field to provide information regarding each order status:
-     * * 'approved' - approved orders
-     * * 'declined-fraud' - declined orders (refunded or voided) as suspected fraud
-     * * 'declined' - declined orders (refunded or voided) without connection to fraud
-     * * 'chargeback' - orders that received a chargeback
+     * Use the decision field to provide information regarding each order status.
      *
      * Orders sent will be used to build analysis models to better analyze newly received orders.
      *
@@ -320,7 +470,31 @@ public class RiskifiedClient {
      */
     public Response historicalOrders(ArrayOrders orders) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
-        validate(orders, Validation.IGNORE_MISSING);
+        validate(orders);
+        return postOrder(orders, url);
+    }
+    
+    /**
+     * Send an array (batch) of existing/historical orders to Riskified.
+     * Use the financial_status field to provide information regarding each order status:
+     * * 'approved' - approved orders
+     * * 'declined-fraud' - declined orders (refunded or voided) as suspected fraud
+     * * 'declined' - declined orders (refunded or voided) without connection to fraud
+     * * 'chargeback' - orders that received a chargeback
+     *
+     * Orders sent will be used to build analysis models to better analyze newly received orders.
+     *
+     * @param orders A list of historical orders to send
+     * @param validation Determines what type of validation will take place
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response historicalOrders(ArrayOrders orders, Validation validation) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/historical";
+        validate(orders, validation);
         return postOrder(orders, url);
     }
 

@@ -1,5 +1,5 @@
 package com.riskified.samples.orderClient;
-
+import java.util.Calendar;
 import com.riskified.RiskifedError;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.Address;
@@ -25,7 +25,9 @@ import com.riskified.models.Response;
 import com.riskified.models.Seller;
 import com.riskified.models.ShippingLine;
 import com.riskified.models.SocialDetails;
+import com.riskified.models.TravelLineItem;
 import com.riskified.validations.FieldBadFormatException;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
@@ -279,12 +281,25 @@ public class Client {
         order.setCustomer(customer);
 
         LineItem lineItem = new LineItem(200, 4, "ACME Spring", 202, "EFGH");
+        
+        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", 211, "EGGG");
+        travelLineItem.setDepartureAirportCode("LLBG");
+        travelLineItem.setDepartureCountryCode("IL");
+        travelLineItem.setDepartureCity("Tel Aviv");
+        travelLineItem.setDepartureDate(getDate(2014, Calendar.MARCH, 5));
+        travelLineItem.setArrivalAirportCode("LBG");
+        travelLineItem.setArrivalCountryCode("IL");
+        travelLineItem.setArrivalCity("Tel Aviv");
+        travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5));
+        travelLineItem.setTravelTimeHours(5);
+        
+        
         Seller seller = new Seller(customer);
         seller.setPriceNegotiated(true);
         seller.setStartingPrice(400);
         order.setLineItems(Arrays.asList(
         new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-        lineItem));
+        lineItem, travelLineItem));
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
@@ -324,5 +339,13 @@ public class Client {
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("1234", authorizationError);
 
         return checkoutDeniedOrder;
+    }
+    
+    private static Date getDate(int year, int month, int day) {
+    	Calendar cal = Calendar.getInstance();
+    	cal.set(Calendar.YEAR, year);
+    	cal.set(Calendar.MONTH, month);
+    	cal.set(Calendar.DAY_OF_MONTH, day);
+    	return cal.getTime();
     }
 }

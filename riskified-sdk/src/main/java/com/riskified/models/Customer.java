@@ -29,7 +29,18 @@ public class Customer implements IValidated {
     private String tags;
     private Address defaultAddress;
     private List<SocialDetails> social;
-
+    private Gender gender; // male or female
+    
+    public Customer() {
+    	
+    }
+    
+    public Customer(String email, String firstName, String lastName) {
+    	this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
     public Customer(String email, String firstName, String lastName, String id, Date createdAt, Boolean verifiedEmail, Integer ordersCount) {
         this.email = email;
         this.firstName = firstName;
