@@ -243,7 +243,7 @@ public class RiskifiedClient {
      * @throws FieldBadFormatException
      */
     public Response submitOrder(Order order) throws IOException, FieldBadFormatException {
-        return submitOrder(order);
+        return submitOrder(order, validation);
     }
 
     /**

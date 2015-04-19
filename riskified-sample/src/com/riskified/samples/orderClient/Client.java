@@ -88,6 +88,15 @@ public class Client {
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
 
+
+            Response resSubmitOrder = client.submitOrder(order);
+
+            System.out.println("-----------------------------------------");
+            System.out.println("Submit order response:");
+            System.out.println("id: " + resSubmitOrder.getOrder().getId());
+            System.out.println("status: " + resSubmitOrder.getOrder().getStatus());
+            System.out.println("description: " + resSubmitOrder.getOrder().getDescription());
+            
             Response resUpdateOrder = client.updateOrder(updateOrder);
 
             System.out.println("-----------------------------------------");
@@ -173,7 +182,7 @@ public class Client {
 
     private static CancelOrder generateCancelOrder(Order order) {
         CancelOrder cancel = new CancelOrder();
-        cancel.setId(order.getId());
+        cancel.setId("166855");
         cancel.setCancelReason("test");
         cancel.setCancelledAt(new Date());
         return cancel;
