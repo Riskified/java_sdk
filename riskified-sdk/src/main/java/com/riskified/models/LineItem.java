@@ -34,6 +34,9 @@ public class LineItem implements IValidated {
     private String eventSubCategoryName;
     private String eventName;
     private String eventSectionName;
+    private String eventCountry;
+    private String eventCity;
+    private String eventLocation;
     private Date eventDate;
     private String condition;
     private Seller seller;
@@ -273,6 +276,30 @@ public class LineItem implements IValidated {
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public String getEventCountry() {
+		return eventCountry;
+	}
+
+	public void setEventCountry(String eventCountry) {
+		this.eventCountry = eventCountry;
+	}
+
+	public String getEventCity() {
+		return eventCity;
+	}
+
+	public void setEventCity(String eventCity) {
+		this.eventCity = eventCity;
+	}
+
+	public String getEventLocation() {
+		return eventLocation;
+	}
+
+	public void setEventLocation(String eventLocation) {
+		this.eventLocation = eventLocation;
 	}
 
 
