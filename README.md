@@ -14,7 +14,7 @@ Validations.ignoreMissing
 
 like this:
 ```
-RiskifiedClient client = new RiskifiedClient(domain, authToken, Environment.sandbox, Validation.ignoreMissing);
+RiskifiedClient client = new RiskifiedClient(domain, authToken, Environment.SANDBOX, Validation.IGNORE_MISSING);
 ```
 Or specify the validation type in the config file 'riskified_sdk.properties'.
 
