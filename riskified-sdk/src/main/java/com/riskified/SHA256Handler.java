@@ -2,6 +2,7 @@ package com.riskified;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -15,12 +16,12 @@ public class SHA256Handler {
         mac = createSHA256Key(authKay);
     }
 
-    public String createSHA256(String data) {
-        final byte[] hmac = mac.doFinal(data.getBytes());
+    public String createSHA256(String data) throws IllegalStateException, UnsupportedEncodingException {
+        final byte[] hmac = mac.doFinal(data.getBytes("UTF-8"));
         return toHexString(hmac);
     }
 
-    public Boolean isHmacCorrect(String data, String hmac) {
+    public Boolean isHmacCorrect(String data, String hmac) throws IllegalStateException, UnsupportedEncodingException {
         String calcHash = createSHA256(data);
         return hmac.equals(calcHash);
     }

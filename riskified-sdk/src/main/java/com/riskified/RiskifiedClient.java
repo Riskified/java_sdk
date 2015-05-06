@@ -16,6 +16,7 @@ import com.riskified.models.Response;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validation;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,10 +26,12 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 
@@ -564,25 +567,23 @@ public class RiskifiedClient {
         return res;
     }
 
-    private void addDataToRequest(Object data, HttpPost postRequest) {
+    private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
         String jsonData = JSONFormmater.toJson(data);
-        String hmac = sha256Handler.createSHA256(jsonData);
+        
+    	String hmac = sha256Handler.createSHA256(jsonData);
         postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
-
+		
         StringEntity input;
-        try {
-            input = new StringEntity(jsonData);
-            input.setContentType("application/json");
-            postRequest.setEntity(input);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        input = new StringEntity(jsonData, Charset.forName("UTF-8"));
+		input.setContentType("application/json");
+		postRequest.setEntity(input);
     }
 
     private HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
+        
         return postRequest;
     }
 
