@@ -514,11 +514,13 @@ public class RiskifiedClient {
             case 200:
                 return responseObject;
             case 400:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
             case 401:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
             case 404:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
+            case 504:
+                throw new HttpResponseException(status, "Temporary error, please retry");
             default:
                 throw new HttpResponseException(500, "Contact Riskified support");
         }
@@ -541,17 +543,19 @@ public class RiskifiedClient {
         int status = response.getStatusLine().getStatusCode();
         Response responseObject = getResponseObject(postBody);
         switch (status) {
-            case 200:
-                return responseObject;
-            case 400:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
-            case 401:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
-            case 404:
-                throw new HttpResponseException(500, responseObject.getError().getMessage());
-            default:
-                throw new HttpResponseException(500, "Contact Riskified support");
-        }
+	        case 200:
+	            return responseObject;
+	        case 400:
+	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	        case 401:
+	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	        case 404:
+	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	        case 504:
+	            throw new HttpResponseException(status, "Temporary error, please retry");
+	        default:
+	            throw new HttpResponseException(500, "Contact Riskified support");
+	    }
     }
 
     private Response getResponseObject(String postBody) throws IOException {
