@@ -13,7 +13,7 @@ public class SampleServer {
         myContext.setContextPath("/");
         server.setHandler(myContext);
 
-        myContext.addServlet(new ServletHolder(new NotificationServlet("26faa0eb6eacf889e300944c297640b68789b11c")), "/*");
+        myContext.addServlet(new ServletHolder(new NotificationServlet("636b3045e083eddf4ea9f0b7f2ed4a26")), "/*");
 
         server.start();
         server.join();

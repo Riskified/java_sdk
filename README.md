@@ -32,6 +32,13 @@ To build sdk and samples:
 --------------------------
 *	Run `mvn install` to build sdk jar and sample.
 
+Run The notifications sample
+--------------------------
+<code sh>
+cd riskified-sample
+mvn exec:java -Dexec.mainClass="com.riskified.samples.notificationServer.servlet.SampleServer"
+<code>
+
 
 Maven dependency excerpt:
 ----------------
