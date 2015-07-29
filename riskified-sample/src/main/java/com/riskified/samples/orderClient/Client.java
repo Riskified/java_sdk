@@ -1,5 +1,6 @@
 package com.riskified.samples.orderClient;
 import java.util.Calendar;
+
 import com.riskified.RiskifedError;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.Address;
@@ -19,6 +20,7 @@ import com.riskified.models.FulfillmentDetails;
 import com.riskified.models.FulfillmentOrder;
 import com.riskified.models.LineItem;
 import com.riskified.models.Order;
+import com.riskified.models.Passenger;
 import com.riskified.models.RefundDetails;
 import com.riskified.models.RefundOrder;
 import com.riskified.models.Response;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Client {
     public static void main(String[] arg) throws FieldBadFormatException {
@@ -63,7 +66,7 @@ public class Client {
             // RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.DEBUG);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
-
+            
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 
             System.out.println("Checkout order response:");
@@ -78,7 +81,7 @@ public class Client {
             System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
-
+			
 
             Response resCreateOrder = client.createOrder(order);
 
@@ -133,7 +136,7 @@ public class Client {
             Response resDecision = client.decisionOrder(decisionOrder);
 
             System.out.println("-----------------------------------------");
-            System.out.println("decision order response:");
+            System.out.println("Decision order response:");
             System.out.println("id: " + resDecision.getOrder().getId());
             System.out.println("status: " + resDecision.getOrder().getStatus());
             System.out.println("description: " + resDecision.getOrder().getDescription());
@@ -201,8 +204,8 @@ public class Client {
         FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
 
         fulfilmentDetails.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-        new LineItem(200, 4, "ACME Spring", 202, "EFGH")));
+        new LineItem(100, 1, "ACME Widget", 101),
+        new LineItem(200, 4, "ACME Spring", 202)));
 
         fulfilmentDetails.setTrackingCompany("UPS");
         fulfilmentDetails.setTrackingNumbers("11X63b");
@@ -215,7 +218,7 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("1235");
+        order.setId("221212");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
@@ -232,8 +235,8 @@ public class Client {
         order.setReferringSite("google.com");
 
         order.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-        new LineItem(200, 4, "ACME Spring", 202, "EFGH")));
+        new LineItem(100, 1, "ACME Widget", 101),
+        new LineItem(200, 4, "ACME Spring", 202)));
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
@@ -267,7 +270,7 @@ public class Client {
 
     private static Order generateOrder() {
         Order order = new Order();
-        order.setId("1235");
+        order.setId("1919191");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
@@ -289,27 +292,42 @@ public class Client {
         customer.getSocial().add(social);
         order.setCustomer(customer);
 
-        LineItem lineItem = new LineItem(200, 4, "ACME Spring", 202, "EFGH");
+        LineItem lineItem = new LineItem(200, 4, "ACME Spring", 202);
         
-        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", 211, "EGGG");
-        travelLineItem.setDepartureAirportCode("LLBG");
+        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", 211, "B11", 1, 1);
+        travelLineItem.setDeparturePortCode("LLBG");
         travelLineItem.setDepartureCountryCode("IL");
         travelLineItem.setDepartureCity("Tel Aviv");
-        travelLineItem.setDepartureDate(getDate(2014, Calendar.MARCH, 5));
-        travelLineItem.setArrivalAirportCode("LBG");
-        travelLineItem.setArrivalCountryCode("IL");
-        travelLineItem.setArrivalCity("Tel Aviv");
-        travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5));
+        travelLineItem.setDepartureDate(getDate(2014, Calendar.MARCH, 5, 12, 30, 0));
+        travelLineItem.setArrivalPortCode("LBG");
+        travelLineItem.setArrivalCountryCode("FR");
+        travelLineItem.setArrivalCity("Paris");
+        travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5, 15, 30, 0));
+        travelLineItem.setTicketClass("economy");
+        travelLineItem.setCarrierCode("AF");
+        travelLineItem.setCarrierName("Air France");
+        travelLineItem.setRequiresShipping(false);
         
+        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", 101), lineItem, travelLineItem));
+
+        Passenger passenger = new Passenger("john","smith");
+        passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));
+        passenger.setNationalityCode("IL");
+        passenger.setInsuranceType("full");
+        passenger.setInsurancePrice(11);
+        passenger.setDocumentNumber("123456");
+        passenger.setDocumentType("Passport");
+        passenger.setDocumentIssueDate(getDate(1988, Calendar.MARCH, 5));
+        passenger.setDocumentExpirationDate(getDate(2020, Calendar.MARCH, 5));
+        passenger.setPassengerType("Adult");
         
+        order.setPassengers(Arrays.asList(passenger));
         
         Seller seller = new Seller(customer);
         seller.setPriceNegotiated(true);
         seller.setStartingPrice(400);
-        order.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-        lineItem, travelLineItem));
-
+        
+        
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
@@ -320,7 +338,7 @@ public class Client {
         address.setCompany("Kansas Computers");
         address.setCountryCode("US");
         address.setName("John Doe");
-        address.setAddress2("Apartment 12");
+        address.setAddress2("איתי בדיקה");
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
@@ -351,10 +369,17 @@ public class Client {
     }
     
     private static Date getDate(int year, int month, int day) {
+    	return getDate(year, month, day, 0, 0, 0);
+    }
+    
+    private static Date getDate(int year, int month, int day, int hour, int minute, int second) {
     	Calendar cal = Calendar.getInstance();
     	cal.set(Calendar.YEAR, year);
     	cal.set(Calendar.MONTH, month);
     	cal.set(Calendar.DAY_OF_MONTH, day);
+    	cal.set(Calendar.HOUR_OF_DAY, hour);
+    	cal.set(Calendar.MINUTE, minute);
+    	cal.set(Calendar.SECOND, second);
     	return cal.getTime();
     }
 }
