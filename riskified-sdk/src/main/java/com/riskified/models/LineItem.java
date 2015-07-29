@@ -43,14 +43,13 @@ public class LineItem implements IValidated {
     private String brand;
 
 
-    public LineItem(double price, int quantity, String title, int productId, String sku) {
+    public LineItem(double price, int quantity, String title, int productId) {
         this.properties = new ArrayList<Attributes>();
         this.taxLines = new ArrayList<TaxLine>();
         this.price = price;
         this.quantity = quantity;
         this.title = title;
         this.productId = productId;
-        this.sku = sku;
     }
 
     public void validate(Validation validationType)
@@ -61,7 +60,6 @@ public class LineItem implements IValidated {
             Validate.notNull(this, this.quantity, "Quantity");
             Validate.notNullOrEmpty(this, this.title, "Title");
             Validate.notNull(this, this.productId, "Product Id");
-            Validate.notNull(this, this.sku, "Sku");
         }
 
         if (seller != null) {

@@ -18,7 +18,6 @@ public class ShippingLine implements IValidated {
     public ShippingLine(double price, String title) {
         this.price = price;
         this.title = title;
-        this.taxLines = new ArrayList<TaxLine>();
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {

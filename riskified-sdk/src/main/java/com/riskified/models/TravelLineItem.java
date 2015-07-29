@@ -7,10 +7,10 @@ import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
 
 public class TravelLineItem extends LineItem {
-	
+
 	private int routeIndex;
 	private int legIndex;
-	
+
 	private String departurePortCode;
 	private String arrivalPortCode;
 	private Date departureDate;
@@ -23,41 +23,46 @@ public class TravelLineItem extends LineItem {
 	private String legId;
 	private String carrierName;
 	private String carrierCode;
-	
-	
-	public TravelLineItem(double price, int quantity, String title, int productId, String sku, String legId, int legIndex, int routeIndex) {
-		super(price, quantity, title, productId, sku);
+
+	public TravelLineItem(double price, int quantity, String title,
+			int productId, String legId, int legIndex, int routeIndex) {
+		super(price, quantity, title, productId);
 		this.legId = legId;
 		this.legIndex = legIndex;
 		this.routeIndex = routeIndex;
 	}
-	public TravelLineItem(double price, int quantity, String title, int productId, String sku) {
-		super(price, quantity, title, productId, sku);
+
+	public TravelLineItem(double price, int quantity, String title,
+			int productId) {
+		super(price, quantity, title, productId);
 	}
 
-	public void validate(Validation validationType) throws FieldBadFormatException {
+	public void validate(Validation validationType)
+			throws FieldBadFormatException {
 		super.validate(validationType);
-		
-		if (validationType == Validation.ALL) {
-            Validate.notNull(this, this.routeIndex, "Route Index");
-            Validate.notNull(this, this.legIndex, "Leg Index");
-            Validate.notNull(this, this.legId, "Leg Id");
-            Validate.notNull(this, this.departureCity, "Departure City");
-            Validate.notNull(this, this.arrivalCity, "Arrival City");
-            Validate.notNull(this, this.departureCountryCode, "Departure Country Code");
-            Validate.notNull(this, this.arrivalCountryCode, "Arrival Country Code");
-            Validate.notNull(this, this.departureDate, "Departure Date");
-        }
-		
-		if(this.departureCountryCode != null) {
-            Validate.countryCode(this, this.departureCountryCode, "Departure Country Code");
-		}
-		if(this.arrivalCountryCode != null) {
-			Validate.countryCode(this, this.arrivalCountryCode, "Arrival Country Code");
-		} 
-        
 
-		
+		if (validationType == Validation.ALL) {
+			Validate.notNull(this, this.routeIndex, "Route Index");
+			Validate.notNull(this, this.legIndex, "Leg Index");
+			Validate.notNull(this, this.legId, "Leg Id");
+			Validate.notNull(this, this.departureCity, "Departure City");
+			Validate.notNull(this, this.arrivalCity, "Arrival City");
+			Validate.notNull(this, this.departureCountryCode,
+					"Departure Country Code");
+			Validate.notNull(this, this.arrivalCountryCode,
+					"Arrival Country Code");
+			Validate.notNull(this, this.departureDate, "Departure Date");
+		}
+
+		if (this.departureCountryCode != null) {
+			Validate.countryCode(this, this.departureCountryCode,
+					"Departure Country Code");
+		}
+		if (this.arrivalCountryCode != null) {
+			Validate.countryCode(this, this.arrivalCountryCode,
+					"Arrival Country Code");
+		}
+
 	}
 
 	public Date getDepartureDate() {
@@ -155,19 +160,21 @@ public class TravelLineItem extends LineItem {
 	public void setLegIndex(int legIndex) {
 		this.legIndex = legIndex;
 	}
+
 	public String getCarrierName() {
 		return carrierName;
 	}
+
 	public void setCarrierName(String carrierName) {
 		this.carrierName = carrierName;
 	}
+
 	public String getCarrierCode() {
 		return carrierCode;
 	}
+
 	public void setCarrierCode(String carrierCode) {
 		this.carrierCode = carrierCode;
 	}
-
-	
 
 }

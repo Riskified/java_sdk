@@ -69,13 +69,6 @@ public abstract class BaseOrder implements IValidated {
 
 
     public BaseOrder() {
-        lineItems = new ArrayList<LineItem>();
-        additionalEmails = new ArrayList<String>();
-        discountCodes = new ArrayList<DiscountCode>();
-        shippingLines = new ArrayList<ShippingLine>();
-        noteAttributes = new ArrayList<Attributes>();
-        taxLines = new ArrayList<TaxLine>();
-        passengers = new ArrayList<Passenger>();
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
