@@ -1,12 +1,11 @@
 package com.riskified;
 
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.Formatter;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
 
 public class SHA256Handler {
 

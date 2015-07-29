@@ -1,13 +1,8 @@
 package com.riskified.models;
 
-import com.riskified.validations.FieldBadFormatException;
-import com.riskified.validations.IValidated;
-import com.riskified.validations.Validate;
-import com.riskified.validations.Validation;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.riskified.validations.*;
 
 public class FulfillmentDetails implements IValidated {
 

@@ -1,9 +1,6 @@
 package com.riskified.models;
 
-import com.riskified.validations.FieldBadFormatException;
-import com.riskified.validations.IValidated;
-import com.riskified.validations.Validate;
-import com.riskified.validations.Validation;
+import com.riskified.validations.*;
 
 public class Seller implements IValidated {
 

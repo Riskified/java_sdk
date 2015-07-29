@@ -2,9 +2,7 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.riskified.validations.FieldBadFormatException;
-import com.riskified.validations.Validate;
-import com.riskified.validations.Validation;
+import com.riskified.validations.*;
 
 public class TravelLineItem extends LineItem {
 

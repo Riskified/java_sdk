@@ -1,17 +1,12 @@
 package com.riskified.notifications;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import com.riskified.RiskifedError;
-import com.riskified.SHA256Handler;
+import java.io.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import com.google.gson.*;
+import com.riskified.RiskifedError;
+import com.riskified.SHA256Handler;
 
 /**
  * Converting string / servlet to notifaction object.
