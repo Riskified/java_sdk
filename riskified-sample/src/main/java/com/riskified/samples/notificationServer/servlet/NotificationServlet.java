@@ -24,7 +24,7 @@ public class NotificationServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         try {
             NotificationOrder notification = formatter.parseServletPostRequest(req).getOrder();
-
+            System.out.println("got notification for id: '" + notification.getId() + "' with status: '" + notification.getStatus() +"'  ");
             out.println("<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
                         + " with status " + notification.getStatus() + " and description " + notification.getDescription()
                         + " Old Status was " + notification.getOldStatus()
