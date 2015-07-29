@@ -3,14 +3,16 @@ package com.riskified.models;
 import java.util.Date;
 
 import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.Validate;
 import com.riskified.validations.Validation;
 
 public class TravelLineItem extends LineItem {
 	
-	private int flightIndex;
+	private int routeIndex;
+	private int legIndex;
 	
-	private String departureAirportCode;
-	private String arrivalAirportCode;
+	private String departurePortCode;
+	private String arrivalPortCode;
 	private Date departureDate;
 	private Date arrivalDate;
 	private String departureCountryCode;
@@ -18,42 +20,44 @@ public class TravelLineItem extends LineItem {
 	private String departureCity;
 	private String arrivalCity;
 	private String ticketClass;
-	private String flightNumber;
-	private String flightCarierName;
-	private PassengerDetails passenger;
+	private String legId;
+	private String carrierName;
+	private String carrierCode;
 	
 	
-	
+	public TravelLineItem(double price, int quantity, String title, int productId, String sku, String legId, int legIndex, int routeIndex) {
+		super(price, quantity, title, productId, sku);
+		this.legId = legId;
+		this.legIndex = legIndex;
+		this.routeIndex = routeIndex;
+	}
 	public TravelLineItem(double price, int quantity, String title, int productId, String sku) {
 		super(price, quantity, title, productId, sku);
 	}
 
 	public void validate(Validation validationType) throws FieldBadFormatException {
 		super.validate(validationType);
-	}
-	
-	public int getFlightIndex() {
-		return flightIndex;
-	}
+		
+		if (validationType == Validation.ALL) {
+            Validate.notNull(this, this.routeIndex, "Route Index");
+            Validate.notNull(this, this.legIndex, "Leg Index");
+            Validate.notNull(this, this.legId, "Leg Id");
+            Validate.notNull(this, this.departureCity, "Departure City");
+            Validate.notNull(this, this.arrivalCity, "Arrival City");
+            Validate.notNull(this, this.departureCountryCode, "Departure Country Code");
+            Validate.notNull(this, this.arrivalCountryCode, "Arrival Country Code");
+            Validate.notNull(this, this.departureDate, "Departure Date");
+        }
+		
+		if(this.departureCountryCode != null) {
+            Validate.countryCode(this, this.departureCountryCode, "Departure Country Code");
+		}
+		if(this.arrivalCountryCode != null) {
+			Validate.countryCode(this, this.arrivalCountryCode, "Arrival Country Code");
+		} 
+        
 
-	public void setFlightIndex(int flightIndex) {
-		this.flightIndex = flightIndex;
-	}
-
-	public String getDepartureAirportCode() {
-		return departureAirportCode;
-	}
-
-	public void setDepartureAirportCode(String departureAirportCode) {
-		this.departureAirportCode = departureAirportCode;
-	}
-
-	public String getArrivalAirportCode() {
-		return arrivalAirportCode;
-	}
-
-	public void setArrivalAirportCode(String arrivalAirportCode) {
-		this.arrivalAirportCode = arrivalAirportCode;
+		
 	}
 
 	public Date getDepartureDate() {
@@ -112,29 +116,58 @@ public class TravelLineItem extends LineItem {
 		this.ticketClass = ticketClass;
 	}
 
-	public String getFlightNumber() {
-		return flightNumber;
+	public String getLegId() {
+		return legId;
 	}
 
-	public void setFlightNumber(String flightNumber) {
-		this.flightNumber = flightNumber;
+	public void setLegId(String legId) {
+		this.legId = legId;
 	}
 
-	public String getFlightCarierName() {
-		return flightCarierName;
+	public String getDeparturePortCode() {
+		return departurePortCode;
 	}
 
-	public void setFlightCarierName(String flightCarierName) {
-		this.flightCarierName = flightCarierName;
+	public void setDeparturePortCode(String departurePortCode) {
+		this.departurePortCode = departurePortCode;
 	}
 
-	public PassengerDetails getPassenger() {
-		return passenger;
+	public String getArrivalPortCode() {
+		return arrivalPortCode;
 	}
 
-	public void setPassenger(PassengerDetails passenger) {
-		this.passenger = passenger;
+	public void setArrivalPortCode(String arrivalPortCode) {
+		this.arrivalPortCode = arrivalPortCode;
 	}
+
+	public int getRouteIndex() {
+		return routeIndex;
+	}
+
+	public void setRouteIndex(int routeIndex) {
+		this.routeIndex = routeIndex;
+	}
+
+	public int getLegIndex() {
+		return legIndex;
+	}
+
+	public void setLegIndex(int legIndex) {
+		this.legIndex = legIndex;
+	}
+	public String getCarrierName() {
+		return carrierName;
+	}
+	public void setCarrierName(String carrierName) {
+		this.carrierName = carrierName;
+	}
+	public String getCarrierCode() {
+		return carrierCode;
+	}
+	public void setCarrierCode(String carrierCode) {
+		this.carrierCode = carrierCode;
+	}
+
 	
 
 }

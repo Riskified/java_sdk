@@ -65,6 +65,7 @@ public abstract class BaseOrder implements IValidated {
     private List<Attributes> noteAttributes;
     private List<TaxLine> taxLines;
     private DecisionDetails decision;
+	private List<Passenger> passengers;
 
 
     public BaseOrder() {
@@ -74,6 +75,7 @@ public abstract class BaseOrder implements IValidated {
         shippingLines = new ArrayList<ShippingLine>();
         noteAttributes = new ArrayList<Attributes>();
         taxLines = new ArrayList<TaxLine>();
+        passengers = new ArrayList<Passenger>();
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
@@ -584,7 +586,6 @@ public abstract class BaseOrder implements IValidated {
         this.taxLines = taxLines;
     }
 
-
     public DecisionDetails getDecision() {
         return decision;
     }
@@ -592,4 +593,12 @@ public abstract class BaseOrder implements IValidated {
     public void setDecision(DecisionDetails decision) {
         this.decision = decision;
     }
+
+	public List<Passenger> getPassengers() {
+		return passengers;
+	}
+
+	public void setPassengers(List<Passenger> passengers) {
+		this.passengers = passengers;
+	}
 }
