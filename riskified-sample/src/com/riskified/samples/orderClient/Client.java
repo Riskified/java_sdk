@@ -310,10 +310,7 @@ public class Client {
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
         
-        
-        order.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101, "ABCD"),
-        lineItem, travelLineItem));
+        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", 101, "ABCD"), lineItem, travelLineItem));
 
         Passenger passenger = new Passenger("john","smith");
         passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));

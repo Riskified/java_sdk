@@ -37,6 +37,10 @@ public class Passenger implements IValidated {
             Validate.notNull(this, this.documentNumber, "Document Number");
             Validate.notNull(this, this.documentType, "Document Type");
         }
+		
+		if(this.nationalityCode != null) {
+			Validate.countryCode(this, this.nationalityCode, "Nationality Code");
+		}
 	}
 	
 	public String getFirstName() {
