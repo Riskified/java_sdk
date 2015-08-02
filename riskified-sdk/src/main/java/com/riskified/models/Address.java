@@ -40,6 +40,8 @@ public class Address implements IValidated {
 
         if (this.countryCode != null) {
             Validate.countryCode(this, this.countryCode, "Country Code");
+        }
+        if (this.provinceCode != null) {
             Validate.provinceCode(this, this.provinceCode, "Province Code");
         }
     }
