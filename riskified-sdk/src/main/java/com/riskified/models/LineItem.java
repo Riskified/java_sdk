@@ -36,8 +36,26 @@ public class LineItem implements IValidated {
     private String condition;
     private Seller seller;
     private String brand;
+    private String productType;
 
 
+    public LineItem(double price, int quantity, String title) {
+        this.properties = new ArrayList<Attributes>();
+        this.taxLines = new ArrayList<TaxLine>();
+        this.price = price;
+        this.quantity = quantity;
+        this.title = title;
+    }
+    
+    public LineItem(double price, int quantity, String title, String sku) {
+        this.properties = new ArrayList<Attributes>();
+        this.taxLines = new ArrayList<TaxLine>();
+        this.price = price;
+        this.quantity = quantity;
+        this.title = title;
+        this.sku = sku;
+    }
+    
     public LineItem(double price, int quantity, String title, int productId) {
         this.properties = new ArrayList<Attributes>();
         this.taxLines = new ArrayList<TaxLine>();
@@ -54,7 +72,6 @@ public class LineItem implements IValidated {
             Validate.notNull(this, this.price, "Price");
             Validate.notNull(this, this.quantity, "Quantity");
             Validate.notNullOrEmpty(this, this.title, "Title");
-            Validate.notNull(this, this.productId, "Product Id");
         }
 
         if (seller != null) {
@@ -293,6 +310,14 @@ public class LineItem implements IValidated {
 
 	public void setEventLocation(String eventLocation) {
 		this.eventLocation = eventLocation;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 
 

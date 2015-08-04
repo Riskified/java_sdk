@@ -22,6 +22,23 @@ public class TravelLineItem extends LineItem {
 	private String carrierName;
 	private String carrierCode;
 
+	
+	public TravelLineItem(double price, int quantity, String title,
+			String legId, int legIndex, int routeIndex) {
+		super(price, quantity, title);
+		this.legId = legId;
+		this.legIndex = legIndex;
+		this.routeIndex = routeIndex;
+	}
+	
+	public TravelLineItem(double price, int quantity, String title,
+			String sku, String legId, int legIndex, int routeIndex) {
+		super(price, quantity, title, sku);
+		this.legId = legId;
+		this.legIndex = legIndex;
+		this.routeIndex = routeIndex;
+	}
+	
 	public TravelLineItem(double price, int quantity, String title,
 			int productId, String legId, int legIndex, int routeIndex) {
 		super(price, quantity, title, productId);
