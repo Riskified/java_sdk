@@ -46,7 +46,7 @@ Maven dependency excerpt:
 <dependency>
 	<groupId>com.riskified</groupId>
 	<artifactId>riskified-sdk</artifactId>
-	<version>1.0.0.12</version>
+	<version>1.0.0.13</version>
 </dependency>
 ```
 
