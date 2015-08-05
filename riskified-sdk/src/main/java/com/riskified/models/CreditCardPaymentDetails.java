@@ -21,8 +21,6 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {
             Validate.notNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
-            Validate.notNullOrEmpty(this, this.avsResultCode, "AVS Result Code");
-            Validate.notNullOrEmpty(this, this.cvvResultCode, "CVV Result Code");
             Validate.notNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
         }
     }
