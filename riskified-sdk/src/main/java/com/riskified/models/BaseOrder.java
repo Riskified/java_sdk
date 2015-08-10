@@ -61,7 +61,7 @@ public abstract class BaseOrder implements IValidated {
     private List<TaxLine> taxLines;
     private DecisionDetails decision;
 	private List<Passenger> passengers;
-	private HashMap<String, Object> additionalData;
+	private Map<String, Object> additionalData;
 
 
     public BaseOrder() {
@@ -587,11 +587,11 @@ public abstract class BaseOrder implements IValidated {
 		this.passengers = passengers;
 	}
 
-	public HashMap<String, Object> getAdditionalData() {
+	public Map<String, Object> getAdditionalData() {
 		return additionalData;
 	}
 
-	public void setAdditionalData(HashMap<String, Object> additionalData) {
+	public void setAdditionalData(Map<String, Object> additionalData) {
 		this.additionalData = additionalData;
 	}
 
