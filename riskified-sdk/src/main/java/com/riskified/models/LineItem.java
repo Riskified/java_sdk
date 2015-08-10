@@ -11,11 +11,10 @@ public class LineItem implements IValidated {
     private Integer quantity;
     private String title;
     private String sku;
-    private Integer productId;
+    private String productId;
     private String fulfillmentService;
     private String fulfillmentStatus;
     private Float grams;
-    private String id;
     private String variantId;
     private String variantTitle;
     private String variantInventoryManagement;
@@ -47,16 +46,7 @@ public class LineItem implements IValidated {
         this.title = title;
     }
     
-    public LineItem(double price, int quantity, String title, String sku) {
-        this.properties = new ArrayList<Attributes>();
-        this.taxLines = new ArrayList<TaxLine>();
-        this.price = price;
-        this.quantity = quantity;
-        this.title = title;
-        this.sku = sku;
-    }
-    
-    public LineItem(double price, int quantity, String title, int productId) {
+    public LineItem(double price, int quantity, String title, String productId) {
         this.properties = new ArrayList<Attributes>();
         this.taxLines = new ArrayList<TaxLine>();
         this.price = price;
@@ -120,11 +110,11 @@ public class LineItem implements IValidated {
         this.condition = condition;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
@@ -151,15 +141,7 @@ public class LineItem implements IValidated {
     public void setGrams(Float grams) {
         this.grams = grams;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    
     public String getVariantId() {
         return variantId;
     }

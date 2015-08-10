@@ -31,7 +31,7 @@ public class Address implements IValidated {
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {
             Validate.notNullOrEmpty(this, this.firstName, "First Name");
-            Validate.notNullOrEmpty(this, this.lastName, "last Name");
+            Validate.notNullOrEmpty(this, this.lastName, "Last Name");
             Validate.notNullOrEmpty(this, this.address1, "Address1");
             Validate.notNullOrEmpty(this, this.country, "Country");
             Validate.notNullOrEmpty(this, this.city, "City");

@@ -21,8 +21,8 @@ public class TravelLineItem extends LineItem {
 	private String legId;
 	private String carrierName;
 	private String carrierCode;
+	private String transportMethod;
 
-	
 	public TravelLineItem(double price, int quantity, String title,
 			String legId, int legIndex, int routeIndex) {
 		super(price, quantity, title);
@@ -32,15 +32,7 @@ public class TravelLineItem extends LineItem {
 	}
 	
 	public TravelLineItem(double price, int quantity, String title,
-			String sku, String legId, int legIndex, int routeIndex) {
-		super(price, quantity, title, sku);
-		this.legId = legId;
-		this.legIndex = legIndex;
-		this.routeIndex = routeIndex;
-	}
-	
-	public TravelLineItem(double price, int quantity, String title,
-			int productId, String legId, int legIndex, int routeIndex) {
+			String productId, String legId, int legIndex, int routeIndex) {
 		super(price, quantity, title, productId);
 		this.legId = legId;
 		this.legIndex = legIndex;
@@ -48,7 +40,7 @@ public class TravelLineItem extends LineItem {
 	}
 
 	public TravelLineItem(double price, int quantity, String title,
-			int productId) {
+			String productId) {
 		super(price, quantity, title, productId);
 	}
 
@@ -191,5 +183,14 @@ public class TravelLineItem extends LineItem {
 	public void setCarrierCode(String carrierCode) {
 		this.carrierCode = carrierCode;
 	}
+
+	public String getTransportMethod() {
+		return transportMethod;
+	}
+
+	public void setTransportMethod(String transportMethod) {
+		this.transportMethod = transportMethod;
+	}
+
 
 }

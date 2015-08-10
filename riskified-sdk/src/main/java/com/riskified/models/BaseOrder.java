@@ -1,7 +1,6 @@
 package com.riskified.models;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.riskified.validations.*;
 
@@ -62,6 +61,7 @@ public abstract class BaseOrder implements IValidated {
     private List<TaxLine> taxLines;
     private DecisionDetails decision;
 	private List<Passenger> passengers;
+	private HashMap<String, Object> additionalData;
 
 
     public BaseOrder() {
@@ -586,4 +586,13 @@ public abstract class BaseOrder implements IValidated {
 	public void setPassengers(List<Passenger> passengers) {
 		this.passengers = passengers;
 	}
+
+	public HashMap<String, Object> getAdditionalData() {
+		return additionalData;
+	}
+
+	public void setAdditionalData(HashMap<String, Object> additionalData) {
+		this.additionalData = additionalData;
+	}
+
 }

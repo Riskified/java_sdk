@@ -1,5 +1,6 @@
 package com.riskified.samples.orderClient;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import org.apache.http.client.ClientProtocolException;
@@ -174,8 +175,8 @@ public class Client {
         FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
 
         fulfilmentDetails.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101),
-        new LineItem(200, 4, "ACME Spring", 202)));
+        new LineItem(100, 1, "ACME Widget", "101"),
+        new LineItem(200, 4, "ACME Spring", "202")));
 
         fulfilmentDetails.setTrackingCompany("UPS");
         fulfilmentDetails.setTrackingNumbers("11X63b");
@@ -205,8 +206,8 @@ public class Client {
         order.setReferringSite("google.com");
 
         order.setLineItems(Arrays.asList(
-        new LineItem(100, 1, "ACME Widget", 101),
-        new LineItem(200, 4, "ACME Spring", 202)));
+        new LineItem(100, 1, "ACME Widget", "101"),
+        new LineItem(200, 4, "ACME Spring", "202")));
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
@@ -262,9 +263,9 @@ public class Client {
         customer.getSocial().add(social);
         order.setCustomer(customer);
 
-        LineItem lineItem = new LineItem(200, 4, "ACME Spring", 202);
+        LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
         
-        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", 211, "B11", 1, 1);
+        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
         travelLineItem.setDeparturePortCode("LLBG");
         travelLineItem.setDepartureCountryCode("IL");
         travelLineItem.setDepartureCity("Tel Aviv");
@@ -278,7 +279,7 @@ public class Client {
         travelLineItem.setCarrierName("Air France");
         travelLineItem.setRequiresShipping(false);
         
-        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", 101), lineItem, travelLineItem));
+        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
 
         Passenger passenger = new Passenger("john","smith");
         passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));
@@ -323,8 +324,7 @@ public class Client {
         address.setProvinceCode("NY");
         address.setZip("64155");
         order.setShippingAddress(address);
-
-
+        
         return order;
     }
 
