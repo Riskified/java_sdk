@@ -10,8 +10,8 @@ public enum DecisionType {
     checkout,
     @SerializedName("cancelled")
     cancelled,
-    @SerializedName("declined")
-    declined,
+    @SerializedName("declined_fraud")
+    declined_fraud,
     @SerializedName("chargeback_fraud")
     chargebackFraud,
     @SerializedName("chargeback_not_fraud")
