@@ -12,6 +12,7 @@ public abstract class BaseOrder implements IValidated {
     private String currency;
     private String gateway;
     private Double totalPrice;
+    private NoChargeAmount nochargeAmount;
     private String browserIp;
     private Customer customer;
     private List<LineItem> lineItems;
@@ -593,6 +594,14 @@ public abstract class BaseOrder implements IValidated {
 
 	public void setAdditionalData(Map<String, Object> additionalData) {
 		this.additionalData = additionalData;
+	}
+
+	public NoChargeAmount getNochargeAmount() {
+		return nochargeAmount;
+	}
+
+	public void setNochargeAmount(NoChargeAmount nochargeAmount) {
+		this.nochargeAmount = nochargeAmount;
 	}
 
 }
