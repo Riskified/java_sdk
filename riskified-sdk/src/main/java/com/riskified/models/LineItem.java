@@ -25,13 +25,8 @@ public class LineItem implements IValidated {
     private Boolean productExists;
     private List<Attributes> properties;
     private List<TaxLine> taxLines;
-    private String eventSubCategoryName;
-    private String eventName;
-    private String eventSectionName;
-    private String eventCountry;
-    private String eventCity;
-    private String eventLocation;
-    private Date eventDate;
+	private String category;
+    private String subCategory;
     private String condition;
     private Seller seller;
     private String brand;
@@ -229,69 +224,13 @@ public class LineItem implements IValidated {
     public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
     }
-
-    public String getEventSubCategoryName() {
-        return eventSubCategoryName;
-    }
-
-    public void setEventSubCategoryName(String eventSubCategoryName) {
-        this.eventSubCategoryName = eventSubCategoryName;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getEventSectionName() {
-        return eventSectionName;
-    }
-
-    public void setEventSectionName(String eventSectionName) {
-        this.eventSectionName = eventSectionName;
-    }
-
-    public Date getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
-    }
-
+    
 	public String getBrand() {
 		return brand;
 	}
 
 	public void setBrand(String brand) {
 		this.brand = brand;
-	}
-
-	public String getEventCountry() {
-		return eventCountry;
-	}
-
-	public void setEventCountry(String eventCountry) {
-		this.eventCountry = eventCountry;
-	}
-
-	public String getEventCity() {
-		return eventCity;
-	}
-
-	public void setEventCity(String eventCity) {
-		this.eventCity = eventCity;
-	}
-
-	public String getEventLocation() {
-		return eventLocation;
-	}
-
-	public void setEventLocation(String eventLocation) {
-		this.eventLocation = eventLocation;
 	}
 
 	public String getProductType() {
@@ -302,5 +241,22 @@ public class LineItem implements IValidated {
 		this.productType = productType;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
+	}
+
+	
 
 }
