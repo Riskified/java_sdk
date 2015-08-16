@@ -1,7 +1,7 @@
 package com.riskified.validations;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.commons.validator.routines.InetAddressValidator;
+import org.apache.http.conn.util.InetAddressUtils;
 
 public class Validate {
     public static void notNull(Object source, Object obj, String fieldName) throws FieldBadFormatException {
@@ -23,9 +23,9 @@ public class Validate {
     }
 
     public static void ipAddress(Object source, String ip, String fieldName) throws FieldBadFormatException {
-        if (!InetAddressValidator.getInstance().isValidInet4Address(ip)) {
-            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + ip + " is not a valid IP address.");
-        }
+		if (!InetAddressUtils.isIPv4Address(ip) && !InetAddressUtils.isIPv6Address(ip)) {
+		    throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + ip + " is not a valid IP address.");
+		}
     }
 
     public static void currencyCode(Object source, String currency, String fieldName) throws FieldBadFormatException {
