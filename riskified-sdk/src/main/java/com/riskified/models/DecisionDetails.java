@@ -17,6 +17,10 @@ public class DecisionDetails implements IValidated {
 
     }
 
+    public DecisionDetails(DecisionType externalStatus) {
+        this.externalStatus = externalStatus;
+    }
+    
     public DecisionDetails(DecisionType externalStatus, Date decidedAt, String reason) {
         this.externalStatus = externalStatus;
         this.decidedAt = decidedAt;
@@ -26,15 +30,8 @@ public class DecisionDetails implements IValidated {
     public void validate(Validation validationType) throws FieldBadFormatException {
 
         if (validationType == Validation.ALL) {
-
             Validate.notNull(this, this.externalStatus, "External Status");
-            Validate.notNull(this, this.decidedAt, "Decided At");
         }
-
-        if (currency != null) {
-            Validate.currencyCode(this, this.currency, "Currency");
-        }
-
     }
 
 
