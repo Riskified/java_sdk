@@ -53,10 +53,23 @@ public class Validate {
         }
     }
 
-    public static void isNumberNegativeOrZero(Object source, Number number, String fieldName) throws FieldBadFormatException {
+    public static void isNumberNegativeOrZero(Object source, float number, String fieldName) throws FieldBadFormatException {
         isNumberNegative(source, number, fieldName);
-        boolean isZero = (number + "").charAt(0) == '0';
-        if (isZero) {
+        if (number == 0) {
+            throw new FieldBadFormatException(source, fieldName + " can't be zero.");
+        }
+    }
+    
+    public static void isNumberNegativeOrZero(Object source, Double number, String fieldName) throws FieldBadFormatException {
+        isNumberNegative(source, number, fieldName);
+        if (number == 0) {
+            throw new FieldBadFormatException(source, fieldName + " can't be zero.");
+        }
+    }
+    
+    public static void isNumberNegativeOrZero(Object source, int number, String fieldName) throws FieldBadFormatException {
+        isNumberNegative(source, number, fieldName);
+        if (number == 0) {
             throw new FieldBadFormatException(source, fieldName + " can't be zero.");
         }
     }
