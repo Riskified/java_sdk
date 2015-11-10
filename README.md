@@ -32,37 +32,35 @@ To build sdk and samples:
 --------------------------
 *	Run `mvn install` to build sdk jar and sample.
 
-Client sample
---------------------------
+## Client sample
 This samples shows how to construct an Order model and invoke each and every one of our endpoints with it
-<code sh>
-cd riskified-sample
 
+```
+cd riskified-sample
 mvn exec:java -Dexec.mainClass="com.riskified.samples.orderClient.Client"
-<code>
+```
 
-Json Client sample
---------------------------
+## Json Client sample
+
 This samples shows how to construct an Order model and save it locally as a Json file, this sample is useful for early stages of the integration and for POCs
-<code sh>
-cd riskified-sample
 
+```
+cd riskified-sample
 mvn exec:java -Dexec.mainClass="com.riskified.samples.orderClient.JsonClient"
+```
 
-<code>
+## Notifications sample
 
-Notifications sample
---------------------------
 This samples shows how to bring up a notification end point
-<code sh>
+
+```
 cd riskified-sample
-
 mvn exec:java -Dexec.mainClass="com.riskified.samples.notificationServer.servlet.SampleServer"
-<code>
+```
 
 
-Maven dependency excerpt:
-----------------
+## Maven dependency excerpt:
+
 ```xml
 <dependency>
 	<groupId>com.riskified</groupId>
