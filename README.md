@@ -53,11 +53,15 @@ mvn exec:java -Dexec.mainClass="com.riskified.samples.orderClient.JsonClient"
 
 This samples shows how to bring up a notification end point
 
-```
+```sh
 cd riskified-sample
 mvn exec:java -Dexec.mainClass="com.riskified.samples.notificationServer.servlet.SampleServer"
 ```
+Then you can test the endpoint by running a curl command from another terminal
 
+```sh
+curl -H "Content-Type: application/json" -H  "X-RISKIFIED-HMAC-SHA256: 071ef80d5790011d2f111479b75eed15e907432a4523defb4e627c6725d3b6b3" -X POST -d '{"order":{"id":"123","status":"approved","old_status":"submitted","description":"Approved by Riskified"}}' http://localhost:8080
+```
 
 ## Maven dependency excerpt:
 
