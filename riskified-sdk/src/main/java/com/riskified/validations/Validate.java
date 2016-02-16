@@ -17,7 +17,7 @@ public class Validate {
     }
 
     public static void emailAddress(Object source, String email, String fieldName) throws FieldBadFormatException {
-        if (!EmailValidator.getInstance().isValid(email)) {
+    	if (!email.contains("@")) {
             throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + email + " is not a valid email.");
         }
     }

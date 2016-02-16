@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>1.0.1.6</version>
+    <version>1.0.1.7</version>
     <name>Risikifed SDK</name>
-    <description>Risikified rest api SDK for java</description>
+    <description>Riskified rest api SDK for java</description>
     <url>http://www.riskified.com</url>
 
     <distributionManagement>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-            <version>1.4.0</version>
+            <version>1.4.1</version>
         </dependency>
 
         <dependency>
