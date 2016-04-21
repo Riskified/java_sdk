@@ -27,6 +27,7 @@ Available validation types:
 Prerequisites:
 ---------------
 *	Java JDK-1.5 or higher
+*	Set your authKey and shopUrl in the riskified-sdk/src/main/resources/riskified_sdk.properties file. Your Riskified's authorization token (authKey) can be found in the [advanced settings section](https://sandbox.riskified.com/main/settings/advanced) of your Riskified sandbox environment.
 
 To build sdk and samples:
 --------------------------
