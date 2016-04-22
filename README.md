@@ -27,11 +27,12 @@ Available validation types:
 Prerequisites:
 ---------------
 *	Java JDK-1.5 or higher
-*	Set your authKey and shopUrl in the riskified-sdk/src/main/resources/riskified_sdk.properties file. Your Riskified's authorization token (authKey) can be found in the [advanced settings section](https://sandbox.riskified.com/main/settings/advanced) of your Riskified sandbox environment.
 
-To build sdk and samples:
+Running the samples:
 --------------------------
-*	Run `mvn install` to build sdk jar and sample.
+* **Build the SDK** - Run `mvn install` which will build both the SDK and samples and create a JAR.
+* **Configure your properties** (authKey and shopUrl) - in the riskified-sdk/src/main/resources/riskified_sdk.properties file. 
+	Your Riskified's authorization token (authKey) can be found in the [advanced settings section](https://sandbox.riskified.com/main/settings/advanced) of your Riskified sandbox environment.
 
 ## Client sample
 This samples shows how to construct an Order model and invoke each and every one of our endpoints with it
