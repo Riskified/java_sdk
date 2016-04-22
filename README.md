@@ -30,7 +30,7 @@ Prerequisites:
 
 Running the samples:
 --------------------------
-* **Build the SDK** - Run `mvn package` which will build both the SDK and samples and create a JAR.
+* **Build the SDK** - Run `mvn package` which will build both the SDK and the samples
 * **Configure your properties** (authKey and shopUrl) - in the riskified-sdk/src/main/resources/riskified_sdk.properties file. 
 	Your Riskified's authorization token (authKey) can be found in the [advanced settings section](https://sandbox.riskified.com/main/settings/advanced) of your Riskified sandbox environment.
 
