@@ -34,7 +34,7 @@ public class Client {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-            // RiskifiedClient client = new RiskifiedClient("test.pass.com", "ad6b6e6376fb1e3521e44ca28451d58b9605d932", Environment.DEBUG);
+            // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
             
@@ -309,7 +309,7 @@ public class Client {
         address.setCompany("Kansas Computers");
         address.setCountryCode("US");
         address.setName("John Doe");
-        address.setAddress2("איתי בדיקה");
+        address.setAddress2("Second street");
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
