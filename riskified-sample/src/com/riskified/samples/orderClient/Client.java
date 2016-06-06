@@ -114,15 +114,21 @@ public class Client {
 
 
         } catch (RiskifedError e) {
-            e.printStackTrace();
+        	printError(e);
         } catch (HttpResponseException e) {
-            e.printStackTrace();
+        	printError(e);
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+        	printError(e);
         } catch (IOException e) {
-            e.printStackTrace();
+        	printError(e);
         }
+        
 
+    }
+    
+    private static void printError(Exception e) {
+    	System.out.println("[Sample failed]");
+        e.printStackTrace();
     }
 
     private static DecisionOrder generateDecisionOrder() {
