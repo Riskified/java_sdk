@@ -1,4 +1,4 @@
-package com.riskified.samples.orderClient;
+package main.java.com.riskified.samples.orderClient;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;

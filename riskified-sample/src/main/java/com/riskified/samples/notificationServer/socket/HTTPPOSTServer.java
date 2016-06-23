@@ -1,4 +1,4 @@
-package com.riskified.samples.notificationServer.socket;
+package main.java.com.riskified.samples.notificationServer.socket;
 
 import com.riskified.notifications.Notification.NotificationOrder;
 import com.riskified.notifications.NotificationHandler;

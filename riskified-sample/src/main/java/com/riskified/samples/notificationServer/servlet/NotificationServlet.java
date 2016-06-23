@@ -1,4 +1,4 @@
-package com.riskified.samples.notificationServer.servlet;
+package main.java.com.riskified.samples.notificationServer.servlet;
 
 import com.riskified.RiskifedError;
 import com.riskified.notifications.Notification.NotificationOrder;

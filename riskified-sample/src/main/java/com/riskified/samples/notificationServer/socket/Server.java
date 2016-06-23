@@ -1,4 +1,4 @@
-package com.riskified.samples.notificationServer.socket;
+package main.java.com.riskified.samples.notificationServer.socket;
 
 import java.net.InetAddress;
 import java.net.ServerSocket;

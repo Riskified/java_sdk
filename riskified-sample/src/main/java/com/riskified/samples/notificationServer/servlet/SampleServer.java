@@ -1,4 +1,4 @@
-package com.riskified.samples.notificationServer.servlet;
+package main.java.com.riskified.samples.notificationServer.servlet;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
