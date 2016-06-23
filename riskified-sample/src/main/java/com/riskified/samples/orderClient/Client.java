@@ -22,15 +22,15 @@ public class Client {
 
         Order updateOrder = generateUpdateOrder(order);
 
-        ArrayOrders orders = generateHistoricalOrders(order);
-
+        RefundOrder refundOrder = generateRefundOrder(order);
+        
         CancelOrder cancelOrder = generateCancelOrder(order);
 
-        RefundOrder refundOrder = generateRefundOrder(order);
+        FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder(order);
 
-        FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder();
+        DecisionOrder decisionOrder = generateDecisionOrder(order);
 
-        DecisionOrder decisionOrder = generateDecisionOrder();
+        ArrayOrders orders = generateHistoricalOrders(order);
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
@@ -79,14 +79,6 @@ public class Client {
             System.out.println("status: " + resUpdateOrder.getOrder().getStatus());
             System.out.println("description: " + resUpdateOrder.getOrder().getDescription());
 
-            Response resCancelOrder = client.cancelOrder(cancelOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Cancel order response:");
-            System.out.println("id: " + resCancelOrder.getOrder().getId());
-            System.out.println("status: " + resCancelOrder.getOrder().getStatus());
-            System.out.println("description: " + resCancelOrder.getOrder().getDescription());
-
             Response resRefundOrder = client.refundOrder(refundOrder);
 
             System.out.println("-----------------------------------------");
@@ -94,6 +86,14 @@ public class Client {
             System.out.println("id: " + resRefundOrder.getOrder().getId());
             System.out.println("status: " + resRefundOrder.getOrder().getStatus());
             System.out.println("description: " + resRefundOrder.getOrder().getDescription());
+            
+            Response resCancelOrder = client.cancelOrder(cancelOrder);
+
+            System.out.println("-----------------------------------------");
+            System.out.println("Cancel order response:");
+            System.out.println("id: " + resCancelOrder.getOrder().getId());
+            System.out.println("status: " + resCancelOrder.getOrder().getStatus());
+            System.out.println("description: " + resCancelOrder.getOrder().getDescription());
 
             Response resFulfillmentOrder = client.fulfillOrder(fulfillmentOrder);
 
@@ -131,12 +131,12 @@ public class Client {
         e.printStackTrace();
     }
 
-    private static DecisionOrder generateDecisionOrder() {
+    private static DecisionOrder generateDecisionOrder(Order order) {
         DecisionDetails decision = new DecisionDetails();
         decision.setExternalStatus(DecisionType.chargebackFraud);
         decision.setReason("Fraud + used proxy");
         decision.setDecidedAt(new Date(114, 01, 10, 11, 00, 00));
-        DecisionOrder decisionOrder = new DecisionOrder("1235", decision);
+        DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decision);
         return decisionOrder;
     }
 
@@ -162,7 +162,7 @@ public class Client {
 
     private static CancelOrder generateCancelOrder(Order order) {
         CancelOrder cancel = new CancelOrder();
-        cancel.setId("166855");
+        cancel.setId(order.getId());
         cancel.setCancelReason("test");
         cancel.setCancelledAt(new Date());
         return cancel;
@@ -176,7 +176,7 @@ public class Client {
         return updateOrder;
     }
 
-    private static FulfillmentOrder generateFulfillmentOrder() {
+    private static FulfillmentOrder generateFulfillmentOrder(Order order) {
         List<FulfillmentDetails> fulfillments = new ArrayList<FulfillmentDetails>();
         FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
 
@@ -188,7 +188,7 @@ public class Client {
         fulfilmentDetails.setTrackingNumbers("11X63b");
 
         fulfillments.add(fulfilmentDetails);
-        FulfillmentOrder fulfillmentOrder = new FulfillmentOrder("1235", fulfillments);
+        FulfillmentOrder fulfillmentOrder = new FulfillmentOrder(order.getId(), fulfillments);
         return fulfillmentOrder;
     }
 
@@ -247,8 +247,8 @@ public class Client {
 
     private static Order generateOrder() {
         Order order = new Order();
-        order.setId("1919191");
-        order.setName("#1234");
+        order.setId("#12345");
+        order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
