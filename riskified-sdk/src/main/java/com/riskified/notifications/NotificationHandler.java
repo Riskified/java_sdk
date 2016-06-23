@@ -5,7 +5,7 @@ import java.io.*;
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.*;
-import com.riskified.RiskifedError;
+import com.riskified.RiskifiedError;
 import com.riskified.SHA256Handler;
 
 /**
@@ -19,9 +19,9 @@ public class NotificationHandler {
     /**
      * Converting string / servlet to notifaction object.
      * @param authKey From the advance settings in Riskified web site
-     * @throws RiskifedError When there was a critical error, look at the exception to see more data
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public NotificationHandler(String authKey) throws RiskifedError {
+    public NotificationHandler(String authKey) throws RiskifiedError {
         gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         this.sha256Handler = new SHA256Handler(authKey);
     }

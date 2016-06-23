@@ -54,7 +54,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testRiskifiedClientConstruction_withoutRequestAndConnectionTimeout() throws RiskifedError {
+    public void testRiskifiedClientConstruction_withoutRequestAndConnectionTimeout() throws RiskifiedError {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).build();
         assertNotNull(riskifiedClient);
         assertEquals("Invalid shop url", shopUrl, riskifiedClient.getShopUrl());
@@ -64,7 +64,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testRiskifiedClientConstruction_withNonDefaultRequestTimeout_connectionTimeout_validationType() throws RiskifedError {
+    public void testRiskifiedClientConstruction_withNonDefaultRequestTimeout_connectionTimeout_validationType() throws RiskifiedError {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setRequestTimeout(7).setConnectionTimeout(11).setValidation(Validation.IGNORE_MISSING).build();
         assertNotNull(riskifiedClient);
         assertEquals("Invalid shop url", shopUrl, riskifiedClient.getShopUrl());
@@ -74,7 +74,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testRiskifiedClientConstructionWithoutAnyArguments() throws RiskifedError {
+    public void testRiskifiedClientConstructionWithoutAnyArguments() throws RiskifiedError {
         riskifiedClient = new RiskifiedClient();
         assertEquals("Invalid request timeout ", 10000, riskifiedClient.getRequestTimeout());
         assertEquals("Invalid connection timeout", 5000, riskifiedClient.getConnectionTimeout());
@@ -84,7 +84,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testCreateOrderWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testCreateOrderWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -93,7 +93,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testSubmitOrderWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testSubmitOrderWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -103,12 +103,12 @@ public class RiskifiedClientTest {
 
     /**
      * Throws an exception because the 'historical' event has been disabled.
-     * @throws RiskifedError
+     * @throws RiskifiedError
      * @throws IOException
      * @throws FieldBadFormatException
      */
     @Test (expected = HttpResponseException.class)
-    public void testHistoricalOrdersWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testHistoricalOrdersWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -118,7 +118,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testCancelOrderAfterSubmitWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testCancelOrderAfterSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -134,7 +134,7 @@ public class RiskifiedClientTest {
     }
 
     @Ignore("need to align with server") @Test
-    public void testCancelOrderAfterCreateWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testCancelOrderAfterCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -150,7 +150,7 @@ public class RiskifiedClientTest {
     }
 
     @Ignore("need to align with server") @Test
-    public void testUpdateAfterCreateWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testUpdateAfterCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -163,7 +163,7 @@ public class RiskifiedClientTest {
     }
 
     @Ignore("need to align with server") @Test
-    public void testUpdateAfterSubmitWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testUpdateAfterSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -176,7 +176,7 @@ public class RiskifiedClientTest {
     }
 
     @Ignore("need to align with server") @Test
-    public void testDecisionAfterCreateWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testDecisionAfterCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -193,7 +193,7 @@ public class RiskifiedClientTest {
     }
 
     @Ignore("need to align with server") @Test
-    public void testDecisionAfterSubmitWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testDecisionAfterSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         Order order = new Order();
         order.setId(UUID.randomUUID().toString());
@@ -210,7 +210,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testCheckoutCreateAndCreateWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testCheckoutCreateAndCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         CheckoutOrder checkoutOrder = new CheckoutOrder();
         checkoutOrder.setId(UUID.randomUUID().toString());
@@ -225,7 +225,7 @@ public class RiskifiedClientTest {
     }
 
     @Test
-    public void testCheckoutCreateAndSubmitWithNoValidation() throws RiskifedError, IOException, FieldBadFormatException {
+    public void testCheckoutCreateAndSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
         CheckoutOrder checkoutOrder = new CheckoutOrder();
         checkoutOrder.setId(UUID.randomUUID().toString());

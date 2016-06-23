@@ -1,12 +1,12 @@
 package com.riskified;
 
-public class RiskifedError extends Exception {
+public class RiskifiedError extends Exception {
 
-    public RiskifedError(Exception ex) {
+    public RiskifiedError(Exception ex) {
         super("Error: contact your admin with this error", ex);
     }
 
-    public RiskifedError(String string) {
+    public RiskifiedError(String string) {
         super("Error: contact your admin with this error: " + string);
     }
 }

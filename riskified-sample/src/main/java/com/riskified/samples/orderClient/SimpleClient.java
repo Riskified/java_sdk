@@ -6,7 +6,7 @@ import java.util.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
-import com.riskified.RiskifedError;
+import com.riskified.RiskifiedError;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
@@ -30,7 +30,7 @@ public class SimpleClient {
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
 
-        } catch (RiskifedError e) {
+        } catch (RiskifiedError e) {
         	printError(e);
         } catch (HttpResponseException e) {
         	printError(e);

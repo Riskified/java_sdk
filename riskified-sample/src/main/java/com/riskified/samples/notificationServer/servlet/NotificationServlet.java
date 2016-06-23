@@ -1,6 +1,6 @@
 package main.java.com.riskified.samples.notificationServer.servlet;
 
-import com.riskified.RiskifedError;
+import com.riskified.RiskifiedError;
 import com.riskified.notifications.Notification.NotificationOrder;
 import com.riskified.notifications.NotificationHandler;
 
@@ -15,7 +15,7 @@ public class NotificationServlet extends HttpServlet {
 
     private NotificationHandler formatter;
 
-    public NotificationServlet(String authKey) throws RiskifedError {
+    public NotificationServlet(String authKey) throws RiskifiedError {
         formatter = new NotificationHandler(authKey);
     }
 

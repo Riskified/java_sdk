@@ -39,14 +39,14 @@ public class RiskifiedClient {
      * use configuration file: "src/main/resources/riskified_sdk.properties"
      * uses the keys: shopUrl, authKey, environment, debugRiskifiedHostUrl
      * see full doc on GitHub
-     * @throws RiskifedError When there was a critical error, look at the exception to see more data
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient() throws RiskifedError {
+    public RiskifiedClient() throws RiskifiedError {
         Properties properties = new Properties();
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("riskified_sdk.properties"));
         } catch (IOException e) {
-            throw new RiskifedError("There was an error reading the config file in: src/main/resources/riskified_sdk.properties");
+            throw new RiskifiedError("There was an error reading the config file in: src/main/resources/riskified_sdk.properties");
         }
 
         String shopUrl = properties.getProperty("shopUrl");
@@ -84,9 +84,9 @@ public class RiskifiedClient {
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
      * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
-     * @throws RiskifedError When there was a critical error, look at the exception to see more data
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifedError {
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
     }
 
@@ -96,13 +96,13 @@ public class RiskifiedClient {
      * @param shopUrl The shop url you use to login to Riskified
      * @param authKey From the advance settings in Riskified web site
      * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
-     * @throws RiskifedError When there was a critical error, look at the exception to see more data
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifedError {
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifedError {
+    private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
@@ -571,7 +571,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.1.7");
+        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.1.8");
         
         return postRequest;
     }
@@ -664,12 +664,12 @@ public class RiskifiedClient {
             return this;
         }
 
-        public RiskifiedClient build() throws RiskifedError {
+        public RiskifiedClient build() throws RiskifiedError {
             return new RiskifiedClient(this);
         }
     }
 
-    public RiskifiedClient(RiskifiedClientBuilder riskifiedClientBuilder) throws RiskifedError {
+    public RiskifiedClient(RiskifiedClientBuilder riskifiedClientBuilder) throws RiskifiedError {
         this.shopUrl = riskifiedClientBuilder.shopUrl;
         this.authKey = riskifiedClientBuilder.authKey;
         this.environment = riskifiedClientBuilder.environment;

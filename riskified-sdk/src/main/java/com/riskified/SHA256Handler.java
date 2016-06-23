@@ -11,7 +11,7 @@ public class SHA256Handler {
 
     private Mac mac;
 
-    public SHA256Handler(String authKay) throws RiskifedError {
+    public SHA256Handler(String authKay) throws RiskifiedError {
         mac = createSHA256Key(authKay);
     }
 
@@ -25,18 +25,18 @@ public class SHA256Handler {
         return hmac.equals(calcHash);
     }
 
-    private Mac createSHA256Key(String authKey) throws RiskifedError {
+    private Mac createSHA256Key(String authKey) throws RiskifiedError {
         Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
 
         try {
             mac = Mac.getInstance(sk.getAlgorithm());
         } catch (NoSuchAlgorithmException e) {
-            throw new RiskifedError(e);
+            throw new RiskifiedError(e);
         }
         try {
             mac.init(sk);
         } catch (InvalidKeyException e) {
-            throw new RiskifedError(e);
+            throw new RiskifiedError(e);
         }
         return mac;
     }
