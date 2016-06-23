@@ -25,6 +25,7 @@ public class Customer implements IValidated {
     private Address defaultAddress;
     private List<SocialDetails> social;
     private Gender gender; // male or female
+    private Address address;
     
     public Customer() {
     	
@@ -192,6 +193,14 @@ public class Customer implements IValidated {
     public void setSocial(List<SocialDetails> social) {
         this.social = social;
     }
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 
 }

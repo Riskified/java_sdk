@@ -7,6 +7,7 @@ public class Address implements IValidated {
     private String lastName;
     private String city;
     private String phone;
+	private Boolean verifiedPhone;
     private String country;
     private String countryCode;
     private String name;
@@ -145,4 +146,12 @@ public class Address implements IValidated {
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
+
+	public Boolean getVerifiedPhone() {
+		return verifiedPhone;
+	}
+
+	public void setVerifiedPhone(Boolean verifiedPhone) {
+		this.verifiedPhone = verifiedPhone;
+	}
 }
