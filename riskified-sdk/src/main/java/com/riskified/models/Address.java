@@ -63,7 +63,23 @@ public class Address implements IValidated {
         return phone;
     }
 
-    public String getCountry() {
+    public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCountry() {
         return country;
     }
 
@@ -153,5 +169,9 @@ public class Address implements IValidated {
 
 	public void setVerifiedPhone(Boolean verifiedPhone) {
 		this.verifiedPhone = verifiedPhone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

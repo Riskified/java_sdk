@@ -1,4 +1,4 @@
-package main.java.com.riskified.samples.orderClient;
+package com.riskified.samples.orderClient;
 
 import java.io.*;
 import java.text.*;
