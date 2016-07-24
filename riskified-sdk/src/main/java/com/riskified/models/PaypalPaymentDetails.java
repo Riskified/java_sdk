@@ -11,6 +11,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String paymentStatus;
     private String pendingReason;
     private String authorizationId;
+    private AuthorizationError authorizationError;
 
     public PaypalPaymentDetails(String payerEmail, String payerStatus, String payerAddressStatus, String protectionEligibility) {
         this.payerEmail = payerEmail;
@@ -85,6 +86,14 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     public void setAuthorizationId(String authorizationId) {
         this.authorizationId = authorizationId;
     }
+
+	public AuthorizationError getAuthorizationError() {
+		return authorizationError;
+	}
+
+	public void setAuthorizationError(AuthorizationError authorizationError) {
+		this.authorizationError = authorizationError;
+	}
 
 
 }

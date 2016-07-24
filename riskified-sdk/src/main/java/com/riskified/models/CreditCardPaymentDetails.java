@@ -8,7 +8,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String cvvResultCode;
     private String creditCardNumber;
     private String creditCardCompany;
-    private String authorization_id;
+    private String authorizationId;
+    private AuthorizationError authorizationError;
 
     public CreditCardPaymentDetails(String creditCardBin, String avsResultCode, String cvvResultCode, String creditCardNumber, String creditCardCompany) {
         this.creditCardBin = creditCardBin;
@@ -65,13 +66,22 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.creditCardCompany = creditCardCompany;
     }
 
-    public String getAuthorization_id() {
-        return authorization_id;
+    public String getAuthorizationId() {
+        return authorizationId;
     }
 
-    public void setAuthorization_id(String authorization_id) {
-        this.authorization_id = authorization_id;
+    public void setAuthorizationId(String authorizationId) {
+        this.authorizationId = authorizationId;
     }
+    
+    public AuthorizationError getAuthorizationError() {
+        return authorizationError;
+    }
+
+    public void setAuthorizationError(AuthorizationError authorizationError) {
+        this.authorizationError = authorizationError;
+    }
+
 
 
 }

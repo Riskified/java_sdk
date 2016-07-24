@@ -338,8 +338,12 @@ public class Client {
         AuthorizationError authorizationError = new AuthorizationError(AuthorizationErrorType.expiredCard, new Date(114, 01, 10, 11, 00, 00));
         authorizationError.setMessage("expired creadit card.");
 
-        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("1234", authorizationError);
-
+        CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
+        creditCardPaymentDetails.setAuthorizationError(authorizationError);
+        
+        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
+        checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetails);
+        
         return checkoutDeniedOrder;
     }
     

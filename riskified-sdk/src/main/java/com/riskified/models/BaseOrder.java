@@ -5,7 +5,7 @@ import java.util.*;
 import com.riskified.validations.*;
 
 public abstract class BaseOrder implements IValidated {
-    private String id;
+    protected String id;
     private String email;
     private Date createdAt;
     private Date updatedAt;
