@@ -5,7 +5,7 @@
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
     <version>1.0.1.9</version>
-    <name>Riskified SDK</name>
+    <name>Risikifed SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>http://www.riskified.com</url>
 
