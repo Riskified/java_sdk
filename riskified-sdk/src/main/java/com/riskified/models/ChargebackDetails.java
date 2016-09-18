@@ -20,7 +20,7 @@ public class ChargebackDetails {
 	private String feeCurrency;
 	private String cardIssuer;
 	private String gateway;
-	private String cardHolder;
+	private String cardholder;
 	private String message;
 	
 	public ChargebackDetails() {
@@ -147,12 +147,12 @@ public class ChargebackDetails {
 		this.gateway = gateway;
 	}
 
-	public String getCardHolder() {
-		return cardHolder;
+	public String getCardholder() {
+		return cardholder;
 	}
 
-	public void setCardHolder(String cardHolder) {
-		this.cardHolder = cardHolder;
+	public void setCardholder(String cardHolder) {
+		this.cardholder = cardholder;
 	}
 
 	public String getMessage() {
