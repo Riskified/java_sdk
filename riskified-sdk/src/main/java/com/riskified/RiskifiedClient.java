@@ -441,6 +441,30 @@ public class RiskifiedClient {
         validate(order, validation);
         return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
+    
+    /**
+     * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement. 
+     * The submitted request will be processed within 48 hours.
+     * Eligible requests will trigger an automatic credit refund by Riskified.
+     * An eligible chargeback reimbursement request must match the details provided originally within the order JSON
+     * and contain a fraudulent chargeback reason code. For tangible goods,
+     * Riskified uses the tracking number provided in the fulfillment parameter to ensure the parcel was delivered
+     * to the address provided within the order JSON. Riskified reserves the right to request additional documentation
+     * pertaining to submitted chargebacks as part of the eligibility review process.
+     * @param order The order to mark as chargeback
+     * @see ChargebackOrder
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response chargebackOrder(ChargebackOrder order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/chargeback";
+        validate(order);
+        return postOrder(new OrderWrapper<ChargebackOrder>(order), url);
+    }
 
     /**
      * Send an array (batch) of existing/historical orders to Riskified.
