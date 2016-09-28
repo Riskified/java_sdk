@@ -31,6 +31,8 @@ public class LineItem implements IValidated {
     private Seller seller;
     private String brand;
     private String productType;
+    private String size;
+    private Date deliveredAt;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -255,6 +257,22 @@ public class LineItem implements IValidated {
 
 	public void setSubCategory(String subCategory) {
 		this.subCategory = subCategory;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public Date getDeliveredAt() {
+		return deliveredAt;
+	}
+
+	public void setDeliveredAt(Date deliveredAt) {
+		this.deliveredAt = deliveredAt;
 	}
 
 	
