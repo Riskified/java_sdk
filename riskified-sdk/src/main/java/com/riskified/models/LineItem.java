@@ -33,6 +33,7 @@ public class LineItem implements IValidated {
     private String productType;
     private String size;
     private Date deliveredAt;
+    private String deliveredTo;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -273,6 +274,14 @@ public class LineItem implements IValidated {
 
 	public void setDeliveredAt(Date deliveredAt) {
 		this.deliveredAt = deliveredAt;
+	}
+
+	public String getDeliveredTo() {
+		return deliveredTo;
+	}
+
+	public void setDeliveredTo(String deliveredTo) {
+		this.deliveredTo = deliveredTo;
 	}
 
 	
