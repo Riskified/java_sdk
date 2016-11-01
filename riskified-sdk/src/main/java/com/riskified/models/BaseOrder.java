@@ -65,6 +65,7 @@ public abstract class BaseOrder implements IValidated {
 	private Map<String, Object> additionalData;
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
+    private SubmissionReason submissionReason;
 
     public BaseOrder() {
     }
@@ -621,5 +622,13 @@ public abstract class BaseOrder implements IValidated {
 			ChargeFreePaymentDetails chargeFreePaymentDetails) {
 		this.chargeFreePaymentDetails = chargeFreePaymentDetails;
 	}
+    
+    public SubmissionReason getSubmissionReason() {
+        return submissionReason;
+    }
+    
+    public void setSubmissionReason(SubmissionReason submissionReason) {
+        this.submissionReason = submissionReason;
+    }
 
 }

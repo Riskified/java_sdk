@@ -26,6 +26,7 @@ public class Customer implements IValidated {
     private List<SocialDetails> social;
     private Gender gender; // male or female
     private Address address;
+    private String accountType;
     
     public Customer() {
     	
@@ -202,5 +203,11 @@ public class Customer implements IValidated {
 		this.address = address;
 	}
 
+    public String getAccountType() {
+        return accountType;
+    }
 
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 }
