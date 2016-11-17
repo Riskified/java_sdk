@@ -151,7 +151,7 @@ public class ChargebackDetails {
 		return cardholder;
 	}
 
-	public void setCardholder(String cardHolder) {
+	public void setCardholder(String cardholder) {
 		this.cardholder = cardholder;
 	}
 
