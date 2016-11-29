@@ -4,16 +4,16 @@ public class DigitalLineItem extends LineItem {
 	
 	// Giftcard industry fields
 	String senderName;
-    String displayName;
-    Boolean photoUploaded;
-    String photoUrl;
-    String greetingPhotoUrl;
-    String message;
-    String greetingMessage;
-    String cardType;
-    String cardSubType;
-    String senderEmail;
-    Recipient recipient;
+    	String displayName;
+    	Boolean photoUploaded;
+    	String photoUrl;
+    	String greetingPhotoUrl;
+    	String message;
+    	String greetingMessage;
+    	String cardType;
+    	String cardSubType;
+    	String senderEmail;
+    	Recipient recipient;
 	
 	public DigitalLineItem(double price, int quantity, String title, Recipient recipient) {
 		super(price, quantity, title);
