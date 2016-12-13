@@ -12,6 +12,7 @@ public class FulfillmentDetails implements IValidated {
     private List<LineItem> lineItems;
     private String trackingCompany;
     private String trackingNumbers;
+    private String trackingUrls;
     private String message;
     private String receipt;
 
@@ -86,7 +87,15 @@ public class FulfillmentDetails implements IValidated {
         this.trackingNumbers = trackingNumbers;
     }
 
-    public String getMessage() {
+    public String getTrackingUrls() {
+		return trackingUrls;
+	}
+
+	public void setTrackingUrls(String trackingUrls) {
+		this.trackingUrls = trackingUrls;
+	}
+
+	public String getMessage() {
         return message;
     }
 
