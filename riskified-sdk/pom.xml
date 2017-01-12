@@ -7,7 +7,7 @@
     <version>1.0.2.8</version>
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
-    <url>http://www.riskified.com</url>
+    <url>https://www.riskified.com</url>
 
     <distributionManagement>
         <snapshotRepository>
@@ -140,7 +140,7 @@
 
     <organization>
         <name>Riskified</name>
-        <url>http://www.riskified.com/</url>
+        <url>https://www.riskified.com/</url>
     </organization>
     <issueManagement>
         <system>GitHub</system>
@@ -159,7 +159,7 @@
             <name>Riskified</name>
             <email>support@riskified.com</email>
             <organization>Riskified</organization>
-            <organizationUrl>http://www.riskified.com</organizationUrl>
+            <organizationUrl>https://www.riskified.com</organizationUrl>
         </developer>
     </developers>
     <scm>
