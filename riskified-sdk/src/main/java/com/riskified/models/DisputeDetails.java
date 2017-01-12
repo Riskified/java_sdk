@@ -4,22 +4,22 @@ import java.util.Date;
 
 public class DisputeDetails {
 
-	private String caseID;
+	private String caseId;
 	private String status;
 	private Date disputeAt;
 	private Date expectedResolutionDate;
 	private String disputeType;
 	private String issuerPocPhoneNumber;
-	
+
 	public DisputeDetails() {
 	}
 
-	public String getCaseID() {
-		return caseID;
+	public String getCaseId() {
+		return caseId;
 	}
 
-	public void setCaseID(String caseID) {
-		this.caseID = caseID;
+	public void setCaseID(String caseId) {
+		this.caseId = caseId;
 	}
 
 	public String getStatus() {
