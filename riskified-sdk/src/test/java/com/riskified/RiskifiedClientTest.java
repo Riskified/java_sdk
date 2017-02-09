@@ -195,7 +195,7 @@ public class RiskifiedClientTest {
                 } else {
                     //Something went wrong during submission.
                     String errorMessage = (error != null) ? error.getMessage() : null;
-                    String warnings = (response.getWarnings() != null) ? (String.join(",",response.getWarnings())) : null;
+                    String warnings = (response.getWarnings() != null) ? (StringUtils.join(",",response.getWarnings())) : null;
                     detailsOfWhatWentWrong = String.format("Unable to %s order at Riskified. Error message: %s, Warnings: %s", riskifiedOperation.toString(), errorMessage, warnings);
                 }
             } else {
