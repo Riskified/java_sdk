@@ -1,6 +1,5 @@
 package com.riskified.validations;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.http.conn.util.InetAddressUtils;
 
 public class Validate {
@@ -11,7 +10,7 @@ public class Validate {
     }
 
     public static void notNullOrEmpty(Object source, String str, String fieldName) throws FieldBadFormatException {
-        if (str == null || str.isEmpty()) {
+        if (str == null || str != "") {
             throw new FieldBadFormatException(source, fieldName + " can't be null or empty.");
         }
     }

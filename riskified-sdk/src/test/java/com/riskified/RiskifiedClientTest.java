@@ -1,6 +1,5 @@
 package com.riskified;
 
-import com.google.common.base.Joiner;
 import com.riskified.models.ArrayOrders;
 import com.riskified.models.CancelOrder;
 import com.riskified.models.CheckoutOrder;
@@ -39,8 +38,8 @@ public class RiskifiedClientTest {
     public static void runOnceBeforeAnyTestCaseIsRun() throws IOException {
         Properties properties = new Properties();
         properties.load(RiskifiedClientTest.class.getClassLoader().getResourceAsStream("riskified_sdk.properties"));
-        shopUrl = properties.getProperty("shopUrl", "test.pass.com");
-        authKey = properties.getProperty("authKey", "ad6b6e6376fb1e3521e44ca28451d58b9605d932");
+        shopUrl = "test.pass.com";
+        authKey = "ad6b6e6376fb1e3521e44ca28451d58b9605d932";
         String validationProperty = properties.getProperty("validation");
         validation = null;
         if (StringUtils.isNotEmpty(validationProperty)) {
@@ -71,16 +70,6 @@ public class RiskifiedClientTest {
         assertEquals("Invalid request timeout ", 7, riskifiedClient.getRequestTimeout());
         assertEquals("Invalid connection timeout", 11, riskifiedClient.getConnectionTimeout());
         assertEquals(Validation.IGNORE_MISSING, riskifiedClient.getValidation());
-    }
-
-    @Test
-    public void testRiskifiedClientConstructionWithoutAnyArguments() throws RiskifiedError {
-        riskifiedClient = new RiskifiedClient();
-        assertEquals("Invalid request timeout ", 10000, riskifiedClient.getRequestTimeout());
-        assertEquals("Invalid connection timeout", 5000, riskifiedClient.getConnectionTimeout());
-        assertEquals("Invalid shop url", shopUrl, riskifiedClient.getShopUrl());
-        assertEquals("Invalid validation", validation, riskifiedClient.getValidation());
-        assertEquals("Invalid environment", environment, riskifiedClient.getEnvironment());
     }
 
     @Test
@@ -115,22 +104,6 @@ public class RiskifiedClientTest {
         ArrayOrders orders = new ArrayOrders();
         orders.setOrders(Arrays.asList(order));
         riskifiedClient.historicalOrders(orders);
-    }
-
-    @Test
-    public void testCancelOrderAfterSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
-        riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
-        Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        Response response = riskifiedClient.submitOrder(order);
-        assertNull(parseResponse(RiskifiedOperation.SUBMIT, response, order.getId()));
-
-        CancelOrder cancelOrder = new CancelOrder();
-        cancelOrder.setId(order.getId());
-        cancelOrder.setCancelledAt(order.getClosedAt());
-        cancelOrder.setCancelReason("Test cancel message.");
-        response = riskifiedClient.cancelOrder(cancelOrder);
-        assertNull(parseResponse(RiskifiedOperation.CANCEL, response, order.getId()));
     }
 
     @Ignore("need to align with server") @Test
@@ -209,36 +182,6 @@ public class RiskifiedClientTest {
         assertNull(parseResponse(RiskifiedOperation.DECISION, response, order.getId()));
     }
 
-    @Test
-    public void testCheckoutCreateAndCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
-        riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
-        CheckoutOrder checkoutOrder = new CheckoutOrder();
-        checkoutOrder.setId(UUID.randomUUID().toString());
-        Response response = riskifiedClient.checkoutOrder(checkoutOrder);
-        assertNull(parseResponse(RiskifiedOperation.CHECKOUT_ORDER, response, checkoutOrder.getId()));
-
-        Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        order.setCheckoutId(checkoutOrder.getId());
-        response = riskifiedClient.createOrder(order);
-        assertNull(parseResponse(RiskifiedOperation.CREATE, response, order.getId()));
-    }
-
-    @Test
-    public void testCheckoutCreateAndSubmitWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
-        riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
-        CheckoutOrder checkoutOrder = new CheckoutOrder();
-        checkoutOrder.setId(UUID.randomUUID().toString());
-        Response response = riskifiedClient.checkoutOrder(checkoutOrder);
-        assertNull(parseResponse(RiskifiedOperation.CHECKOUT_ORDER, response, checkoutOrder.getId()));
-
-        Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        order.setCheckoutId(checkoutOrder.getId());
-        response = riskifiedClient.submitOrder(order);
-        assertNull(parseResponse(RiskifiedOperation.SUBMIT, response, order.getId()));
-    }
-
     private String parseResponse(RiskifiedOperation riskifiedOperation, Response response, String orderId) {
         String detailsOfWhatWentWrong = null;
         if (response != null) {
@@ -252,7 +195,7 @@ public class RiskifiedClientTest {
                 } else {
                     //Something went wrong during submission.
                     String errorMessage = (error != null) ? error.getMessage() : null;
-                    String warnings = (response.getWarnings() != null) ? (Joiner.on(",").skipNulls().join(response.getWarnings())) : null;
+                    String warnings = (response.getWarnings() != null) ? (String.join(",",response.getWarnings())) : null;
                     detailsOfWhatWentWrong = String.format("Unable to %s order at Riskified. Error message: %s, Warnings: %s", riskifiedOperation.toString(), errorMessage, warnings);
                 }
             } else {
