@@ -5,13 +5,14 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
+import org.apache.http.auth.*;
 import org.apache.http.client.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.*;
+import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -33,6 +34,11 @@ public class RiskifiedClient {
     private int requestTimeout = 10000;
     private int connectionTimeout = 5000;
     private String authKey;
+    
+    private String proxyUrl;
+    private int proxyPort;
+    private String proxyUsername;
+    private String proxyPassword;
 
     /**
      * Riskified API client
@@ -54,6 +60,11 @@ public class RiskifiedClient {
         String environmentType = properties.getProperty("environment");
         String validationType = properties.getProperty("validation");
 
+        String proxyUrl = properties.getProperty("proxyUrl");
+        String proxyPort = properties.getProperty("proxyPort");
+        String proxyUserName = properties.getProperty("proxyUsername");
+        String proxyPassword = properties.getProperty("proxyPassword");
+
         if (validationType.equals("NONE")) {
             validation = Validation.NONE;
         } else if (validationType.equals("IGNORE_MISSING")) {
@@ -70,11 +81,10 @@ public class RiskifiedClient {
         	environment = Environment.SANDBOX;
         }
 
-        if (environment == Environment.DEBUG) {
-            String url = properties.getProperty("debugRiskifiedHostUrl", Utils.DEBUG_ENVIRONMENT);
-            init(shopUrl, authKey, url, validation);
-        } else {
-            init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        
+        if (proxyUrl != null) {
+            initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
         }
     }
 
@@ -107,6 +117,13 @@ public class RiskifiedClient {
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
+    }
+    
+    private void initProxy(String proxyUrl, String proxyPort, String proxyUsername, String proxyPassword) {
+    	this.proxyUrl = proxyUrl;
+    	this.proxyPort = Integer.parseInt(proxyPort);
+    	this.proxyUsername = proxyUsername;
+    	this.proxyPassword = proxyPassword;
     }
 
     /**
@@ -538,7 +555,26 @@ public class RiskifiedClient {
         RequestConfig.Builder requestBuilder = RequestConfig.custom().setConnectTimeout(connectionTimeout).setConnectionRequestTimeout(requestTimeout);
         HttpClientBuilder builder = HttpClientBuilder.create();
         builder.setDefaultRequestConfig(requestBuilder.build());
+        
+        if (proxyUrl != null) {
+        	setProxyWithAuth(builder);
+        }
+        
         return builder.build();
+    }
+    
+    private CredentialsProvider getHttpProxyCredentials() {
+    	Credentials credentials = new UsernamePasswordCredentials(proxyUsername,proxyPassword);
+    	AuthScope authScope = new AuthScope(proxyUrl, 443);
+    	CredentialsProvider credsProvider = new BasicCredentialsProvider();
+    	credsProvider.setCredentials(authScope, credentials);
+    	return credsProvider;
+    }
+    
+    private void setProxyWithAuth(HttpClientBuilder builder) {
+        builder.setProxy(new HttpHost(proxyUrl, proxyPort));
+        builder.setDefaultCredentialsProvider(getHttpProxyCredentials());
+        builder.setProxyAuthenticationStrategy(new ProxyAuthenticationStrategy());
     }
 
     private Response postOrder(Object data, String url) throws IOException {
