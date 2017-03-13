@@ -10,9 +10,12 @@ import org.apache.http.auth.*;
 import org.apache.http.client.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -39,6 +42,7 @@ public class RiskifiedClient {
     private int proxyPort;
     private String proxyUsername;
     private String proxyPassword;
+    private HttpClientContext context;
 
     /**
      * Riskified API client
@@ -531,7 +535,7 @@ public class RiskifiedClient {
         addDataToRequest(data, request);
         HttpResponse response;
         HttpClient client = constructHttpClient();
-        response = client.execute(request);
+        response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
         Response responseObject = getCheckoutResponseObject(postBody);
@@ -555,26 +559,49 @@ public class RiskifiedClient {
         RequestConfig.Builder requestBuilder = RequestConfig.custom().setConnectTimeout(connectionTimeout).setConnectionRequestTimeout(requestTimeout);
         HttpClientBuilder builder = HttpClientBuilder.create();
         builder.setDefaultRequestConfig(requestBuilder.build());
-        
-        if (proxyUrl != null) {
-        	setProxyWithAuth(builder);
+       
+        if(this.proxyUrl != null && this.context == null) {
+        	try {
+                setProxyWithAuth();
+			} catch (MalformedChallengeException e) {
+				System.out.println("Error: failed to process challenge for proxy");
+			}
         }
-        
+       
         return builder.build();
     }
     
-    private CredentialsProvider getHttpProxyCredentials() {
-    	Credentials credentials = new UsernamePasswordCredentials(proxyUsername,proxyPassword);
-    	AuthScope authScope = new AuthScope(proxyUrl, 443);
-    	CredentialsProvider credsProvider = new BasicCredentialsProvider();
-    	credsProvider.setCredentials(authScope, credentials);
-    	return credsProvider;
-    }
+    private HttpResponse executeClient(HttpClient client, HttpPost request) throws IOException {
+        HttpResponse response;
+       
+        if(context != null) {
+              response = client.execute(request, context);
+        } else {
+              response = client.execute(request);
+        }
+       
+        return response;
+     }
     
-    private void setProxyWithAuth(HttpClientBuilder builder) {
-        builder.setProxy(new HttpHost(proxyUrl, proxyPort));
-        builder.setDefaultCredentialsProvider(getHttpProxyCredentials());
-        builder.setProxyAuthenticationStrategy(new ProxyAuthenticationStrategy());
+    private CredentialsProvider getHttpProxyCredentials() {
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(new HttpHost(this.proxyUrl, this.proxyPort)),
+                new UsernamePasswordCredentials(this.proxyUsername, this.proxyPassword));
+       return credsProvider;
+    }
+   
+    private void setProxyWithAuth() throws MalformedChallengeException {
+        BasicScheme proxyAuth = new BasicScheme();
+           proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH, "BASIC realm=default"));
+         BasicAuthCache authCache = new BasicAuthCache();
+         authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
+ 
+         HttpClientContext context = HttpClientContext.create();
+         context.setAuthCache(authCache);
+         context.setCredentialsProvider(getHttpProxyCredentials());
+        
+         this.context = context;
     }
 
     private Response postOrder(Object data, String url) throws IOException {
@@ -582,7 +609,7 @@ public class RiskifiedClient {
         addDataToRequest(data, request);
         HttpResponse response;
         HttpClient client = constructHttpClient();
-        response = client.execute(request);
+        response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
         Response responseObject = getResponseObject(postBody);
