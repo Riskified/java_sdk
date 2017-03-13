@@ -555,33 +555,37 @@ public class RiskifiedClient {
         }
     }
 
-    private HttpClient constructHttpClient() {
-        RequestConfig.Builder requestBuilder = RequestConfig.custom().setConnectTimeout(connectionTimeout).setConnectionRequestTimeout(requestTimeout);
-        HttpClientBuilder builder = HttpClientBuilder.create();
-        builder.setDefaultRequestConfig(requestBuilder.build());
-       
-        if(this.proxyUrl != null && this.context == null) {
-        	try {
-                setProxyWithAuth();
+	private HttpClient constructHttpClient() {
+		RequestConfig.Builder requestBuilder = RequestConfig.custom()
+				.setConnectTimeout(connectionTimeout)
+				.setConnectionRequestTimeout(requestTimeout);
+		HttpClientBuilder builder = HttpClientBuilder.create();
+		builder.setDefaultRequestConfig(requestBuilder.build());
+
+		if (this.proxyUrl != null && this.context == null) {
+			try {
+				setProxyWithAuth();
 			} catch (MalformedChallengeException e) {
-				System.out.println("Error: failed to process challenge for proxy");
+				System.out
+						.println("Error: failed to process challenge for proxy");
 			}
-        }
-       
-        return builder.build();
-    }
-    
-    private HttpResponse executeClient(HttpClient client, HttpPost request) throws IOException {
-        HttpResponse response;
-       
-        if(context != null) {
-              response = client.execute(request, context);
-        } else {
-              response = client.execute(request);
-        }
-       
-        return response;
-     }
+		}
+
+		return builder.build();
+	}
+
+	private HttpResponse executeClient(HttpClient client, HttpPost request)
+			throws IOException {
+		HttpResponse response;
+
+		if (context != null) {
+			response = client.execute(request, context);
+		} else {
+			response = client.execute(request);
+		}
+
+		return response;
+	}
     
     private CredentialsProvider getHttpProxyCredentials() {
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -591,18 +595,19 @@ public class RiskifiedClient {
        return credsProvider;
     }
    
-    private void setProxyWithAuth() throws MalformedChallengeException {
-        BasicScheme proxyAuth = new BasicScheme();
-           proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH, "BASIC realm=default"));
-         BasicAuthCache authCache = new BasicAuthCache();
-         authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
- 
-         HttpClientContext context = HttpClientContext.create();
-         context.setAuthCache(authCache);
-         context.setCredentialsProvider(getHttpProxyCredentials());
-        
-         this.context = context;
-    }
+	private void setProxyWithAuth() throws MalformedChallengeException {
+		BasicScheme proxyAuth = new BasicScheme();
+		proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
+				"BASIC realm=default"));
+		BasicAuthCache authCache = new BasicAuthCache();
+		authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
+
+		HttpClientContext context = HttpClientContext.create();
+		context.setAuthCache(authCache);
+		context.setCredentialsProvider(getHttpProxyCredentials());
+
+		this.context = context;
+	}
 
     private Response postOrder(Object data, String url) throws IOException {
         HttpPost request = createPostRequest(url);
