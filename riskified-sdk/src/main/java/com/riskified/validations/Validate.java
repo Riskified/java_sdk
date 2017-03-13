@@ -10,7 +10,7 @@ public class Validate {
     }
 
     public static void notNullOrEmpty(Object source, String str, String fieldName) throws FieldBadFormatException {
-        if (str == null || str != "") {
+        if (str == null || str.isEmpty()) {
             throw new FieldBadFormatException(source, fieldName + " can't be null or empty.");
         }
     }

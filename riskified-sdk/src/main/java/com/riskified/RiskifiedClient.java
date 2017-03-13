@@ -562,13 +562,8 @@ public class RiskifiedClient {
 		HttpClientBuilder builder = HttpClientBuilder.create();
 		builder.setDefaultRequestConfig(requestBuilder.build());
 
-		if (this.proxyUrl != null && this.context == null) {
-			try {
-				setProxyWithAuth();
-			} catch (MalformedChallengeException e) {
-				System.out
-						.println("Error: failed to process challenge for proxy");
-			}
+		if (this.proxyUrl != null) {
+			setProxyWithAuth(builder);
 		}
 
 		return builder.build();
@@ -595,7 +590,21 @@ public class RiskifiedClient {
        return credsProvider;
     }
    
-	private void setProxyWithAuth() throws MalformedChallengeException {
+	private void setProxyWithAuth(HttpClientBuilder builder) {
+		builder.setProxy(new HttpHost(proxyUrl, proxyPort));
+		builder.setDefaultCredentialsProvider(getHttpProxyCredentials());
+		builder.setProxyAuthenticationStrategy(new ProxyAuthenticationStrategy());
+
+		if (this.context == null) {
+			try {
+				setProxyContext();
+			} catch (MalformedChallengeException e) {
+				System.out.println("Error: failed to process challenge for proxy");
+			}
+		}
+	}
+	
+	private void setProxyContext() throws MalformedChallengeException {
 		BasicScheme proxyAuth = new BasicScheme();
 		proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
 				"BASIC realm=default"));
