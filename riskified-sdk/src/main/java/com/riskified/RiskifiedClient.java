@@ -672,7 +672,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.1.8");
+        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.3.3"); // TODO: take the version automatically
         
         return postRequest;
     }
