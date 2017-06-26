@@ -95,25 +95,54 @@ public class RiskifiedClient {
     /**
      * Riskified API client
      * don't use config file
-     * @param shopUrl The shop url you use to login to Riskified
+     * @param shopUrl The shop URL as registered in Riskified
      * @param authKey From the advance settings in Riskified web site
-     * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
+     * @param environment The Riskified environment (SANDBOX / PRODUCTION)
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
     }
+    
+    /**
+     * Riskified API client (with proxy)
+     * don't use config file
+     * @param shopUrl The shop URL as registered in Riskified
+     * @param authKey From the advance settings in Riskified web site
+     * @param environment The Riskified environment (SANDBOX / PRODUCTION)
+     * @param proxyClientDetails proxy details
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
+     */
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
+        initProxy(proxyClientDetails);
+    }
 
     /**
      * Riskified API client
      * don't use config file
-     * @param shopUrl The shop url you use to login to Riskified
+     * @param shopUrl The shop URL as registered in Riskified
      * @param authKey From the advance settings in Riskified web site
-     * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
+     * @param environment The Riskified environment (SANDBOX / PRODUCTION)
+     * @param validation The sdk's validation strategy
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+    }
+    
+    /**
+     * Riskified API client (with proxy)
+     * don't use config file
+     * @param shopUrl The shop URL as registered in Riskified
+     * @param authKey From the advance settings in Riskified web site
+     * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
+     * @param validation The sdk's validation strategy
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
+     */
+    public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        initProxy(proxyClientDetails);
     }
 
     private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifiedError {
@@ -128,6 +157,13 @@ public class RiskifiedClient {
     	this.proxyPort = Integer.parseInt(proxyPort);
     	this.proxyUsername = proxyUsername;
     	this.proxyPassword = proxyPassword;
+    }
+    
+    private void initProxy(ProxyClientDetails proxyClientDetails) {
+    	this.proxyUrl = proxyClientDetails.getProxyUrl();
+    	this.proxyPort = proxyClientDetails.getProxyPort();
+    	this.proxyUsername = proxyClientDetails.getProxyUsername();
+    	this.proxyPassword = proxyClientDetails.getProxyPassword();
     }
 
     /**
