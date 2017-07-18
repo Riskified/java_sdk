@@ -17,6 +17,8 @@ public class Notification {
         private String status;
         private String oldStatus;
         private String description;
+        private String decisionCode;
+        private String category;
 
         public String getId() {
             return id;
@@ -49,5 +51,21 @@ public class Notification {
         public void setDescription(String description) {
             this.description = description;
         }
+
+		public String getDecisionCode() {
+			return decisionCode;
+		}
+
+		public void setDecisionCode(String decisionCode) {
+			this.decisionCode = decisionCode;
+		}
+
+		public String getCategory() {
+			return category;
+		}
+
+		public void setCategory(String category) {
+			this.category = category;
+		}
     }
 }
