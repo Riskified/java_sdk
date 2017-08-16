@@ -6,7 +6,7 @@ public class DisputeDetails {
 
 	private String caseId;
 	private String status;
-	private Date disputeAt;
+	private Date disputedAt;
 	private Date expectedResolutionDate;
 	private String disputeType;
 	private String issuerPocPhoneNumber;
@@ -30,12 +30,12 @@ public class DisputeDetails {
 		this.status = status;
 	}
 
-	public Date getDisputeAt() {
-		return disputeAt;
+	public Date getDisputedAt() {
+		return disputedAt;
 	}
 
-	public void setDisputeAt(Date disputeAt) {
-		this.disputeAt = disputeAt;
+	public void setDisputedAt(Date disputedAt) {
+		this.disputedAt = disputedAt;
 	}
 
 	public Date getExpectedResolutionDate() {

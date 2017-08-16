@@ -132,11 +132,11 @@ public class Client {
         e.printStackTrace();
     }
 
-    private static DecisionOrder generateDecisionOrder(Order order) {
+    private static DecisionOrder generateDecisionOrder(Order order) throws ParseException {
         DecisionDetails decision = new DecisionDetails();
         decision.setExternalStatus(DecisionType.chargebackFraud);
         decision.setReason("Fraud + used proxy");
-        decision.setDecidedAt(new Date(114, 01, 10, 11, 00, 00));
+        decision.setDecidedAt(parseDate("15-12-2016 00:00:00.0"));
         DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decision);
         return decisionOrder;
     }
@@ -148,12 +148,12 @@ public class Client {
         return orders;
     }
 
-    private static RefundOrder generateRefundOrder(Order order) {
+    private static RefundOrder generateRefundOrder(Order order) throws ParseException {
         RefundOrder refund = new RefundOrder();
         refund.setId(order.getId());
         RefundDetails refundDetail = new RefundDetails();
         refundDetail.setRefundId("refund_001");
-        refundDetail.setRefundedAt(new Date(114, 01, 10, 11, 00, 00));
+        refundDetail.setRefundedAt(parseDate("15-12-2016 00:00:00.0"));
         refundDetail.setAmount(33.12);
         refundDetail.setCurrency("USD");
         refundDetail.setReason("Product Missing");
@@ -177,9 +177,9 @@ public class Client {
         return updateOrder;
     }
 
-    private static FulfillmentOrder generateFulfillmentOrder(Order order) {
+    private static FulfillmentOrder generateFulfillmentOrder(Order order) throws ParseException {
         List<FulfillmentDetails> fulfillments = new ArrayList<FulfillmentDetails>();
-        FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", new Date(114, 01, 10, 11, 00, 00), "success");
+        FulfillmentDetails fulfilmentDetails = new FulfillmentDetails("33", parseDate("15-12-2016 00:00:00.0"), "success");
 
         fulfilmentDetails.setLineItems(Arrays.asList(
         new LineItem(100, 1, "ACME Widget", "101"),
@@ -193,16 +193,16 @@ public class Client {
         return fulfillmentOrder;
     }
 
-    private static CheckoutOrder generateCheckoutOrder() {
+    private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
         order.setId("221212");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
-        order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(113.23);
@@ -335,9 +335,9 @@ public class Client {
         return order;
     }
 
-    private static CheckoutDeniedOrder generateCheckoutDeniedOrder() {
+    private static CheckoutDeniedOrder generateCheckoutDeniedOrder() throws ParseException {
 
-        AuthorizationError authorizationError = new AuthorizationError(AuthorizationErrorType.expiredCard, new Date(114, 01, 10, 11, 00, 00));
+        AuthorizationError authorizationError = new AuthorizationError(AuthorizationErrorType.expiredCard, parseDate("15-12-2016 00:00:00.0"));
         authorizationError.setMessage("expired creadit card.");
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
