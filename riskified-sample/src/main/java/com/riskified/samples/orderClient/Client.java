@@ -1,5 +1,7 @@
 package com.riskified.samples.orderClient;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.apache.http.client.ClientProtocolException;
@@ -11,7 +13,7 @@ import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
 
 public class Client {
-    public static void main(String[] arg) throws FieldBadFormatException {
+    public static void main(String[] arg) throws FieldBadFormatException, ParseException {
 
         CheckoutOrder checkoutOrder = generateCheckoutOrder();
 
@@ -244,15 +246,15 @@ public class Client {
         return order;
     }
 
-    private static Order generateOrder() {
+    private static Order generateOrder() throws ParseException {
         Order order = new Order();
         order.setId("#12345");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
-        order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setCurrency("CAD");
-        order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(120.22);
@@ -262,7 +264,7 @@ public class Client {
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
 
-        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", new Date(114, 01, 10, 11, 00, 00), true, 10);
+        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", parseDate("15-12-2016 00:00:00.0"), true, 10);
         SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
         social.setEmail("john.smith@facebook.com");
         customer.getSocial().add(social);
@@ -274,11 +276,11 @@ public class Client {
         travelLineItem.setDeparturePortCode("LLBG");
         travelLineItem.setDepartureCountryCode("IL");
         travelLineItem.setDepartureCity("Tel Aviv");
-        travelLineItem.setDepartureDate(getDate(2014, Calendar.MARCH, 5, 12, 30, 0));
+        travelLineItem.setDepartureDate(parseDate("15-12-2016 00:00:00.0"));
         travelLineItem.setArrivalPortCode("LBG");
         travelLineItem.setArrivalCountryCode("FR");
         travelLineItem.setArrivalCity("Paris");
-        travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5, 15, 30, 0));
+        travelLineItem.setArrivalDate(parseDate("15-12-2016 00:00:00.0"));
         travelLineItem.setTicketClass("economy");
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
@@ -287,14 +289,14 @@ public class Client {
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
 
         Passenger passenger = new Passenger("john","smith");
-        passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));
+        passenger.setDateOfBirth(parseDate("15-12-2016 00:00:00.0"));
         passenger.setNationalityCode("IL");
         passenger.setInsuranceType("full");
         passenger.setInsurancePrice(11);
         passenger.setDocumentNumber("123456");
         passenger.setDocumentType("Passport");
-        passenger.setDocumentIssueDate(getDate(1988, Calendar.MARCH, 5));
-        passenger.setDocumentExpirationDate(getDate(2020, Calendar.MARCH, 5));
+        passenger.setDocumentIssueDate(parseDate("15-12-2016 00:00:00.0"));
+        passenger.setDocumentExpirationDate(parseDate("15-12-2016 00:00:00.0"));
         passenger.setPassengerType("Adult");
         
         order.setPassengers(Arrays.asList(passenger));
@@ -347,18 +349,9 @@ public class Client {
         return checkoutDeniedOrder;
     }
     
-    private static Date getDate(int year, int month, int day) {
-    	return getDate(year, month, day, 0, 0, 0);
-    }
-    
-    private static Date getDate(int year, int month, int day, int hour, int minute, int second) {
-    	Calendar cal = Calendar.getInstance();
-    	cal.set(Calendar.YEAR, year);
-    	cal.set(Calendar.MONTH, (month-1));
-    	cal.set(Calendar.DAY_OF_MONTH, (day + 1));
-    	cal.set(Calendar.HOUR_OF_DAY, hour);
-    	cal.set(Calendar.MINUTE, minute);
-    	cal.set(Calendar.SECOND, second);
-    	return cal.getTime();
+    private static Date parseDate(String date) throws ParseException {
+    	SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss"); 
+    	
+    	return dt.parse(date); 
     }
 }
