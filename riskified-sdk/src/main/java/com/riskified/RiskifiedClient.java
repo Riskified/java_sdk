@@ -32,6 +32,7 @@ public class RiskifiedClient {
     private Validation validation = Validation.ALL;
     private Environment environment = Environment.SANDBOX;
     private String baseUrl;
+    private String baseUrlSyncAnalyze;
     private String shopUrl;
     private SHA256Handler sha256Handler;
     private int requestTimeout = 10000;
@@ -85,7 +86,7 @@ public class RiskifiedClient {
         	environment = Environment.SANDBOX;
         }
 
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
         
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
@@ -101,7 +102,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), Validation.ALL);
     }
     
     /**
@@ -114,7 +115,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), Validation.ALL);
         initProxy(proxyClientDetails);
     }
 
@@ -128,7 +129,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
     }
     
     /**
@@ -141,12 +142,13 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
         initProxy(proxyClientDetails);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, Validation validationType) throws RiskifiedError {
+    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
+        this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
@@ -500,8 +502,25 @@ public class RiskifiedClient {
     }
     
     /**
+     * Send & analyze a new order to Riskified
+     * Analyzes the order synchronicly, the returned status is Riskified's analysis review result.
+     * @param order An order to create & analyze
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response analyzeOrder(Order order) throws IOException, FieldBadFormatException {
+        String url = baseUrlSyncAnalyze + "/api/analyze";
+        validate(order);
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
+    
+    /**
      * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement. 
-     * The submitted request will be processed within 48 hours.
+     * The submitted request will be processed within 48 hosurs.
      * Eligible requests will trigger an automatic credit refund by Riskified.
      * An eligible chargeback reimbursement request must match the details provided originally within the order JSON
      * and contain a fraudulent chargeback reason code. For tangible goods,
