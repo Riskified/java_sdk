@@ -520,7 +520,7 @@ public class RiskifiedClient {
     
     /**
      * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement. 
-     * The submitted request will be processed within 48 hosurs.
+     * The submitted request will be processed within 48 hours.
      * Eligible requests will trigger an automatic credit refund by Riskified.
      * An eligible chargeback reimbursement request must match the details provided originally within the order JSON
      * and contain a fraudulent chargeback reason code. For tangible goods,
