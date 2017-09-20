@@ -130,6 +130,9 @@ public class SimpleClient {
         address.setProvinceCode("NY");
         address.setZip("64155");
         order.setShippingAddress(address);
+
+        Custom custom = new Custom("D2C");
+        order.setCustom(custom);
         
         return order;
     }
