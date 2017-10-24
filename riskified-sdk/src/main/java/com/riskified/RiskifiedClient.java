@@ -513,7 +513,7 @@ public class RiskifiedClient {
      * @throws FieldBadFormatException
      */
     public Response analyzeOrder(Order order) throws IOException, FieldBadFormatException {
-        String url = baseUrlSyncAnalyze + "/api/analyze";
+        String url = baseUrlSyncAnalyze + "/api/decide";
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
