@@ -12,14 +12,14 @@ public class AccommodationLineItem extends LineItem {
 	private String countryCode;
 	private Date checkInDate;
 	private Date checkOutDate;
-	private float rating;
+	private Float rating;
 	private int numberOfGuests;
 	private String cancellationPolicy;
 	private String accommodationType;
 
 	public AccommodationLineItem(double price, String title, String productId,
 			String city, String countryCode, Date checkInDate, Date checkOutDate) {
-		super(price, title, productId);
+		super(price, 1, title, productId);
 		this.city = city;
 		this.countryCode = countryCode;
 		this.checkInDate = checkInDate;
@@ -52,7 +52,7 @@ public class AccommodationLineItem extends LineItem {
 		return roomType;
 	}
 
-	public void setRoomType(String ticketClass) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 
