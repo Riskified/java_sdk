@@ -49,10 +49,10 @@ public class AccommodationClient {
         Order order = new Order();
         order.setId("123456");
         order.setName("#1234");
-        order.setEmail("great.customer@example.com");
+        order.setEmail("sample.sampleson@sample.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
-        order.setCurrency("CAD");
+        order.setCurrency("USD");
         order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
@@ -69,44 +69,14 @@ public class AccommodationClient {
         customer.getSocial().add(social);
         order.setCustomer(customer);
 
-        LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
-
-        // TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
-        // travelLineItem.setDeparturePortCode("LLBG");
-        // travelLineItem.setDepartureCountryCode("IL");
-        // travelLineItem.setDepartureCity("Tel Aviv");
-        // travelLineItem.setDepartureDate(getDate(2014, Calendar.MARCH, 5, 12, 30, 0));
-        // travelLineItem.setArrivalPortCode("LBG");
-        // travelLineItem.setArrivalCountryCode("FR");
-        // travelLineItem.setArrivalCity("Paris");
-        // travelLineItem.setArrivalDate(getDate(2014, Calendar.MARCH, 5, 15, 30, 0));
-        // travelLineItem.setTicketClass("economy");
-        // travelLineItem.setCarrierCode("AF");
-        // travelLineItem.setCarrierName("Air France");
-        // travelLineItem.setRequiresShipping(false);
-
         AccommodationLineItem accommodationLineItem = new AccommodationLineItem(300, "Holiday Inn", "hotel", "New York City", "US", new Date(114, 01, 10, 11, 00, 00), new Date(114, 01, 10, 11, 00, 00));
         accommodationLineItem.setRoomType("Presidential Suite");
-        accommodationLineItem.setRating(3.9);
+        accommodationLineItem.setRating(3.9f);
         accommodationLineItem.setNumberOfGuests(2);
         accommodationLineItem.setCancellationPolicy("No");
         accommodationLineItem.setAccommodationType("Hotel");
 
-        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, accommodationLineItem));
-        // order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
-
-        // Passenger passenger = new Passenger("john","smith");
-        // passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));
-        // passenger.setNationalityCode("IL");
-        // passenger.setInsuranceType("full");
-        // passenger.setInsurancePrice(11);
-        // passenger.setDocumentNumber("123456");
-        // passenger.setDocumentType("Passport");
-        // passenger.setDocumentIssueDate(getDate(1988, Calendar.MARCH, 5));
-        // passenger.setDocumentExpirationDate(getDate(2020, Calendar.MARCH, 5));
-        // passenger.setPassengerType("Adult");
-        //
-        // order.setPassengers(Arrays.asList(passenger));
+        order.setLineItems(Arrays.asList(accommodationLineItem));
 
         Seller seller = new Seller(customer);
         seller.setPriceNegotiated(true);

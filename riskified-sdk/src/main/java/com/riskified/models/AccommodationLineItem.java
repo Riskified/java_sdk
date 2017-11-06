@@ -24,6 +24,8 @@ public class AccommodationLineItem extends LineItem {
 		this.countryCode = countryCode;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
+		this.setProductType("accommodation");
+		this.setRequiresShipping(false);
 	}
 
 	public void validate(Validation validationType)
