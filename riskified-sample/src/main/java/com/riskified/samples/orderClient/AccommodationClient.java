@@ -56,18 +56,12 @@ public class AccommodationClient {
         order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
-        order.setTotalPrice(120.22);
-        order.setTotalDiscounts(5);
+        order.setTotalPrice(180);
+        order.setTotalDiscounts(20);
         order.setCartToken("1sdaf23j212");
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
-
-        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", new Date(114, 01, 10, 11, 00, 00), true, 10);
-        SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
-        social.setEmail("john.smith@facebook.com");
-        customer.getSocial().add(social);
-        order.setCustomer(customer);
 
         AccommodationLineItem accommodationLineItem = new AccommodationLineItem(300, "Holiday Inn", "hotel", "New York City", "US", new Date(114, 01, 10, 11, 00, 00), new Date(114, 01, 10, 11, 00, 00));
         accommodationLineItem.setRoomType("Presidential Suite");
@@ -78,14 +72,7 @@ public class AccommodationClient {
 
         order.setLineItems(Arrays.asList(accommodationLineItem));
 
-        Seller seller = new Seller(customer);
-        seller.setPriceNegotiated(true);
-        seller.setStartingPrice(400);
-
-
-        order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
-
-        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        order.setDiscountCodes(Arrays.asList(new DiscountCode(20, "10")));
 
         order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
 
@@ -98,19 +85,6 @@ public class AccommodationClient {
         address.setProvinceCode("NY");
         address.setZip("64155");
         order.setBillingAddress(address);
-
-        address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
-        address.setCompany("Kansas Computers");
-        address.setCountryCode("US");
-        address.setName("John Doe");
-        address.setAddress2("Apartment 12");
-        address.setProvince("New York");
-        address.setProvinceCode("NY");
-        address.setZip("64155");
-        order.setShippingAddress(address);
-
-        Custom custom = new Custom("D2C");
-        order.setCustom(custom);
 
         return order;
     }
