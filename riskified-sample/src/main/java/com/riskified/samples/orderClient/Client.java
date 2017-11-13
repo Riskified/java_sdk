@@ -350,7 +350,7 @@ public class Client {
     }
     
     private static Date parseDate(String date) throws ParseException {
-    	SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss"); 
+    	SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss"); 
     	
     	return dt.parse(date); 
     }

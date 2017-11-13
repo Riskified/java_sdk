@@ -38,7 +38,7 @@ public class RiskifiedClient {
     private int requestTimeout = 10000;
     private int connectionTimeout = 5000;
     private String authKey;
-    
+
     private String proxyUrl;
     private int proxyPort;
     private String proxyUsername;
@@ -104,7 +104,7 @@ public class RiskifiedClient {
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), Validation.ALL);
     }
-    
+
     /**
      * Riskified API client (with proxy)
      * don't use config file
@@ -131,7 +131,7 @@ public class RiskifiedClient {
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
     }
-    
+
     /**
      * Riskified API client (with proxy)
      * don't use config file
@@ -153,14 +153,14 @@ public class RiskifiedClient {
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
     }
-    
+
     private void initProxy(String proxyUrl, String proxyPort, String proxyUsername, String proxyPassword) {
     	this.proxyUrl = proxyUrl;
     	this.proxyPort = Integer.parseInt(proxyPort);
     	this.proxyUsername = proxyUsername;
     	this.proxyPassword = proxyPassword;
     }
-    
+
     private void initProxy(ProxyClientDetails proxyClientDetails) {
     	this.proxyUrl = proxyClientDetails.getProxyUrl();
     	this.proxyPort = proxyClientDetails.getProxyPort();
@@ -180,15 +180,15 @@ public class RiskifiedClient {
      */
     public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
-        
+
         // Validation.ALL is not relevant when checkout.
         if(validation != validation.NONE) {
             validate(order, Validation.IGNORE_MISSING);
         }
-        
+
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
-    
+
     /**
      * Send a new checkout order to Riskified
      * @param order The checkout order to create (Checkout order has the same fields like Order but ALL fields are optional)
@@ -221,7 +221,7 @@ public class RiskifiedClient {
         validate(order);
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutDeniedOrder>(order), url);
     }
-    
+
     /**
      * Mark a previously checkout order has been denied.
      * @param order The checkout denied order details, mark as denied and also can specify why it was denied.
@@ -256,7 +256,7 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
-    
+
     /**
      * Send a new order to Riskified
      * Depending on your current plan, the newly created order might not be submitted automatically for review.
@@ -325,15 +325,15 @@ public class RiskifiedClient {
      */
     public Response updateOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
-        
+
         // Validation.ALL is not relevant when updating.
         if(validation != validation.NONE) {
             validate(order, Validation.IGNORE_MISSING);
         }
-        
+
         return postOrder(new OrderWrapper<Order>(order), url);
     }
-    
+
     /**
      * Update details of an existing order.
      * Orders are differentiated by their id field. To update an existing order, include its id and any up-to-date data.
@@ -372,7 +372,7 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<CancelOrder>(order), url);
     }
-    
+
     /**
      * Mark a previously submitted order as cancelled.
      * If the order has not yet been reviewed, it is excluded from future review.
@@ -411,7 +411,7 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<RefundOrder>(order), url);
     }
-    
+
     /**
      * Issue a partial refund for an existing order.
      * Any associated charges will be updated to reflect the new order total amount.
@@ -447,7 +447,7 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<FulfillmentOrder>(order), url);
     }
-    
+
     /**
      * Mark a previously submitted order that is was fulfilled.
      * @param order The fulfillment order details
@@ -482,7 +482,7 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
-    
+
     /**
      * Set the decision made for order that was not submitted.
      * @param order The decision order details
@@ -500,7 +500,7 @@ public class RiskifiedClient {
         validate(order, validation);
         return postOrder(new OrderWrapper<DecisionOrder>(order), url);
     }
-    
+
     /**
      * Send & analyze a new order to Riskified
      * Analyzes the order synchronicly, the returned status is Riskified's analysis review result.
@@ -560,7 +560,7 @@ public class RiskifiedClient {
         validate(orders);
         return postOrder(orders, url);
     }
-    
+
     /**
      * Send an array (batch) of existing/historical orders to Riskified.
      * Use the financial_status field to provide information regarding each order status:
@@ -636,7 +636,7 @@ public class RiskifiedClient {
 
 		return response;
 	}
-    
+
     private CredentialsProvider getHttpProxyCredentials() {
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
@@ -644,7 +644,7 @@ public class RiskifiedClient {
                 new UsernamePasswordCredentials(this.proxyUsername, this.proxyPassword));
        return credsProvider;
     }
-   
+
 	private void setProxyWithAuth(HttpClientBuilder builder) {
 		builder.setProxy(new HttpHost(proxyUrl, proxyPort));
 		builder.setDefaultCredentialsProvider(getHttpProxyCredentials());
@@ -658,7 +658,7 @@ public class RiskifiedClient {
 			}
 		}
 	}
-	
+
 	private void setProxyContext() throws MalformedChallengeException {
 		BasicScheme proxyAuth = new BasicScheme();
 		proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
@@ -713,10 +713,10 @@ public class RiskifiedClient {
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
         String jsonData = JSONFormmater.toJson(data);
-        
+
     	String hmac = sha256Handler.createSHA256(jsonData);
         postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
-		
+
         StringEntity input;
         input = new StringEntity(jsonData, Charset.forName("UTF-8"));
 		input.setContentType("application/json");
@@ -727,8 +727,8 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.3.3"); // TODO: take the version automatically
-        
+        postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.7"); // TODO: take the version automatically
+
         return postRequest;
     }
 

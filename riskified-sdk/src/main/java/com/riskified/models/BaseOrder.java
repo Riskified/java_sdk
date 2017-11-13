@@ -66,6 +66,7 @@ public abstract class BaseOrder implements IValidated {
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
     private SubmissionReason submissionReason;
+    private Custom custom;
 
     public BaseOrder() {
     }
@@ -622,13 +623,21 @@ public abstract class BaseOrder implements IValidated {
 			ChargeFreePaymentDetails chargeFreePaymentDetails) {
 		this.chargeFreePaymentDetails = chargeFreePaymentDetails;
 	}
-    
+
     public SubmissionReason getSubmissionReason() {
         return submissionReason;
     }
-    
+
     public void setSubmissionReason(SubmissionReason submissionReason) {
         this.submissionReason = submissionReason;
+    }
+
+    public Custom getCustom() {
+        return custom;
+    }
+
+    public void setCustom(Custom custom) {
+        this.custom = custom;
     }
 
 }
