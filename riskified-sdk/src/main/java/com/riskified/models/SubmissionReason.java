@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public enum SubmissionReason {
 
+    @SerializedName("pilot")
+    pilot,
+    @SerializedName("agent_cancellation")
+    agent_cancellation,
     @SerializedName("failed_verification")
     failedVerification,
     @SerializedName("rule_decision")
