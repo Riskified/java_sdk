@@ -18,7 +18,7 @@ public class AccommodationClient {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-        	// RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
+        	 RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
 
             Response resCreateOrder = client.createOrder(order);
@@ -70,7 +70,7 @@ public class AccommodationClient {
         accommodationLineItem.setCancellationPolicy("No");
         accommodationLineItem.setAccommodationType("Hotel");
 
-        order.setLineItems(Arrays.asList(accommodationLineItem));
+        order.setLineItems(Arrays.<LineItem>asList(accommodationLineItem));
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(20, "10")));
 
