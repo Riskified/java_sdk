@@ -715,7 +715,7 @@ public class RiskifiedClient {
         String jsonData = JSONFormmater.toJson(data);
 
     	String hmac = sha256Handler.createSHA256(jsonData);
-        postRequest.setHeader("X_RISKIFIED_HMAC_SHA256", hmac);
+        postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
 
         StringEntity input;
         input = new StringEntity(jsonData, Charset.forName("UTF-8"));
@@ -726,7 +726,7 @@ public class RiskifiedClient {
     private HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
-        postRequest.setHeader("X_RISKIFIED_SHOP_DOMAIN", shopUrl);
+        postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
         postRequest.setHeader("User-Agent","riskified_java_sdk/1.0.7"); // TODO: take the version automatically
 
         return postRequest;
