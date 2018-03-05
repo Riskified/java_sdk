@@ -337,8 +337,8 @@ public class Client {
 
     private static CheckoutDeniedOrder generateCheckoutDeniedOrder() throws ParseException {
 
-        AuthorizationError authorizationError = new AuthorizationError(AuthorizationErrorType.expiredCard, parseDate("15-12-2016 00:00:00.0"));
-        authorizationError.setMessage("expired creadit card.");
+        AuthorizationError authorizationError = new AuthorizationError("Expired Card", parseDate("15-12-2016 00:00:00.0"));
+        authorizationError.setMessage("expired credit card.");
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);

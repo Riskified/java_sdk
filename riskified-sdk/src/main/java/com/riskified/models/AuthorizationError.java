@@ -6,10 +6,10 @@ import com.riskified.validations.*;
 
 public class AuthorizationError implements IValidated {
     private String message;
-    private AuthorizationErrorType errorCode;
+    private String errorCode;
     private Date createdAt;
 
-    public AuthorizationError(AuthorizationErrorType errorCode, Date createdAt) {
+    public AuthorizationError(String errorCode, Date createdAt) {
         this.errorCode = errorCode;
         this.createdAt = createdAt;
     }
@@ -22,11 +22,11 @@ public class AuthorizationError implements IValidated {
         this.message = message;
     }
 
-    public AuthorizationErrorType getErrorCode() {
+    public String getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(AuthorizationErrorType errorCode) {
+    public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;
     }
 
