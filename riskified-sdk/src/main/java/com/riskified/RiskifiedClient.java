@@ -1,26 +1,44 @@
 package com.riskified;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.Properties;
-
-import org.apache.http.*;
-import org.apache.http.auth.*;
-import org.apache.http.client.*;
+import com.google.gson.Gson;
+import com.riskified.models.*;
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.IValidated;
+import com.riskified.validations.Validation;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AUTH;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.MalformedChallengeException;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.*;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.ProxyAuthenticationStrategy;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
-import com.google.gson.Gson;
-import com.riskified.models.*;
-import com.riskified.validations.*;
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
+
+import static org.apache.http.conn.ssl.SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
 
 
 /**
@@ -614,8 +632,26 @@ public class RiskifiedClient {
 		RequestConfig.Builder requestBuilder = RequestConfig.custom()
 				.setConnectTimeout(connectionTimeout)
 				.setConnectionRequestTimeout(requestTimeout);
-		HttpClientBuilder builder = HttpClientBuilder.create();
-		builder.setDefaultRequestConfig(requestBuilder.build());
+
+        SSLContext sslContext = null;
+        try {
+            sslContext = SSLContexts.custom()
+                    .useTLS()
+                    .build();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(
+                sslContext,
+                new String[]{"TLSv1.2"},
+                null,
+                BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+		HttpClientBuilder builder = HttpClientBuilder.create()
+                .setSSLSocketFactory(sslConnectionSocketFactory)
+		        .setDefaultRequestConfig(requestBuilder.build());
 
 		if (this.proxyUrl != null) {
 			setProxyWithAuth(builder);
