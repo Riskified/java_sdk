@@ -10,18 +10,15 @@ public class Utils {
     public static final String DECO_PRODUCTION_ENVIRONMENT = "https://w.decopayments.com";
 
     public static String getBaseUrlFromEnvironment(Environment environmentType) {
-        String url = getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
-        return url;
+        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
     }
     
     public static String getBaseUrlSyncAnalyzeFromEnvironment(Environment environmentType) {
-        String url = getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_SYNC_ANALYZE_ENVIRONMENT);
-        return url;
+        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_SYNC_ANALYZE_ENVIRONMENT);
     }
 
     public static String getDecoBaseFromEnvironment(Environment environmentType) {
-        String url = getUrlString(environmentType, DECO_SANDBOX_ENVIRONMENT, DECO_PRODUCTION_ENVIRONMENT);
-        return url;
+        return getUrlString(environmentType, DECO_SANDBOX_ENVIRONMENT, DECO_PRODUCTION_ENVIRONMENT);
     }
 
     private static String getUrlString(Environment environmentType, String sandboxEnvironment, String productionEnvironment) {
