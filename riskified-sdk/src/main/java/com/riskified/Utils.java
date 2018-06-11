@@ -6,26 +6,22 @@ public class Utils {
     public static final String SANDBOX_ENVIRONMENT = "https://sandbox.riskified.com";
     public static final String PRODUCTION_ENVIRONMENT = "https://wh.riskified.com";
     public static final String PRODUCTION_SYNC_ANALYZE_ENVIRONMENT = "https://wh-sync.riskified.com";
+    public static final String DECO_SANDBOX_ENVIRONMENT = "https://sandboxw.decopayments.com";
+    public static final String DECO_PRODUCTION_ENVIRONMENT = "https://w.decopayments.com";
 
     public static String getBaseUrlFromEnvironment(Environment environmentType) {
-        String url = null;
-        if (environmentType != null) {
-            switch (environmentType) {
-                case DEBUG:
-                    url = DEBUG_ENVIRONMENT;
-                    break;
-                case SANDBOX:
-                    url = SANDBOX_ENVIRONMENT;
-                    break;
-                case PRODUCTION:
-                    url = PRODUCTION_ENVIRONMENT;
-                    break;
-            }
-        }
-        return url;
+        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
     }
     
-    public static String getBaseUrlSyncAnalzyeFromEnvironment(Environment environmentType) {
+    public static String getBaseUrlSyncAnalyzeFromEnvironment(Environment environmentType) {
+        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_SYNC_ANALYZE_ENVIRONMENT);
+    }
+
+    public static String getDecoBaseFromEnvironment(Environment environmentType) {
+        return getUrlString(environmentType, DECO_SANDBOX_ENVIRONMENT, DECO_PRODUCTION_ENVIRONMENT);
+    }
+
+    private static String getUrlString(Environment environmentType, String sandboxEnvironment, String productionEnvironment) {
         String url = null;
         if (environmentType != null) {
             switch (environmentType) {
@@ -33,10 +29,10 @@ public class Utils {
                     url = DEBUG_ENVIRONMENT;
                     break;
                 case SANDBOX:
-                    url = SANDBOX_ENVIRONMENT;
+                    url = sandboxEnvironment;
                     break;
                 case PRODUCTION:
-                    url = PRODUCTION_SYNC_ANALYZE_ENVIRONMENT;
+                    url = productionEnvironment;
                     break;
             }
         }
