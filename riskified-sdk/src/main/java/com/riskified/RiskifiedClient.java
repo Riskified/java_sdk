@@ -33,6 +33,7 @@ public class RiskifiedClient {
     private Environment environment = Environment.SANDBOX;
     private String baseUrl;
     private String baseUrlSyncAnalyze;
+    private String decoBaseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
     private int requestTimeout = 10000;
@@ -86,7 +87,7 @@ public class RiskifiedClient {
         	environment = Environment.SANDBOX;
         }
 
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
         
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
@@ -102,7 +103,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Validation.ALL);
     }
 
     /**
@@ -115,7 +116,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Validation.ALL);
         initProxy(proxyClientDetails);
     }
 
@@ -129,7 +130,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
     }
 
     /**
@@ -142,13 +143,14 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
         initProxy(proxyClientDetails);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, Validation validationType) throws RiskifiedError {
+    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
+        this.decoBaseUrl = decoBaseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
@@ -517,7 +519,39 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
-    
+
+    /**
+     * Check eligibility for Deco
+     * After checkout_denied, Inquiry if order is eligible for Deco.
+     * @param order An order to check Deco eligibility (only the order id is needed)
+     * @see Response
+     * @return Response object, including the status from the Deco server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response eligible(Order order) throws IOException, FieldBadFormatException {
+        String url = decoBaseUrl + "/api/eligible";
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
+
+    /**
+     * Opt-in to Deco
+     * Notifies Deco the customer has chosen to utilize Deco’s service
+     * @param order An order to opt-in to Deco payment (only the order id is needed)
+     * @see Response
+     * @return Response object, including the status from the Deco server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response opt_in(Order order) throws IOException, FieldBadFormatException {
+        String url = decoBaseUrl + "/api/opt_in";
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
+
     /**
      * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement. 
      * The submitted request will be processed within 48 hours.
@@ -844,5 +878,6 @@ public class RiskifiedClient {
 
         this.sha256Handler = new SHA256Handler(authKey);
         this.baseUrl = Utils.getBaseUrlFromEnvironment(environment);
+        this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
     }
 }
