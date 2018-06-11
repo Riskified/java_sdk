@@ -878,7 +878,7 @@ public class RiskifiedClient {
 
         this.sha256Handler = new SHA256Handler(authKey);
         this.baseUrl = Utils.getBaseUrlFromEnvironment(environment);
-        this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalzyeFromEnvironment(environment);
+        this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment);
         this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
     }
 }
