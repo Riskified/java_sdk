@@ -29,7 +29,7 @@ public class AccountActionClient {
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
 
-            // To run a different action, please comment out login action and uncomment a action you want to test
+            // To run a different action, please comment out login action and uncomment an action you want to test
             Response resCreateOrder = client.login(login);
 //            Response resCreateOrder = client.customerCreate(customerCreate);
 //            Response resCreateOrder = client.customerUpdate(customerUpdate);
