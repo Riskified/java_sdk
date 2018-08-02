@@ -17,7 +17,7 @@ public class JSONFormmater {
 
     public static class DateTimeSerializer implements JsonSerializer<Date> {
         public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmXXX");
             return new JsonPrimitive(df.format(src));
         }
     }

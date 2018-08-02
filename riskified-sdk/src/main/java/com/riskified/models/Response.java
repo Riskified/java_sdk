@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Response {
     private ResOrder order;
+    private String decision;
     private Integer received;
     private List<String> warnings;
     private Error error;
@@ -25,6 +26,14 @@ public class Response {
 
     public void setOrder(ResOrder order) {
         this.order = order;
+    }
+
+    public String getDecision() {
+        return decision;
+    }
+
+    public void setDecision(String decision) {
+        this.decision = decision;
     }
 
     public int getReceived() {

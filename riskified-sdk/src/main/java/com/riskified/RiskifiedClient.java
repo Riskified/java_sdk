@@ -14,7 +14,6 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.*;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
@@ -34,6 +33,7 @@ public class RiskifiedClient {
     private String baseUrl;
     private String baseUrlSyncAnalyze;
     private String decoBaseUrl;
+    private String accountBaseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
     private int requestTimeout = 10000;
@@ -87,7 +87,7 @@ public class RiskifiedClient {
         	environment = Environment.SANDBOX;
         }
 
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
         
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
@@ -103,7 +103,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Validation.ALL);
     }
 
     /**
@@ -116,7 +116,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Validation.ALL);
         initProxy(proxyClientDetails);
     }
 
@@ -130,7 +130,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
     }
 
     /**
@@ -143,14 +143,15 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
         initProxy(proxyClientDetails);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, Validation validationType) throws RiskifiedError {
+    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
         this.decoBaseUrl = decoBaseUrl;
+        this.accountBaseUrl = accountBaseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
@@ -619,6 +620,142 @@ public class RiskifiedClient {
         return postOrder(orders, url);
     }
 
+    /**
+     * Login Account Action
+     * Notifies Riskified that there has been a login account action
+     * @param login A login object
+     * @see Response
+     * @return Response object, including the status from the Deco server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response login(Login login) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/login";
+        validate(login, validation);
+        return postOrder(login, url);
+    }
+
+    /**
+     * Customer Create Account Action
+     * Notifies Riskified that there has been a customer create account action
+     * @param customerCreate A customer create object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response customerCreate(CustomerCreate customerCreate) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/customer_create";
+        validate(customerCreate, validation);
+        return postOrder(customerCreate, url);
+    }
+
+    /**
+     * Customer Update Account Action
+     * Notifies Riskified that there has been a customer update account action
+     * @param customerUpdate A customer create object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response customerUpdate(CustomerUpdate customerUpdate) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/customer_update";
+        validate(customerUpdate, validation);
+        return postOrder(customerUpdate, url);
+    }
+
+    /**
+     * Logout Account Action
+     * Notifies Riskified that there has been a logout account action
+     * @param logout A logout object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response logout(Logout logout) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/logout";
+        validate(logout, validation);
+        return postOrder(logout, url);
+    }
+
+    /**
+     * ResetPassword Account Action
+     * Notifies Riskified that there has been a reset password account action
+     * @param resetPassword A resetPassword object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response resetPassword(ResetPassword resetPassword) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/reset_password";
+        validate(resetPassword, validation);
+        return postOrder(resetPassword, url);
+    }
+
+    /**
+     * Wishlist Account Action
+     * Notifies Riskified that there has been a wishlist account action
+     * @param wishlist A Wishlist object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response wishlist(Wishlist wishlist) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/wishlist";
+        validate(wishlist, validation);
+        return postOrder(wishlist, url);
+    }
+
+    /**
+     * Redeem Account Action
+     * Notifies Riskified that there has been a redeem account action
+     * @param redeem A Redeem object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response redeem(Redeem redeem) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/redeem";
+        validate(redeem, validation);
+        return postOrder(redeem, url);
+    }
+
+    /**
+     * Contact Account Action
+     * Notifies Riskified that there has been a contact account action
+     * @param contact A Contact object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException
+     */
+    public Response contact(Contact contact) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/contact";
+        validate(contact, validation);
+        return postOrder(contact, url);
+    }
+
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
@@ -720,11 +857,11 @@ public class RiskifiedClient {
 	        case 200:
 	            return responseObject;
 	        case 400:
-	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	            throw new HttpResponseException(status, postBody);
 	        case 401:
-	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	            throw new HttpResponseException(status, postBody);
 	        case 404:
-	            throw new HttpResponseException(status, responseObject.getError().getMessage());
+	            throw new HttpResponseException(status, postBody);
 	        case 504:
 	            throw new HttpResponseException(status, "Temporary error, please retry");
 	        default:
@@ -880,5 +1017,6 @@ public class RiskifiedClient {
         this.baseUrl = Utils.getBaseUrlFromEnvironment(environment);
         this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment);
         this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
+        this.accountBaseUrl = Utils.getAccountBaseFromEnvironment(environment);
     }
 }
