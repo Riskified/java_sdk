@@ -8,6 +8,8 @@ public class Utils {
     public static final String PRODUCTION_SYNC_ANALYZE_ENVIRONMENT = "https://wh-sync.riskified.com";
     public static final String DECO_SANDBOX_ENVIRONMENT = "https://sandboxw.decopayments.com";
     public static final String DECO_PRODUCTION_ENVIRONMENT = "https://w.decopayments.com";
+    public static final String ACCOUNT_SANDBOX_ENVIRONMENT = "https://api-sandbox.riskified.com";
+    public static final String ACCOUNT_PRODUCTION_ENVIRONMENT = "https://api.riskified.com";
 
     public static String getBaseUrlFromEnvironment(Environment environmentType) {
         return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
@@ -19,6 +21,10 @@ public class Utils {
 
     public static String getDecoBaseFromEnvironment(Environment environmentType) {
         return getUrlString(environmentType, DECO_SANDBOX_ENVIRONMENT, DECO_PRODUCTION_ENVIRONMENT);
+    }
+
+    public static String getAccountBaseFromEnvironment(Environment environmentType) {
+        return getUrlString(environmentType, ACCOUNT_SANDBOX_ENVIRONMENT, ACCOUNT_PRODUCTION_ENVIRONMENT);
     }
 
     private static String getUrlString(Environment environmentType, String sandboxEnvironment, String productionEnvironment) {

@@ -87,6 +87,10 @@ public class Customer implements IValidated {
         return createdAt;
     }
 
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -97,6 +101,10 @@ public class Customer implements IValidated {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGroupId() {
@@ -125,6 +133,10 @@ public class Customer implements IValidated {
 
     public Integer getOrdersCount() {
         return ordersCount;
+    }
+
+    public void setVerifiedEmail(Boolean verifiedEmail) {
+        this.verifiedEmail = verifiedEmail;
     }
 
     public Boolean getVerifiedEmail() {
