@@ -17,15 +17,11 @@ public class ContactMethod {
         this.contactMethodType = contactMethodType;
     }
 
-//    public void validate(Validation validationType) throws FieldBadFormatException {
-//        if (validationType == Validation.ALL) {
-//            Validate.notNull(this, this.loginStatusType, "Login Status Type");
-//        }
-//
-//        if (this.failureReason != null && this.loginStatusType != LoginStatusType.failure) {
-//            throw new FieldBadFormatException("Reason for unsuccessful login should only be included on failed login.");
-//        }
-//    }
+    public void validate(Validation validationType) throws FieldBadFormatException {
+        if (this.email != null) {
+            Validate.emailAddress(this, this.email, "Email");
+        }
+    }
 
     public ContactMethodType getContactMethodType() {
         return contactMethodType;
