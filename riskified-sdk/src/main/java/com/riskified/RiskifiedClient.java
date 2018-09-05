@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.GsonBuilder;
 import org.apache.http.*;
 import org.apache.http.auth.*;
 import org.apache.http.client.*;
@@ -870,7 +872,7 @@ public class RiskifiedClient {
     }
 
     private Response getResponseObject(String postBody) throws IOException {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Response res = gson.fromJson(postBody, Response.class);
         return res;
     }
