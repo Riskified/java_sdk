@@ -28,6 +28,9 @@ public class SimpleClient {
             System.out.println("id: " + resCreateOrder.getOrder().getId());
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
+            System.out.println("old status: " + resCreateOrder.getOrder().getOldStatus());
+            System.out.println("decision code: " + resCreateOrder.getOrder().getDecisionCode());
+            System.out.println("category: " + resCreateOrder.getOrder().getCategory());
 
         } catch (RiskifiedError e) {
         	printError(e);
