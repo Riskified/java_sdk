@@ -885,7 +885,7 @@ public class RiskifiedClient {
     }
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
-        String jsonData = JSONFormmater.toJson(data);
+        String jsonData = JSONFormatter.toJson(data);
 
     	String hmac = sha256Handler.createSHA256(jsonData);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
