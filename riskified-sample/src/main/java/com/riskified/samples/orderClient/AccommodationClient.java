@@ -18,7 +18,7 @@ public class AccommodationClient {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-        	 RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
+        	RiskifiedClient client = new RiskifiedClient("vinny-test.com", "659b93dfbf702d72fd7d8867ce208a39", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
 
             Response resCreateOrder = client.createOrder(order);
@@ -62,6 +62,7 @@ public class AccommodationClient {
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
+        order.setSource(OrderSource.desktopWeb);
 
         AccommodationLineItem accommodationLineItem = new AccommodationLineItem(300, "Holiday Inn", "hotel", "New York City", "US", new Date(114, 01, 10, 11, 00, 00), new Date(114, 01, 10, 11, 00, 00));
         accommodationLineItem.setRoomType("Presidential Suite");

@@ -2,6 +2,7 @@ package com.riskified.samples.orderClient;
 import java.io.IOException;
 import java.util.*;
 
+import com.riskified.Environment;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
@@ -65,6 +66,7 @@ public class SimpleClient {
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
+        order.setSource(OrderSource.desktopWeb);
 
         Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", new Date(114, 01, 10, 11, 00, 00), true, 10);
         SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
