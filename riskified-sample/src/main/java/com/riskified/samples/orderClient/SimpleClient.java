@@ -2,6 +2,7 @@ package com.riskified.samples.orderClient;
 import java.io.IOException;
 import java.util.*;
 
+import com.riskified.Environment;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 

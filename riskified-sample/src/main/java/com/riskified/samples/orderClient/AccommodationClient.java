@@ -18,7 +18,7 @@ public class AccommodationClient {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-        	 RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
+        	RiskifiedClient client = new RiskifiedClient("vinny-test.com", "659b93dfbf702d72fd7d8867ce208a39", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
 
             Response resCreateOrder = client.createOrder(order);

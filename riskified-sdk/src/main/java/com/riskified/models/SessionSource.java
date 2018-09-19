@@ -2,7 +2,7 @@ package com.riskified.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public enum AccountSource {
+public enum SessionSource {
 
     @SerializedName("desktop_web")
     desktopWeb,
