@@ -35,7 +35,7 @@ public abstract class BaseOrder implements IValidated {
     private String landingSite;
     private String landingSiteRef;
     private String locationId;
-    private String source;
+    private OrderSource source;
     private String sourceIdentifier;
     private String sourceName;
     private String sourceUrl;
@@ -86,6 +86,7 @@ public abstract class BaseOrder implements IValidated {
             Validate.notNull(this, this.paymentDetails, "Payment Details");
             Validate.notNull(this, this.customer, "Customer");
             Validate.notNull(this, this.billingAddress, "Billing Address");
+            Validate.notNull(this, this.source, "Order Source");
         }
 
         if (this.totalPrice != null) {
@@ -375,11 +376,11 @@ public abstract class BaseOrder implements IValidated {
         this.locationId = locationId;
     }
 
-    public String getSource() {
+    public OrderSource getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(OrderSource source) {
         this.source = source;
     }
 

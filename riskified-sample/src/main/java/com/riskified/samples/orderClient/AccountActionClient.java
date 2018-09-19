@@ -2,8 +2,6 @@ package com.riskified.samples.orderClient;
 import java.io.IOException;
 import java.util.*;
 
-import com.riskified.Environment;
-import com.riskified.validations.Validation;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
@@ -67,7 +65,7 @@ public class AccountActionClient {
         LoginStatus loginStatus = new LoginStatus(LoginStatusType.success);
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         Login login = new Login("207119551", "test@test.com", loginStatus, clientDetails, sessionDetails);
         login.setLoginAtCheckout(true);
         login.setSocialLoginType(SocialType.facebook);
@@ -78,7 +76,7 @@ public class AccountActionClient {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
         clientDetails.setAcceptLanguage("en-CA");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         sessionDetails.setReferringSite("http://www.nba.com/");
         Customer customer = new Customer("bob.norman@hostmail.com", "Bob", "Norman");
         customer.setVerifiedEmail(true);
@@ -103,7 +101,7 @@ public class AccountActionClient {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
         clientDetails.setAcceptLanguage("en-CA");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         sessionDetails.setReferringSite("http://www.nba.com/");
         Customer customer = new Customer("bob.norman@hostmail.com", "Bob", "Norman");
         customer.setVerifiedEmail(true);
@@ -126,21 +124,21 @@ public class AccountActionClient {
     private static Logout generateLogout() {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         return new Logout("207119551", clientDetails, sessionDetails);
     }
 
     private static ResetPassword generateResetPassword() {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         return new ResetPassword("207119551", clientDetails, sessionDetails);
     }
 
     private static Wishlist generateWishlist() {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         LineItem lineItem = new LineItem(199, 1, "IPod Nano - 8gb - green", "632910392");
         lineItem.setBrand("Apple");
         lineItem.setProductType("physical");
@@ -151,7 +149,7 @@ public class AccountActionClient {
     private static Contact generateContact() {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", AccountSource.desktopWeb);
         ContactMethod contactMethod = new ContactMethod(ContactMethodType.email);
         contactMethod.setEmail("moo@gmail.com");
         Contact contact = new Contact("207119551", contactMethod);

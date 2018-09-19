@@ -211,6 +211,7 @@ public class Client {
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
+        order.setSource(OrderSource.desktopWeb);
 
         order.setLineItems(Arrays.asList(
         new LineItem(100, 1, "ACME Widget", "101"),
@@ -263,6 +264,7 @@ public class Client {
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
+        order.setSource(OrderSource.desktopWeb);
 
         Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", parseDate("15-12-2016 00:00:00.0"), true, 10);
         SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");

@@ -62,6 +62,7 @@ public class AccommodationClient {
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
+        order.setSource(OrderSource.desktopWeb);
 
         AccommodationLineItem accommodationLineItem = new AccommodationLineItem(300, "Holiday Inn", "hotel", "New York City", "US", new Date(114, 01, 10, 11, 00, 00), new Date(114, 01, 10, 11, 00, 00));
         accommodationLineItem.setRoomType("Presidential Suite");

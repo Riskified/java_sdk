@@ -22,6 +22,7 @@ public class JsonClient {
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(950);
         order.setCartToken("1sdaf23j212");
+        order.setSource(OrderSource.desktopWeb);
         order.setCustomer(
         		new Customer("great.customer@example.com", "john", "smith", "999", 
         		dateFormat.parse("1/1/2014 12:20:00"), true, 10));
