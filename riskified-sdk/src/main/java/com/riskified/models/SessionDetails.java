@@ -7,10 +7,10 @@ public class SessionDetails implements IValidated {
     private Date createdAt;
     private String cartToken;
     private String browserIp;
-    private AccountSource source;
+    private SessionSource source;
     private String referringSite;
 
-    public SessionDetails(Date createdAt, String cartToken, String browserIp, AccountSource source) {
+    public SessionDetails(Date createdAt, String cartToken, String browserIp, SessionSource source) {
         this.createdAt = createdAt;
         this.cartToken = cartToken;
         this.browserIp = browserIp;
@@ -22,7 +22,7 @@ public class SessionDetails implements IValidated {
             Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNullOrEmpty(this, this.cartToken, "Cart Token");
             Validate.notNullOrEmpty(this, this.browserIp, "Browser IP");
-            Validate.notNull(this, this.source, "AccountSource");
+            Validate.notNull(this, this.source, "SessionSource");
         }
     }
 
@@ -50,11 +50,11 @@ public class SessionDetails implements IValidated {
         this.browserIp = browserIp;
     }
 
-    public AccountSource getSource() {
+    public SessionSource getSource() {
         return source;
     }
 
-    public void setSource(AccountSource source) {
+    public void setSource(SessionSource source) {
         this.source = source;
     }
 
