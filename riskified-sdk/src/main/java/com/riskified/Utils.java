@@ -5,7 +5,7 @@ public class Utils {
     public static final String DEBUG_ENVIRONMENT = "http://localhost:3000";
     public static final String SANDBOX_ENVIRONMENT = "https://sandbox.riskified.com";
     public static final String PRODUCTION_ENVIRONMENT = "https://wh.riskified.com";
-    public static final String PRODUCTION_SYNC_ANALYZE_ENVIRONMENT = "https://wh-sync.riskified.com";
+    public static final String PRODUCTION_SYNC_DECIDE_ENVIRONMENT = "https://wh-sync.riskified.com";
     public static final String DECO_SANDBOX_ENVIRONMENT = "https://sandboxw.decopayments.com";
     public static final String DECO_PRODUCTION_ENVIRONMENT = "https://w.decopayments.com";
     public static final String ACCOUNT_SANDBOX_ENVIRONMENT = "https://api-sandbox.riskified.com";
@@ -15,8 +15,8 @@ public class Utils {
         return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
     }
     
-    public static String getBaseUrlSyncAnalyzeFromEnvironment(Environment environmentType) {
-        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_SYNC_ANALYZE_ENVIRONMENT);
+    public static String getBaseUrlSyncDecideFromEnvironment(Environment environmentType) {
+        return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_SYNC_DECIDE_ENVIRONMENT);
     }
 
     public static String getDecoBaseFromEnvironment(Environment environmentType) {
