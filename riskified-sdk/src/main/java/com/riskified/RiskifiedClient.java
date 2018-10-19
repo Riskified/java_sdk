@@ -142,6 +142,7 @@ public class RiskifiedClient {
      * @param authKey From the advance settings in Riskified web site
      * @param environment The Riskifed environment (SANDBOX / PRODUCTION)
      * @param validation The sdk's validation strategy
+     * @param proxyClientDetails proxy details
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
@@ -181,7 +182,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
@@ -203,7 +204,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response checkoutOrder(CheckoutOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
@@ -219,7 +220,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response checkoutDeniedOrder(CheckoutDeniedOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_denied";
@@ -236,7 +237,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response checkoutDeniedOrder(CheckoutDeniedOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_denied";
@@ -254,7 +255,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response createOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/create";
@@ -273,7 +274,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response createOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/create";
@@ -291,7 +292,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response submitOrder(Order order) throws IOException, FieldBadFormatException {
         return submitOrder(order, validation);
@@ -308,7 +309,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response submitOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/submit";
@@ -326,7 +327,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response updateOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
@@ -350,7 +351,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response updateOrder(Order order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/update";
@@ -370,7 +371,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response cancelOrder(CancelOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/cancel";
@@ -391,7 +392,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response cancelOrder(CancelOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/cancel";
@@ -409,7 +410,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response refundOrder(RefundOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/refund";
@@ -428,7 +429,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response refundOrder(RefundOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/refund";
@@ -445,7 +446,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response fulfillOrder(FulfillmentOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/fulfill";
@@ -463,7 +464,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response fulfillOrder(FulfillmentOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/fulfill";
@@ -480,7 +481,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response decisionOrder(DecisionOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/decision";
@@ -498,7 +499,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response decisionOrder(DecisionOrder order, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/decision";
@@ -507,15 +508,15 @@ public class RiskifiedClient {
     }
 
     /**
-     * Send & analyze a new order to Riskified
+     * Send and analyze a new order to Riskified
      * Analyzes the order synchronicly, the returned status is Riskified's analysis review result.
-     * @param order An order to create & analyze
+     * @param order An order to create and analyze
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response analyzeOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrlSyncAnalyze + "/api/decide";
@@ -532,7 +533,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response eligible(Order order) throws IOException, FieldBadFormatException {
         String url = decoBaseUrl + "/api/eligible";
@@ -548,7 +549,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response opt_in(Order order) throws IOException, FieldBadFormatException {
         String url = decoBaseUrl + "/api/opt_in";
@@ -571,7 +572,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response chargebackOrder(ChargebackOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/chargeback";
@@ -590,7 +591,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response historicalOrders(ArrayOrders orders) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
@@ -614,7 +615,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response historicalOrders(ArrayOrders orders, Validation validation) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/historical";
@@ -631,7 +632,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response login(Login login) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/login";
@@ -648,7 +649,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response customerCreate(CustomerCreate customerCreate) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/customer_create";
@@ -665,7 +666,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response customerUpdate(CustomerUpdate customerUpdate) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/customer_update";
@@ -682,7 +683,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response logout(Logout logout) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/logout";
@@ -699,7 +700,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response resetPassword(ResetPassword resetPassword) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/reset_password";
@@ -716,7 +717,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response wishlist(Wishlist wishlist) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/wishlist";
@@ -733,7 +734,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response redeem(Redeem redeem) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/redeem";
@@ -750,7 +751,7 @@ public class RiskifiedClient {
      * @throws ClientProtocolException in case of a problem or the connection was aborted
      * @throws IOException in case of an http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     public Response contact(Contact contact) throws IOException, FieldBadFormatException {
         String url = accountBaseUrl + "/customers/contact";
@@ -968,9 +969,9 @@ public class RiskifiedClient {
 
         /**
          * Required arguments to build a RiskifiedClient
-         * @param shopUrl
-         * @param authKey
-         * @param environment
+         * @param shopUrl The shop URL as registered in Riskified
+         * @param authKey From the advance settings in Riskified web site
+         * @param environment The Riskified environment (SANDBOX / PRODUCTION)
          */
         public RiskifiedClientBuilder(String shopUrl, String authKey, Environment environment) {
             this.shopUrl = shopUrl;
