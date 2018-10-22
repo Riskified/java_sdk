@@ -10,7 +10,7 @@ import com.riskified.SHA256Handler;
 
 /**
  * Converting string / servlet to notifaction object.
- * @see http://apiref.riskified.com/curl/#notifications
+ * see http://apiref.riskified.com/curl/#notifications
  */
 public class NotificationHandler {
     private Gson gson;
@@ -32,9 +32,9 @@ public class NotificationHandler {
      * @param hash the sha256 of the string
      * @return Notification
      * @throws AuthError the hash doesn't match the was calced sha256 for the string
-     * @throws UnsupportedEncodingException 
-     * @throws IllegalStateException 
-     * @throws JsonSyntaxException 
+     * @throws UnsupportedEncodingException unsupported encoding exception
+     * @throws IllegalStateException illegal state exception
+     * @throws JsonSyntaxException json syntax exception
      */
     public Notification toObject(String data, String hash) throws AuthError, JsonSyntaxException, IllegalStateException, UnsupportedEncodingException {
         if (sha256Handler.isHmacCorrect(data, hash))

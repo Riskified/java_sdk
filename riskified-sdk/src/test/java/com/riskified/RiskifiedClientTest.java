@@ -94,7 +94,7 @@ public class RiskifiedClientTest {
      * Throws an exception because the 'historical' event has been disabled.
      * @throws RiskifiedError
      * @throws IOException
-     * @throws FieldBadFormatException
+     * @throws FieldBadFormatException bad format found on field
      */
     @Test (expected = HttpResponseException.class)
     public void testHistoricalOrdersWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {

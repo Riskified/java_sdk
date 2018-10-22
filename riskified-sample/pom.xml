@@ -9,7 +9,7 @@
         <dependency>
             <groupId>com.riskified</groupId>
             <artifactId>riskified-sdk</artifactId>
-            <version>LATEST</version>
+            <version>1.2.1</version>
         </dependency>
 
         <dependency>
