@@ -762,25 +762,27 @@ public class RiskifiedClient {
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
-        HttpResponse response;
         HttpClient client = constructHttpClient();
-        response = executeClient(client, request);
+        HttpResponse response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
-        Response responseObject = getCheckoutResponseObject(postBody);
-        switch (status) {
-            case 200:
-                return responseObject;
-            case 400:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 401:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 404:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 504:
-                throw new HttpResponseException(status, "Temporary error, please retry");
-            default:
-                throw new HttpResponseException(500, "Contact Riskified support");
+        try {
+            Response responseObject = getCheckoutResponseObject(postBody);
+            switch (status) {
+                case 200:
+                    return responseObject;
+                case 400:
+                case 401:
+                case 404:
+                    throw new HttpResponseException(status, responseObject.getError().getMessage());
+                case 504:
+                    throw new HttpResponseException(status, "Temporary error, please retry");
+                default:
+                    throw new HttpResponseException(500, "Contact Riskified support. Server response status: " + status
+                            + " body: " + postBody);            }
+        } catch (Exception e) {
+            throw new HttpResponseException(500, "Contact Riskified support. Server response status: " + status
+                    + " body: " + postBody + " is the cause: " + e);
         }
     }
 
@@ -850,35 +852,37 @@ public class RiskifiedClient {
     private Response postOrder(Object data, String url) throws IOException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
-        HttpResponse response;
         HttpClient client = constructHttpClient();
-        response = executeClient(client, request);
+        HttpResponse response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
-        Response responseObject = getResponseObject(postBody);
-        switch (status) {
-	        case 200:
-	            return responseObject;
-	        case 400:
-	            throw new HttpResponseException(status, postBody);
-	        case 401:
-	            throw new HttpResponseException(status, postBody);
-	        case 404:
-	            throw new HttpResponseException(status, postBody);
-	        case 504:
-	            throw new HttpResponseException(status, "Temporary error, please retry");
-	        default:
-	            throw new HttpResponseException(500, "Contact Riskified support");
-	    }
+        try {
+            switch (status) {
+                case 200:
+                    return getResponseObject(postBody);
+                case 400:
+                case 401:
+                case 404:
+                    throw new HttpResponseException(status, postBody);
+                case 504:
+                    throw new HttpResponseException(status, "Temporary error, please retry");
+                default:
+                    throw new HttpResponseException(500, "Contact Riskified support. Server response status: " + status
+                            + " body: " + postBody);
+            }
+        } catch (Exception e) {
+            throw new HttpResponseException(500, "Contact Riskified support. Server response status: " + status
+                    + " body: " + postBody + " is the cause: " + e);
+        }
     }
 
-    private Response getResponseObject(String postBody) throws IOException {
+    private Response getResponseObject(String postBody) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Response res = gson.fromJson(postBody, Response.class);
         return res;
     }
 
-    private CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
+    private CheckoutResponse getCheckoutResponseObject(String postBody) {
         Gson gson = new Gson();
         CheckoutResponse res = gson.fromJson(postBody, CheckoutResponse.class);
         res.setOrder(res.getCheckout());
