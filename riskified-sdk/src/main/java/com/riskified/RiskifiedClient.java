@@ -90,7 +90,7 @@ public class RiskifiedClient {
         }
 
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
-        
+
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
         }
@@ -557,7 +557,7 @@ public class RiskifiedClient {
     }
 
     /**
-     * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement. 
+     * The chargeback API will allow merchants to request a fraud-related chargeback reimbursement.
      * The submitted request will be processed within 48 hours.
      * Eligible requests will trigger an automatic credit refund by Riskified.
      * An eligible chargeback reimbursement request must match the details provided originally within the order JSON
@@ -855,6 +855,7 @@ public class RiskifiedClient {
         response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
+
         Response responseObject = getResponseObject(postBody);
         switch (status) {
 	        case 200:
