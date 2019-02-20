@@ -1,11 +1,11 @@
 package com.riskified;
 
-import java.io.UnsupportedEncodingException;
-import java.security.*;
-import java.util.Formatter;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 
 public class SHA256Handler {
 
@@ -15,19 +15,14 @@ public class SHA256Handler {
         mac = createSHA256Key(authKay);
     }
 
-    public String createSHA256(String data) throws IllegalStateException, UnsupportedEncodingException {
-        final byte[] hmac = mac.doFinal(data.getBytes("UTF-8"));
+    public synchronized String createSHA256(byte[] data) throws IllegalStateException {
+        final byte[] hmac = mac.doFinal(data);
         return toHexString(hmac);
-    }
-
-    public Boolean isHmacCorrect(String data, String hmac) throws IllegalStateException, UnsupportedEncodingException {
-        String calcHash = createSHA256(data);
-        return hmac.equals(calcHash);
     }
 
     private Mac createSHA256Key(String authKey) throws RiskifiedError {
         Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
-
+        Mac mac;
         try {
             mac = Mac.getInstance(sk.getAlgorithm());
         } catch (NoSuchAlgorithmException e) {
