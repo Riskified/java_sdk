@@ -1,20 +1,13 @@
 package com.riskified;
 
-import com.riskified.models.ArrayOrders;
-import com.riskified.models.CancelOrder;
-import com.riskified.models.CheckoutOrder;
-import com.riskified.models.DecisionDetails;
-import com.riskified.models.DecisionOrder;
-import com.riskified.models.DecisionType;
-import com.riskified.models.Order;
-import com.riskified.models.ResOrder;
-import com.riskified.models.Response;
+import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.Validation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpResponseException;
 import org.junit.BeforeClass;
-import org.junit.*;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,9 +15,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 
 public class RiskifiedClientTest {

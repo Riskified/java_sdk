@@ -37,10 +37,11 @@ public class NotificationHandler {
      * @throws JsonSyntaxException json syntax exception
      */
     public Notification toObject(String data, String hash) throws AuthError, JsonSyntaxException, IllegalStateException, UnsupportedEncodingException {
-        if (sha256Handler.isHmacCorrect(data, hash))
+        String calcHash = sha256Handler.createSHA256(data.getBytes("UTF-8"));
+        if (hash.equals(calcHash))
             return gson.fromJson(data, Notification.class);
         else
-            throw new AuthError(hash, sha256Handler.createSHA256(data));
+            throw new AuthError(hash, calcHash);
     }
 
     /**
