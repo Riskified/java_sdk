@@ -33,7 +33,9 @@ public class JsonClient {
         order.setLineItems(lineItems);
        
         order.setShippingLines(Arrays.asList(new ShippingLine(25, "express")));
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
+        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(creditCardList);
 
         Address billingAddress = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         billingAddress.setCompany("Kansas Computers");

@@ -220,7 +220,9 @@ public class Client {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
+        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(creditCardList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -310,7 +312,9 @@ public class Client {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
+        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(creditCardList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -340,11 +344,12 @@ public class Client {
         AuthorizationError authorizationError = new AuthorizationError("Expired Card", parseDate("15-12-2016 00:00:00.0"));
         authorizationError.setMessage("expired credit card.");
 
+        List<IPaymentDetails> creditCardPaymentDetailsList = new ArrayList<IPaymentDetails>();
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
-        
+        creditCardPaymentDetailsList.add(creditCardPaymentDetails);
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
-        checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetails);
+        checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetailsList);
         
         return checkoutDeniedOrder;
     }
