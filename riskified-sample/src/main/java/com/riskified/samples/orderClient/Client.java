@@ -196,8 +196,8 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("221212");
-        order.setName("#1234");
+        order.setId("2212121122");
+        order.setName("#12341122");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setClosedAt(null);
@@ -220,9 +220,9 @@ public class Client {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
-        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
-        order.setPaymentDetails(creditCardList);
+        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
+        paymentDetailsList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(paymentDetailsList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -312,9 +312,9 @@ public class Client {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
-        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
-        order.setPaymentDetails(creditCardList);
+        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
+        paymentDetailsList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(paymentDetailsList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -344,12 +344,12 @@ public class Client {
         AuthorizationError authorizationError = new AuthorizationError("Expired Card", parseDate("15-12-2016 00:00:00.0"));
         authorizationError.setMessage("expired credit card.");
 
-        List<IPaymentDetails> creditCardPaymentDetailsList = new ArrayList<IPaymentDetails>();
+        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
-        creditCardPaymentDetailsList.add(creditCardPaymentDetails);
+        paymentDetailsList.add(creditCardPaymentDetails);
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
-        checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetailsList);
+        checkoutDeniedOrder.setPaymentDetails(paymentDetailsList);
         
         return checkoutDeniedOrder;
     }

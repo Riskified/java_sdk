@@ -47,8 +47,8 @@ public class AccommodationClient {
 
     private static Order generateOrder() {
         Order order = new Order();
-        order.setId("123456");
-        order.setName("#1234");
+        order.setId("12345678");
+        order.setName("#12345678");
         order.setEmail("sample.sampleson@sample.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
         order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
@@ -74,9 +74,9 @@ public class AccommodationClient {
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(20, "10")));
 
-        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
-        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
-        order.setPaymentDetails(creditCardList);
+        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
+        paymentDetailsList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(paymentDetailsList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");

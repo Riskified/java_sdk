@@ -112,9 +112,10 @@ public class SimpleClient {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        List<IPaymentDetails> creditCardList = new ArrayList<IPaymentDetails>();
-        creditCardList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
-        order.setPaymentDetails(creditCardList);
+        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
+        paymentDetailsList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+
+        order.setPaymentDetails(paymentDetailsList);
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
