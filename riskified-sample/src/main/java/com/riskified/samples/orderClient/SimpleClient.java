@@ -113,9 +113,6 @@ public class SimpleClient {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        List<IPaymentDetails> paymentDetailsList = new ArrayList<IPaymentDetails>();
-        paymentDetailsList.add(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
-
         order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
 
 
