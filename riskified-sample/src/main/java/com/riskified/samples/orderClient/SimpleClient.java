@@ -17,7 +17,7 @@ public class SimpleClient {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-        	// RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
+            // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
 
@@ -33,18 +33,18 @@ public class SimpleClient {
             System.out.println("category: " + resCreateOrder.getOrder().getCategory());
 
         } catch (RiskifiedError e) {
-        	printError(e);
+            printError(e);
         } catch (HttpResponseException e) {
-        	printError(e);
+            printError(e);
         } catch (ClientProtocolException e) {
-        	printError(e);
+            printError(e);
         } catch (IOException e) {
-        	printError(e);
+            printError(e);
         }
     }
-    
+
     private static void printError(Exception e) {
-    	System.out.println("[Sample failed]");
+        System.out.println("[Sample failed]");
         e.printStackTrace();
     }
 
@@ -73,7 +73,8 @@ public class SimpleClient {
         order.setCustomer(customer);
 
         LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
-        
+        lineItem.setRegistryType(RegistryType.other);
+
         TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
         travelLineItem.setDeparturePortCode("LLBG");
         travelLineItem.setDepartureCountryCode("IL");
@@ -87,7 +88,7 @@ public class SimpleClient {
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
         travelLineItem.setRequiresShipping(false);
-        
+
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
 
         Passenger passenger = new Passenger("john","smith");
@@ -100,19 +101,20 @@ public class SimpleClient {
         passenger.setDocumentIssueDate(getDate(1988, Calendar.MARCH, 5));
         passenger.setDocumentExpirationDate(getDate(2020, Calendar.MARCH, 5));
         passenger.setPassengerType("Adult");
-        
+
         order.setPassengers(Arrays.asList(passenger));
-        
+
         Seller seller = new Seller(customer);
         seller.setPriceNegotiated(true);
         seller.setStartingPrice(400);
-        
-        
+
+
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
         order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -136,22 +138,22 @@ public class SimpleClient {
 
         Custom custom = new Custom("D2C");
         order.setCustom(custom);
-        
+
         return order;
     }
 
     private static Date getDate(int year, int month, int day) {
-    	return getDate(year, month, day, 0, 0, 0);
+        return getDate(year, month, day, 0, 0, 0);
     }
-    
+
     private static Date getDate(int year, int month, int day, int hour, int minute, int second) {
-    	Calendar cal = Calendar.getInstance();
-    	cal.set(Calendar.YEAR, year);
-    	cal.set(Calendar.MONTH, month);
-    	cal.set(Calendar.DAY_OF_MONTH, day);
-    	cal.set(Calendar.HOUR_OF_DAY, hour);
-    	cal.set(Calendar.MINUTE, minute);
-    	cal.set(Calendar.SECOND, second);
-    	return cal.getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        cal.set(Calendar.SECOND, second);
+        return cal.getTime();
     }
 }
