@@ -27,6 +27,7 @@ public class Customer implements IValidated {
     private Gender gender; // male or female
     private Address address;
     private String accountType;
+    private Integer linkedAccounts;
     
     public Customer() {
     	
@@ -222,4 +223,10 @@ public class Customer implements IValidated {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
+
+    public Integer getLinkedAccounts() {
+        return linkedAccounts;
+    }
+
+    public void setLinkedAccounts(Integer linkedAccounts) { this.linkedAccounts = linkedAccounts; }
 }
