@@ -113,7 +113,7 @@ public class SimpleClient {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA")));
 
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");

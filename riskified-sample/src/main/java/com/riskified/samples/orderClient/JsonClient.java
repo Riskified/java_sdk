@@ -3,7 +3,8 @@ package com.riskified.samples.orderClient;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import com.riskified.JSONFormmater;
+
+import com.riskified.JSONFormater;
 import com.riskified.models.*;
 
 public class JsonClient {
@@ -33,7 +34,7 @@ public class JsonClient {
         order.setLineItems(lineItems);
        
         order.setShippingLines(Arrays.asList(new ShippingLine(25, "express")));
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA")));
 
         Address billingAddress = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         billingAddress.setCompany("Kansas Computers");
@@ -49,7 +50,7 @@ public class JsonClient {
         shippingAddress.setZip("64155");
         order.setShippingAddress(shippingAddress);
         
-        String orderJson = JSONFormmater.toJson(order);
+        String orderJson = JSONFormater.toJson(order);
         
         // Save the order json to a file
         PrintWriter fileWriter = new PrintWriter(orderId + ".json");
