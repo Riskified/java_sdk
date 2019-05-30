@@ -11,7 +11,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String authorizationId;
     private AuthorizationError authorizationError;
     private String cardholderName;
-    private String type;
+    private String _type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -108,11 +108,11 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 	}
 	
 	public String getType() { 
-		return type;
+		return _type;
 	}
 
 	public void setType(String type) { 
-		this.type = type;
+		this._type = type;
 	}
 
 	public String getId() {
