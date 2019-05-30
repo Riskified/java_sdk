@@ -11,19 +11,35 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String authorizationId;
     private AuthorizationError authorizationError;
     private String cardholderName;
+    private String _type;
+    private String id;
+    private String gateway;
+    private String acquirerBin;
+    private String mid;
+    
 
-    public CreditCardPaymentDetails(String creditCardBin, String avsResultCode, String cvvResultCode, String creditCardNumber, String creditCardCompany) {
+    public CreditCardPaymentDetails(String creditCardBin, 
+    		String avsResultCode, 
+    		String cvvResultCode, 
+    		String creditCardNumber, 
+    		String creditCardCompany) {
         this.creditCardBin = creditCardBin;
         this.avsResultCode = avsResultCode;
         this.cvvResultCode = cvvResultCode;
         this.creditCardNumber = creditCardNumber;
         this.creditCardCompany = creditCardCompany;
+        
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {
             Validate.notNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
             Validate.notNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
+        //  Validate.notNullOrEmpty(this, this.type, "Type");
+       //   Validate.notNullOrEmpty(this, this.acquirerBin, "acquirer Bin");
+       //   Validate.notNullOrEmpty(this, this.gateway, "gateway");
+          
+            
         }
     }
 
@@ -89,6 +105,46 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 
 	public void setCardholderName(String cardholderName) {
 		this.cardholderName = cardholderName;
+	}
+	
+	public String getType() { 
+		return _type;
+	}
+
+	public void setType(String type) { 
+		this._type = type;
+	}
+
+	public String getId() {
+		return id; 
+	}
+
+	public void setId(String id) { 
+		this.id = id;
+	}
+
+	public String getGateway() { 
+		return gateway; 
+	}
+
+	public void setGateway(String gateway) { 
+		this.gateway = gateway; 
+	}
+
+	public String getAcquirerBin() { 
+		return acquirerBin; 
+	}
+
+	public void setAcquirerBin(String acquirerBin) { 
+		this.acquirerBin = acquirerBin; 
+	}
+
+	public String getMid() { 
+		return mid;
+	}
+
+	public void setMid(String mid) { 
+		this.mid = mid; 
 	}
 
 

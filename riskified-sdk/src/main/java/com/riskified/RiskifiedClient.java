@@ -206,6 +206,28 @@ public class RiskifiedClient {
 
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
+    
+    // TODO add other paramaters Riskified server will return 
+    /**
+     * Send a new advise order to Riskified
+     * @param order The advise order to create 
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response adviseOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/advise";
+
+        // Validation.ALL is not relevant when checkout.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
+    }
 
     /**
      * Send a new checkout order to Riskified
@@ -345,9 +367,9 @@ public class RiskifiedClient {
         String url = baseUrl + "/api/update";
 
         // Validation.ALL is not relevant when updating.
-        if(validation != validation.NONE) {
+        	if(validation != validation.NONE) {
             validate(order, Validation.IGNORE_MISSING);
-        }
+        } 
 
         return postOrder(new OrderWrapper<Order>(order), url);
     }
@@ -899,7 +921,7 @@ public class RiskifiedClient {
     }
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
-        String jsonData = JSONFormmater.toJson(data);
+        String jsonData = JSONFormater.toJson(data);
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
