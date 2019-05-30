@@ -1,13 +1,17 @@
 package com.riskified.models;
 
 public class ResOrder {
+
     private String id;
     private String status;
     private String description;
     private String oldStatus;
     private String decisionCode;
     private String category;
-
+	private int score;
+	private AuthenticationType authentication_type;
+	
+	
     public String getId() {
         return id;
     }
@@ -55,4 +59,23 @@ public class ResOrder {
     public void setCategory(String category) {
         this.category = category;
     }
+    
+    
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
+    public AuthenticationType getAuthenticationType() { 
+    	return authentication_type; 
+    }
+
+    public void setAuthenticationType(AuthenticationType authenticationType) { 
+    	this.authentication_type = authenticationType; 
+    }
+    
+    
 }
