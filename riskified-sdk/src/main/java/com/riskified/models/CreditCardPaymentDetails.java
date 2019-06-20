@@ -16,6 +16,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String gateway;
     private String acquirerBin;
     private String mid;
+    private String paymentPlan;
+    private int installmentMonths;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -42,7 +44,24 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
             
         }
     }
+    
+    public String getPaymentPlan() {
+        return paymentPlan;
+    }
 
+    public void setPaymentPlan(String paymentPlan) {
+        this.paymentPlan = paymentPlan;
+    }
+    
+    public int getInstallmentMonths() {
+        return installmentMonths;
+    }
+
+    public void setInstallmentMonths(int installmentMonths) {
+        this.installmentMonths = installmentMonths;
+    }
+    
+    
     public String getCreditCardBin() {
         return creditCardBin;
     }
