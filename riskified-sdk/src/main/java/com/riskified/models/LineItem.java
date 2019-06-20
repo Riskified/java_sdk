@@ -34,6 +34,7 @@ public class LineItem implements IValidated {
     private String size;
     private Date deliveredAt;
     private String deliveredTo;
+    private String color;
     private RegistryType registryType;
 
 
@@ -97,8 +98,18 @@ public class LineItem implements IValidated {
         return sku;
     }
 
+  
     public void setSku(String sku) {
         this.sku = sku;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+
+  
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getCondition() {
