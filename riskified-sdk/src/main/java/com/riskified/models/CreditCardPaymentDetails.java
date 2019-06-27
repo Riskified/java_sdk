@@ -10,6 +10,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardCompany;
     private String authorizationId;
     private AuthorizationError authorizationError;
+    private AuthenticationResult authenticationResult;
     private String cardholderName;
     private String _type;
     private String id;
@@ -117,6 +118,14 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void setAuthorizationError(AuthorizationError authorizationError) {
         this.authorizationError = authorizationError;
     }
+    
+	public AuthenticationResult getAuthenticationResult() {
+		return authenticationResult;
+	}
+
+	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
+		this.authenticationResult = authenticationResult;
+	}
 
 	public String getCardholderName() {
 		return cardholderName;
