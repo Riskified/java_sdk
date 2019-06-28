@@ -30,7 +30,7 @@ public class AuthenticationResult implements IValidated {
         return tranStatus;
     }
 
-    public void setTranStatusv(String tranStatus) {
+    public void setTranStatus(String tranStatus) {
         this.tranStatus = tranStatus;
     }
     
