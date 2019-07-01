@@ -9,7 +9,6 @@ import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
 import com.riskified._type;
-import com.riskified.ErrorCode;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
@@ -432,7 +431,7 @@ public class Client {
 
     private static CheckoutDeniedOrder generateCheckoutDeniedOrder() throws ParseException {
 
-        AuthorizationError authorizationError = new AuthorizationError(ErrorCode.expired_card, parseDate("15-12-2016 00:00:00.0"));
+        AuthorizationError authorizationError = new AuthorizationError("card_declined", parseDate("15-12-2016 00:00:00.0"));
         authorizationError.setMessage("expired credit card.");
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
