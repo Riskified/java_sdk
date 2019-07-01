@@ -2,14 +2,15 @@ package com.riskified.models;
 
 import java.util.Date;
 
+import com.riskified.ErrorCode;
 import com.riskified.validations.*;
 
 public class AuthorizationError implements IValidated {
     private String message;
-    private String errorCode;
+    private ErrorCode errorCode;
     private Date createdAt;
 
-    public AuthorizationError(String errorCode, Date createdAt) {
+    public AuthorizationError(ErrorCode errorCode, Date createdAt) {
         this.errorCode = errorCode;
         this.createdAt = createdAt;
     }
@@ -22,11 +23,11 @@ public class AuthorizationError implements IValidated {
         this.message = message;
     }
 
-    public String getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 

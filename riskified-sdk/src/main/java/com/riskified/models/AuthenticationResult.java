@@ -2,6 +2,7 @@ package com.riskified.models;
 
 import java.util.Date;
 
+import com.riskified.TranStatus;
 import com.riskified.validations.*;
 
 
@@ -9,7 +10,7 @@ public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
-	private String tranStatus;
+	private TranStatus tranStatus;
 	private String tranStatusReason;
 	
 
@@ -26,11 +27,11 @@ public class AuthenticationResult implements IValidated {
     }
     
 
-    public String getTranStatus() {
+    public TranStatus getTranStatus() {
         return tranStatus;
     }
 
-    public void setTranStatus(String tranStatus) {
+    public void setTranStatus(TranStatus tranStatus) {
         this.tranStatus = tranStatus;
     }
     
