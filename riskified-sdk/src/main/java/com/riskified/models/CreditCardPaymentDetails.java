@@ -10,8 +10,9 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardCompany;
     private String authorizationId;
     private AuthorizationError authorizationError;
+    private AuthenticationResult authenticationResult;
     private String cardholderName;
-    private String _type;
+    private com.riskified._type _type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -117,6 +118,14 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void setAuthorizationError(AuthorizationError authorizationError) {
         this.authorizationError = authorizationError;
     }
+    
+	public AuthenticationResult getAuthenticationResult() {
+		return authenticationResult;
+	}
+
+	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
+		this.authenticationResult = authenticationResult;
+	}
 
 	public String getCardholderName() {
 		return cardholderName;
@@ -126,11 +135,11 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 		this.cardholderName = cardholderName;
 	}
 	
-	public String getType() { 
+	public com.riskified._type getType() { 
 		return _type;
 	}
 
-	public void setType(String type) { 
+	public void setType(com.riskified._type type) { 
 		this._type = type;
 	}
 
