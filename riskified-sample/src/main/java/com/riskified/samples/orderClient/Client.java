@@ -215,7 +215,7 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("javasdkcheckoutorder001");
+        order.setId("221211112");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -333,7 +333,7 @@ public class Client {
     
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("191919171101");
+        order.setId("#12000000000345");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
