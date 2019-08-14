@@ -2,10 +2,13 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.List;
+
 public class DecisionOrder implements IValidated {
 
     private String id;
     private DecisionDetails decision;
+    private List<? extends IPaymentDetails> paymentDetails;
 
     public DecisionOrder(String id, DecisionDetails decision) {
         this.id = id;
@@ -31,15 +34,20 @@ public class DecisionOrder implements IValidated {
         this.id = id;
     }
 
-
     public DecisionDetails getDecision() {
         return decision;
     }
-
 
     public void setDecision(DecisionDetails decision) {
         this.decision = decision;
     }
 
+    public List<? extends IPaymentDetails> getPaymentDetails(){
+        return paymentDetails;
+    }
+
+    public void setPaymentDetails(List<? extends IPaymentDetails> paymentDetails) {
+        this.paymentDetails = paymentDetails;
+    }
 
 }

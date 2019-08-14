@@ -16,25 +16,25 @@ import com.riskified.validations.FieldBadFormatException;
 public class Client {
     public static void main(String[] arg) throws FieldBadFormatException, ParseException {
 
-        CheckoutOrder adviseOrder = generateAdviseOrder();
-
-        CheckoutOrder checkoutOrder = generateCheckoutOrder();        
-
-        CheckoutDeniedOrder checkoutDeniedOrder = generateCheckoutDeniedOrder();
-
+//        CheckoutOrder adviseOrder = generateAdviseOrder();
+//
+//        CheckoutOrder checkoutOrder = generateCheckoutOrder();
+//
+//        CheckoutDeniedOrder checkoutDeniedOrder = generateCheckoutDeniedOrder();
+//
         Order order = generateOrder();
-
-        Order updateOrder = generateUpdateOrder(order);
-
-        RefundOrder refundOrder = generateRefundOrder(order);
-        
-        CancelOrder cancelOrder = generateCancelOrder(order);
-
-        FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder(order);
+//
+//        Order updateOrder = generateUpdateOrder(order);
+//
+//        RefundOrder refundOrder = generateRefundOrder(order);
+//
+//        CancelOrder cancelOrder = generateCancelOrder(order);
+//
+//        FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder(order);
 
         DecisionOrder decisionOrder = generateDecisionOrder(order);
 
-        ArrayOrders orders = generateHistoricalOrders(order);
+//        ArrayOrders orders = generateHistoricalOrders(order);
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
@@ -53,72 +53,72 @@ public class Client {
             System.out.println("-----------------------------------------");  */
 
             
-            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
-
-            System.out.println("Checkout create order response:");
-            System.out.println("id: " + resCheckoutOrder.getOrder().getId());
-            System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
-            System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
-            
-            
-
-            Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Checkout denied order response:");
-            System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
-            System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
-            System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
-			
-
-            Response resCreateOrder = client.createOrder(order);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Create order response:");
-            System.out.println("id: " + resCreateOrder.getOrder().getId());
-            System.out.println("status: " + resCreateOrder.getOrder().getStatus());
-            System.out.println("description: " + resCreateOrder.getOrder().getDescription());
-
-
-            Response resSubmitOrder = client.submitOrder(order);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Submit order response:");
-            System.out.println("id: " + resSubmitOrder.getOrder().getId());
-            System.out.println("status: " + resSubmitOrder.getOrder().getStatus());
-            System.out.println("description: " + resSubmitOrder.getOrder().getDescription());
-            
-            Response resUpdateOrder = client.updateOrder(updateOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Update order response:");
-            System.out.println("id: " + resUpdateOrder.getOrder().getId());
-            System.out.println("status: " + resUpdateOrder.getOrder().getStatus());
-            System.out.println("description: " + resUpdateOrder.getOrder().getDescription());
-
-            Response resRefundOrder = client.refundOrder(refundOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Refund order response:");
-            System.out.println("id: " + resRefundOrder.getOrder().getId());
-            System.out.println("status: " + resRefundOrder.getOrder().getStatus());
-            System.out.println("description: " + resRefundOrder.getOrder().getDescription());
-            
-            Response resCancelOrder = client.cancelOrder(cancelOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Cancel order response:");
-            System.out.println("id: " + resCancelOrder.getOrder().getId());
-            System.out.println("status: " + resCancelOrder.getOrder().getStatus());
-            System.out.println("description: " + resCancelOrder.getOrder().getDescription());
-
-            Response resFulfillmentOrder = client.fulfillOrder(fulfillmentOrder);
-
-            System.out.println("-----------------------------------------");
-            System.out.println("Fulfillment order response:");
-            System.out.println("id: " + resFulfillmentOrder.getOrder().getId());
-            System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
-            System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
+//            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
+//
+//            System.out.println("Checkout create order response:");
+//            System.out.println("id: " + resCheckoutOrder.getOrder().getId());
+//            System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
+//
+//
+//
+//            Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Checkout denied order response:");
+//            System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
+//            System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
+//
+//
+//            Response resCreateOrder = client.createOrder(order);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Create order response:");
+//            System.out.println("id: " + resCreateOrder.getOrder().getId());
+//            System.out.println("status: " + resCreateOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCreateOrder.getOrder().getDescription());
+//
+//
+//            Response resSubmitOrder = client.submitOrder(order);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Submit order response:");
+//            System.out.println("id: " + resSubmitOrder.getOrder().getId());
+//            System.out.println("status: " + resSubmitOrder.getOrder().getStatus());
+//            System.out.println("description: " + resSubmitOrder.getOrder().getDescription());
+//
+//            Response resUpdateOrder = client.updateOrder(updateOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Update order response:");
+//            System.out.println("id: " + resUpdateOrder.getOrder().getId());
+//            System.out.println("status: " + resUpdateOrder.getOrder().getStatus());
+//            System.out.println("description: " + resUpdateOrder.getOrder().getDescription());
+//
+//            Response resRefundOrder = client.refundOrder(refundOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Refund order response:");
+//            System.out.println("id: " + resRefundOrder.getOrder().getId());
+//            System.out.println("status: " + resRefundOrder.getOrder().getStatus());
+//            System.out.println("description: " + resRefundOrder.getOrder().getDescription());
+//
+//            Response resCancelOrder = client.cancelOrder(cancelOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Cancel order response:");
+//            System.out.println("id: " + resCancelOrder.getOrder().getId());
+//            System.out.println("status: " + resCancelOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCancelOrder.getOrder().getDescription());
+//
+//            Response resFulfillmentOrder = client.fulfillOrder(fulfillmentOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Fulfillment order response:");
+//            System.out.println("id: " + resFulfillmentOrder.getOrder().getId());
+//            System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
+//            System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
 
 
             Response resDecision = client.decisionOrder(decisionOrder);
@@ -154,6 +154,9 @@ public class Client {
         decision.setReason("Fraud + used proxy");
         decision.setDecidedAt(parseDate("15-12-2016 00:00:00.0"));
         DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decision);
+        CreditCardPaymentDetails paymentDetails = new CreditCardPaymentDetails(null, null, null, null, null);
+        paymentDetails.setAuthorizationId("251379942");
+        decisionOrder.setPaymentDetails(Arrays.asList(paymentDetails));
         return decisionOrder;
     }
 
@@ -212,7 +215,7 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("221211112");
+        order.setId("javasdkcheckoutorder001");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -238,10 +241,10 @@ public class Client {
         CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
         cr.setInstallmentMonths(6);
         cr.setPaymentPlan("at&t");
-        
-        
+
+
         order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
-        
+
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -330,7 +333,7 @@ public class Client {
     
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#12000000000345");
+        order.setId("191919171101");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -436,10 +439,10 @@ public class Client {
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
-        
+
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
         checkoutDeniedOrder.setPaymentDetails(Arrays.asList(creditCardPaymentDetails));
-        
+
         return checkoutDeniedOrder;
     }
     
