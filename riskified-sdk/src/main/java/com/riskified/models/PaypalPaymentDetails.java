@@ -12,7 +12,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String pendingReason;
     private String authorizationId;
     private AuthorizationError authorizationError;
-    private AuthenticationResult authenticationResult;
+    private AuthenticationResults authenticationResults;
     private com.riskified._type _type;
     private String id;
     private String gateway;
@@ -95,12 +95,12 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.authorizationId = authorizationId;
     }
 
-	public AuthenticationResult getAuthenticationResult() {
-		return authenticationResult;
+	public AuthenticationResults getAuthenticationResult() {
+		return authenticationResults;
 	}
 
-	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
-		this.authenticationResult = authenticationResult;
+	public void setAuthenticationResult(AuthenticationResults authenticationResults) {
+		this.authenticationResults = authenticationResults;
 	}
 	
 	public AuthorizationError getAuthorizationError() {

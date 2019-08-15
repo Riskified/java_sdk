@@ -10,7 +10,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardCompany;
     private String authorizationId;
     private AuthorizationError authorizationError;
-    private AuthenticationResult authenticationResult;
+    private AuthenticationResults authenticationResults;
     private String cardholderName;
     private com.riskified._type _type;
     private String id;
@@ -119,12 +119,12 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.authorizationError = authorizationError;
     }
     
-	public AuthenticationResult getAuthenticationResult() {
-		return authenticationResult;
+	public AuthenticationResults getAuthenticationResults() {
+		return authenticationResults;
 	}
 
-	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
-		this.authenticationResult = authenticationResult;
+	public void setAuthenticationResult(AuthenticationResults authenticationResults) {
+		this.authenticationResults = authenticationResults;
 	}
 
 	public String getCardholderName() {
