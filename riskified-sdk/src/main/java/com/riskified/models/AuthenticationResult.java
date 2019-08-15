@@ -2,21 +2,20 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.riskified.ECI;
 import com.riskified.TranStatus;
 import com.riskified.TranStatusReason;
 import com.riskified.validations.*;
 
 
 public class AuthenticationResult implements IValidated {
-	private ECI eci;
+	private String eci;
 	private String cavv;
 	private Date createdAt;
 	private TranStatus tranStatus;
 	private TranStatusReason tranStatusReason;
 	
 
-	public AuthenticationResult(ECI eci) {
+	public AuthenticationResult(String eci) {
 	        this.eci = eci;
 	        }
 
@@ -46,11 +45,11 @@ public class AuthenticationResult implements IValidated {
         this.cavv = cavv;
     }
     
-    public ECI getEci() {
+    public String getEci() {
         return eci;
     }
 
-    public void setEci(ECI eci) {
+    public void setEci(String eci) {
         this.eci = eci;
     }
     

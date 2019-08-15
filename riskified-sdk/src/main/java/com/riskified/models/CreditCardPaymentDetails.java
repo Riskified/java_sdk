@@ -119,12 +119,12 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.authorizationError = authorizationError;
     }
     
-	public AuthenticationResult getAuthenticationResult() {
+	public AuthenticationResult getAuthenticationResults() {
 		return authenticationResult;
 	}
 
-	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
-		this.authenticationResult = authenticationResult;
+	public void setAuthenticationResult(AuthenticationResult authenticationResults) {
+		this.authenticationResult = authenticationResults;
 	}
 
 	public String getCardholderName() {
