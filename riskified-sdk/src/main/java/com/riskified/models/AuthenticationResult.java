@@ -7,7 +7,7 @@ import com.riskified.TranStatusReason;
 import com.riskified.validations.*;
 
 
-public class AuthenticationResults implements IValidated {
+public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
@@ -15,7 +15,7 @@ public class AuthenticationResults implements IValidated {
 	private TranStatusReason tranStatusReason;
 	
 
-	public AuthenticationResults(String eci) {
+	public AuthenticationResult(String eci) {
 	        this.eci = eci;
 	        }
 
