@@ -18,7 +18,7 @@ public class Client {
 
         CheckoutOrder adviseOrder = generateAdviseOrder();
 
-        CheckoutOrder checkoutOrder = generateCheckoutOrder();        
+        CheckoutOrder checkoutOrder = generateCheckoutOrder();
 
         CheckoutDeniedOrder checkoutDeniedOrder = generateCheckoutDeniedOrder();
 
@@ -27,7 +27,7 @@ public class Client {
         Order updateOrder = generateUpdateOrder(order);
 
         RefundOrder refundOrder = generateRefundOrder(order);
-        
+
         CancelOrder cancelOrder = generateCancelOrder(order);
 
         FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder(order);
@@ -59,8 +59,8 @@ public class Client {
             System.out.println("id: " + resCheckoutOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
-            
-            
+
+
 
             Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
 
@@ -69,7 +69,7 @@ public class Client {
             System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
-			
+
 
             Response resCreateOrder = client.createOrder(order);
 
@@ -87,7 +87,7 @@ public class Client {
             System.out.println("id: " + resSubmitOrder.getOrder().getId());
             System.out.println("status: " + resSubmitOrder.getOrder().getStatus());
             System.out.println("description: " + resSubmitOrder.getOrder().getDescription());
-            
+
             Response resUpdateOrder = client.updateOrder(updateOrder);
 
             System.out.println("-----------------------------------------");
@@ -103,7 +103,7 @@ public class Client {
             System.out.println("id: " + resRefundOrder.getOrder().getId());
             System.out.println("status: " + resRefundOrder.getOrder().getStatus());
             System.out.println("description: " + resRefundOrder.getOrder().getDescription());
-            
+
             Response resCancelOrder = client.cancelOrder(cancelOrder);
 
             System.out.println("-----------------------------------------");
@@ -154,6 +154,9 @@ public class Client {
         decision.setReason("Fraud + used proxy");
         decision.setDecidedAt(parseDate("15-12-2016 00:00:00.0"));
         DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decision);
+        CreditCardPaymentDetails paymentDetails = new CreditCardPaymentDetails(null, null, null, null, null);
+        paymentDetails.setAuthorizationId("251379942");
+        decisionOrder.setPaymentDetails(Arrays.asList(paymentDetails));
         return decisionOrder;
     }
 
@@ -238,10 +241,10 @@ public class Client {
         CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
         cr.setInstallmentMonths(6);
         cr.setPaymentPlan("at&t");
-        
-        
+
+
         order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
-        
+
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -436,10 +439,10 @@ public class Client {
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
-        
+
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
         checkoutDeniedOrder.setPaymentDetails(Arrays.asList(creditCardPaymentDetails));
-        
+
         return checkoutDeniedOrder;
     }
     
