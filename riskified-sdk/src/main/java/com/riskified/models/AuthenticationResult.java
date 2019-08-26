@@ -13,6 +13,7 @@ public class AuthenticationResult implements IValidated {
 	private Date createdAt;
 	private TranStatus tranStatus;
 	private TranStatusReason tranStatusReason;
+	private boolean liabilityShift;
 	
 
 	public AuthenticationResult(String eci) {
@@ -37,6 +38,14 @@ public class AuthenticationResult implements IValidated {
     }
     
 	
+    public boolean getLiabilityShift() {
+        return liabilityShift;
+    }
+
+    public void setLiabilityShift(boolean liabilityShift) {
+        this.liabilityShift = liabilityShift;
+    }
+    
     public String getCavv() {
         return cavv;
     }
