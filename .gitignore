@@ -13,3 +13,4 @@ lib/*
 */bin/
 */target/
 /target/
+/.metadata/
