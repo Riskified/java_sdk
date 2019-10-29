@@ -343,7 +343,7 @@ public class Client {
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
         
-        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12222345");
+        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
         checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetails);
         
         return checkoutDeniedOrder;
