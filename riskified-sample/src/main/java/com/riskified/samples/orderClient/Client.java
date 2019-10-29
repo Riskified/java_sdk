@@ -248,7 +248,7 @@ public class Client {
 
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#123433335");
+        order.setId("#12000000000345");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("29-10-2019 00:00:00.0"));
