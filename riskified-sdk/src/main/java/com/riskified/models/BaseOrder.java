@@ -66,8 +66,8 @@ public abstract class BaseOrder implements IValidated {
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
     private String submissionReason;
-    private Custom custom;
-
+	private HashMap<String, String> custom = new HashMap<String,String>();
+  
     public BaseOrder() {
     }
 
@@ -632,12 +632,13 @@ public abstract class BaseOrder implements IValidated {
         this.submissionReason = submissionReason;
     }
 
-    public Custom getCustom() {
-        return custom;
-    }
 
-    public void setCustom(Custom custom) {
-        this.custom = custom;
-    }
+	public void addCustomField(String name, String value) {
+		this.custom.put(name, value);
+		
+	}
 
+	public String getCustomField(String name) {
+		return custom.get(name);
+	}
 }
