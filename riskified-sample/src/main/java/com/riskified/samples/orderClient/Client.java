@@ -196,10 +196,10 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("221212");
+        order.setId("222221212");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCreatedAt(parseDate("29-10-2019 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
         order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -248,11 +248,11 @@ public class Client {
 
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#12345");
+        order.setId("#123433335");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
-        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCreatedAt(parseDate("29-10-2019 00:00:00.0"));
+        order.setClosedAt(parseDate("29-10-2019 00:00:00.0"));
         order.setCurrency("CAD");
         order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
@@ -343,7 +343,7 @@ public class Client {
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
         
-        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
+        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12222345");
         checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetails);
         
         return checkoutDeniedOrder;

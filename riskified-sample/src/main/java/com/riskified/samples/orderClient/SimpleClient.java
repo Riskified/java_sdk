@@ -53,10 +53,10 @@ public class SimpleClient {
         order.setId("1919191");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
-        order.setClosedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setCreatedAt(new Date(119, 9, 28, 11, 00, 00));
+        order.setClosedAt(new Date(119, 9, 28, 11, 00, 00));
         order.setCurrency("CAD");
-        order.setUpdatedAt(new Date(114, 01, 10, 11, 00, 00));
+        order.setUpdatedAt(new Date(119, 9, 28, 11, 00, 00));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(120.22);
@@ -66,7 +66,7 @@ public class SimpleClient {
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
 
-        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", new Date(114, 01, 10, 11, 00, 00), true, 10);
+        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", new Date(119, 9, 28, 11, 00, 00), true, 10);
         SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
         social.setEmail("john.smith@facebook.com");
         customer.getSocial().add(social);
@@ -135,10 +135,9 @@ public class SimpleClient {
         address.setProvinceCode("NY");
         address.setZip("64155");
         order.setShippingAddress(address);
-
-        Custom custom = new Custom("D2C");
-        order.setCustom(custom);
-
+ 
+        order.addCustomField("custom_field_1", "testing_values_1");
+        order.addCustomField("custom_field_2", "testing_values_2");
         return order;
     }
 
@@ -156,4 +155,5 @@ public class SimpleClient {
         cal.set(Calendar.SECOND, second);
         return cal.getTime();
     }
+    
 }
