@@ -1,6 +1,5 @@
 package com.riskified.notifications;
 
-import com.riskified.models.Custom;
 
 // Shop URL may also be added to the API notifications from Riskified depending on your
 // account configuration (contact your Account Manager or Integration Engineer for details).
@@ -26,7 +25,6 @@ public class Notification {
         private String description;
         private String decisionCode;
         private String category;
-        private Custom custom;
 
         public String getId() {
             return id;
@@ -76,10 +74,5 @@ public class Notification {
 			this.category = category;
 		}
 
-        public Custom getCustom() { return custom; }
-
-        public void setCustom(Custom custom) {
-            this.custom = custom;
-        }
     }
 }
