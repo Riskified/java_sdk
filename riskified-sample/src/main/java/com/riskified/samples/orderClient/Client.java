@@ -218,7 +218,7 @@ public class Client {
         order.setId("221211112");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("29-10-2019 00:00:00.0"));
+        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
         order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -336,8 +336,8 @@ public class Client {
         order.setId("#12000000000345");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("29-10-2019 00:00:00.0"));
-        order.setClosedAt(parseDate("29-10-2019 00:00:00.0"));
+        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setCurrency("CAD");
         order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setGateway("mypaymentprocessor");

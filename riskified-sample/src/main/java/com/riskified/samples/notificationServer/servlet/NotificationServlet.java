@@ -27,6 +27,7 @@ public class NotificationServlet extends HttpServlet {
             System.out.println("got notification for id: '" + notification.getId() + "' with status: '" + notification.getStatus() +"'  ");
             out.println("<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
                         + " with status " + notification.getStatus() + " and description " + notification.getDescription()
+                        + " and app_dom_id " + notification.getCustom().getAppDomId()
                         + " Old Status was " + notification.getOldStatus()
                         + "</BODY></HTML>");
 
