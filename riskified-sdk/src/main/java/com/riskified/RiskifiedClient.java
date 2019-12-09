@@ -162,6 +162,22 @@ public class RiskifiedClient {
         initProxy(proxyClientDetails);
     }
 
+    /**
+     * Riskified API client
+     * don't use config file
+     * @param shopUrl The shop URL as registered in Riskified
+     * @param authKey From the advance settings in Riskified web site
+     * @param validation The sdk's validation strategy
+     * @param baseUrl base riskified host
+     * @param baseUrlSyncAnalyze base riskified sync-api host
+     * @param decoBaseUrl deco host
+     * @param accountBaseUrl account host
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
+     */
+    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl) throws RiskifiedError {
+        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, validation);
+    }
+
     private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
