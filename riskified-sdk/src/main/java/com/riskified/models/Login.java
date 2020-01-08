@@ -2,9 +2,12 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.Date;
+
 public class Login implements IValidated {
     private String customerId;
     private String email;
+    private Date customerCreatedAt;
     private Boolean loginAtCheckout;
     private SocialType socialLoginType;
     private LoginStatus loginStatus;
@@ -37,9 +40,11 @@ public class Login implements IValidated {
         this.customerId = customerId;
     }
 
-    public Boolean getLoginAtCheckout() {
-        return loginAtCheckout;
-    }
+    public Date getCustomerCreatedAt() { return customerCreatedAt; }
+
+    public void setCustomerCreatedAt(Date customerCreatedAt) {this.customerCreatedAt = customerCreatedAt; }
+
+    public Boolean getLoginAtCheckout() { return loginAtCheckout; }
 
     public void setLoginAtCheckout(Boolean loginAtCheckout) {
         this.loginAtCheckout = loginAtCheckout;
