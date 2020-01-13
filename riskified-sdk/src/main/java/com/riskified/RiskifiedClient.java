@@ -162,6 +162,22 @@ public class RiskifiedClient {
         initProxy(proxyClientDetails);
     }
 
+    /**
+     * Riskified API client
+     * don't use config file
+     * @param shopUrl The shop URL as registered in Riskified
+     * @param authKey From the advance settings in Riskified web site
+     * @param validation The sdk's validation strategy
+     * @param baseUrl base riskified host
+     * @param baseUrlSyncAnalyze base riskified sync-api host
+     * @param decoBaseUrl deco host
+     * @param accountBaseUrl account host
+     * @throws RiskifiedError When there was a critical error, look at the exception to see more data
+     */
+    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl) throws RiskifiedError {
+        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, validation);
+    }
+
     private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
@@ -198,6 +214,28 @@ public class RiskifiedClient {
      */
     public Response checkoutOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/checkout_create";
+
+        // Validation.ALL is not relevant when checkout.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
+    }
+    
+    // TODO add other paramaters Riskified server will return 
+    /**
+     * Send a new advise order to Riskified
+     * @param order The advise order to create 
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response adviseOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/advise";
 
         // Validation.ALL is not relevant when checkout.
         if(validation != validation.NONE) {
@@ -345,9 +383,9 @@ public class RiskifiedClient {
         String url = baseUrl + "/api/update";
 
         // Validation.ALL is not relevant when updating.
-        if(validation != validation.NONE) {
+        	if(validation != validation.NONE) {
             validate(order, Validation.IGNORE_MISSING);
-        }
+        } 
 
         return postOrder(new OrderWrapper<Order>(order), url);
     }
@@ -899,7 +937,7 @@ public class RiskifiedClient {
     }
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
-        String jsonData = JSONFormmater.toJson(data);
+        String jsonData = JSONFormater.toJson(data);
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);

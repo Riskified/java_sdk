@@ -71,6 +71,7 @@ public class AccountActionClient {
         Login login = new Login("207119551", "test@test.com", loginStatus, clientDetails, sessionDetails);
         login.setLoginAtCheckout(true);
         login.setSocialLoginType(SocialType.facebook);
+        login.setCustomerCreatedAt(new Date(2020, 01, 06, 13, 00, 00));;
         return login;
     }
 

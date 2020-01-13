@@ -2,6 +2,10 @@ package com.riskified.models;
 
 import com.google.gson.annotations.SerializedName;
 
+/*
+ * 
+ *  We depreciated this class to allow merchant to be more flexible with submission reason values   
+ */
 public enum SubmissionReason {
 
     @SerializedName("pilot")

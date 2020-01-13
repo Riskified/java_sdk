@@ -8,12 +8,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
+import com.riskified._type;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
 
 public class Client {
     public static void main(String[] arg) throws FieldBadFormatException, ParseException {
+
+        CheckoutOrder adviseOrder = generateAdviseOrder();
 
         CheckoutOrder checkoutOrder = generateCheckoutOrder();
 
@@ -24,7 +27,7 @@ public class Client {
         Order updateOrder = generateUpdateOrder(order);
 
         RefundOrder refundOrder = generateRefundOrder(order);
-        
+
         CancelOrder cancelOrder = generateCancelOrder(order);
 
         FulfillmentOrder fulfillmentOrder = generateFulfillmentOrder(order);
@@ -39,12 +42,25 @@ public class Client {
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
             
+         /*   Response resAdviseOrder = client.adviseOrder(adviseOrder);
+
+            System.out.println("Advise order response:");
+            System.out.println("id: " + resAdviseOrder.getOrder().getId());
+            System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
+            System.out.println("score: " + resAdviseOrder.getOrder().getScore());
+            System.out.println("auth_type: " + resAdviseOrder.getOrder().getAuthenticationType().getAuthType());
+
+            System.out.println("-----------------------------------------");  */
+
+            
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 
-            System.out.println("Checkout order response:");
+            System.out.println("Checkout create order response:");
             System.out.println("id: " + resCheckoutOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
+
+
 
             Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
 
@@ -53,7 +69,7 @@ public class Client {
             System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
-			
+
 
             Response resCreateOrder = client.createOrder(order);
 
@@ -71,7 +87,7 @@ public class Client {
             System.out.println("id: " + resSubmitOrder.getOrder().getId());
             System.out.println("status: " + resSubmitOrder.getOrder().getStatus());
             System.out.println("description: " + resSubmitOrder.getOrder().getDescription());
-            
+
             Response resUpdateOrder = client.updateOrder(updateOrder);
 
             System.out.println("-----------------------------------------");
@@ -87,7 +103,7 @@ public class Client {
             System.out.println("id: " + resRefundOrder.getOrder().getId());
             System.out.println("status: " + resRefundOrder.getOrder().getStatus());
             System.out.println("description: " + resRefundOrder.getOrder().getDescription());
-            
+
             Response resCancelOrder = client.cancelOrder(cancelOrder);
 
             System.out.println("-----------------------------------------");
@@ -138,6 +154,9 @@ public class Client {
         decision.setReason("Fraud + used proxy");
         decision.setDecidedAt(parseDate("15-12-2016 00:00:00.0"));
         DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decision);
+        CreditCardPaymentDetails paymentDetails = new CreditCardPaymentDetails(null, null, null, null, null);
+        paymentDetails.setAuthorizationId("251379942");
+        decisionOrder.setPaymentDetails(Arrays.asList(paymentDetails));
         return decisionOrder;
     }
 
@@ -196,7 +215,7 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("221212");
+        order.setId("221211112");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -219,8 +238,13 @@ public class Client {
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        cr.setInstallmentMonths(6);
+        cr.setPaymentPlan("at&t");
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
+
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -246,9 +270,70 @@ public class Client {
         return order;
     }
 
+    private static CheckoutOrder generateAdviseOrder() throws ParseException {
+        CheckoutOrder order = new CheckoutOrder();
+
+        order.setId("99992328882");
+        order.setName("#123422111");
+        order.setEmail("great.customer_2@example.com");
+        order.setCreatedAt(parseDate("04-04-2018 00:00:00.0"));
+        order.setClosedAt(null);
+        order.setCurrency("CAD");
+        order.setUpdatedAt(parseDate("04-05-2018 00:00:00.0"));
+        order.setBrowserIp("125.185.86.55");
+        order.setTotalPrice(123.23);
+        order.setTotalDiscounts(4);
+        order.setCartToken("1sdaf23j212oodee");
+        order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
+        order.setNote("Shipped to my hotel.");
+        order.setReferringSite("google.com");
+
+        order.setLineItems(Arrays.asList(
+        new LineItem(100, 1, "ACME Widget", "101"),
+        new LineItem(200, 4, "ACME Spring", "202")));
+
+        order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
+
+        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+
+        CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        creditCardPaymentDetails.setType(_type.credit_card);
+        creditCardPaymentDetails.setAcquirerBin("232323");
+        creditCardPaymentDetails.setGateway("goGateway");
+        creditCardPaymentDetails.setMid("212212121");
+        creditCardPaymentDetails.setId("1");
+
+        order.setPaymentDetails(Arrays.asList(creditCardPaymentDetails));
+        
+
+        Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
+        address.setName("John Doe");
+        address.setAddress2("Apartment 12");
+        address.setProvince("New York");
+        address.setProvinceCode("NY");
+        address.setZip("64155");
+        order.setBillingAddress(address);
+
+        address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
+        address.setName("John Doe");
+        address.setAddress2("Apartment 12");
+        address.setProvince("New York");
+        address.setProvinceCode("NY");
+        address.setZip("64155");
+        order.setShippingAddress(address);
+
+
+        return order;
+    }
+
+    
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#12345");
+        order.setId("#12000000000345");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -271,6 +356,7 @@ public class Client {
         order.setCustomer(customer);
 
         LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
+        lineItem.setColor("black");
         
         TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
         travelLineItem.setDeparturePortCode("LLBG");
@@ -285,6 +371,15 @@ public class Client {
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
         travelLineItem.setRequiresShipping(false);
+        
+        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        cr.setInstallmentMonths(6);
+        cr.setPaymentPlan("at&t");
+        
+        
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
+
         
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
 
@@ -309,8 +404,10 @@ public class Client {
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA") ));
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -337,15 +434,15 @@ public class Client {
 
     private static CheckoutDeniedOrder generateCheckoutDeniedOrder() throws ParseException {
 
-        AuthorizationError authorizationError = new AuthorizationError("Expired Card", parseDate("15-12-2016 00:00:00.0"));
+        AuthorizationError authorizationError = new AuthorizationError("card_declined", parseDate("15-12-2016 00:00:00.0"));
         authorizationError.setMessage("expired credit card.");
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
-        
+
         CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
-        checkoutDeniedOrder.setPaymentDetails(creditCardPaymentDetails);
-        
+        checkoutDeniedOrder.setPaymentDetails(Arrays.asList(creditCardPaymentDetails));
+
         return checkoutDeniedOrder;
     }
     

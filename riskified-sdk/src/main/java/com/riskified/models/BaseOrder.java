@@ -54,7 +54,7 @@ public abstract class BaseOrder implements IValidated {
     private String vendorName;
     private Address shippingAddress;
     private Address billingAddress;
-    private IPaymentDetails paymentDetails;
+    private List<? extends IPaymentDetails> paymentDetails;
     private ClientDetails clientDetails;
     private List<DiscountCode> discountCodes;
     private List<ShippingLine> shippingLines;
@@ -65,7 +65,7 @@ public abstract class BaseOrder implements IValidated {
 	private Map<String, Object> additionalData;
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
-    private SubmissionReason submissionReason;
+    private String submissionReason;
     private Custom custom;
 
     public BaseOrder() {
@@ -122,8 +122,8 @@ public abstract class BaseOrder implements IValidated {
             }
         }
 
-        if (this.paymentDetails != null) {
-            this.paymentDetails.validate(validationType);
+        for (IPaymentDetails paymentDetail : this.paymentDetails) {
+            paymentDetail.validate(validationType);
         }
 
         if (this.customer != null) {
@@ -527,11 +527,11 @@ public abstract class BaseOrder implements IValidated {
         this.billingAddress = billingAddress;
     }
 
-    public IPaymentDetails getPaymentDetails() {
+    public List<? extends IPaymentDetails> getPaymentDetails(){
         return paymentDetails;
     }
 
-    public void setPaymentDetails(IPaymentDetails paymentDetails) {
+    public void setPaymentDetails(List<? extends IPaymentDetails> paymentDetails) {
         this.paymentDetails = paymentDetails;
     }
 
@@ -624,11 +624,11 @@ public abstract class BaseOrder implements IValidated {
 		this.chargeFreePaymentDetails = chargeFreePaymentDetails;
 	}
 
-    public SubmissionReason getSubmissionReason() {
+    public String getSubmissionReason() {
         return submissionReason;
     }
 
-    public void setSubmissionReason(SubmissionReason submissionReason) {
+    public void setSubmissionReason(String submissionReason) {
         this.submissionReason = submissionReason;
     }
 

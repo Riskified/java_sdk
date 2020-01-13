@@ -50,7 +50,7 @@ public class SimpleClient {
 
     private static Order generateOrder() {
         Order order = new Order();
-        order.setId("1919191");
+        order.setId("javasdktest00");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(new Date(114, 01, 10, 11, 00, 00));
@@ -89,7 +89,13 @@ public class SimpleClient {
         travelLineItem.setCarrierName("Air France");
         travelLineItem.setRequiresShipping(false);
 
-        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
+        RideLineItem rideLineItem = new RideLineItem(75, 1, "Ride from Airport", new Date(2019, 01, 15, 12, 00, 00), 1, 1);
+        rideLineItem.setPickupAddress(new Address(null, null, "123 Farewell St., 12345", "New York", "1227560912", "USA"));
+        rideLineItem.setTransportMethod("car");
+        rideLineItem.setVehicleClass("executive");
+        rideLineItem.setNoteToDriver("Wait in back entrance");
+
+        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem, rideLineItem));
 
         Passenger passenger = new Passenger("john","smith");
         passenger.setDateOfBirth(getDate(1988, Calendar.MARCH, 5));
@@ -113,7 +119,7 @@ public class SimpleClient {
 
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
-        order.setPaymentDetails(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"));
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA")));
 
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
