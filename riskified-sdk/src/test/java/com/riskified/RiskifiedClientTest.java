@@ -81,22 +81,6 @@ public class RiskifiedClientTest {
         assertNull(parseResponse(RiskifiedOperation.SUBMIT, response, order.getId()));
     }
 
-    /**
-     * Throws an exception because the 'historical' event has been disabled.
-     * @throws RiskifiedError
-     * @throws IOException
-     * @throws FieldBadFormatException bad format found on field
-     */
-    @Test (expected = HttpResponseException.class)
-    public void testHistoricalOrdersWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
-        riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
-        Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        ArrayOrders orders = new ArrayOrders();
-        orders.setOrders(Arrays.asList(order));
-        riskifiedClient.historicalOrders(orders);
-    }
-
     @Ignore("need to align with server") @Test
     public void testCancelOrderAfterCreateWithNoValidation() throws RiskifiedError, IOException, FieldBadFormatException {
         riskifiedClient = new RiskifiedClient.RiskifiedClientBuilder(shopUrl, authKey, Environment.SANDBOX).setValidation(Validation.NONE).build();
