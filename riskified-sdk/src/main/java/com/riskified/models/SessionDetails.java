@@ -8,6 +8,7 @@ public class SessionDetails implements IValidated {
     private String cartToken;
     private String browserIp;
     private Source source;
+    private String deviceId;
     private String referringSite;
 
     public SessionDetails(Date createdAt, String cartToken, String browserIp, Source source) {
@@ -57,6 +58,10 @@ public class SessionDetails implements IValidated {
     public void setSource(Source source) {
         this.source = source;
     }
+
+    public String getDeviceId() { return deviceId;}
+
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
     public String getReferringSite() {
         return referringSite;
