@@ -7,13 +7,19 @@ import com.riskified.validations.Validation;
 
 public class ResetPassword implements IValidated {
     private String customerId;
+    private StatusType status;
+    private ReasonType reason;
+    private String email;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
 
-    public ResetPassword(String customerId, ClientDetails clientDetails, SessionDetails sessionDetails) {
+    public ResetPassword(String customerId, ClientDetails clientDetails, SessionDetails sessionDetails, StatusType status, ReasonType reason, String email) {
         this.customerId = customerId;
         this.clientDetails = clientDetails;
         this.sessionDetails = sessionDetails;
+        this.status = status;
+        this.reason = reason;
+        this.email = email;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
@@ -21,6 +27,9 @@ public class ResetPassword implements IValidated {
             Validate.notNullOrEmpty(this, this.customerId, "Customer ID");
             Validate.notNull(this, this.clientDetails, "Client Details");
             Validate.notNull(this, this.sessionDetails, "Session Details");
+            Validate.notNull(this,this.status,"Status");
+            Validate.notNull(this, this.reason, "Reason");
+            Validate.notNull(this, this.email, "Email");
         }
     }
 
@@ -31,6 +40,18 @@ public class ResetPassword implements IValidated {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+
+    public StatusType getStatus() { return status; }
+
+    public void setStatus(StatusType status) { this.status = status; }
+
+    public ReasonType getReason() { return reason; }
+
+    public void setReason(ReasonType reason) {this.reason = reason; }
+
+    public String getEmail() {return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public ClientDetails getClientDetails() {
         return clientDetails;
