@@ -2,6 +2,7 @@ package com.riskified.samples.orderClient;
 import java.io.IOException;
 import java.util.*;
 
+import com.riskified.Environment;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
@@ -114,6 +115,18 @@ public class SimpleClient {
         seller.setPriceNegotiated(true);
         seller.setStartingPrice(400);
 
+        ContactDetails contactDetails = new ContactDetails(ContactMethodType.email);
+        contactDetails.setEmail("great.customer@email.com");
+        contactDetails.setAgentName("John Doe");
+        contactDetails.setAgentId("567");
+        contactDetails.setConversationDuration(345);
+        contactDetails.setWaitingDuration(123);
+        contactDetails.setConversationLanguage("en");
+        contactDetails.setAgentImpression(AgentImpression.positive);
+        contactDetails.setInboundOutbound(InboundOutbound.inbound);
+        contactDetails.setCustomerVerifiedBy("cc_4_digits");
+
+        order.setContactDetails(contactDetails);
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
 

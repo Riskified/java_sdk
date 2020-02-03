@@ -66,6 +66,7 @@ public abstract class BaseOrder implements IValidated {
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
     private String submissionReason;
+    private ContactDetails contactDetails;
     private Custom custom;
 
     public BaseOrder() {
@@ -631,6 +632,10 @@ public abstract class BaseOrder implements IValidated {
     public void setSubmissionReason(String submissionReason) {
         this.submissionReason = submissionReason;
     }
+
+    public ContactDetails getContactDetails() { return contactDetails; }
+
+    public void setContactDetails(ContactDetails contactDetails) { this.contactDetails = contactDetails; }
 
     public Custom getCustom() {
         return custom;
