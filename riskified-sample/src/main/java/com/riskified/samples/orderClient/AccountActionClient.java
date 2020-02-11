@@ -68,7 +68,7 @@ public class AccountActionClient {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
         SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
-        sessionDetails.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
+//        sessionDetails.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
         Login login = new Login("207119551", "test@test.com", loginStatus, clientDetails, sessionDetails);
         login.setLoginAtCheckout(true);
         login.setSocialLoginType(SocialType.facebook);
