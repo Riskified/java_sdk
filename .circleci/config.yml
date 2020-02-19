@@ -45,7 +45,7 @@ commands:
           name: Release new version to Maven Central and push new project version to repo
           command: |
             echo "Starting new release... "
-            mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+            mvn -e .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
 workflows:
   version: 2
   main:
