@@ -568,6 +568,23 @@ public class RiskifiedClient {
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
+    public Response screenOrder(Order order) throws IOException, FieldBadFormatException {
+        String url = baseUrlSyncAnalyze + "/api/screen";
+        validate(order, validation);
+        return postOrder(new OrderWrapper<Order>(order), url);
+    }
+
+    /**
+     * Send and analyze a new order to Riskified
+     * Analyzes the order synchronicly, the returned status is Riskified's analysis review result.
+     * @param order An order to create and analyze
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
     public Response analyzeOrder(Order order) throws IOException, FieldBadFormatException {
         String url = baseUrlSyncAnalyze + "/api/decide";
         validate(order);
