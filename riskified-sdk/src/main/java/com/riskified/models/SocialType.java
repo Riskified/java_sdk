@@ -8,6 +8,8 @@ public enum SocialType {
     facebook,
     @SerializedName("google")
     google,
+    @SerializedName("amazon")
+    amazon,
     @SerializedName("linkedin")
     linkedin,
     @SerializedName("twitter")
