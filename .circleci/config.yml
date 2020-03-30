@@ -24,6 +24,7 @@ jobs:
             echo $SERVER_OSSRH_USERNAME
       - run: 
           command: |
+            echo mkdir -p ~/.gnupg
             echo use-agent >> ~/.gnupg/gpg.conf
             echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
@@ -46,7 +47,7 @@ commands:
           name: Configure GPG private key for signing project artifacts in OSS Sonatype
           
           command: | 
-            echo mkdir -p ~/.gnupg
+            
             echo use-agent >> ~/.gnupg/gpg.conf
             echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
