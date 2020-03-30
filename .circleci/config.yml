@@ -24,7 +24,7 @@ jobs:
             echo $SERVER_OSSRH_USERNAME
       - run: 
           command: |
-            echo mkdir -p ~/.gnupg
+            mkdir -p ~/.gnupg
             echo use-agent >> ~/.gnupg/gpg.conf
             echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
