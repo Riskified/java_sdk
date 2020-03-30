@@ -36,31 +36,6 @@ jobs:
           command: |
             mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true        
       
-commands:
-  configure-gpg:
-    steps:
-      - run:
-          name: Configure GPG private key for signing project artifacts in OSS Sonatype
-          command: |
-            echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
-  deploy:
-    steps:
-      - run:
-          name: Configure GPG private key for signing project artifacts in OSS Sonatype
-          
-          command: | 
-            
-            echo use-agent >> ~/.gnupg/gpg.conf
-            echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-            echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-            echo RELOADAGENT | gpg-connect-agent
-            echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes 
-     
-      - run:
-          name: Release new version to Maven Central and push new project version to repo
-          command: |
-            echo "Starting new release...."
-            mvn -e .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
 workflows:
   version: 2
   main:
