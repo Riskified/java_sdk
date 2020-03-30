@@ -62,7 +62,7 @@ public class SimpleClient {
         order.setTotalPrice(120.22);
         order.setTotalDiscounts(5);
         order.setCartToken("1sdaf23j212");
-        order.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
+     //   order.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
