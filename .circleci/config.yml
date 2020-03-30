@@ -24,6 +24,10 @@ jobs:
             echo $SERVER_OSSRH_USERNAME
       - run: 
           command: |
+            echo use-agent >> ~/.gnupg/gpg.conf
+            echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
+            echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
+            echo RELOADAGENT | gpg-connect-agent
             echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
       - run:
           command: |
