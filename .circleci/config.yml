@@ -30,6 +30,8 @@ jobs:
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
             echo RELOADAGENT | gpg-connect-agent
             echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
+            GPG_TTY=$(tty)
+            export GPG_TTY
       - run:
           command: |
             mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true        
