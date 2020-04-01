@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.riskified.Environment;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
@@ -25,6 +26,8 @@ public class Client {
         Order order = generateOrder();
 
         Order updateOrder = generateUpdateOrder(order);
+
+        CheckoutOrder screenOrder = generateScreenOrder();
 
         RefundOrder refundOrder = generateRefundOrder(order);
 
@@ -78,6 +81,13 @@ public class Client {
             System.out.println("id: " + resCreateOrder.getOrder().getId());
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
+
+            Response resScreenOrder = client.screenOrder(screenOrder);
+
+            System.out.println("-----------------------------------------");
+            System.out.println("Screen order response:");
+            System.out.println("id: " + resScreenOrder.getOrder().getId());
+            System.out.println("action: " + resScreenOrder.getOrder().getAction());
 
 
             Response resSubmitOrder = client.submitOrder(order);
@@ -221,7 +231,7 @@ public class Client {
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
-        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setUpdatedAt(parseDate("15-12-2019 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(113.23);
@@ -440,10 +450,99 @@ public class Client {
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("666666", "full", "m", "4444", "visa");
         creditCardPaymentDetails.setAuthorizationError(authorizationError);
 
-        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd12345");
+        CheckoutDeniedOrder checkoutDeniedOrder = new CheckoutDeniedOrder("cd123456");
         checkoutDeniedOrder.setPaymentDetails(Arrays.asList(creditCardPaymentDetails));
 
         return checkoutDeniedOrder;
+    }
+
+    private static CheckoutOrder generateScreenOrder() throws ParseException {
+        CheckoutOrder order = new CheckoutOrder();
+
+        order.setId("3593252813");
+        order.setName("#7967868678");
+        order.setEmail("great.customer@example.com");
+        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCurrency("CAD");
+        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setGateway("mypaymentprocessor");
+        order.setBrowserIp("124.185.86.55");
+        order.setTotalPrice(120.22);
+        order.setTotalDiscounts(5);
+        order.setCartToken("1sdaf23j212");
+        order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
+        order.setNote("Shipped to my hotel.");
+        order.setReferringSite("google.com");
+
+        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", parseDate("15-12-2016 00:00:00.0"), true, 10);
+        SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
+        social.setEmail("john.smith@facebook.com");
+        customer.getSocial().add(social);
+        order.setCustomer(customer);
+
+        LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
+        lineItem.setColor("black");
+
+        TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
+        travelLineItem.setDeparturePortCode("LLBG");
+        travelLineItem.setDepartureCountryCode("IL");
+        travelLineItem.setDepartureCity("Tel Aviv");
+        travelLineItem.setDepartureDate(parseDate("15-12-2016 00:00:00.0"));
+        travelLineItem.setArrivalPortCode("LBG");
+        travelLineItem.setArrivalCountryCode("FR");
+        travelLineItem.setArrivalCity("Paris");
+        travelLineItem.setArrivalDate(parseDate("15-12-2016 00:00:00.0"));
+        travelLineItem.setTicketClass("economy");
+        travelLineItem.setCarrierCode("AF");
+        travelLineItem.setCarrierName("Air France");
+        travelLineItem.setRequiresShipping(false);
+
+        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        cr.setInstallmentMonths(6);
+        cr.setPaymentPlan("at&t");
+
+
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
+
+
+        order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
+
+        Seller seller = new Seller(customer);
+        seller.setPriceNegotiated(true);
+        seller.setStartingPrice(400);
+
+
+        order.setDiscountCodes(Arrays.asList(new DiscountCode(19.95, "12")));
+
+        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+
+
+
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA") ));
+
+        Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
+        address.setName("John Doe");
+        address.setAddress2("Second street");
+        address.setProvince("New York");
+        address.setProvinceCode("NY");
+        address.setZip("64155");
+        order.setBillingAddress(address);
+
+        address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address.setCompany("Kansas Computers");
+        address.setCountryCode("US");
+        address.setName("John Doe");
+        address.setAddress2("Apartment 12");
+        address.setProvince("New York");
+        address.setProvinceCode("NY");
+        address.setZip("64155");
+        order.setShippingAddress(address);
+
+        return order;
     }
     
     private static Date parseDate(String date) throws ParseException {

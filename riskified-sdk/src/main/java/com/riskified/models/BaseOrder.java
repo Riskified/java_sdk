@@ -122,8 +122,10 @@ public abstract class BaseOrder implements IValidated {
             }
         }
 
-        for (IPaymentDetails paymentDetail : this.paymentDetails) {
-            paymentDetail.validate(validationType);
+        if (this.paymentDetails != null) {
+            for (IPaymentDetails paymentDetail : this.paymentDetails) {
+                paymentDetail.validate(validationType);
+            }
         }
 
         if (this.customer != null) {

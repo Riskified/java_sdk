@@ -10,6 +10,7 @@ public class ResOrder {
     private String category;
 	private int score;
 	private AuthenticationType authentication_type;
+	private String action;
 	
 	
     public String getId() {
@@ -75,6 +76,14 @@ public class ResOrder {
 
     public void setAuthenticationType(AuthenticationType authenticationType) { 
     	this.authentication_type = authenticationType; 
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
     
     

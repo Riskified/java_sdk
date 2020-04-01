@@ -47,6 +47,7 @@ public class RiskifiedClient {
     private String baseUrl;
     private String baseUrlSyncAnalyze;
     private String decoBaseUrl;
+    private String screenBaseUrl;
     private String accountBaseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
@@ -101,7 +102,7 @@ public class RiskifiedClient {
         	environment = Environment.SANDBOX;
         }
 
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),validation);
 
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
@@ -117,7 +118,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Validation.ALL);
     }
 
     /**
@@ -130,7 +131,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Validation.ALL);
         initProxy(proxyClientDetails);
     }
 
@@ -144,7 +145,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), validation);
     }
 
     /**
@@ -158,7 +159,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), validation);
         initProxy(proxyClientDetails);
     }
 
@@ -174,15 +175,16 @@ public class RiskifiedClient {
      * @param accountBaseUrl account host
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl) throws RiskifiedError {
-        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, validation);
+    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl) throws RiskifiedError {
+        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, screenBaseUrl, validation);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, Validation validationType) throws RiskifiedError {
+    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
         this.decoBaseUrl = decoBaseUrl;
         this.accountBaseUrl = accountBaseUrl;
+        this.screenBaseUrl = screenBaseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
@@ -568,10 +570,10 @@ public class RiskifiedClient {
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
-    public Response screenOrder(Order order) throws IOException, FieldBadFormatException {
-        String url = baseUrlSyncAnalyze + "/api/screen";
+    public Response screenOrder(CheckoutOrder order) throws IOException, FieldBadFormatException {
+        String url = screenBaseUrl + "/api/screen";
         validate(order, validation);
-        return postOrder(new OrderWrapper<Order>(order), url);
+        return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
 
     /**
@@ -968,7 +970,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/1.2.9"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/1.3.1"); // TODO: take the version automatically
 
         return postRequest;
     }
