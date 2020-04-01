@@ -560,9 +560,9 @@ public class RiskifiedClient {
     }
 
     /**
-     * Send and analyze a new order to Riskified
-     * Analyzes the order synchronicly, the returned status is Riskified's analysis review result.
-     * @param order An order to create and analyze
+     * Screen a new order to Riskified
+     * Analyzes the order synchronicly, the returned status is Riskified's screen review result.
+     * @param order An order to screen
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
