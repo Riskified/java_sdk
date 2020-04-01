@@ -25,6 +25,7 @@ public abstract class BaseOrder implements IValidated {
     private Date cancelledAt;
     private Date closedAt;
     private String cartToken;
+    private String deviceId;
     private String checkoutToken;
     private String token;
     private String referringSite;
@@ -296,6 +297,10 @@ public abstract class BaseOrder implements IValidated {
     public void setCartToken(String cartToken) {
         this.cartToken = cartToken;
     }
+
+    public String getDeviceId() { return deviceId; }
+
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
     public String getCheckoutToken() {
         return checkoutToken;

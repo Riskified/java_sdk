@@ -71,7 +71,7 @@ public class AccountActionClient {
 //        sessionDetails.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
         Login login = new Login("207119551", "test@test.com", loginStatus, clientDetails, sessionDetails);
         login.setLoginAtCheckout(true);
-        login.setSocialLoginType(SocialType.facebook);
+    //    login.setSocialLoginType(SocialType.amazon);
         login.setCustomerCreatedAt(new Date(2020, 01, 06, 13, 00, 00));;
         return login;
     }
