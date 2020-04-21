@@ -77,9 +77,9 @@ curl -H "Content-Type: application/json" -H  "X-RISKIFIED-HMAC-SHA256: 071ef80d5
 
 ```xml
 <dependency>
-	<groupId>com.riskified</groupId>
-	<artifactId>riskified-sdk</artifactId>
-	<version>1.0.2.9</version>
+    <groupId>com.riskified</groupId>
+    <artifactId>riskified-sdk</artifactId>
+    <version>v1.3.1</version>
 </dependency>
 ```
 
