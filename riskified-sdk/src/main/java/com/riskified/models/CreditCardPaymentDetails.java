@@ -1,5 +1,7 @@
 package com.riskified.models;
 
+import java.util.Date;
+
 import com.riskified.validations.*;
 
 public class CreditCardPaymentDetails implements IPaymentDetails {
@@ -9,6 +11,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardNumber;
     private String creditCardCompany;
     private String authorizationId;
+    private Date storedPaymentCreatedAt;
+    private Date storedPaymentUpdatedAt;
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
     private String cardholderName;
@@ -110,6 +114,14 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void setAuthorizationId(String authorizationId) {
         this.authorizationId = authorizationId;
     }
+
+    public Date getStoredPaymentCreatedAt() { return storedPaymentCreatedAt; }
+
+    public void setStoredPaymentCreatedAt(Date storedPaymentCreatedAt) { this.storedPaymentCreatedAt = storedPaymentCreatedAt; }
+
+    public Date getStoredPaymentUpdatedAt() { return storedPaymentUpdatedAt; }
+
+    public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt) { this.storedPaymentUpdatedAt = storedPaymentUpdatedAt; }
     
     public AuthorizationError getAuthorizationError() {
         return authorizationError;
