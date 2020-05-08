@@ -23,6 +23,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String mid;
     private String paymentPlan;
     private int installmentMonths;
+    private int installments;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -187,6 +188,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 		this.mid = mid; 
 	}
 
+    public int getInstallments() { return installments; }
 
+    public void setInstallments(int installments) { this.installments = installments; }
 
 }
