@@ -53,6 +53,7 @@ public abstract class BaseOrder implements IValidated {
     private String tags;
     private String vendorId;
     private String vendorName;
+    private String vendorIntegrationType;
     private Address shippingAddress;
     private Address billingAddress;
     private List<? extends IPaymentDetails> paymentDetails;
@@ -516,6 +517,14 @@ public abstract class BaseOrder implements IValidated {
 
     public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
+    }
+
+    public String getVendorIntegrationType() {
+        return vendorIntegrationType;
+    }
+
+    public void setVendorIntegrationType(String vendorIntegrationType) {
+        this.vendorIntegrationType = vendorIntegrationType;
     }
 
     public Address getShippingAddress() {
