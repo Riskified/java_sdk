@@ -24,6 +24,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String paymentPlan;
     private int installmentMonths;
     private int installments;
+    private AuthorizationType authorizationType;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -191,5 +192,9 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public int getInstallments() { return installments; }
 
     public void setInstallments(int installments) { this.installments = installments; }
+
+    public AuthorizationType getAuthorizationType() {return authorizationType;}
+
+    public void setAuthorizationType(AuthorizationType authorizationType) { this.authorizationType = authorizationType; }
 
 }
