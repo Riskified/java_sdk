@@ -248,6 +248,44 @@ public class RiskifiedClient {
     }
 
     /**
+     * Send a new advise order to Riskified
+     * @param order The advise order to create
+     * @see Response
+     * @return Response object, including the status from Riskified server
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response adviseDecideCheckout(BaseOrder order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/advise";
+        String decideUrl = baseUrl + "/api/decide";
+
+        CheckoutOrderWrapper adviseOrder = new CheckoutOrderWrapper<BaseOrder>(order);
+
+        // Validation.ALL is not relevant when checkout.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+
+        Response adviseResponse = postCheckoutOrder(adviseOrder, url);
+        String authType = adviseResponse.getOrder().getAuthenticationType().getAuthType();
+        if (authType.equals("out_of_scope")) {
+            OrderWrapper decideOrder = new OrderWrapper<BaseOrder>(order);
+            Response decideResponse = postOrder(decideOrder, decideUrl);
+            String decideStatus = decideResponse.getOrder().getStatus();
+            String decideDescription = decideResponse.getOrder().getDescription();
+            ResOrder adviseResponseOrder = adviseResponse.getOrder();
+            adviseResponseOrder.setStatus(decideStatus);
+            adviseResponseOrder.setDescription(decideDescription);
+            adviseResponse.setOrder(adviseResponseOrder);
+            return adviseResponse;
+        } else {
+            return adviseResponse;
+        }
+    }
+
+    /**
      * Send a new checkout order to Riskified
      * @param order The checkout order to create (Checkout order has the same fields like Order but ALL fields are optional)
      * @param validation Determines what type of validation will take place
