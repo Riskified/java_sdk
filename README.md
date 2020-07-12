@@ -2,7 +2,7 @@ Riskified JAVA SDK
 =================
 See http://apiref.riskified.com for full API documentation 
 
-See riskified-sample/ for examples on how to use this SDK.
+see riskified-sample/ for examples on how to use this SDK. 
 
 Data validation:
 ---------------
