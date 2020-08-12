@@ -67,6 +67,7 @@ public abstract class BaseOrder implements IValidated {
 	private Map<String, Object> additionalData;
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
+    private CommunicationDetails communicationDetails;
     private String submissionReason;
     private Custom custom;
 
@@ -647,6 +648,10 @@ public abstract class BaseOrder implements IValidated {
     public void setSubmissionReason(String submissionReason) {
         this.submissionReason = submissionReason;
     }
+
+    public CommunicationDetails getCommunicationDetails() { return communicationDetails; }
+
+    public void setCommunicationDetails(CommunicationDetails contactDetails) { this.communicationDetails = contactDetails; }
 
     public Custom getCustom() {
         return custom;
