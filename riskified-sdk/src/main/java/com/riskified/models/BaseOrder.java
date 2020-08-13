@@ -651,7 +651,7 @@ public abstract class BaseOrder implements IValidated {
 
     public CommunicationDetails getCommunicationDetails() { return communicationDetails; }
 
-    public void setCommunicationDetails(CommunicationDetails contactDetails) { this.communicationDetails = contactDetails; }
+    public void setCommunicationDetails(CommunicationDetails communicationDetails) { this.communicationDetails = communicationDetails; }
 
     public Custom getCustom() {
         return custom;
