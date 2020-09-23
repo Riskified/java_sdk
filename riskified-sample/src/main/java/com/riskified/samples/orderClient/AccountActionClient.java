@@ -27,7 +27,7 @@ public class AccountActionClient {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
-            RiskifiedClient client = new RiskifiedClient();
+            RiskifiedClient client = new RiskifiedClient("richstestsite.com", "13579NoCOmmiT24680", Environment.SANDBOX);
 
             // To run a different action, please comment out login action and uncomment an action you want to test
             Response resCreateOrder = client.login(login);
@@ -43,6 +43,7 @@ public class AccountActionClient {
 
             System.out.println("-----------------------------------------");
             System.out.println("Account action response:");
+            System.out.println("login id: " + resCreateOrder.getLoginId());
             System.out.println("decision: " + resCreateOrder.getDecision());
 
 

@@ -8,6 +8,7 @@ public class Response {
     private Integer received;
     private List<String> warnings;
     private Error error;
+    private String loginId;
 
     public Response() {
 
@@ -31,6 +32,10 @@ public class Response {
     public String getDecision() {
         return decision;
     }
+
+    public String getLoginId() { return loginId; }
+
+    public void setLoginId(String loginId) { this.loginId = loginId; }
 
     public void setDecision(String decision) {
         this.decision = decision;
