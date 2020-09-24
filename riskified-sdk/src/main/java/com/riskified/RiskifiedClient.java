@@ -828,23 +828,6 @@ public class RiskifiedClient {
         return postOrder(contact, url);
     }
 
-    /**
-     * Verification Account Action
-     * Notifies Riskified that a verification attempt has been made
-     * @param verification A Verification object
-     * @see Response
-     * @return OK if good, object with error if bad request
-     * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
-     * @throws HttpResponseException The server respond status wasn't 200
-     * @throws FieldBadFormatException bad format found on field
-     */
-    public Response verification(Verification verification) throws IOException, FieldBadFormatException {
-        String url = accountBaseUrl + "/customers/verification";
-        validate(verification, validation);
-        return postOrder(verification, url);
-    }
-
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);

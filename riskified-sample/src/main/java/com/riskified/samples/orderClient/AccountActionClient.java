@@ -22,7 +22,6 @@ public class AccountActionClient {
         ResetPassword resetPassword = generateResetPassword();
         Wishlist wishlist = generateWishlist();
         Contact contact = generateContact();
-        Verification verification = generateVerification();
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
@@ -38,7 +37,6 @@ public class AccountActionClient {
 //            Response resCreateOrder = client.resetPassword(resetPassword);
 //            Response resCreateOrder = client.wishlist(wishlist);
 //            Response resCreateOrder = client.contact(contact);
-//            Response resCreateOrder = client.verification(verification);
 
             System.out.println("-----------------------------------------");
             System.out.println(resCreateOrder);
@@ -46,12 +44,6 @@ public class AccountActionClient {
             System.out.println("-----------------------------------------");
             System.out.println("Account action response:");
             System.out.println("decision: " + resCreateOrder.getDecision());
-
-//            Uncomment to handle /verification response
-//            System.out.println("-----------------------------------------");
-//            System.out.println("Verification response:");
-//            System.out.println("message: " + resCreateOrder.getMessage());
-
 
 
 
@@ -169,15 +161,5 @@ public class AccountActionClient {
         contact.setSessionDetails(sessionDetails);
         contact.setOrderId("450789469");
         return contact;
-    }
-
-    private static Verification generateVerification() {
-        Verification verification = new Verification(new Date(2020,06,25,13,53,19), VerificationStatus.success, "12345");
-        verification.setEmail("customer_email@test.com");
-        VerificationSessionDetails verificationSessionDetails = new VerificationSessionDetails();
-        verificationSessionDetails.setBrowserIp("111.111.111.111");
-        verificationSessionDetails.setCartToken("68778783ad298f1c80c3bafcddeea02f");
-        verification.setVerificationSessionDetails(verificationSessionDetails);
-        return verification;
     }
 }
