@@ -8,6 +8,7 @@ public class Response {
     private Integer received;
     private List<String> warnings;
     private Error error;
+    private String message;
 
     public Response() {
 
@@ -59,4 +60,8 @@ public class Response {
     public void setError(Error error) {
         this.error = error;
     }
+
+    public String getMessage() { return message; }
+
+    public void setMessage() { this.message = message; }
 }
