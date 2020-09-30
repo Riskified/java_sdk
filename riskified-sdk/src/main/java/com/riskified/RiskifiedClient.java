@@ -828,6 +828,23 @@ public class RiskifiedClient {
         return postOrder(contact, url);
     }
 
+    /**
+     * Verification Account Action
+     * Notifies Riskified that a verification attempt has been made
+     * @param verification A Verification object
+     * @see Response
+     * @return OK if good, object with error if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of an http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response verification(Verification verification) throws IOException, FieldBadFormatException {
+        String url = accountBaseUrl + "/customers/verification";
+        validate(verification, validation);
+        return postOrder(verification, url);
+    }
+
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
@@ -970,7 +987,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/1.3.4"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/1.3.5"); // TODO: take the version automatically
         return postRequest;
     }
 

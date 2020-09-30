@@ -9,6 +9,8 @@ public class Response {
     private List<String> warnings;
     private Error error;
     private String loginId;
+    private String message;
+
 
     public Response() {
 
@@ -64,4 +66,8 @@ public class Response {
     public void setError(Error error) {
         this.error = error;
     }
+
+    public String getMessage() { return message; }
+
+    public void setMessage() { this.message = message; }
 }
