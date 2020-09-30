@@ -27,7 +27,7 @@ public class AccountActionClient {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
-            RiskifiedClient client = new RiskifiedClient("richstestsite.com", "13579NoCOmmiT24680", Environment.SANDBOX);
+            RiskifiedClient client = new RiskifiedClient();
 
             // To run a different action, please comment out login action and uncomment an action you want to test
             Response resCreateOrder = client.login(login);
@@ -137,7 +137,7 @@ public class AccountActionClient {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
         SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
-        return new ResetPassword("207119551", clientDetails, sessionDetails);
+        return new ResetPassword("207119551",ResetPasswordStatusType.success, ReasonType.userRequested, "great.customer@email.com", clientDetails, sessionDetails);
     }
 
     private static Wishlist generateWishlist() {
