@@ -45,6 +45,7 @@ public class AccountActionClient {
 
             System.out.println("-----------------------------------------");
             System.out.println("Account action response:");
+            System.out.println("login id: " + resCreateOrder.getLoginId());
             System.out.println("decision: " + resCreateOrder.getDecision());
 
 //            Uncomment to handle /verification response
@@ -144,7 +145,7 @@ public class AccountActionClient {
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
         SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
-        return new ResetPassword("207119551", clientDetails, sessionDetails);
+        return new ResetPassword("207119551",ResetPasswordStatusType.success, ReasonType.userRequested, "great.customer@email.com", clientDetails, sessionDetails);
     }
 
     private static Wishlist generateWishlist() {
