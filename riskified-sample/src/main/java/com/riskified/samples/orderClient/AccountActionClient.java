@@ -24,13 +24,12 @@ public class AccountActionClient {
         Contact contact = generateContact();
         Verification verification = generateVerification();
 
-        System.out.println(login.getEmail());
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
-            RiskifiedClient client = new RiskifiedClient("richstestsite.com", "13579NoCOmmiT24681", Environment.SANDBOX);
+            RiskifiedClient client = new RiskifiedClient();
 
             // To run a different action, please comment out login action and uncomment an action you want to test
             Response resCreateOrder = client.login(login);
@@ -49,14 +48,17 @@ public class AccountActionClient {
             System.out.println("Account action response:");
             System.out.println("login id: " + resCreateOrder.getLoginId());
             System.out.println("decision: " + resCreateOrder.getDecision());
-            System.out.println("verification data:" + resCreateOrder.getVerificationData());
-            System.out.println("email: " + resCreateOrder.getVerificationData().getEmail());
-            System.out.println("device: " + resCreateOrder.getVerificationData().getDevice());
-            System.out.println("location: " + resCreateOrder.getVerificationData().getLocation());
-            System.out.println("date: " + resCreateOrder.getVerificationData().getDate());
+//
+//            UNCOMMENT TO HANDLE VERIFICATIONDATA OBJECT IN LOGIN RESPONSE
+//
+//            System.out.println("verification data:" + resCreateOrder.getVerificationData());
+//            System.out.println("email: " + resCreateOrder.getVerificationData().getEmail());
+//            System.out.println("device: " + resCreateOrder.getVerificationData().getDevice());
+//            System.out.println("location: " + resCreateOrder.getVerificationData().getLocation());
+//            System.out.println("date: " + resCreateOrder.getVerificationData().getDate());
 
 
-//            Uncomment to handle /verification response
+//            UNCOMMENT TO HANDLE VERIFICATION RESPONSE
 //            System.out.println("-----------------------------------------");
 //            System.out.println("Verification response:");
 //            System.out.println("message: " + resCreateOrder.getMessage());
