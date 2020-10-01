@@ -10,6 +10,7 @@ public class Response {
     private Error error;
     private String loginId;
     private String message;
+    private VerificationData verificationData;
 
 
     public Response() {
@@ -67,7 +68,19 @@ public class Response {
         this.error = error;
     }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setMessage() { this.message = message; }
+    public void setMessage() {
+        this.message = message;
+    }
+
+    public VerificationData getVerificationData() {
+        return verificationData;
+    }
+
+    public void setVerificationData(VerificationData verificationData) {
+        this.verificationData = verificationData;
+    }
 }
