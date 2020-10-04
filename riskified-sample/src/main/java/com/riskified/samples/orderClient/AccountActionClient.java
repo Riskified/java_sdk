@@ -24,6 +24,7 @@ public class AccountActionClient {
         Contact contact = generateContact();
         Verification verification = generateVerification();
 
+
         try {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
@@ -47,8 +48,17 @@ public class AccountActionClient {
             System.out.println("Account action response:");
             System.out.println("login id: " + resCreateOrder.getLoginId());
             System.out.println("decision: " + resCreateOrder.getDecision());
+//
+//            UNCOMMENT TO HANDLE VERIFICATIONDATA OBJECT IN LOGIN RESPONSE
+//
+//            System.out.println("verification data:" + resCreateOrder.getVerificationData());
+//            System.out.println("email: " + resCreateOrder.getVerificationData().getEmail());
+//            System.out.println("device: " + resCreateOrder.getVerificationData().getDevice());
+//            System.out.println("location: " + resCreateOrder.getVerificationData().getLocation());
+//            System.out.println("date: " + resCreateOrder.getVerificationData().getDate());
 
-//            Uncomment to handle /verification response
+
+//            UNCOMMENT TO HANDLE VERIFICATION RESPONSE
 //            System.out.println("-----------------------------------------");
 //            System.out.println("Verification response:");
 //            System.out.println("message: " + resCreateOrder.getMessage());
@@ -76,9 +86,9 @@ public class AccountActionClient {
         LoginStatus loginStatus = new LoginStatus(LoginStatusType.success);
         ClientDetails clientDetails = new ClientDetails();
         clientDetails.setUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-        SessionDetails sessionDetails = new SessionDetails(new Date(), "68778783ad298f1c80c3bafcddeea02f", "111.111.111.111", Source.desktopWeb);
+        SessionDetails sessionDetails = new SessionDetails(new Date(), "215fpgrjwrpiyj3", "111.111.111.111", Source.desktopWeb);
 //        sessionDetails.setDeviceId("01234567-89ABCDEF-01234567-89ABCDEF");
-        Login login = new Login("207119551", "test@test.com", loginStatus, clientDetails, sessionDetails);
+        Login login = new Login("00012457890", "verify@hostmail.com", loginStatus, clientDetails, sessionDetails);
         login.setLoginAtCheckout(true);
     //    login.setSocialLoginType(SocialType.amazon);
         login.setCustomerCreatedAt(new Date(2020, 01, 06, 13, 00, 00));;
