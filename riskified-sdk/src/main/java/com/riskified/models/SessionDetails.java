@@ -31,7 +31,7 @@ public class SessionDetails implements IValidated {
         return createdAt;
     }
 
-    private void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -39,7 +39,7 @@ public class SessionDetails implements IValidated {
         return cartToken;
     }
 
-    private void setCartToken(String cartToken) {
+    public void setCartToken(String cartToken) {
         this.cartToken = cartToken;
     }
 

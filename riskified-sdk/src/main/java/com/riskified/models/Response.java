@@ -8,6 +8,10 @@ public class Response {
     private Integer received;
     private List<String> warnings;
     private Error error;
+    private String loginId;
+    private String message;
+    private VerificationData verificationData;
+
 
     public Response() {
 
@@ -31,6 +35,10 @@ public class Response {
     public String getDecision() {
         return decision;
     }
+
+    public String getLoginId() { return loginId; }
+
+    public void setLoginId(String loginId) { this.loginId = loginId; }
 
     public void setDecision(String decision) {
         this.decision = decision;
@@ -58,5 +66,21 @@ public class Response {
 
     public void setError(Error error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage() {
+        this.message = message;
+    }
+
+    public VerificationData getVerificationData() {
+        return verificationData;
+    }
+
+    public void setVerificationData(VerificationData verificationData) {
+        this.verificationData = verificationData;
     }
 }

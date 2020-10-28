@@ -18,6 +18,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String gateway;
     private String acquirerBin;
     private String mid;
+    private AuthorizationType authorizationType;
 
     
 
@@ -151,7 +152,8 @@ public class PaypalPaymentDetails implements IPaymentDetails {
 		this.mid = mid; 
 	}
 
+    public AuthorizationType getAuthorizationType() {return authorizationType;}
 
-
-
+    public void setAuthorizationType(AuthorizationType authorizationType) { this.authorizationType = authorizationType; }
+    
 }
