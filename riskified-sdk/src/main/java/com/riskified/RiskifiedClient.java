@@ -260,6 +260,8 @@ public class RiskifiedClient {
     public Response adviseDecideCheckout(BaseOrder order) throws IOException, FieldBadFormatException {
         String url = baseUrl + "/api/advise";
         String decideUrl = baseUrl + "/api/decide";
+        Response response;
+        AdviseDecideHandler adHandler = new AdviseDecideHandler();
 
         CheckoutOrderWrapper adviseOrder = new CheckoutOrderWrapper<BaseOrder>(order);
 
@@ -269,20 +271,18 @@ public class RiskifiedClient {
         }
 
         Response adviseResponse = postCheckoutOrder(adviseOrder, url);
+        String adviseStatus = adviseResponse.getOrder().getStatus();
         String authType = adviseResponse.getOrder().getAuthenticationType().getAuthType();
-        if (authType.equals("out_of_scope")) {
+
+        if (adviseStatus.equals("declined") ||  adviseStatus.equals("captured") && authType.equals("sca") ) {
+            response = adHandler.handleAdviseOnly(adviseResponse);
+        } else {
             OrderWrapper decideOrder = new OrderWrapper<BaseOrder>(order);
             Response decideResponse = postOrder(decideOrder, decideUrl);
-            String decideStatus = decideResponse.getOrder().getStatus();
-            String decideDescription = decideResponse.getOrder().getDescription();
-            ResOrder adviseResponseOrder = adviseResponse.getOrder();
-            adviseResponseOrder.setStatus(decideStatus);
-            adviseResponseOrder.setDescription(decideDescription);
-            adviseResponse.setOrder(adviseResponseOrder);
-            return adviseResponse;
-        } else {
-            return adviseResponse;
+            response = adHandler.handleAdviseAndDecide(adviseResponse, decideResponse);
         }
+
+        return response;
     }
 
     /**
