@@ -12,11 +12,9 @@ public class AdviseDecideHandler {
 
         if (adviseStatus.equals("declined") && authType.equals("fraud")) {
             response = handleDeclinedAndFraud(adviseResponse);
-        }
-        if (adviseStatus.equals("declined") && authType.equals("out_of_scope")) {
+        } else if (adviseStatus.equals("declined") && authType.equals("out_of_scope")) {
             response = handleDeclineAndOutOfScope(adviseResponse);
-        }
-        if (adviseStatus.equals("captured") && authType.equals("sca")) {
+        } else if (adviseStatus.equals("captured") && authType.equals("sca")) {
             response = handleCapturedAndSca(adviseResponse);
         }
 
@@ -29,17 +27,13 @@ public class AdviseDecideHandler {
 
         if (authType.equals("tra") && decideStatus.equals("declined")) {
             response = handleTraAndDeclined(decideResponse);
-        }
-        if (authType.equals("tra") && decideStatus.equals("approved")) {
+        } else if (authType.equals("tra") && decideStatus.equals("approved")) {
             response = handleTraAndApprovedOrCaptured(decideResponse, adviseResponse);
-        }
-        if (authType.equals("low_amount") && decideStatus.equals("declined")) {
+        } else if (authType.equals("low_amount") && decideStatus.equals("declined")) {
             response = handleLowAmountAndDeclined(decideResponse);
-        }
-        if (authType.equals("low_amount") && !decideStatus.equals("declined")) {
+        } else if (authType.equals("low_amount") && !decideStatus.equals("declined")) {
             response = handleLowAmountAndApprovedOrCaptured(decideResponse);
-        }
-        if (authType.equals("out_of_scope")) {
+        } else if (authType.equals("out_of_scope")) {
             response = handleOutOfScope(decideResponse);
         }
 
