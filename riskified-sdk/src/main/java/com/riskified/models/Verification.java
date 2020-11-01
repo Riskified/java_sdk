@@ -12,6 +12,7 @@ public class Verification implements IValidated {
     private VerificationStatus status;
     private String eventId;
     private VerificationSessionDetails verificationSessionDetails;
+    private String vendorName;
 
     public Verification(Date verifiedAt, VerificationStatus status, String eventId) {
         this.verifiedAt = verifiedAt;
@@ -62,4 +63,8 @@ public class Verification implements IValidated {
     public VerificationSessionDetails getVerificationSessionDetails() { return verificationSessionDetails; }
 
     public void setVerificationSessionDetails(VerificationSessionDetails verificationSessionDetails) { this.verificationSessionDetails = verificationSessionDetails; }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }

@@ -12,6 +12,7 @@ public class ResetPassword implements IValidated {
     private String email;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
+    private String vendorName;
 
     public ResetPassword(String customerId, ResetPasswordStatusType status, ReasonType reason, String email, ClientDetails clientDetails, SessionDetails sessionDetails) {
         this.customerId = customerId;
@@ -68,4 +69,8 @@ public class ResetPassword implements IValidated {
     public void setSessionDetails(SessionDetails sessionDetails) {
         this.sessionDetails = sessionDetails;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }
