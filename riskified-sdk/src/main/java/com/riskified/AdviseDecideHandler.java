@@ -42,40 +42,29 @@ public class AdviseDecideHandler {
 
     public Response handleDeclinedAndFraud(Response adviseResponse) {
         Advice advice = new Advice(true);
-        ResOrder adviseResponseOrder = adviseResponse.getOrder();
-
-        adviseResponseOrder.setDescription("Order exhibits data points that are highly correlated with fraudulent activity");
-        adviseResponseOrder.setAdvice(advice);
-        adviseResponse.setOrder(adviseResponseOrder);
+        String description = "Order exhibits data points that are highly correlated with fraudulent activity";
+        addAdviceToAdviseResponse(adviseResponse, advice, description);
         return adviseResponse;
     }
 
     public Response handleDeclineAndOutOfScope(Response adviseResponse) {
         Advice advice = new Advice(false);
-        ResOrder adviseResponseOrder = adviseResponse.getOrder();
-
-        adviseResponseOrder.setDescription("Order exhibits data points that are highly correlated with fraudulent activity");
-        adviseResponseOrder.setAdvice(advice);
-        adviseResponse.setOrder(adviseResponseOrder);
+        String description = "Order exhibits data points that are highly correlated with fraudulent activity";
+        addAdviceToAdviseResponse(adviseResponse, advice, description);
         return adviseResponse;
     }
 
     public Response handleCapturedAndSca(Response adviseResponse) {
         Advice advice = new Advice(true);
         advice.setRecommendation("sca");
-        ResOrder adviseResponseOrder = adviseResponse.getOrder();
-
-        adviseResponseOrder.setDescription("Received by Riskified");
-        adviseResponseOrder.setAdvice(advice);
-        adviseResponse.setOrder(adviseResponseOrder);
+        String description = "Received by Riskified";
+        addAdviceToAdviseResponse(adviseResponse, advice, description);
         return adviseResponse;
     }
 
     public Response handleTraAndDeclined(Response decideResponse) {
         Advice advice = new Advice(true);
-        ResOrder decideResponseOrder = decideResponse.getOrder();
-        decideResponseOrder.setAdvice(advice);
-        decideResponse.setOrder(decideResponseOrder);
+        addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
     }
 
@@ -83,36 +72,42 @@ public class AdviseDecideHandler {
         Advice advice = new Advice(true);
         advice.setRecommendation("tra");
         advice.setScore(adviseResponse.getOrder().getScore());
-        ResOrder decideResponseOrder = decideResponse.getOrder();
-        decideResponseOrder.setAdvice(advice);
-        decideResponse.setOrder(decideResponseOrder);
+        addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
     }
 
     public Response handleLowAmountAndDeclined(Response decideResponse) {
         Advice advice = new Advice(true);
-        ResOrder decideResponseOrder = decideResponse.getOrder();
-        decideResponseOrder.setAdvice(advice);
-        decideResponse.setOrder(decideResponseOrder);
+        addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
     }
 
     public Response handleLowAmountAndApprovedOrCaptured(Response decideResponse) {
         Advice advice = new Advice(true);
         advice.setRecommendation("low_amount");
-        ResOrder decideResponseOrder = decideResponse.getOrder();
-        decideResponseOrder.setAdvice(advice);
-        decideResponse.setOrder(decideResponseOrder);
+        addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
     }
 
     public Response handleOutOfScope(Response decideResponse) {
         Advice advice = new Advice(false);
-        ResOrder decideResponseOrder = decideResponse.getOrder();
-
-        decideResponseOrder.setAdvice(advice);
-        decideResponse.setOrder(decideResponseOrder);
+        addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
+    }
+
+    private Response addAdviceToAdviseResponse(Response response, Advice advice, String description) {
+        ResOrder responseOrder = response.getOrder();
+        responseOrder.setDescription(description);
+        responseOrder.setAdvice(advice);
+        response.setOrder(responseOrder);
+        return response;
+    }
+
+    private Response addAdviceToDecideResponse(Response response, Advice advice) {
+        ResOrder responseOrder = response.getOrder();
+        responseOrder.setAdvice(advice);
+        response.setOrder(responseOrder);
+        return response;
     }
 }
 
