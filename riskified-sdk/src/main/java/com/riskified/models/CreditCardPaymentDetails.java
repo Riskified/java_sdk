@@ -1,5 +1,7 @@
 package com.riskified.models;
 
+import java.util.Date;
+
 import com.riskified.validations.*;
 
 public class CreditCardPaymentDetails implements IPaymentDetails {
@@ -9,6 +11,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String creditCardNumber;
     private String creditCardCompany;
     private String authorizationId;
+    private Date storedPaymentCreatedAt;
+    private Date storedPaymentUpdatedAt;
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
     private String cardholderName;
@@ -19,6 +23,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String mid;
     private String paymentPlan;
     private int installmentMonths;
+    private int installments;
+    private AuthorizationType authorizationType;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -110,6 +116,14 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public void setAuthorizationId(String authorizationId) {
         this.authorizationId = authorizationId;
     }
+
+    public Date getStoredPaymentCreatedAt() { return storedPaymentCreatedAt; }
+
+    public void setStoredPaymentCreatedAt(Date storedPaymentCreatedAt) { this.storedPaymentCreatedAt = storedPaymentCreatedAt; }
+
+    public Date getStoredPaymentUpdatedAt() { return storedPaymentUpdatedAt; }
+
+    public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt) { this.storedPaymentUpdatedAt = storedPaymentUpdatedAt; }
     
     public AuthorizationError getAuthorizationError() {
         return authorizationError;
@@ -175,6 +189,12 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 		this.mid = mid; 
 	}
 
+    public int getInstallments() { return installments; }
 
+    public void setInstallments(int installments) { this.installments = installments; }
+
+    public AuthorizationType getAuthorizationType() {return authorizationType;}
+
+    public void setAuthorizationType(AuthorizationType authorizationType) { this.authorizationType = authorizationType; }
 
 }

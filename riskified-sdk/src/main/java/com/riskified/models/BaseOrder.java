@@ -53,6 +53,7 @@ public abstract class BaseOrder implements IValidated {
     private String tags;
     private String vendorId;
     private String vendorName;
+    private String vendorIntegrationType;
     private Address shippingAddress;
     private Address billingAddress;
     private List<? extends IPaymentDetails> paymentDetails;
@@ -66,6 +67,7 @@ public abstract class BaseOrder implements IValidated {
 	private Map<String, Object> additionalData;
 	private String orderType;
     private ChargeFreePaymentDetails chargeFreePaymentDetails;
+    private CommunicationDetails communicationDetails;
     private String submissionReason;
     private Custom custom;
 
@@ -518,6 +520,14 @@ public abstract class BaseOrder implements IValidated {
         this.vendorName = vendorName;
     }
 
+    public String getVendorIntegrationType() {
+        return vendorIntegrationType;
+    }
+
+    public void setVendorIntegrationType(String vendorIntegrationType) {
+        this.vendorIntegrationType = vendorIntegrationType;
+    }
+
     public Address getShippingAddress() {
         return shippingAddress;
     }
@@ -638,6 +648,10 @@ public abstract class BaseOrder implements IValidated {
     public void setSubmissionReason(String submissionReason) {
         this.submissionReason = submissionReason;
     }
+
+    public CommunicationDetails getCommunicationDetails() { return communicationDetails; }
+
+    public void setCommunicationDetails(CommunicationDetails communicationDetails) { this.communicationDetails = communicationDetails; }
 
     public Custom getCustom() {
         return custom;

@@ -6,6 +6,7 @@ import com.riskified.validations.*;
 
 public class RefundDetails implements IValidated {
     private String refundId;
+    private String sku;
     private Date refundedAt;
     private Double amount;
     private String currency;
@@ -33,6 +34,10 @@ public class RefundDetails implements IValidated {
     public void setRefundId(String refundId) {
         this.refundId = refundId;
     }
+
+    public String getSku() { return sku; }
+
+    public void setSku(String sku) { this.sku = sku; }
 
     public Date getRefundedAt() {
         return refundedAt;

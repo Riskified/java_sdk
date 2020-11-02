@@ -28,6 +28,8 @@ public class Customer implements IValidated {
     private Address address;
     private String accountType;
     private Integer linkedAccounts;
+    private String documentId;
+    private String documentType;
     
     public Customer() {
     	
@@ -229,4 +231,12 @@ public class Customer implements IValidated {
     }
 
     public void setLinkedAccounts(Integer linkedAccounts) { this.linkedAccounts = linkedAccounts; }
+
+    public String getDocumentId() { return documentId; }
+
+    public void setDocumentId(String documentId) { this.documentId = documentId; }
+
+    public String getDocumentType() { return documentType; }
+
+    public void setDocumentType(String documentType) { this.documentType = documentType; }
 }
