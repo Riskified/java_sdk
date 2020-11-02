@@ -13,6 +13,9 @@ public class Login implements IValidated {
     private LoginStatus loginStatus;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
+    private String vendorName;
+    private String authenticationMechanism;
+    private String redirectUrl;
 
     public Login(String customerId, String email, LoginStatus loginStatus, ClientDetails clientDetails, SessionDetails sessionDetails) {
         this.customerId = customerId;
@@ -89,4 +92,16 @@ public class Login implements IValidated {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
+
+    public String getAuthenticationMechanism() { return authenticationMechanism; }
+
+    public void setAuthenticationMechanism(String authenticationMechanism) { this.authenticationMechanism = authenticationMechanism; }
+
+    public String getRedirectUrl() { return redirectUrl; }
+
+    public void setRedirectUrl(String redirectUrl) { this.redirectUrl = redirectUrl; }
 }

@@ -7,6 +7,8 @@ public enum LoginStatusType {
     @SerializedName("success")
     success,
     @SerializedName("failure")
-    failure
+    failure,
+    @SerializedName("expired")
+    expired
 
 }

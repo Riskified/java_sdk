@@ -14,6 +14,7 @@ public class CustomerCreate implements IValidated {
     private List<IPaymentDetails> paymentDetails;
     private List<Address> billingAddress;
     private List<Address> shippingAddress;
+    private String vendorName;
 
     public CustomerCreate(String customerId, ClientDetails clientDetails, SessionDetails sessionDetails, Customer customer) {
         this.customerId = customerId;
@@ -129,4 +130,8 @@ public class CustomerCreate implements IValidated {
     public void setShippingAddress(List<Address> shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }
