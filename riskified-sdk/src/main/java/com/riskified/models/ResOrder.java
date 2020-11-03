@@ -11,6 +11,7 @@ public class ResOrder {
 	private int score;
 	private AuthenticationType authentication_type;
 	private String action;
+	private Advice advice;
 	
 	
     public String getId() {
@@ -60,8 +61,7 @@ public class ResOrder {
     public void setCategory(String category) {
         this.category = category;
     }
-    
-    
+
     public int getScore() {
         return score;
     }
@@ -74,17 +74,17 @@ public class ResOrder {
     	return authentication_type; 
     }
 
-    public void setAuthenticationType(AuthenticationType authenticationType) { 
-    	this.authentication_type = authenticationType; 
+    public void setAuthenticationType(AuthenticationType authenticationType) {
+    	this.authentication_type = authenticationType;
     }
 
-    public String getAction() {
-        return action;
-    }
+    public String getAction() { return action; }
 
-    public void setAction(String action) {
-        this.action = action;
-    }
+    public void setAction(String action) { this.action = action; }
+
+    public Advice getAdvice() { return advice; }
+
+    public void setAdvice(Advice advice) { this.advice = advice;}
     
     
 }
