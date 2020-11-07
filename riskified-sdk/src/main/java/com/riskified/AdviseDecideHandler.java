@@ -71,7 +71,6 @@ public class AdviseDecideHandler {
     public Response handleTraAndApprovedOrCaptured(Response decideResponse, Response adviseResponse) {
         Advice advice = new Advice(true);
         advice.setRecommendation("tra");
-        advice.setScore(adviseResponse.getOrder().getScore());
         addAdviceToDecideResponse(decideResponse, advice);
         return decideResponse;
     }

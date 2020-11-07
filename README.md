@@ -1,5 +1,8 @@
 Riskified JAVA SDK
 =================
+
+Branch used by last minute including support for /advise_decide endpoint 
+
 See http://apiref.riskified.com for full API documentation 
 
 see riskified-sample/ for examples on how to use this SDK. 
