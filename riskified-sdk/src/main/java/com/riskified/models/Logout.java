@@ -9,6 +9,7 @@ public class Logout implements IValidated {
     private String customerId;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
+    private String vendorName;
 
     public Logout(String customerId, ClientDetails clientDetails, SessionDetails sessionDetails) {
         this.customerId = customerId;
@@ -47,4 +48,8 @@ public class Logout implements IValidated {
     public void setSessionDetails(SessionDetails sessionDetails) {
         this.sessionDetails = sessionDetails;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }
