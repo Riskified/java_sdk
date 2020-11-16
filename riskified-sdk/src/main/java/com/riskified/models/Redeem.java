@@ -10,6 +10,7 @@ public class Redeem implements IValidated {
     private String redeemType;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
+    private String vendorName;
 
     public Redeem(String customerId, String redeemType, ClientDetails clientDetails, SessionDetails sessionDetails) {
         this.customerId = customerId;
@@ -58,4 +59,8 @@ public class Redeem implements IValidated {
     public void setSessionDetails(SessionDetails sessionDetails) {
         this.sessionDetails = sessionDetails;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }

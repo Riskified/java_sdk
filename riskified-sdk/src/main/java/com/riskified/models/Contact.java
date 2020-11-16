@@ -11,6 +11,7 @@ public class Contact implements IValidated {
     private ContactMethod contactMethod;
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
+    private String vendorName;
 
     public Contact(String customerId, ContactMethod contactMethod) {
         this.customerId = customerId;
@@ -63,4 +64,8 @@ public class Contact implements IValidated {
     public void setSessionDetails(SessionDetails sessionDetails) {
         this.sessionDetails = sessionDetails;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }

@@ -11,6 +11,7 @@ public class Wishlist implements IValidated {
     private ClientDetails clientDetails;
     private SessionDetails sessionDetails;
     private LineItem lineItem;
+    private String vendorName;
 
     public Wishlist(String customerId, String wishlistAction, ClientDetails clientDetails, SessionDetails sessionDetails, LineItem lineItem) {
         this.customerId = customerId;
@@ -69,4 +70,8 @@ public class Wishlist implements IValidated {
     public void setLineItem(LineItem lineItem) {
         this.lineItem = lineItem;
     }
+
+    public String getVendorName() { return vendorName; }
+
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 }

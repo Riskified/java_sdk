@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>v1.3.9</version>
+    <version>v1.3.10</version>
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>https://www.riskified.com</url>
