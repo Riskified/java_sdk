@@ -12,6 +12,8 @@ public enum DecisionType {
     cancelled,
     @SerializedName("declined_fraud")
     declined_fraud,
+    @SerializedName("declined_business")
+    declinedBusiness,
     @SerializedName("chargeback_fraud")
     chargebackFraud,
     @SerializedName("chargeback_not_fraud")
