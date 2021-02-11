@@ -7,11 +7,11 @@ public class Policy {
 		this.evaluate = evaluate;
 	}
 
-    public boolean getPolicy() {
+    public boolean getEvaluate() {
         return evaluate;
     }
 
-    public void setPolicy(boolean evaluate) {
+    public void setEvaluate(boolean evaluate) {
         this.evaluate = evaluate;
     }
     
