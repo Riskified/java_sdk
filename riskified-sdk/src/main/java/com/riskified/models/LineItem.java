@@ -36,6 +36,7 @@ public class LineItem implements IValidated {
     private String deliveredTo;
     private String color;
     private RegistryType registryType;
+    private Policy policy;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -300,7 +301,15 @@ public class LineItem implements IValidated {
 
     public void setRegistryType(RegistryType registryType) { this.registryType = registryType; }
 
+	public Policy getPolicy() {
+		return policy;
+	}
 
+	public void setPolicy(Policy policy) {
+		this.policy = policy;
+	}
+
+    
 
 
 
