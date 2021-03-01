@@ -30,6 +30,9 @@ public class Customer implements IValidated {
     private Integer linkedAccounts;
     private String documentId;
     private String documentType;
+    private String phone;
+    private Boolean verifiedPhone;
+    private Date verifiedPhoneAt;
     
     public Customer() {
     	
@@ -239,4 +242,16 @@ public class Customer implements IValidated {
     public String getDocumentType() { return documentType; }
 
     public void setDocumentType(String documentType) { this.documentType = documentType; }
+
+    public String getPhone() { return phone; }
+
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public Boolean getVerifiedPhone() { return verifiedPhone; }
+
+    public void setVerifiedPhone(Boolean verifiedPhone) { this.verifiedPhone = verifiedPhone; }
+
+    public Date getVerifiedPhoneAt() { return verifiedPhoneAt; }
+
+    public void setVerifiedPhoneAt(Date verifiedPhoneAt) { this.verifiedPhoneAt = verifiedPhoneAt; }
 }
