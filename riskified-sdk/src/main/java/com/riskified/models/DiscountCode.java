@@ -6,6 +6,7 @@ public class DiscountCode implements IValidated {
 
     private String code;
     private Double amount;
+    private Policy policy;
 
     public DiscountCode(double amount, String code) {
         this.code = code;
@@ -36,5 +37,9 @@ public class DiscountCode implements IValidated {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public Policy getPolicy() { return policy; }
+
+    public void setPolicy(Policy policy) { this.policy = policy; }
 
 }
