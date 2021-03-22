@@ -104,7 +104,7 @@ public class Login implements IValidated {
 
     public String getChallengeRedirectUrl() { return challengeRedirectUrl; }
 
-    public void setChallengeRedirectUrl(String redirectUrl) { this.challengeRedirectUrl = redirectUrl; }
+    public void setChallengeRedirectUrl(String challengeRedirectUrl) { this.challengeRedirectUrl = challengeRedirectUrl; }
 
     public String getLocalizationLanguage() { return localizationLanguage; }
 
