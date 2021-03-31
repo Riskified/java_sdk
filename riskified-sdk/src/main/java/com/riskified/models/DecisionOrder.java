@@ -7,6 +7,8 @@ import java.util.List;
 public class DecisionOrder implements IValidated {
 
     private String id;
+    private String gateway;
+    private String submissionReason;
     private DecisionDetails decision;
     private List<? extends IPaymentDetails> paymentDetails;
 
@@ -32,6 +34,22 @@ public class DecisionOrder implements IValidated {
 
     public void setId(String id) {
         this.id = id;
+    }
+    
+    public String getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
+    
+    public void setSubmissionReason(String submissionReason) {
+        this.submissionReason = submissionReason;
+    }
+    
+    public String getSubmissionReason() {
+        return submissionReason;
     }
 
     public DecisionDetails getDecision() {
