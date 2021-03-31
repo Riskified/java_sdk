@@ -15,7 +15,8 @@ public class Login implements IValidated {
     private SessionDetails sessionDetails;
     private String vendorName;
     private AuthenticationMechanism authenticationMechanism;
-    private String redirectUrl;
+    private String challengeRedirectUrl;
+    private String localizationLanguage;
 
     public Login(String customerId, String email, LoginStatus loginStatus, ClientDetails clientDetails, SessionDetails sessionDetails) {
         this.customerId = customerId;
@@ -101,7 +102,11 @@ public class Login implements IValidated {
 
     public void setAuthenticationMechanism(AuthenticationMechanism authenticationMechanism) { this.authenticationMechanism = authenticationMechanism; }
 
-    public String getRedirectUrl() { return redirectUrl; }
+    public String getChallengeRedirectUrl() { return challengeRedirectUrl; }
 
-    public void setRedirectUrl(String redirectUrl) { this.redirectUrl = redirectUrl; }
+    public void setChallengeRedirectUrl(String challengeRedirectUrl) { this.challengeRedirectUrl = challengeRedirectUrl; }
+
+    public String getLocalizationLanguage() { return localizationLanguage; }
+
+    public void setLocalizationLanguage(String localizationLanguage) { this.localizationLanguage = localizationLanguage; }
 }
