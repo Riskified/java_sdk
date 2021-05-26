@@ -25,6 +25,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private int installmentMonths;
     private int installments;
     private AuthorizationType authorizationType;
+    private String creditCardCountry;
+    private String acquirerRegion;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -44,6 +46,12 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         if (validationType == Validation.ALL) {
             Validate.notNullOrEmpty(this, this.creditCardBin, "Credit Card Bin");
             Validate.notNullOrEmpty(this, this.creditCardNumber, "Credit Card Number");
+            if (this.creditCardCountry != null) {
+                Validate.countryCode(this, this.creditCardCountry, "Credit Card Country");
+            }
+            if (this.acquirerRegion != null && (this.acquirerRegion != "EU" && this.acquirerRegion != "NONEU")) {
+                throw new FieldBadFormatException("Acquirer Region must be 'EU' or 'NONEU'");
+            }
         //  Validate.notNullOrEmpty(this, this.type, "Type");
        //   Validate.notNullOrEmpty(this, this.acquirerBin, "acquirer Bin");
        //   Validate.notNullOrEmpty(this, this.gateway, "gateway");
@@ -193,8 +201,16 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 
     public void setInstallments(int installments) { this.installments = installments; }
 
-    public AuthorizationType getAuthorizationType() {return authorizationType;}
+    public AuthorizationType getAuthorizationType() { return authorizationType; }
 
     public void setAuthorizationType(AuthorizationType authorizationType) { this.authorizationType = authorizationType; }
+
+    public String getCreditCardCountry() { return creditCardCountry; }
+
+    public void setCreditCardCountry(String creditCardCountry) { this.creditCardCountry = creditCardCountry; }
+
+    public String getAcquirerRegion() { return acquirerRegion; }
+
+    public void setAcquirerRegion(String acquirerRegion) { this.acquirerRegion = acquirerRegion; }
 
 }
