@@ -12,6 +12,9 @@ public class Utils {
     public static final String ACCOUNT_PRODUCTION_ENVIRONMENT = "https://api.riskified.com";
     public static final String SCREEN_SANDBOX_ENVIRONMENT = "https://screen-sandbox.riskified.com";
 
+    /*
+    * Testing comments 
+    */
     public static String getBaseUrlFromEnvironment(Environment environmentType) {
         return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
     }
