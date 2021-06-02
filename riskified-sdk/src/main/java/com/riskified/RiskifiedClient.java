@@ -33,7 +33,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Properties;
+import java.util.*;
 
 
 /**
@@ -60,6 +60,7 @@ public class RiskifiedClient {
     private String proxyUsername;
     private String proxyPassword;
     private HttpClientContext context;
+    private List<RiskifiedLogListener> logListeners = new ArrayList<RiskifiedLogListener>();
 
     /**
      * Riskified API client
@@ -100,6 +101,8 @@ public class RiskifiedClient {
             environment = Environment.PRODUCTION;
         } else if (environmentType.equals("SANDBOX")) {
         	environment = Environment.SANDBOX;
+        } else if (environmentType.equals("CHINA_PRODUCTION")) {
+        	environment = Environment.CHINA_PRODUCTION;
         }
 
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),validation);
@@ -941,7 +944,6 @@ public class RiskifiedClient {
         response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
-
         Response responseObject = getResponseObject(postBody);
         switch (status) {
 	        case 200:
@@ -971,17 +973,25 @@ public class RiskifiedClient {
         res.setOrder(res.getCheckout());
         return res;
     }
+    
+    public void addListener(RiskifiedLogListener riskifiedListener) {
+    	logListeners.add(riskifiedListener);
+    }
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
         String jsonData = JSONFormater.toJson(data);
+        for (RiskifiedLogListener riskifiedLogListener : logListeners)
+        	riskifiedLogListener.getRequestLogs(jsonData);
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
-
         ByteArrayEntity input;
         input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
 		postRequest.setEntity(input);
     }
+    
+  
+    
 
     private HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);
