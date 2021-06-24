@@ -4,7 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
+<<<<<<< Updated upstream
     <version>v1.3.17</version>
+=======
+    <version>v2.0.0</version>
+>>>>>>> Stashed changes
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>https://www.riskified.com</url>

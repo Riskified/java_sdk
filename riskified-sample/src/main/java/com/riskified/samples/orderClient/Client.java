@@ -44,16 +44,17 @@ public class Client {
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
-            
-         /*   Response resAdviseOrder = client.adviseOrder(adviseOrder);
+        /*    
+            Response resAdviseOrder = client.adviseOrder(adviseOrder);
 
             System.out.println("Advise order response:");
             System.out.println("id: " + resAdviseOrder.getOrder().getId());
             System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
-            System.out.println("score: " + resAdviseOrder.getOrder().getScore());
-            System.out.println("auth_type: " + resAdviseOrder.getOrder().getAuthenticationType().getAuthType());
+            System.out.println("advise response rec " + resAdviseOrder.getOrder().getAdvice().getRecommendation());
+            System.out.println("advise response scope " + resAdviseOrder.getOrder().getAdvice().getRegulatoryScope());
 
-            System.out.println("-----------------------------------------");  */
+		*/
+            System.out.println("-----------------------------------------");  
 
             
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
@@ -62,7 +63,6 @@ public class Client {
             System.out.println("id: " + resCheckoutOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
             System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
-
 
 
             Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
@@ -283,13 +283,13 @@ public class Client {
     private static CheckoutOrder generateAdviseOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("99992328882");
-        order.setName("#123422111");
+        order.setId("99992328889900");
+        order.setName("#123422111000");
         order.setEmail("great.customer_2@example.com");
-        order.setCreatedAt(parseDate("04-04-2018 00:00:00.0"));
+        order.setCreatedAt(parseDate("06-24-2021 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
-        order.setUpdatedAt(parseDate("04-05-2018 00:00:00.0"));
+        order.setUpdatedAt(parseDate("06-24-2021 00:00:00.0"));
         order.setBrowserIp("125.185.86.55");
         order.setTotalPrice(123.23);
         order.setTotalDiscounts(4);

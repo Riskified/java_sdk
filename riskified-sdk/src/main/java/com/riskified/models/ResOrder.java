@@ -11,6 +11,7 @@ public class ResOrder {
 	private int score;
 	private AuthenticationType authentication_type;
 	private String action;
+	private Advice advice;
 	
 	
     public String getId() {
@@ -76,6 +77,14 @@ public class ResOrder {
 
     public void setAuthenticationType(AuthenticationType authenticationType) { 
     	this.authentication_type = authenticationType; 
+    }   
+    
+    public Advice getAdvice() {
+    	return advice;
+    }
+    
+    public void setAdvice(Advice advice) {
+    	this.advice = advice;
     }
 
     public String getAction() {
@@ -86,5 +95,18 @@ public class ResOrder {
         this.action = action;
     }
     
+    public class Advice { 
+    	
+    	private boolean in_regulatory_scope;
+    	private String recommendation;
+    	
+    	public boolean getRegulatoryScope() {
+    		return in_regulatory_scope;
+    	}
+    	public String getRecommendation() {
+    		return recommendation;
+    	}
+    
+    }
     
 }
