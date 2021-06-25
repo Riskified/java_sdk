@@ -852,6 +852,7 @@ public class RiskifiedClient {
         HttpClient client = constructHttpClient();
         response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+        System.out.println("PostBody : " + postBody );
         int status = response.getStatusLine().getStatusCode();
         Response responseObject = getCheckoutResponseObject(postBody);
         switch (status) {
@@ -987,7 +988,12 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
+<<<<<<< Updated upstream
         postRequest.setHeader("User-Agent","riskified_java_sdk/1.3.17"); // TODO: take the version automatically
+=======
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.0.0"); // TODO: take the version automatically
+        postRequest.setHeader("Version","V2");
+>>>>>>> Stashed changes
         return postRequest;
     }
 
