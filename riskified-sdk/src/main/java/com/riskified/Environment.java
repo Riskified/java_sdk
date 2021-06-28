@@ -3,5 +3,6 @@ package com.riskified;
 public enum Environment {
     DEBUG,
     SANDBOX,
-    PRODUCTION
+    PRODUCTION,
+    CHINA_PRODUCTION
 }
