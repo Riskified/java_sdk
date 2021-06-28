@@ -4,12 +4,12 @@
     <groupId>com.riskified.sample</groupId>
     <artifactId>riskified-sample</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    
+
     <dependencies>
         <dependency>
             <groupId>com.riskified</groupId>
             <artifactId>riskified-sdk</artifactId>
-            <version>v2.0.2</version>
+            <version>v1.3.18</version>
         </dependency>
 
         <dependency>
