@@ -1,7 +1,5 @@
 package com.riskified;
 
-import java.awt.desktop.SystemSleepEvent;
-
 public class Utils {
 
     public static final String DEBUG_ENVIRONMENT = "http://localhost:3000";
