@@ -1,5 +1,7 @@
 package com.riskified;
 
+import java.awt.desktop.SystemSleepEvent;
+
 public class Utils {
 
     public static final String DEBUG_ENVIRONMENT = "http://localhost:3000";
@@ -11,6 +13,9 @@ public class Utils {
     public static final String ACCOUNT_SANDBOX_ENVIRONMENT = "https://api-sandbox.riskified.com";
     public static final String ACCOUNT_PRODUCTION_ENVIRONMENT = "https://api.riskified.com";
     public static final String SCREEN_SANDBOX_ENVIRONMENT = "https://screen-sandbox.riskified.com";
+    public static final String CHINA_ACCOUNT_PRODUCTION_ENVIRONMENT = "https://apicdn.riskified.com";
+    
+    
 
     public static String getBaseUrlFromEnvironment(Environment environmentType) {
         return getUrlString(environmentType, SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
@@ -25,7 +30,12 @@ public class Utils {
     }
 
     public static String getAccountBaseFromEnvironment(Environment environmentType) {
-        return getUrlString(environmentType, ACCOUNT_SANDBOX_ENVIRONMENT, ACCOUNT_PRODUCTION_ENVIRONMENT);
+    	if (environmentType ==  Environment.CHINA_PRODUCTION) {
+            return getUrlString(environmentType, ACCOUNT_SANDBOX_ENVIRONMENT, CHINA_ACCOUNT_PRODUCTION_ENVIRONMENT);
+    	}
+    	else
+            return getUrlString(environmentType, ACCOUNT_SANDBOX_ENVIRONMENT, ACCOUNT_PRODUCTION_ENVIRONMENT);
+
     }
 
     public static String getScreenBaseFromEnvironment(Environment environmentType) {
@@ -43,8 +53,10 @@ public class Utils {
                     url = sandboxEnvironment;
                     break;
                 case PRODUCTION:
-                    url = productionEnvironment;
-                    break;
+                case CHINA_PRODUCTION:{
+                	url = productionEnvironment;
+                	break;
+                	}
             }
         }
         return url;

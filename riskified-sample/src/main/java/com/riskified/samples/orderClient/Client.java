@@ -44,7 +44,7 @@ public class Client {
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
-        /*    
+       /*     
             Response resAdviseOrder = client.adviseOrder(adviseOrder);
 
             System.out.println("Advise order response:");

@@ -100,6 +100,8 @@ public class RiskifiedClient {
             environment = Environment.PRODUCTION;
         } else if (environmentType.equals("SANDBOX")) {
         	environment = Environment.SANDBOX;
+        } else if (environmentType.equals("CHINA_PRODUCTION")) {
+        	environment = Environment.CHINA_PRODUCTION;
         }
 
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),validation);
@@ -988,7 +990,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.0.0"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.0.2"); // TODO: take the version automatically
         postRequest.setHeader("Version","V2");
         return postRequest;
     }
