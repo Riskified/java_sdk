@@ -40,4 +40,7 @@ workflows:
   version: 2
   main:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: master
