@@ -13,7 +13,10 @@ public class AuthenticationResult implements IValidated {
 	private Date createdAt;
 	private TranStatus tranStatus;
 	private TranStatusReason tranStatusReason;
-	private boolean liabilityShift;
+	private Boolean liabilityShift;
+	private Boolean three_d_challenge;
+	private Boolean tra_exemption;
+	
 	
 
 	public AuthenticationResult(String eci) {
@@ -80,6 +83,22 @@ public class AuthenticationResult implements IValidated {
         }
 
     }
+
+	public boolean get3DChallenge() {
+		return three_d_challenge;
+	}
+
+	public void set3DChallenge(boolean ThreeDChallenge) {
+		this.three_d_challenge = ThreeDChallenge;
+	}
+
+	public boolean getTRAExemption() {
+		return tra_exemption;
+	}
+
+	public void setTRAExemption(boolean TRAExemption) {
+		tra_exemption = TRAExemption;
+	}
     
 }
 
