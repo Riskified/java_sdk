@@ -56,7 +56,7 @@ public class Client {
 		*/
             System.out.println("-----------------------------------------");  
 
-            
+          
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 
             System.out.println("Checkout create order response:");
@@ -225,13 +225,13 @@ public class Client {
     private static CheckoutOrder generateCheckoutOrder() throws ParseException {
         CheckoutOrder order = new CheckoutOrder();
 
-        order.setId("221211112");
+        order.setId("22121111211");
         order.setName("#1234");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCreatedAt(parseDate("15-7-2021 00:00:00.0"));
         order.setClosedAt(null);
         order.setCurrency("CAD");
-        order.setUpdatedAt(parseDate("15-12-2019 00:00:00.0"));
+        order.setUpdatedAt(parseDate("15-7-2021 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(113.23);
@@ -274,8 +274,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(address);
-
+        order.setShippingAddress(Arrays.asList((address)));
 
         return order;
     }
@@ -334,7 +333,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(address);
+        order.setShippingAddress(Arrays.asList((address)));
 
 
         return order;
@@ -437,7 +436,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(address);
+        order.setShippingAddress(Arrays.asList((address)));
         
         return order;
     }
@@ -540,7 +539,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(address);
+        order.setShippingAddress(Arrays.asList((address)));
 
         return order;
     }

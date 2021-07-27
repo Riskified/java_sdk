@@ -141,7 +141,7 @@ public class SimpleClient {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(address);
+        order.setShippingAddress(Arrays.asList((address)));
 
         Custom custom = new Custom("D2C");
         order.setCustom(custom);

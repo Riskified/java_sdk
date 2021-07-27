@@ -8,12 +8,21 @@ public class AuthorizationError implements IValidated {
     private String message;
     private String errorCode;
     private Date createdAt;
+    private Boolean dropOff;
 
     public AuthorizationError(String errorCode, Date createdAt) {
         this.errorCode = errorCode;
         this.createdAt = createdAt;
     }
+    
+    public Boolean getDropOff() {
+        return dropOff;
+    }
 
+    public void setDropOff(Boolean dropOff) {
+        this.dropOff = dropOff;
+    }
+    
     public String getMessage() {
         return message;
     }

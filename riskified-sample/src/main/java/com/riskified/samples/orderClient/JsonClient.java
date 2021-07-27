@@ -32,7 +32,7 @@ public class JsonClient {
         lineItem.setCategory("Shirts - Men");
         lineItems.add(lineItem);       
         order.setLineItems(lineItems);
-       
+             
         order.setShippingLines(Arrays.asList(new ShippingLine(25, "express")));
         order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA")));
 
@@ -48,7 +48,8 @@ public class JsonClient {
         shippingAddress.setCountryCode("US");
         shippingAddress.setProvinceCode("NY");
         shippingAddress.setZip("64155");
-        order.setShippingAddress(shippingAddress);
+        order.setShippingAddress(Arrays.asList((shippingAddress)));
+        
         
         String orderJson = JSONFormater.toJson(order);
         
