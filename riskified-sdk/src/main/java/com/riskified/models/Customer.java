@@ -33,6 +33,7 @@ public class Customer implements IValidated {
     private String phone;
     private Boolean verifiedPhone;
     private Date verifiedPhoneAt;
+    private String userName;
     
     public Customer() {
     	
@@ -254,4 +255,9 @@ public class Customer implements IValidated {
     public Date getVerifiedPhoneAt() { return verifiedPhoneAt; }
 
     public void setVerifiedPhoneAt(Date verifiedPhoneAt) { this.verifiedPhoneAt = verifiedPhoneAt; }
+	
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }	
+	
 }
