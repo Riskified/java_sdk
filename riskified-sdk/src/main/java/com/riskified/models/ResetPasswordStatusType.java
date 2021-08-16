@@ -8,7 +8,7 @@ public enum ResetPasswordStatusType {
     pending,
     @SerializedName("success")
     success,
-    @SerializedName("failure")
-    failure
+    @SerializedName("failed")
+    failed
 
 }
