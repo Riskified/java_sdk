@@ -60,6 +60,9 @@ public class RiskifiedClient {
     private String proxyUsername;
     private String proxyPassword;
     private HttpClientContext context;
+    private boolean enableAdvise;
+    // value of the versionHeaderValue property can be overwritten by the properties file
+    private String versionHeaderValue = "V2";
 
     /**
      * Riskified API client
@@ -80,7 +83,13 @@ public class RiskifiedClient {
         String authKey = properties.getProperty("authKey");
         String environmentType = properties.getProperty("environment");
         String validationType = properties.getProperty("validation");
-
+        enableAdvise = Boolean.parseBoolean(properties.getProperty("enable_old_advise_response"));
+        // this is temporary  
+        System.out.println("value for advise response : " + enableAdvise);
+        if (enableAdvise) {
+        	versionHeaderValue = "V1";
+        }
+        
         String proxyUrl = properties.getProperty("proxyUrl");
         String proxyPort = properties.getProperty("proxyPort");
         String proxyUserName = properties.getProperty("proxyUsername");
@@ -104,6 +113,7 @@ public class RiskifiedClient {
         	environment = Environment.CHINA_PRODUCTION;
         }
 
+        
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),validation);
 
         if (proxyUrl != null) {
@@ -980,7 +990,6 @@ public class RiskifiedClient {
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
-
         ByteArrayEntity input;
         input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
 		postRequest.setEntity(input);
@@ -990,8 +999,10 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.0.3"); // TODO: take the version automatically
-        postRequest.setHeader("Version","V2");
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.2.0"); // TODO: take the version automatically
+        System.out.println("headersvalue : " + versionHeaderValue);
+        postRequest.setHeader("Version",versionHeaderValue);
+        System.out.println("PostBody : " + postRequest);
         return postRequest;
     }
 

@@ -2,8 +2,8 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.riskified.TranStatus;
 import com.riskified.TranStatusReason;
+import com.riskified.TransStatus;
 import com.riskified.validations.*;
 
 
@@ -11,7 +11,7 @@ public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
-	private TranStatus tranStatus;
+	private TransStatus tranStatus;
 	private TranStatusReason tranStatusReason;
 	private Boolean liabilityShift;
 	private Boolean three_d_challenge;
@@ -32,12 +32,12 @@ public class AuthenticationResult implements IValidated {
     }
     
 
-    public TranStatus getTranStatus() {
+    public TransStatus getTranStatus() {
         return tranStatus;
     }
 
-    public void setTranStatus(TranStatus tranStatus) {
-        this.tranStatus = tranStatus;
+    public void setTranStatus(TransStatus transStatus) {
+        this.tranStatus = transStatus;
     }
     
 	

@@ -9,6 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
+import com.riskified.TransStatus;
 import com.riskified._type;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
@@ -44,19 +45,19 @@ public class Client {
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
-       /*     
+          /*
             Response resAdviseOrder = client.adviseOrder(adviseOrder);
-
+          
             System.out.println("Advise order response:");
             System.out.println("id: " + resAdviseOrder.getOrder().getId());
             System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
             System.out.println("advise response rec " + resAdviseOrder.getOrder().getAdvice().getRecommendation());
             System.out.println("advise response scope " + resAdviseOrder.getOrder().getAdvice().getRegulatoryScope());
-
-		*/
+            
+		
             System.out.println("-----------------------------------------");  
 
-          
+          */
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 
             System.out.println("Checkout create order response:");
@@ -81,9 +82,9 @@ public class Client {
             System.out.println("id: " + resCreateOrder.getOrder().getId());
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
-
+            /*
             Response resScreenOrder = client.screenOrder(screenOrder);
-
+    
             System.out.println("-----------------------------------------");
             System.out.println("Screen order response:");
             System.out.println("id: " + resScreenOrder.getOrder().getId());
@@ -138,7 +139,7 @@ public class Client {
             System.out.println("id: " + resDecision.getOrder().getId());
             System.out.println("status: " + resDecision.getOrder().getStatus());
             System.out.println("description: " + resDecision.getOrder().getDescription());
-
+*/
 
         } catch (RiskifiedError e) {
         	printError(e);
@@ -274,7 +275,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(Arrays.asList((address)));
+ //       order.setShippingAddress(Arrays.asList((address)));
 
         return order;
     }
@@ -326,14 +327,8 @@ public class Client {
         order.setBillingAddress(address);
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
-        address.setCompany("Kansas Computers");
-        address.setCountryCode("US");
-        address.setName("John Doe");
-        address.setAddress2("Apartment 12");
-        address.setProvince("New York");
-        address.setProvinceCode("NY");
-        address.setZip("64155");
-        order.setShippingAddress(Arrays.asList((address)));
+   
+        order.setShippingAddress((address));
 
 
         return order;
@@ -342,7 +337,7 @@ public class Client {
     
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#12000000000345");
+        order.setId("#120000000003451");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
         order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
@@ -382,12 +377,17 @@ public class Client {
         travelLineItem.setRequiresShipping(false);
         
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
-        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370010", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
         cr.setInstallmentMonths(6);
         cr.setPaymentPlan("at&t");
-        
-        
-        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
+       
+        AuthenticationResult authResults = new AuthenticationResult("1");
+        authResults.setTranStatus(TransStatus.A);
+        /*     authResults.set3DChallenge(true);
+        authResults.setTRAExemption(true);
+        */
+        cr.setAuthenticationResult(authResults);
+        order.setPaymentDetails(Arrays.asList( cr ));
 
         
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
@@ -436,7 +436,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(Arrays.asList((address)));
+        order.setShippingAddress((address));
         
         return order;
     }
@@ -539,7 +539,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress(Arrays.asList((address)));
+ //       order.setShippingAddress(Arrays.asList((address)));
 
         return order;
     }

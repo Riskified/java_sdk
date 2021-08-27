@@ -5,10 +5,11 @@ import java.text.*;
 import java.util.*;
 
 import com.riskified.JSONFormater;
+import com.riskified.TransStatus;
 import com.riskified.models.*;
 
 public class JsonClient {
-	
+
 	public static void main(String[] args) throws ParseException, FileNotFoundException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		
@@ -43,13 +44,26 @@ public class JsonClient {
         billingAddress.setZip("64155");
         order.setBillingAddress(billingAddress);
 
+
+        
+        
         Address shippingAddress = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         shippingAddress.setCompany("Kansas Computers");
         shippingAddress.setCountryCode("US");
         shippingAddress.setProvinceCode("NY");
         shippingAddress.setZip("64155");
-        order.setShippingAddress(Arrays.asList((shippingAddress)));
+        //order.setShippingAddress(Arrays.asList((shippingAddress)));
         
+        order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
+        CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
+        cr.setInstallmentMonths(6);
+        cr.setPaymentPlan("at&t");
+        
+        AuthenticationResult authResults = new AuthenticationResult("1");
+        authResults.setTranStatus(TransStatus.A);
+        cr.setAuthenticationResult(authResults);
+        order.setPaymentDetails(Arrays.asList( cr ));
+     
         
         String orderJson = JSONFormater.toJson(order);
         
@@ -57,5 +71,5 @@ public class JsonClient {
         PrintWriter fileWriter = new PrintWriter(orderId + ".json");
         fileWriter.println(orderJson);
         fileWriter.close();
-	}
+	} 
 }
