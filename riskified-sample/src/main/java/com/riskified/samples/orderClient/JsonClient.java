@@ -5,7 +5,7 @@ import java.text.*;
 import java.util.*;
 
 import com.riskified.JSONFormater;
-import com.riskified.TranStatus;
+import com.riskified.TransStatus;
 import com.riskified.models.*;
 
 public class JsonClient {
@@ -60,7 +60,7 @@ public class JsonClient {
         cr.setPaymentPlan("at&t");
         
         AuthenticationResult authResults = new AuthenticationResult("1");
-        authResults.setTranStatus(TranStatus.A);
+        authResults.setTranStatus(TransStatus.A);
         cr.setAuthenticationResult(authResults);
         order.setPaymentDetails(Arrays.asList( cr ));
      

@@ -9,7 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
-import com.riskified.TranStatus;
+import com.riskified.TransStatus;
 import com.riskified._type;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
@@ -44,20 +44,20 @@ public class Client {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
-            RiskifiedClient client = new RiskifiedClient("eran_test.com","bbed0fc7ca1d4bca710f57fe08860cdf",Environment.SANDBOX);
-       /*    
+            RiskifiedClient client = new RiskifiedClient();
+          /*
             Response resAdviseOrder = client.adviseOrder(adviseOrder);
-
+          
             System.out.println("Advise order response:");
             System.out.println("id: " + resAdviseOrder.getOrder().getId());
             System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
             System.out.println("advise response rec " + resAdviseOrder.getOrder().getAdvice().getRecommendation());
             System.out.println("advise response scope " + resAdviseOrder.getOrder().getAdvice().getRegulatoryScope());
-*/
+            
 		
             System.out.println("-----------------------------------------");  
 
-          
+          */
             Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
 
             System.out.println("Checkout create order response:");
@@ -382,7 +382,7 @@ public class Client {
         cr.setPaymentPlan("at&t");
        
         AuthenticationResult authResults = new AuthenticationResult("1");
-        authResults.setTranStatus(TranStatus.A);
+        authResults.setTranStatus(TransStatus.A);
         /*     authResults.set3DChallenge(true);
         authResults.setTRAExemption(true);
         */
