@@ -31,8 +31,8 @@ Available validation types:
 PSD2: Advise endpoint old response testing:
 -------------------------------------------
 Riskified changed the /advice endpoint response. To enable the old response for testing purposes, follow steps below:
-* 1.	Open riskified_sdk.properties file
-* 2.	Set "enable_old_advise_response" to "true"
+1.	Open riskified_sdk.properties file
+2.	Set "enable_old_advise_response" to "true"
 
 Riskified SDK will return the old advise response. 
 
