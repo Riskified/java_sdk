@@ -6,7 +6,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
-import com.riskified.TransStatus;
+//import com.riskified.TransStatus;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
@@ -143,12 +143,8 @@ public class SimpleClient {
         address.setProvinceCode("NY");
         address.setZip("64155");
      //   order.setShippingAddress(Arrays.asList((address)));
-
-        AuthenticationResult authResults = new AuthenticationResult("1");
-        authResults.setTranStatus(TransStatus.A);
-
-       
         
+
         Custom custom = new Custom("D2C");
         order.setCustom(custom);
 

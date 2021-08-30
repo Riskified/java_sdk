@@ -85,7 +85,6 @@ public class RiskifiedClient {
         String validationType = properties.getProperty("validation");
         enableAdvise = Boolean.parseBoolean(properties.getProperty("enable_old_advise_response"));
         // this is temporary  
-        System.out.println("value for advise response : " + enableAdvise);
         if (enableAdvise) {
         	versionHeaderValue = "V1";
         }
@@ -864,7 +863,6 @@ public class RiskifiedClient {
         HttpClient client = constructHttpClient();
         response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-        System.out.println("PostBody : " + postBody );
         int status = response.getStatusLine().getStatusCode();
         Response responseObject = getCheckoutResponseObject(postBody);
         switch (status) {
@@ -1000,9 +998,7 @@ public class RiskifiedClient {
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
         postRequest.setHeader("User-Agent","riskified_java_sdk/2.2.0"); // TODO: take the version automatically
-        System.out.println("headersvalue : " + versionHeaderValue);
         postRequest.setHeader("Version",versionHeaderValue);
-        System.out.println("PostBody : " + postRequest);
         return postRequest;
     }
 

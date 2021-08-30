@@ -1,7 +1,7 @@
 Riskified JAVA SDK
 =================
 
-version: 1.3.17
+version: 2.2.0
 ------------------
 
 See http://apiref.riskified.com for full API documentation 
@@ -26,6 +26,15 @@ Available validation types:
 *	none - disable validations
 *	ignoreMissing - validates only the data format
 *	all - validates the data format and that required fields are not missing
+
+
+PSD2: Advise endpoint old response testing:
+-------------------------------------------
+Riskified changed the /advice endpoint response. To enable the old response for testing purposes, follow steps below:
+* 1.	Open riskified_sdk.properties file
+* 2.	Set "enable_old_advise_response" to "true"
+
+Riskified SDK will return the old advise response. 
 
 
 Prerequisites:
@@ -83,7 +92,7 @@ curl -H "Content-Type: application/json" -H  "X-RISKIFIED-HMAC-SHA256: 071ef80d5
 <dependency>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>v1.3.3</version>
+    <version>v2.2.0</version>
 </dependency>
 ```
 
