@@ -9,7 +9,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
-import com.riskified.TransStatus;
+//import com.riskified.TransStatus;
 import com.riskified._type;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
@@ -45,7 +45,7 @@ public class Client {
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
             RiskifiedClient client = new RiskifiedClient();
-          /*
+            /*
             Response resAdviseOrder = client.adviseOrder(adviseOrder);
           
             System.out.println("Advise order response:");
@@ -381,12 +381,14 @@ public class Client {
         cr.setInstallmentMonths(6);
         cr.setPaymentPlan("at&t");
        
+        /* 
         AuthenticationResult authResults = new AuthenticationResult("1");
         authResults.setTranStatus(TransStatus.A);
-        /*     authResults.set3DChallenge(true);
+           authResults.set3DChallenge(true);
         authResults.setTRAExemption(true);
-        */
+        
         cr.setAuthenticationResult(authResults);
+        */
         order.setPaymentDetails(Arrays.asList( cr ));
 
         
