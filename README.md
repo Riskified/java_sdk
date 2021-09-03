@@ -28,12 +28,12 @@ Included in AesGcm class under testAesGcmDecrypt() method
 One thing developers should be aware of is when to use getCheckoutOrderJson() vs getOrderJson() method. Below is how should the aforementioned methods must be used 
 
 *	Use **getCheckoutOrderJson()** when passing data to the following endpoints:
-*	    _checkoutDeniedEncryptedOrder_
-*	    _adviseOrderEncrypted_
+*	    checkoutDeniedEncryptedOrder
+*	    adviseOrderEncrypted
 *	Use **getOrderJson()** when passing data to the following endpoints:
-*	    _cancelEncryptedOrder_
-*	    _analyzeEncryptedOrder_
-*	    _refundEncryptedOrder_
+*	    cancelEncryptedOrder
+*	    analyzeEncryptedOrder
+*	    refundEncryptedOrder
 
 The rationale behind creating two methods to retrieve the appropriate JSON as the Riskified JSON root key could be either “**order**” or “**checkout**” so we have to ensure each method is wrapped with appropriate Root Key
 
