@@ -12,6 +12,7 @@ Encryption version :
 ---------------------
 
 **Changes**
+-----------
 
 Added the following methods to handle encryption
 1.	adviseOrderEncrypted = /advise
@@ -21,10 +22,14 @@ Added the following methods to handle encryption
 5.	refundEncryptedOrder = /refund
 
 **Examples:**
+-----------
+
 Included in AesGcm class under testAesGcmDecrypt() method
 
 
 **Important:** 
+-----------
+
 One thing developers should be aware of is when to use getCheckoutOrderJson() vs getOrderJson() method. Below is how should the aforementioned methods must be used 
 
 *	Use **getCheckoutOrderJson()** when passing data to the following endpoints:
@@ -55,6 +60,7 @@ Order root key
  }
 ```
 **Note:**
+-----------
 It is ok to see the exception below as Riskified’s server-side doesn’t yet have the ability to handle the encrypted data. 
 
 ```
