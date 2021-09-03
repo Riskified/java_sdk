@@ -4,12 +4,30 @@
     <groupId>com.riskified.sample</groupId>
     <artifactId>riskified-sample</artifactId>
     <version>0.0.2-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
             <groupId>com.riskified</groupId>
             <artifactId>riskified-sdk</artifactId>
-            <version>v2.1.1</version>
+            <version>v2.2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.64</version>
         </dependency>
 
         <dependency>

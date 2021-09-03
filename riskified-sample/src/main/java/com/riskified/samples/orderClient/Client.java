@@ -58,8 +58,13 @@ public class Client {
             System.out.println("-----------------------------------------");  
 
           */
-            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
+         //   checkoutOrder;
+         //   String checkoutOrderString = String.valueof(checkoutOrder);
 
+
+
+            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
+            
             System.out.println("Checkout create order response:");
             System.out.println("id: " + resCheckoutOrder.getOrder().getId());
             System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());

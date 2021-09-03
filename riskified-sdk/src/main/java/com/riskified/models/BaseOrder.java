@@ -21,8 +21,6 @@ public abstract class BaseOrder implements IValidated {
     private String note;
     private String number;
     private String orderNumber;
-    private String cancelReason;
-    private Date cancelledAt;
     private Date closedAt;
     private String cartToken;
     private String deviceId;
@@ -269,21 +267,6 @@ public abstract class BaseOrder implements IValidated {
         this.orderNumber = orderNumber;
     }
 
-    public String getCancelReason() {
-        return cancelReason;
-    }
-
-    public void setCancelReason(String cancelReason) {
-        this.cancelReason = cancelReason;
-    }
-
-    public Date getCancelledAt() {
-        return cancelledAt;
-    }
-
-    public void setCancelledAt(Date cancelledAt) {
-        this.cancelledAt = cancelledAt;
-    }
 
     public Date getClosedAt() {
         return closedAt;

@@ -235,6 +235,84 @@ public class RiskifiedClient {
 
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
+
+
+    /***
+     *
+     * Start of Encrypted methods
+     *
+     */
+
+
+    public String getCheckoutOrderJson(BaseOrder order) throws IOException, FieldBadFormatException {
+        // Validation.ALL is not relevant when checkout.
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+       Object checkoutOrderObject =  new CheckoutOrderWrapper<BaseOrder>(order);
+       String jsonData = JSONFormater.toJson(checkoutOrderObject);
+       return jsonData; 
+    }
+
+
+
+
+    public String getOrderJson(BaseOrder order) throws IOException, FieldBadFormatException {
+        // Validation.ALL is not relevant when checkout.
+
+        if(validation != validation.NONE) {
+            validate(order, Validation.IGNORE_MISSING);
+        }
+        Object orderData =  new OrderWrapper<BaseOrder>(order);
+        String jsonData = JSONFormater.toJson(orderData);
+        return jsonData;
+    }
+
+
+
+    
+    
+    // encryptedJSON
+    public Response adviseOrderEncrypted(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/advise";
+        return postEncryptedCheckoutOrder(order, url);
+ 
+    }
+
+
+
+    public Response analyzeEncryptedOrder(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrlSyncAnalyze + "/api/decide";
+        return postEncryptedOrder(order, url);
+    }
+
+
+    public Response cancelEncryptedOrder(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/cancel";
+        return postEncryptedOrder(order, url);
+    }
+
+    public Response checkoutDeniedEncryptedOrder(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/checkout_denied";
+        return postEncryptedCheckoutOrder(order, url);
+    }
+
+
+
+    public Response refundEncryptedOrder(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/refund";
+        return postEncryptedOrder(order, url);
+    }
+
+
+
+    /***
+     *
+     * End of Encrypted methods
+     *
+     */
+    
+    
     
     // TODO add other paramaters Riskified server will return 
     /**
@@ -603,6 +681,9 @@ public class RiskifiedClient {
         validate(order);
         return postOrder(new OrderWrapper<Order>(order), url);
     }
+    
+    
+    
 
     /**
      * Check eligibility for Deco
@@ -881,6 +962,32 @@ public class RiskifiedClient {
         }
     }
 
+
+    private Response postEncryptedCheckoutOrder(String data, String url) throws IOException {
+        HttpPost request = createPostRequest(url);
+        addEncryptedDataToRequest(data, request);
+        HttpResponse response;
+        HttpClient client = constructHttpClient();
+        response = executeClient(client, request);
+        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+        int status = response.getStatusLine().getStatusCode();
+        Response responseObject = getCheckoutResponseObject(postBody);
+        switch (status) {
+            case 200:
+                return responseObject;
+            case 400:
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
+            case 401:
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
+            case 404:
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
+            case 504:
+                throw new HttpResponseException(status, "Temporary error, please retry");
+            default:
+                throw new HttpResponseException(500, "Contact Riskified support");
+        }
+    }
+
 	private HttpClient constructHttpClient() {
 		RequestConfig.Builder requestBuilder = RequestConfig.custom()
 				.setConnectTimeout(connectionTimeout)
@@ -970,6 +1077,35 @@ public class RiskifiedClient {
 	    }
     }
 
+
+
+    private Response postEncryptedOrder(String data, String url) throws IOException {
+        HttpPost request = createPostRequest(url);
+        addEncryptedDataToRequest(data, request);
+        HttpResponse response;
+        HttpClient client = constructHttpClient();
+        response = executeClient(client, request);
+        String postBody = EntityUtils.toString(response.getEntity());
+        int status = response.getStatusLine().getStatusCode();
+        Response responseObject = getResponseObject(postBody);
+        switch (status) {
+            case 200:
+                return responseObject;
+            case 400:
+                throw new HttpResponseException(status, postBody);
+            case 401:
+                throw new HttpResponseException(status, postBody);
+            case 404:
+                throw new HttpResponseException(status, postBody);
+            case 504:
+                throw new HttpResponseException(status, "Temporary error, please retry");
+            default:
+                throw new HttpResponseException(500, "Contact Riskified support");
+        }
+    }
+
+
+
     private Response getResponseObject(String postBody) throws IOException {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Response res = gson.fromJson(postBody, Response.class);
@@ -992,6 +1128,20 @@ public class RiskifiedClient {
         input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
 		postRequest.setEntity(input);
     }
+
+
+    private void addEncryptedDataToRequest(String data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
+        byte[] body = data.getBytes("UTF-8");
+        String hmac = sha256Handler.createSHA256(body);
+        postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
+        ByteArrayEntity input;
+        input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
+        postRequest.setEntity(input);
+    }
+
+
+
+
 
     private HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);

@@ -5,9 +5,8 @@ import java.util.List;
 
 import com.riskified.validations.*;
 
-public class RefundOrder implements IValidated {
+public class RefundOrder extends BaseOrder implements IValidated {
 
-    private String id;
     private List<RefundDetails> refunds;
 
     public RefundOrder() {

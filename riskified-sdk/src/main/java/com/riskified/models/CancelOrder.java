@@ -7,8 +7,7 @@ import com.riskified.validations.*;
 /**
  * Cancel Order details
  */
-public class CancelOrder implements IValidated {
-    private String id;
+public class CancelOrder extends BaseOrder implements IValidated {
     private String cancelReason;
     private Date cancelledAt;
 
