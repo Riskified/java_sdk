@@ -11,7 +11,7 @@ see riskified-sample/ for examples on how to use this SDK.
 Encryption version :
 ---------------------
 
-Changes
+####Changes:####
 -----------
 
 Added the following methods to handle encryption
@@ -21,13 +21,13 @@ Added the following methods to handle encryption
 4.	checkoutDeniedEncryptedOrder /checkout_denied
 5.	refundEncryptedOrder = /refund
 
-Examples:
+####Examples:####
 -----------
 
 Included in AesGcm class under testAesGcmDecrypt() method
 
 
-Important: 
+####Important:#### 
 -----------
 
 One thing developers should be aware of is when to use getCheckoutOrderJson() vs getOrderJson() method. Below is how should the aforementioned methods must be used 
@@ -59,7 +59,7 @@ Order root key
  	}
  }
 ```
-Note:
+####Note:####
 -----------
 It is ok to see the exception below as Riskified’s server-side doesn’t yet have the ability to handle the encrypted data. 
 
