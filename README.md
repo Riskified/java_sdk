@@ -1,12 +1,69 @@
 Riskified JAVA SDK
 =================
 
-version: 2.2.0
+version: 2.2.0.0
 ------------------
 
 See http://apiref.riskified.com for full API documentation 
 
 see riskified-sample/ for examples on how to use this SDK. 
+
+Encryption version :
+---------------------
+
+**Changes**
+
+Added the following methods to handle encryption
+1.	adviseOrderEncrypted = /advise
+2.	analyzeEncryptedOrder = /decide 
+3.	cancelEncryptedOrder = /cancel
+4.	checkoutDeniedEncryptedOrder /checkout_denied
+5.	refundEncryptedOrder = /refund
+
+**Examples:**
+Included in AesGcm class under testAesGcmDecrypt() method
+
+
+**Important:** 
+One thing developers should be aware of is when to use getCheckoutOrderJson() vs getOrderJson() method. Below is how should the aforementioned methods must be used 
+
+*	Use **getCheckoutOrderJson()** when passing data to the following endpoints:
+*	    _checkoutDeniedEncryptedOrder_
+*	    _adviseOrderEncrypted_
+*	Use **getOrderJson()** when passing data to the following endpoints:
+*	    _cancelEncryptedOrder_
+*	    _analyzeEncryptedOrder_
+*	    _refundEncryptedOrder_
+
+The rationale behind creating two methods to retrieve the appropriate JSON as the Riskified JSON root key could be either “**order**” or “**checkout**” so we have to ensure each method is wrapped with appropriate Root Key
+
+Checkout root key
+```
+{
+  "checkout": {
+    "id" : "2222000000000346",
+  }
+}
+```
+
+Order root key
+```
+ {
+ 	"order": {
+ 		"id": "12000000000346"
+ 	}
+ }
+```
+**Note:**
+It is ok to see the exception below as Riskified’s server-side doesn’t yet have the ability to handle the encrypted data. 
+
+```
+“Exception in thread "main" org.apache.http.client.HttpResponseException: The request content was malformed: expected json value got 'securi...' (line 1, column 1)
+	at com.riskified.RiskifiedClient.postEncryptedCheckoutOrder(RiskifiedClient.java:979)
+	at com.riskified.RiskifiedClient.adviseOrderEncrypted(RiskifiedClient.java:278)
+	at com.ry.secure.AesGcm.testAesGcmDecrypt(AesGcm.java:113)
+	at com.ry.secure.AesGcm.main(AesGcm.java:94)”
+```
 
 Data validation:
 ---------------
