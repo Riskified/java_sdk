@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.riskified</groupId>
             <artifactId>riskified-sdk</artifactId>
-            <version>v2.2.0.0</version>
+            <version>v1.0.0-ch</version>
         </dependency>
 
         <dependency>
