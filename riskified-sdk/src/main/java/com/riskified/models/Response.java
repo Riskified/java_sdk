@@ -44,7 +44,7 @@ public class Response {
         this.decision = decision;
     }
 
-    public int getReceived() {
+    public Integer getReceived() {
         return received;
     }
 
