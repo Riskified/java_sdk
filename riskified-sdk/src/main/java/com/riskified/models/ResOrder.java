@@ -98,13 +98,19 @@ public class ResOrder {
     public class Advice { 
     	
     	private boolean in_regulatory_scope;
+    	private boolean safe_order;
     	private String recommendation;
+    	
     	
     	public boolean getRegulatoryScope() {
     		return in_regulatory_scope;
     	}
     	public String getRecommendation() {
     		return recommendation;
+    	}
+    	
+    	public boolean getSafeOrder() {
+    		return safe_order;
     	}
     
     }
