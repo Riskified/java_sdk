@@ -1,7 +1,7 @@
 Riskified JAVA SDK
 =================
 
-version: 2.2.0.0
+version: v1.1.0-ch
 ------------------
 
 See http://apiref.riskified.com for full API documentation 
@@ -20,6 +20,7 @@ Added the following methods to handle encryption
 3.	cancelEncryptedOrder = /cancel
 4.	checkoutDeniedEncryptedOrder /checkout_denied
 5.	refundEncryptedOrder = /refund
+6.  chargebackEncryptedOrder = /chargeback
 
 Examples:
 -----------
@@ -39,6 +40,7 @@ One thing developers should be aware of is when to use getCheckoutOrderJson() vs
 *	    cancelEncryptedOrder
 *	    analyzeEncryptedOrder
 *	    refundEncryptedOrder
+*     chargebackEncryptedOrder
 
 The rationale behind creating two methods to retrieve the appropriate JSON as the Riskified JSON root key could be either “**order**” or “**checkout**” so we have to ensure each method is wrapped with appropriate Root Key
 
