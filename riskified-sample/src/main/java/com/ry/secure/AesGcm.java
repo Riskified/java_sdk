@@ -164,9 +164,8 @@ public class AesGcm {
         String refundEncryptedContent = ag.encrypt(refundOrderData);
         System.out.println("refundEncryptedContent  = " + refundEncryptedContent );
         riskifiedClient.refundEncryptedOrder(refundEncryptedContent);
-
-
-
+       
+        
 /*
 //        System.out.println(adviseOrder);
         String enCodeContent = JSON.toJSONString(adviseOrder );

@@ -303,7 +303,14 @@ public class RiskifiedClient {
         String url = baseUrl + "/api/refund";
         return postEncryptedOrder(order, url);
     }
+    
+    
+    public Response chargebackEncryptedOrder(String order) throws IOException, FieldBadFormatException {
+        String url = baseUrl + "/api/chargeback";
+        return postEncryptedOrder(order, url);
+    }
 
+    
 
 
     /***
@@ -1147,7 +1154,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/v1.0.0-ch"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/v1.1.0-ch"); // TODO: take the version automatically
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }
