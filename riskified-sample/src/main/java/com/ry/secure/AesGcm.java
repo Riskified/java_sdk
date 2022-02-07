@@ -164,7 +164,20 @@ public class AesGcm {
         String refundEncryptedContent = ag.encrypt(refundOrderData);
         System.out.println("refundEncryptedContent  = " + refundEncryptedContent );
         riskifiedClient.refundEncryptedOrder(refundEncryptedContent);
-       
+
+
+        /**
+         *  /chargeback API example
+         **/
+
+        ChargebackOrder chargebackOrder = generateChargebackOrder(decideOrder);
+        String chargebackOrderData = riskifiedClient.getOrderJson(chargebackOrder);
+        System.out.println("chargebackOrderData JSON = " + chargebackOrderData);
+        String chargebackEncryptedContent = ag.encrypt(chargebackOrderData);
+        System.out.println("chargebackEncryptedContent  = " + chargebackEncryptedContent );
+        riskifiedClient.chargebackEncryptedOrder(chargebackEncryptedContent);
+
+
         
 /*
 //        System.out.println(adviseOrder);
@@ -469,6 +482,37 @@ public class AesGcm {
         refund.setRefunds(Arrays.asList(refundDetail));
         return refund;
     }
+
+
+
+    private static ChargebackOrder generateChargebackOrder(Order order) throws ParseException {
+        ChargebackOrder chargeback = new ChargebackOrder();
+        chargeback.setId(order.getId());
+        ChargebackDetails chargebackDetails = new ChargebackDetails();
+        chargebackDetails.setReasonCode("4863");
+        chargebackDetails.setChargebackAt(parseDate("02-08-2022 00:00:00.0"));
+        chargebackDetails.setChargebackAmount(33.12);
+        chargebackDetails.setChargebackCurrency("USD");
+        chargebackDetails.setReasonDescription("Transaction not recognised");
+        chargebackDetails.setType("cb");
+        chargebackDetails.setGateway("braintree");
+        chargeback.setChargebackDetails(chargebackDetails);
+
+        FulfillmentDetails fulfillmentDetails = new FulfillmentDetails("23499999",parseDate("02-08-2022 00:00:00.0"),"success");
+        fulfillmentDetails.setFulfillmentId("23499999");
+        fulfillmentDetails.setTrackingCompany("fedex");
+        fulfillmentDetails.setTrackingNumbers("abc123");
+        chargeback.setFulfillment(fulfillmentDetails);
+
+        DisputeDetails disputeDetails = new DisputeDetails();
+        disputeDetails.setCaseID("a2222");
+        disputeDetails.setStatus("won");
+        disputeDetails.setDisputeType("dispute_type");
+        chargeback.setDisputeDetails(disputeDetails);
+
+        return chargeback;
+    }
+
 
 
 

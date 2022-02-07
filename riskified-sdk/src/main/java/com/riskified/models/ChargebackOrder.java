@@ -2,7 +2,7 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
-public class ChargebackOrder implements IValidated {
+public class ChargebackOrder extends BaseOrder implements IValidated {
 	private String id;
 	private ChargebackDetails chargebackDetails;
 	private FulfillmentDetails fulfillment;
