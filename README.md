@@ -1,7 +1,7 @@
 Riskified JAVA SDK
 =================
 
-version: v1.1.0-ch
+version: v1.1.1-ch
 
 ------------------
 
