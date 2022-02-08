@@ -2,10 +2,11 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.List;
+
 public class ChargebackOrder extends BaseOrder implements IValidated {
-	private String id;
 	private ChargebackDetails chargebackDetails;
-	private FulfillmentDetails fulfillment;
+	private List<FulfillmentDetails> fulfillment;
 	private DisputeDetails disputeDetails;
 
 	public ChargebackOrder() {
@@ -18,14 +19,7 @@ public class ChargebackOrder extends BaseOrder implements IValidated {
             Validate.notNullOrEmpty(this, this.id, "Id");
         }
     }
-	
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public ChargebackDetails getChargebackDetails() {
 		return chargebackDetails;
@@ -35,11 +29,8 @@ public class ChargebackOrder extends BaseOrder implements IValidated {
 		this.chargebackDetails = chargebackDetails;
 	}
 
-	public FulfillmentDetails getFulfillment() {
-		return fulfillment;
-	}
 
-	public void setFulfillment(FulfillmentDetails fulfillment) {
+	public void setFulfillment(List<FulfillmentDetails> fulfillment) {
 		this.fulfillment = fulfillment;
 	}
 

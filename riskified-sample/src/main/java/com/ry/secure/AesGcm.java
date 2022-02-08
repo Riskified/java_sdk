@@ -16,11 +16,9 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Properties;
-import com.riskified.RiskifiedClient;
+import java.util.*;
 
+import com.riskified.RiskifiedClient;
 
 public class AesGcm {
 
@@ -98,13 +96,13 @@ public class AesGcm {
         AesGcm ag = new AesGcm();
         ag.initAesConfig();
         // Initializing Riskified
-        RiskifiedClient riskifiedClient = new RiskifiedClient("Shop URL ","AuthToken", Environment.SANDBOX, Validation.NONE);
+        RiskifiedClient riskifiedClient = new RiskifiedClient("shop url ","auth token", Environment.SANDBOX, Validation.NONE);
 
 
         /**
          * // adviseOrder API example
          **/
-
+/*
         CheckoutOrder adviseOrder = generateAdviseOrder();
         String adviseOrderData = riskifiedClient.getCheckoutOrderJson(adviseOrder);
         System.out.println("adviseOrderData = " + adviseOrderData);
@@ -170,7 +168,9 @@ public class AesGcm {
          *  /chargeback API example
          **/
 
-        ChargebackOrder chargebackOrder = generateChargebackOrder(decideOrder);
+
+/*
+        ChargebackOrder chargebackOrder = generateChargebackOrder();
         String chargebackOrderData = riskifiedClient.getOrderJson(chargebackOrder);
         System.out.println("chargebackOrderData JSON = " + chargebackOrderData);
         String chargebackEncryptedContent = ag.encrypt(chargebackOrderData);
@@ -180,7 +180,7 @@ public class AesGcm {
 
         
 /*
-//        System.out.println(adviseOrder);
+//      System.out.println(adviseOrder);
         String enCodeContent = JSON.toJSONString(adviseOrder );
         System.out.println("原文: " + enCodeContent);
         String content = ag.encrypt(enCodeContent);
@@ -349,13 +349,13 @@ public class AesGcm {
 
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#12000000000346");
+        order.setId("#12000000011003146");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
-        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCreatedAt(parseDate("08-02-2022 00:00:00.0"));
+        order.setClosedAt(parseDate("08-02-2022 00:00:00.0"));
         order.setCurrency("CAD");
-        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setUpdatedAt(parseDate("08-02-2022 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(120.22);
@@ -378,11 +378,11 @@ public class AesGcm {
         travelLineItem.setDeparturePortCode("LLBG");
         travelLineItem.setDepartureCountryCode("IL");
         travelLineItem.setDepartureCity("Tel Aviv");
-        travelLineItem.setDepartureDate(parseDate("15-12-2016 00:00:00.0"));
+        travelLineItem.setDepartureDate(parseDate("08-02-2022 00:00:00.0"));
         travelLineItem.setArrivalPortCode("LBG");
         travelLineItem.setArrivalCountryCode("FR");
         travelLineItem.setArrivalCity("Paris");
-        travelLineItem.setArrivalDate(parseDate("15-12-2016 00:00:00.0"));
+        travelLineItem.setArrivalDate(parseDate("08-02-2022 00:00:00.0"));
         travelLineItem.setTicketClass("economy");
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
@@ -400,14 +400,14 @@ public class AesGcm {
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
 
         Passenger passenger = new Passenger("john","smith");
-        passenger.setDateOfBirth(parseDate("15-12-2016 00:00:00.0"));
+        passenger.setDateOfBirth(parseDate("08-02-2022 00:00:00.0"));
         passenger.setNationalityCode("IL");
         passenger.setInsuranceType("full");
         passenger.setInsurancePrice(11);
         passenger.setDocumentNumber("123456");
         passenger.setDocumentType("Passport");
-        passenger.setDocumentIssueDate(parseDate("15-12-2016 00:00:00.0"));
-        passenger.setDocumentExpirationDate(parseDate("15-12-2016 00:00:00.0"));
+        passenger.setDocumentIssueDate(parseDate("08-02-2022 00:00:00.0"));
+        passenger.setDocumentExpirationDate(parseDate("08-02-2022 00:00:00.0"));
         passenger.setPassengerType("Adult");
 
         order.setPassengers(Arrays.asList(passenger));
@@ -485,9 +485,9 @@ public class AesGcm {
 
 
 
-    private static ChargebackOrder generateChargebackOrder(Order order) throws ParseException {
+    private static ChargebackOrder generateChargebackOrder() throws ParseException {
         ChargebackOrder chargeback = new ChargebackOrder();
-        chargeback.setId(order.getId());
+        chargeback.setId("#12000000000346");
         ChargebackDetails chargebackDetails = new ChargebackDetails();
         chargebackDetails.setReasonCode("4863");
         chargebackDetails.setChargebackAt(parseDate("02-08-2022 00:00:00.0"));
@@ -498,11 +498,26 @@ public class AesGcm {
         chargebackDetails.setGateway("braintree");
         chargeback.setChargebackDetails(chargebackDetails);
 
-        FulfillmentDetails fulfillmentDetails = new FulfillmentDetails("23499999",parseDate("02-08-2022 00:00:00.0"),"success");
-        fulfillmentDetails.setFulfillmentId("23499999");
-        fulfillmentDetails.setTrackingCompany("fedex");
-        fulfillmentDetails.setTrackingNumbers("abc123");
-        chargeback.setFulfillment(fulfillmentDetails);
+
+
+
+        FulfillmentDetails firstFulfillmenItem = new FulfillmentDetails("23499999",parseDate("02-08-2022 00:00:00.0"),"success");
+        firstFulfillmenItem.setFulfillmentId("23499999");
+        firstFulfillmenItem.setTrackingCompany("fedex");
+        firstFulfillmenItem.setTrackingNumbers("abc123");
+
+        FulfillmentDetails secondFulfillmenItem = new FulfillmentDetails("23491119",parseDate("02-09-2022 00:00:00.0"),"success");
+        secondFulfillmenItem.setFulfillmentId("1112222");
+        secondFulfillmenItem.setTrackingCompany("fedex");
+        secondFulfillmenItem.setTrackingNumbers("aaa11123");
+
+        List<FulfillmentDetails> fulfillmentItems = new ArrayList<FulfillmentDetails>();
+
+
+        fulfillmentItems.add(firstFulfillmenItem);
+        fulfillmentItems.add(secondFulfillmenItem);
+
+        chargeback.setFulfillment(fulfillmentItems);
 
         DisputeDetails disputeDetails = new DisputeDetails();
         disputeDetails.setCaseID("a2222");

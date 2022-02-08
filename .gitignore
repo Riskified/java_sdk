@@ -14,3 +14,4 @@ lib/*
 */target/
 /target/
 /.metadata/
+riskified-sample/src/main/resources/configs-project/configs.properties
