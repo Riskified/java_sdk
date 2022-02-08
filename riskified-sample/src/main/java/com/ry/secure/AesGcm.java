@@ -500,7 +500,7 @@ public class AesGcm {
 
 
 
-
+/*
         FulfillmentDetails firstFulfillmenItem = new FulfillmentDetails("23499999",parseDate("02-08-2022 00:00:00.0"),"success");
         firstFulfillmenItem.setFulfillmentId("23499999");
         firstFulfillmenItem.setTrackingCompany("fedex");
@@ -518,7 +518,7 @@ public class AesGcm {
         fulfillmentItems.add(secondFulfillmenItem);
 
         chargeback.setFulfillment(fulfillmentItems);
-
+*/
         DisputeDetails disputeDetails = new DisputeDetails();
         disputeDetails.setCaseID("a2222");
         disputeDetails.setStatus("won");
