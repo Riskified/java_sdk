@@ -1,5 +1,5 @@
 package com.riskified;
 
-public enum _type {
+public enum PaymentType {
 	credit_card, paypal
 }

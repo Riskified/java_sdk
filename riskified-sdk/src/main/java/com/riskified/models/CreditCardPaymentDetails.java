@@ -2,6 +2,7 @@ package com.riskified.models;
 
 import java.util.Date;
 
+import com.riskified.PaymentType;
 import com.riskified.validations.*;
 
 public class CreditCardPaymentDetails implements IPaymentDetails {
@@ -16,7 +17,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
     private String cardholderName;
-    private com.riskified._type _type;
+    private PaymentType payment_type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -39,6 +40,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
         this.cvvResultCode = cvvResultCode;
         this.creditCardNumber = creditCardNumber;
         this.creditCardCompany = creditCardCompany;
+        this.payment_type = PaymentType.credit_card;
         
     }
 
@@ -157,12 +159,12 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 		this.cardholderName = cardholderName;
 	}
 	
-	public com.riskified._type getType() { 
-		return _type;
+	public PaymentType getType() {
+		return payment_type;
 	}
 
-	public void setType(com.riskified._type type) { 
-		this._type = type;
+	public void setType(PaymentType type) {
+		this.payment_type = type;
 	}
 
 	public String getId() {
