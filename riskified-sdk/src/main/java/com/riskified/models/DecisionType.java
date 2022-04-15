@@ -6,6 +6,8 @@ public enum DecisionType {
 
     @SerializedName("approved")
     approved,
+    @SerializedName("declined")
+    declined,
     @SerializedName("checkout")
     checkout,
     @SerializedName("cancelled")
