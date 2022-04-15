@@ -16,7 +16,6 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
     private String cardholderName;
-    private com.riskified._type _type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -52,14 +51,14 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
             if (this.acquirerRegion != null && (this.acquirerRegion != "EU" && this.acquirerRegion != "NONEU")) {
                 throw new FieldBadFormatException("Acquirer Region must be 'EU' or 'NONEU'");
             }
-        //  Validate.notNullOrEmpty(this, this.type, "Type");
+
        //   Validate.notNullOrEmpty(this, this.acquirerBin, "acquirer Bin");
        //   Validate.notNullOrEmpty(this, this.gateway, "gateway");
           
             
         }
     }
-    
+
     public String getPaymentPlan() {
         return paymentPlan;
     }
@@ -156,14 +155,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
 	public void setCardholderName(String cardholderName) {
 		this.cardholderName = cardholderName;
 	}
-	
-	public com.riskified._type getType() { 
-		return _type;
-	}
 
-	public void setType(com.riskified._type type) { 
-		this._type = type;
-	}
 
 	public String getId() {
 		return id; 
