@@ -1,5 +1,6 @@
 package com.riskified.models;
 
+import com.riskified.PaymentType;
 import com.riskified.validations.*;
 
 public class PaypalPaymentDetails implements IPaymentDetails {
@@ -13,7 +14,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String authorizationId;
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
-    private com.riskified._type _type;
+    private PaymentType payment_type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -27,6 +28,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
         this.payerStatus = payerStatus;
         this.payerAddressStatus = payerAddressStatus;
         this.protectionEligibility = protectionEligibility;
+        this.payment_type = PaymentType.paypal;
     }
 
     public void validate(Validation validationType)
@@ -112,12 +114,12 @@ public class PaypalPaymentDetails implements IPaymentDetails {
 		this.authorizationError = authorizationError;
 	}
 	
-	public com.riskified._type getType() { 
-		return _type;
+	public PaymentType getType() {
+		return payment_type;
 	}
 
-	public void setType(com.riskified._type type) { 
-		this._type = type;
+	public void setType(PaymentType type) {
+		this.payment_type = type;
 	}
 
 	public String getId() {
