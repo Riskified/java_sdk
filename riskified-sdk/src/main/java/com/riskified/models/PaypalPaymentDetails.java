@@ -13,7 +13,6 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String authorizationId;
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
-    private com.riskified._type _type;
     private String id;
     private String gateway;
     private String acquirerBin;
@@ -110,14 +109,6 @@ public class PaypalPaymentDetails implements IPaymentDetails {
 
 	public void setAuthorizationError(AuthorizationError authorizationError) {
 		this.authorizationError = authorizationError;
-	}
-	
-	public com.riskified._type getType() { 
-		return _type;
-	}
-
-	public void setType(com.riskified._type type) { 
-		this._type = type;
 	}
 
 	public String getId() {
