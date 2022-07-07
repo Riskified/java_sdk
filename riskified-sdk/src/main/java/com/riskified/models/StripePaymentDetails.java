@@ -7,7 +7,8 @@ import com.riskified.validations.Validation;
 public class StripePaymentDetails implements IPaymentDetails {
 
 	private String authorizationId ;
-	
+	private AuthorizationError authorizationError;
+
 	public StripePaymentDetails(String authorizationId) {
 		this.authorizationId = authorizationId;
 	}
@@ -19,5 +20,13 @@ public class StripePaymentDetails implements IPaymentDetails {
 		}
 		
 	}
+    public AuthorizationError getAuthorizationError() {
+        return authorizationError;
+    }
+
+    public void setAuthorizationError(AuthorizationError authorizationError) {
+        this.authorizationError = authorizationError;
+    }
+    
 
 }
