@@ -54,7 +54,7 @@ public class RiskifiedClient {
     private int requestTimeout = 10000;
     private int connectionTimeout = 5000;
 
-    private int socketTimeout = 1000;
+    private int socketTimeout = 10000;
     private String authKey;
 
     private String proxyUrl;
