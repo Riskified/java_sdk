@@ -85,16 +85,10 @@ public class RiskifiedClient {
         String authKey = properties.getProperty("authKey");
         String environmentType = properties.getProperty("environment");
         String validationType = properties.getProperty("validation");
-        Integer socketTimeOut = Integer.parseInt(properties.getProperty("socketTimeout"));
         enableAdvise = Boolean.parseBoolean(properties.getProperty("enable_old_advise_response"));
         // this is temporary  
         if (enableAdvise) {
         	versionHeaderValue = "V1";
-        }
-
-        if(socketTimeOut != null){
-            System.out.println("socket time: " + socketTimeOut);
-            setSocketTimeoout(socketTimeout);
         }
         
         String proxyUrl = properties.getProperty("proxyUrl");
