@@ -891,9 +891,14 @@ public class RiskifiedClient {
 		HttpClientBuilder builder = HttpClientBuilder.create();
 		builder.setDefaultRequestConfig(requestBuilder.build());
 
-		if (this.proxyUrl != null) {
+		if (this.proxyUrl != null && this.proxyUsername != null) {
 			setProxyWithAuth(builder);
 		}
+
+        if (this.proxyUrl != null && this.proxyUsername == null){
+            //set proxy without proxy Auth
+            setProxyWithOutAuth(builder);
+        }
 
 		return builder.build();
 	}
@@ -933,6 +938,20 @@ public class RiskifiedClient {
 		}
 	}
 
+    private void setProxyWithOutAuth(HttpClientBuilder builder) {
+        builder.setProxy(new HttpHost(proxyUrl, proxyPort));
+        //builder.setDefaultCredentialsProvider(getHttpProxyCredentialsNoAuth());
+        //builder.setProxyAuthenticationStrategy(new ProxyAuthenticationStrategy());
+
+        if (this.context == null) {
+            try {
+                setProxyWithoutAuthContext();
+            } catch (MalformedChallengeException e) {
+                System.out.println("Error: failed to process challenge for proxy");
+            }
+        }
+    }
+
 	private void setProxyContext() throws MalformedChallengeException {
 		BasicScheme proxyAuth = new BasicScheme();
 		proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
@@ -946,6 +965,17 @@ public class RiskifiedClient {
 
 		this.context = context;
 	}
+
+    private void setProxyWithoutAuthContext() throws MalformedChallengeException {
+        BasicScheme proxyAuth = new BasicScheme();
+        proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
+                "BASIC realm=default"));
+        BasicAuthCache authCache = new BasicAuthCache();
+        authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
+        HttpClientContext context = HttpClientContext.create();
+        //context.setAuthCache(authCache);
+        this.context = context;
+    }
 
     private Response postOrder(Object data, String url) throws IOException {
         HttpPost request = createPostRequest(url);
