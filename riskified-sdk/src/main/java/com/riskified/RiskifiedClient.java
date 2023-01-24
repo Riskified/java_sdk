@@ -967,13 +967,7 @@ public class RiskifiedClient {
 	}
 
     private void setProxyWithoutAuthContext() throws MalformedChallengeException {
-        BasicScheme proxyAuth = new BasicScheme();
-        proxyAuth.processChallenge(new BasicHeader(AUTH.PROXY_AUTH,
-                "BASIC realm=default"));
-        BasicAuthCache authCache = new BasicAuthCache();
-        authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
         HttpClientContext context = HttpClientContext.create();
-        context.setAuthCache(authCache);
         this.context = context;
     }
 
