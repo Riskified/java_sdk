@@ -973,7 +973,7 @@ public class RiskifiedClient {
         BasicAuthCache authCache = new BasicAuthCache();
         authCache.put(new HttpHost(this.proxyUrl, this.proxyPort), proxyAuth);
         HttpClientContext context = HttpClientContext.create();
-        //context.setAuthCache(authCache);
+        context.setAuthCache(authCache);
         this.context = context;
     }
 
