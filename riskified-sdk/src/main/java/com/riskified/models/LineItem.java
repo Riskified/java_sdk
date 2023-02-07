@@ -37,6 +37,9 @@ public class LineItem implements IValidated {
     private String color;
     private RegistryType registryType;
     private Policy policy;
+    
+    public LineItem() {
+    }
 
 
     public LineItem(double price, int quantity, String title) {
