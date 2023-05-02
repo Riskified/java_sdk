@@ -66,7 +66,7 @@ public abstract class BaseOrder implements IValidated {
 	private List<Passenger> passengers;
 	private Map<String, Object> additionalData;
 	private String orderType;
-    private ChargeFreePaymentDetails chargeFreePaymentDetails;
+    private List<ChargeFreePaymentDetails> chargeFreePaymentDetails;
     private CommunicationDetails communicationDetails;
     private String submissionReason;
     private Custom custom;
@@ -633,12 +633,12 @@ public abstract class BaseOrder implements IValidated {
 		this.orderType = orderType;
 	}
 
-	public ChargeFreePaymentDetails getChargeFreePaymentDetails() {
+	public List<ChargeFreePaymentDetails> getChargeFreePaymentDetails() {
 		return chargeFreePaymentDetails;
 	}
 
 	public void setChargeFreePaymentDetails(
-			ChargeFreePaymentDetails chargeFreePaymentDetails) {
+            List<ChargeFreePaymentDetails> chargeFreePaymentDetails) {
 		this.chargeFreePaymentDetails = chargeFreePaymentDetails;
 	}
 
