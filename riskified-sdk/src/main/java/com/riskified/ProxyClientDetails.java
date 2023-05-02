@@ -13,6 +13,12 @@ public class ProxyClientDetails {
 		this.proxyUsername = proxyUserName;
 		this.proxyPassword = proxyPassword;
 	}
+
+	public ProxyClientDetails(String proxyUrl, int proxyPort){
+		this.proxyUrl = proxyUrl;
+		this.proxyPort = proxyPort;
+	}
+
     public String getProxyUrl() {
 		return proxyUrl;
 	}
