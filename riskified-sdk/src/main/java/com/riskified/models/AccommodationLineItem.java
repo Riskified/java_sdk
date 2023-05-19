@@ -13,7 +13,7 @@ public class AccommodationLineItem extends LineItem {
 	private Date checkInDate;
 	private Date checkOutDate;
 	private Float rating;
-	private int numberOfGuests;
+	private Integer numberOfGuests;
 	private String cancellationPolicy;
 	private String accommodationType;
 

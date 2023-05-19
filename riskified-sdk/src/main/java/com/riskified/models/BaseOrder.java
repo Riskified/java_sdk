@@ -529,9 +529,7 @@ public abstract class BaseOrder implements IValidated {
         this.vendorIntegrationType = vendorIntegrationType;
     }
 
- //   public List<Address> getShippingAddress() {
- //       return shippingAddress;
- //   }
+    public Address getShippingAddress() {return shippingAddress;}
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
