@@ -1,11 +1,11 @@
 package com.riskified.models;
-
+import java.util.List;
 import com.riskified.validations.*;
 
 public class ChargebackOrder implements IValidated {
 	private String id;
 	private ChargebackDetails chargebackDetails;
-	private FulfillmentDetails fulfillment;
+	private List<FulfillmentDetails> fulfillment;
 	private DisputeDetails disputeDetails;
 
 	public ChargebackOrder() {
@@ -35,11 +35,11 @@ public class ChargebackOrder implements IValidated {
 		this.chargebackDetails = chargebackDetails;
 	}
 
-	public FulfillmentDetails getFulfillment() {
+	public List<FulfillmentDetails> getFulfillment() {
 		return fulfillment;
 	}
 
-	public void setFulfillment(FulfillmentDetails fulfillment) {
+	public void setFulfillment(List<FulfillmentDetails> fulfillment) {
 		this.fulfillment = fulfillment;
 	}
 
