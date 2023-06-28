@@ -197,7 +197,7 @@ public abstract class BaseOrder implements IValidated {
         this.gateway = gateway;
     }
 
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
@@ -417,7 +417,7 @@ public abstract class BaseOrder implements IValidated {
         this.sourceUrl = sourceUrl;
     }
 
-    public double getSubtotalPrice() {
+    public Double getSubtotalPrice() {
         return subtotalPrice;
     }
 
@@ -433,7 +433,7 @@ public abstract class BaseOrder implements IValidated {
         this.taxesIncluded = taxesIncluded;
     }
 
-    public double getTotalDiscounts() {
+    public Double getTotalDiscounts() {
         return totalDiscounts;
     }
 
@@ -441,7 +441,7 @@ public abstract class BaseOrder implements IValidated {
         this.totalDiscounts = totalDiscounts;
     }
 
-    public double getTotalLineItemsPrice() {
+    public Double getTotalLineItemsPrice() {
         return totalLineItemsPrice;
     }
 
@@ -449,7 +449,7 @@ public abstract class BaseOrder implements IValidated {
         this.totalLineItemsPrice = totalLineItemsPrice;
     }
 
-    public double getTotalPriceUsd() {
+    public Double getTotalPriceUsd() {
         return totalPriceUsd;
     }
 
@@ -457,7 +457,7 @@ public abstract class BaseOrder implements IValidated {
         this.totalPriceUsd = totalPriceUsd;
     }
 
-    public double getTotalTax() {
+    public Double getTotalTax() {
         return totalTax;
     }
 
@@ -465,7 +465,7 @@ public abstract class BaseOrder implements IValidated {
         this.totalTax = totalTax;
     }
 
-    public double getTotalWeight() {
+    public Double getTotalWeight() {
         return totalWeight;
     }
 
