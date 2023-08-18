@@ -6,6 +6,8 @@ public enum SocialType {
 
     @SerializedName("facebook")
     facebook,
+    @SerializedName("apple")
+    apple,
     @SerializedName("google")
     google,
     @SerializedName("amazon")
