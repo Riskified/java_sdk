@@ -876,6 +876,8 @@ public class RiskifiedClient {
                 throw new HttpResponseException(status, responseObject.getError().getMessage());
             case 404:
                 throw new HttpResponseException(status, responseObject.getError().getMessage());
+            case 429:
+                throw new HttpResponseException(status, responseObject.getError().getMessage());			
             case 504:
                 throw new HttpResponseException(status, "Temporary error, please retry");
             default:
@@ -990,6 +992,8 @@ public class RiskifiedClient {
 	            throw new HttpResponseException(status, postBody);
 	        case 404:
 	            throw new HttpResponseException(status, postBody);
+		case 429: 
+		    throw new HttpResponseException(status, postBody);
 	        case 504:
 	            throw new HttpResponseException(status, "Temporary error, please retry");
 	        default:
@@ -1024,7 +1028,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.8.1"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.8.2"); // TODO: take the version automatically
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }
