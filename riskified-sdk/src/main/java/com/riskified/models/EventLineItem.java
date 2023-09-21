@@ -10,6 +10,7 @@ public class EventLineItem extends LineItem {
     private float latitude;
     private float longitude;
     private Date eventDate;
+	private Recipient recipient;
     
 	public EventLineItem(double price, int quantity, String title,
 			String productId) {
@@ -62,6 +63,14 @@ public class EventLineItem extends LineItem {
 
 	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
+	}
+
+	public Recipient getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(Recipient recipient) {
+		this.recipient = recipient;
 	}
 
 }

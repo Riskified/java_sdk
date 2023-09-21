@@ -22,6 +22,7 @@ public class TravelLineItem extends LineItem {
 	private String carrierName;
 	private String carrierCode;
 	private String transportMethod;
+	private Recipient recipient;
 
 	public TravelLineItem(double price, int quantity, String title,
 			String legId, int legIndex, int routeIndex) {
@@ -190,6 +191,14 @@ public class TravelLineItem extends LineItem {
 
 	public void setTransportMethod(String transportMethod) {
 		this.transportMethod = transportMethod;
+	}
+
+	public Recipient getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(Recipient recipient) {
+		this.recipient = recipient;
 	}
 
 
