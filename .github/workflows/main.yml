@@ -13,6 +13,16 @@ jobs:
     - name: Checking out
       uses: actions/checkout@v3 ##action to give our job access to code in our repo
 
+    - name: Cache local mvn repo
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: v1-dependencies-{{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          v1-dependencies-
+    - run: mvn dependency:go-offline
+        
+
     - name: PWD
       run: pwd
 
@@ -22,9 +32,8 @@ jobs:
     - name: Set up JDK 8
       uses: actions/setup-java@v1 ##this action sets up a java environment that our job can run in
       with:
-        distribution: 'temurin'
         java-version: 8
-        cache: 'maven'
+   
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
