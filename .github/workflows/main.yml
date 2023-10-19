@@ -23,7 +23,7 @@ jobs:
     - run: mvn dependency:go-offline
         
 
-    - name: PWD
+    - name: PWDD
       run: pwd
 
     - name: LS
