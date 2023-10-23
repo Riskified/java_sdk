@@ -29,11 +29,12 @@ jobs:
     - name: LS
       run: ls
       
-    # - name: Configuring GPG key 
-    #   run: |
-    #     echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
-    #   env:
-    #     GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
+    - name: Configuring GPG key 
+      run: |
+        echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
+        export GPG_TTY=$(tty)
+      env:
+        GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
     
     - name: Set up JDK 8
       uses: actions/setup-java@v1 ##this action sets up a java environment that our job can run in
