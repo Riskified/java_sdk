@@ -31,7 +31,7 @@ jobs:
       
     - name: Configuring GPG key 
       run: |
-        echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --import
+        echo ${{ SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --import
         export GPG_TTY=$(tty)
       env:
         GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
