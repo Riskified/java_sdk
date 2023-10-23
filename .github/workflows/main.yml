@@ -33,14 +33,9 @@ jobs:
       run: |
         # echo ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --import
         # export GPG_TTY=$(tty)
-        mkdir -p ~/.gnupg
-            echo use-agent >> ~/.gnupg/gpg.conf
-            echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-            echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-            echo RELOADAGENT | gpg-connect-agent
-            echo ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --batch --no-tty --import --yes
-            GPG_TTY=$(tty)
-            export GPG_TTY
+        GPG_TTY=$(tty)
+        export GPG_TTY
+        echo -n ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --import
       #env:
         #GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
     
