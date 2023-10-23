@@ -31,14 +31,10 @@ jobs:
       
     - name: Configuring GPG key 
       run: |
-        mkdir -p ~/.gnupg
-            echo use-agent >> ~/.gnupg/gpg.conf
-            echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
-            echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-            echo RELOADAGENT | gpg-connect-agent
-            echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
-            GPG_TTY=$(tty)
-            export GPG_TTY
+        # Install gpg secret key
+        cat <(echo -e "${{ secrets.SECRING_GPG_ASC_BASE64 }}") | gpg --batch --import
+        # Verify gpg secret key
+        gpg --list-secret-keys --keyid-format LONG
       env:
         GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
     
