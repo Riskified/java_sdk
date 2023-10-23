@@ -31,10 +31,18 @@ jobs:
       
     - name: Configuring GPG key 
       run: |
-        echo ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --import
-        export GPG_TTY=$(tty)
-      #env:
-        #GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
+        # echo ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --import
+        # export GPG_TTY=$(tty)
+        mkdir -p ~/.gnupg
+            echo use-agent >> ~/.gnupg/gpg.conf
+            echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
+            echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
+            echo RELOADAGENT | gpg-connect-agent
+            echo ${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 --decode | gpg --batch --no-tty --import --yes
+            GPG_TTY=$(tty)
+            export GPG_TTY
+      env:
+        GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
     
     - name: Set up JDK 8
       uses: actions/setup-java@v1 ##this action sets up a java environment that our job can run in
