@@ -43,10 +43,10 @@ jobs:
       with:
         java-version: 8
         server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
-        server-username: ${{ secrets.SERVER_OSSRH_USERNAME }} # env variable for username in deploy
-        server-password: ${{ secrets.SERVER_OSSRH_PASSWORD }} # env variable for token in deploy
+        server-username: SERVER_OSSRH_USERNAME # env variable for username in deploy
+        server-password: SERVER_OSSRH_PASSWORD # env variable for token in deploy
         gpg-private-key: ${{ secrets.SECRING_GPG_ASC_BASE64 }} # Value of the GPG private key to import
-        gpg-passphrase:  ${{ secrets.GPG_PASSPHRASE }}  # env variable for GPG private key passphrase
+        gpg-passphrase:  GPG_PASSPHRASE  # env variable for GPG private key passphrase
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
