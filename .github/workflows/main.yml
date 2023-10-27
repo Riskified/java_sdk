@@ -68,7 +68,7 @@ jobs:
         cat settings.xml
 
     - name: Publish to Apache Maven Central
-      mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+      run: mvn -s .github/workflows/maven-release-setting.xmlclean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       env:
         SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
         SERVER_OSSRH_PASSWORD: ${{ secrets.SERVER_OSSRH_PASSWORD }}
