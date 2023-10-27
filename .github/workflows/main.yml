@@ -62,11 +62,6 @@ jobs:
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
 
-    - name: settings.xml
-      run:  |
-        cd ~/.m2
-        cat settings.xml
-
     - name: Publish to Apache Maven Central
       run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       env:
