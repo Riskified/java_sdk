@@ -43,16 +43,14 @@ jobs:
         server-password: SERVER_OSSRH_PASSWORD # env variable for token in deploy
         gpg-private-key: ${{ steps.setKey.outputs.testTempGpg }} #${{ secrets.SECRING_GPG_ASC_BASE64 }}  Value of the GPG private key to import
         gpg-passphrase:  GPG_PASSPHRASE  # env variable for GPG private key passphrase
-        #overwrite-settings: false
+        overwrite-settings: false
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
 
     - name: Publish to Apache Maven Central
-      run: mvn clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
-      #run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+      run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       env:
         SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
         SERVER_OSSRH_PASSWORD: ${{ secrets.SERVER_OSSRH_PASSWORD }}
-        #SECRING_GPG_ASC_BASE64: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
