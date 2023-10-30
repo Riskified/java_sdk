@@ -23,12 +23,6 @@ jobs:
     - run: mvn dependency:go-offline
         
 
-    - name: PWDD
-      run: pwd
-
-    - name: LS
-      run: ls
-
     - name: setting env
       run: echo "testTempGpg=$(echo $tempGpgValue | base64 -d)" >> $GITHUB_OUTPUT
       id: setKey
@@ -39,14 +33,6 @@ jobs:
       env:
         GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
 
-    - name: testing envs
-      run: |
-         echo $HI_THERE
-      env:
-        HI_THERE: "testinghithere"
-
-    - name: running test env
-      run: echo $HI_THERE
       
     - name: Set up JDK 8
       uses: actions/setup-java@v1 ##this action sets up a java environment that our job can run in
@@ -57,13 +43,14 @@ jobs:
         server-password: SERVER_OSSRH_PASSWORD # env variable for token in deploy
         gpg-private-key: ${{ steps.setKey.outputs.testTempGpg }} #${{ secrets.SECRING_GPG_ASC_BASE64 }}  Value of the GPG private key to import
         gpg-passphrase:  GPG_PASSPHRASE  # env variable for GPG private key passphrase
-        overwrite-settings: false
+        #overwrite-settings: false
 
     - name: Build project with Maven
       run: mvn -B package --file pom.xml
 
     - name: Publish to Apache Maven Central
-      run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+      run: clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+      #run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       env:
         SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
         SERVER_OSSRH_PASSWORD: ${{ secrets.SERVER_OSSRH_PASSWORD }}
