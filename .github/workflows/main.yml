@@ -49,7 +49,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Publish to Apache Maven Central
-      run: clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+      run: mvn clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       #run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
       env:
         SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
