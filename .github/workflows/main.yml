@@ -37,6 +37,7 @@ jobs:
     - name: Set up JDK 8
       uses: actions/setup-java@v2 ##this action sets up a java environment that our job can run in
       with:
+        distribution: 'zulu'
         java-version: 8
         server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
         server-username: SERVER_OSSRH_USERNAME # env variable for username in deploy
