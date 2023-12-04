@@ -33,10 +33,10 @@ jobs:
       # env:
       #   GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
      
-      uses: crazy-max/ghaction-import-gpg@v6
-      with:
-        gpg_private_key: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
-        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      # uses: crazy-max/ghaction-import-gpg@v6
+      # with:
+      #   gpg_private_key: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
+      #   passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       
     - name: Set up JDK 8
