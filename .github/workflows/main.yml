@@ -27,7 +27,7 @@ jobs:
       run: echo "testTempGpg=$(echo $tempGpgValue | base64 -d)" >> $GITHUB_OUTPUT
       id: setKey
       
-    - name: Configuring GPG key 
+    #- name: Configuring GPG key 
       # run: |
       #   echo $GPG_SIGNING_KEY | base64 --decode | gpg --batch --import
       # env:
