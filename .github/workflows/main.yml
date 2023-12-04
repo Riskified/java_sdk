@@ -27,11 +27,11 @@ jobs:
       run: echo "testTempGpg=$(echo $tempGpgValue | base64 -d)" >> $GITHUB_OUTPUT
       id: setKey
       
-    #- name: Configuring GPG key 
-      # run: |
-      #   echo $GPG_SIGNING_KEY | base64 --decode | gpg --batch --import
-      # env:
-      #   GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
+    - name: Configuring GPG key 
+      run: |
+        echo $GPG_SIGNING_KEY | base64 --decode | gpg --batch --import
+      env:
+        GPG_SIGNING_KEY: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
      
       # uses: crazy-max/ghaction-import-gpg@v6
       # with:
