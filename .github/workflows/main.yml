@@ -22,10 +22,6 @@ jobs:
           v1-dependencies-
     - run: mvn dependency:go-offline
         
-
-    - name: setting env
-      run: echo "testTempGpg=$(echo $tempGpgValue | base64 -d)" >> $GITHUB_OUTPUT
-      id: setKey
       
     - name: Configuring GPG key 
       run: |
@@ -37,6 +33,10 @@ jobs:
       # with:
       #   gpg_private_key: ${{ secrets.SECRING_GPG_ASC_BASE64 }}
       #   passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+    - name: setting env
+      run: echo "testTempGpg=$(echo $${{ secrets.SECRING_GPG_ASC_BASE64 }} | base64 -d)" >> $GITHUB_OUTPUT
+      id: setKey
 
       
     - name: Set up JDK 8
