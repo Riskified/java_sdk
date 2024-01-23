@@ -1,9 +1,6 @@
 Riskified JAVA SDK
 =================
 
-version: 2.3.2
-------------------
-
 See http://apiref.riskified.com for full API documentation 
 
 see riskified-sample/ for examples on how to use this SDK. 
