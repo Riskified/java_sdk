@@ -223,7 +223,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -245,7 +245,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -267,7 +267,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -283,7 +283,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -300,7 +300,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -318,7 +318,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -337,7 +337,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -355,7 +355,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -372,7 +372,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -390,7 +390,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -414,7 +414,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -434,7 +434,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -455,7 +455,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -473,7 +473,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -492,7 +492,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -509,7 +509,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -527,7 +527,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -544,7 +544,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -562,7 +562,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -579,7 +579,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -596,7 +596,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -613,7 +613,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from the Deco server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -629,7 +629,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from the Deco server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -652,7 +652,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -671,7 +671,7 @@ public class RiskifiedClient {
      * @param orders A list of historical orders to send
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -695,7 +695,7 @@ public class RiskifiedClient {
      * @param validation Determines what type of validation will take place
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -712,7 +712,7 @@ public class RiskifiedClient {
      * @see Response
      * @return Response object, including the status from the Deco server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -729,7 +729,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -746,7 +746,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -763,7 +763,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -780,7 +780,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -797,7 +797,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -814,7 +814,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -831,7 +831,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -848,7 +848,7 @@ public class RiskifiedClient {
      * @see Response
      * @return OK if good, object with error if bad request
      * @throws ClientProtocolException in case of a problem or the connection was aborted
-     * @throws IOException in case of an http protocol error
+     * @throws IOException in case of a http protocol error
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
@@ -856,6 +856,22 @@ public class RiskifiedClient {
         String url = accountBaseUrl + "/customers/verification";
         validate(verification, validation);
         return postOrder(verification, url);
+    }
+
+    /**
+     * Order Customer Verification
+     * Notifies Riskified of the MFA challenge outcome
+     * @param recoveryEligibility A RecoveryEligibility object
+     * @see Response
+     * @return 200 if good, exception if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of a http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response RecoveryEligibility(RecoveryEligibility recoveryEligibility) throws IOException, FieldBadFormatException{
+        String url = accountBaseUrl + "/api/verification";
+        return postOrder(recoveryEligibility, url);
     }
 
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
@@ -1028,7 +1044,7 @@ public class RiskifiedClient {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.8.3"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.9.0"); // TODO: take the version automatically
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }
