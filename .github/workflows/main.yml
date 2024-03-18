@@ -41,9 +41,8 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Publish to Apache Maven Central
-        run: mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+        run: GPG_TTY=$(tty); mvn -s .github/workflows/maven-release-setting.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
         env:
           SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
           SERVER_OSSRH_PASSWORD: ${{ secrets.SERVER_OSSRH_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          GPG_TTY: $(tty)
