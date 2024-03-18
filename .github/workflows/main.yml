@@ -46,4 +46,4 @@ jobs:
           SERVER_OSSRH_USERNAME: ${{ secrets.SERVER_OSSRH_USERNAME }}
           SERVER_OSSRH_PASSWORD: ${{ secrets.SERVER_OSSRH_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          GPG_TTY=$(tty)
+          GPG_TTY: $(tty)
