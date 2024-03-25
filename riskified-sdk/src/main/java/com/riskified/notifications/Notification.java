@@ -1,6 +1,7 @@
 package com.riskified.notifications;
 
 import com.riskified.models.Custom;
+import com.riskified.models.RecoveryEligibility;
 
 // Shop URL may also be added to the API notifications from Riskified depending on your
 // account configuration (contact your Account Manager or Integration Engineer for details).
@@ -27,6 +28,8 @@ public class Notification {
         private String decisionCode;
         private String category;
         private Custom custom;
+
+        private RecoveryEligibility recoveryEligibility;
 
         public String getId() {
             return id;
@@ -81,5 +84,9 @@ public class Notification {
         public void setCustom(Custom custom) {
             this.custom = custom;
         }
+
+        public RecoveryEligibility getRecoveryEligibility(){ return recoveryEligibility; }
+
+        public void setRecoveryEligibility(RecoveryEligibility recoveryEligibility){this.recoveryEligibility = recoveryEligibility;}
     }
 }

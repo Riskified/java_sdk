@@ -14,6 +14,8 @@ public class RecoveryEligibility {
     private String verifiedAt;
     private VerificationMethod verificationMethod;
 
+    private String challengeType;
+
     private VerificationSessionDetails verificationSessionDetails;
 
     public RecoveryEligibility(String id, String status, String verifiedAt, VerificationMethod verificationMethod){
@@ -61,6 +63,14 @@ public class RecoveryEligibility {
 
     public void setVerificationSessionDetails(VerificationSessionDetails verificationSessionDetails){
         this.verificationSessionDetails = verificationSessionDetails;
+    }
+
+    public String getChallengeType() {
+        return challengeType;
+    }
+
+    public void setChallengeType(String challengeType){
+        this.challengeType = challengeType;
     }
 }
 
