@@ -12,6 +12,7 @@ public class ResOrder {
 	private AuthenticationType authentication_type;
 	private String action;
 	private Advice advice;
+    private RecoveryEligibility recoveryEligibility;
 	
 	
     public String getId() {
@@ -94,6 +95,10 @@ public class ResOrder {
     public void setAction(String action) {
         this.action = action;
     }
+
+    public RecoveryEligibility getRecoveryEligibility(){return recoveryEligibility;}
+
+    public void setRecoveryEligibility(RecoveryEligibility recoveryEligibility){this.recoveryEligibility = recoveryEligibility;}
     
     public class Advice { 
     	

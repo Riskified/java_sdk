@@ -28,7 +28,6 @@ public class Notification {
         private String decisionCode;
         private String category;
         private Custom custom;
-
         private RecoveryEligibility recoveryEligibility;
 
         public String getId() {
