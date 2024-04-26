@@ -10,6 +10,7 @@ import com.riskified.models.BankWirePaymentDetails;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.IPaymentDetails;
 import com.riskified.models.PaypalPaymentDetails;
+import com.riskified.models.VenmoPaymentDetails;
 import com.riskified.models.StripePaymentDetails;
 
 //import sun.security.x509.IPAddressName;
@@ -34,6 +35,7 @@ public class JSONFormater {
         return RuntimeTypeAdapterFactory
                 .of(IPaymentDetails.class, "method")
                 .registerSubtype(PaypalPaymentDetails.class, "paypal")
+                .registerSubtype(VenmoPaymentDetails.class, "venmo")
                 .registerSubtype(StripePaymentDetails.class, "stripe")
                 .registerSubtype(CreditCardPaymentDetails.class, "credit_card")
                 .registerSubtype(BankWirePaymentDetails.class, "bank_wire");
