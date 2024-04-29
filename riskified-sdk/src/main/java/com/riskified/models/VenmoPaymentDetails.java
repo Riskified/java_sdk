@@ -8,6 +8,7 @@ public class VenmoPaymentDetails implements IPaymentDetails {
 
     private String venmoEmail;
     private String venmoUsername;
+    private String venmoAccountId;
     private String authorizationId;
     private AuthorizationError authorizationError;
     private AuthenticationResult authenticationResult;
@@ -41,6 +42,14 @@ public class VenmoPaymentDetails implements IPaymentDetails {
 
     public String getVenmoUsername() {
         return venmoUsername;
+    }
+
+    public void setVenmoAccountId(String venmoAccountId) {
+        this.venmoAccountId = venmoAccountId;
+    }
+
+    public String getVenmoAccountId() {
+        return venmoAccountId;
     }
 
     public void setVenmoUsername(String venmoUsername) {
