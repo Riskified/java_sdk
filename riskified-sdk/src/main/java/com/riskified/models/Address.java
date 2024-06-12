@@ -29,6 +29,9 @@ public class Address implements IValidated {
         this.address1 = address1;
     }
 
+    public Address() {
+    }
+
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {
             Validate.notNullOrEmpty(this, this.firstName, "First Name");
