@@ -11,6 +11,7 @@ public class Response {
     private String loginId;
     private String message;
     private VerificationData verificationData;
+    private String WidgetToken;
 
 
     public Response() {
@@ -82,5 +83,13 @@ public class Response {
 
     public void setVerificationData(VerificationData verificationData) {
         this.verificationData = verificationData;
+    }
+
+    public String getOtpwidgetToken() {
+        return WidgetToken;
+    }
+
+    public void setOtpwidgetToken(String widgetToken) {
+        this.WidgetToken = widgetToken;
     }
 }

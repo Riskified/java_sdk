@@ -12,6 +12,8 @@ public class Utils {
     public static final String ACCOUNT_PRODUCTION_ENVIRONMENT = "https://api.riskified.com";
     public static final String SCREEN_SANDBOX_ENVIRONMENT = "https://screen-sandbox.riskified.com";
     public static final String CHINA_ACCOUNT_PRODUCTION_ENVIRONMENT = "https://apicdn.riskified.com";
+    public static final String OTP_PRODUCTION = "https://otp.self-veri.com";
+    public static final String OTP_SANDBOX = "https://otp-sandbox.self-veri.com";
     
     
 
@@ -38,6 +40,10 @@ public class Utils {
 
     public static String getScreenBaseFromEnvironment(Environment environmentType) {
         return getUrlString(environmentType, SCREEN_SANDBOX_ENVIRONMENT, PRODUCTION_ENVIRONMENT);
+    }
+
+    public static String getOtpBaseFromEnvironment(Environment environmentType){
+        return getUrlString(environmentType, OTP_SANDBOX, OTP_PRODUCTION);
     }
 
     private static String getUrlString(Environment environmentType, String sandboxEnvironment, String productionEnvironment) {
