@@ -3,6 +3,7 @@ package com.riskified;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
@@ -49,6 +50,7 @@ public class RiskifiedClient {
     private String decoBaseUrl;
     private String screenBaseUrl;
     private String accountBaseUrl;
+    private String otpBaseUrl;
     private String shopUrl;
     private SHA256Handler sha256Handler;
     private int requestTimeout = 10000;
@@ -115,7 +117,7 @@ public class RiskifiedClient {
         }
 
         
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Utils.getOtpBaseFromEnvironment(environment), validation);
 
         if (proxyUrl != null) {
             initProxy(proxyUrl, proxyPort, proxyUserName, proxyPassword);
@@ -131,7 +133,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Utils.getOtpBaseFromEnvironment(environment), Validation.ALL);
     }
 
     /**
@@ -144,7 +146,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Validation.ALL);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment),Utils.getOtpBaseFromEnvironment(environment), Validation.ALL);
         initProxy(proxyClientDetails);
     }
 
@@ -158,7 +160,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Utils.getOtpBaseFromEnvironment(environment), validation);
     }
 
     /**
@@ -172,7 +174,7 @@ public class RiskifiedClient {
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
     public RiskifiedClient(String shopUrl, String authKey, Environment environment, Validation validation, ProxyClientDetails proxyClientDetails) throws RiskifiedError {
-        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), validation);
+        init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Utils.getOtpBaseFromEnvironment(environment), validation);
         initProxy(proxyClientDetails);
     }
 
@@ -188,16 +190,17 @@ public class RiskifiedClient {
      * @param accountBaseUrl account host
      * @throws RiskifiedError When there was a critical error, look at the exception to see more data
      */
-    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl) throws RiskifiedError {
-        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, screenBaseUrl, validation);
+    public RiskifiedClient(String shopUrl, String authKey, Validation validation, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl, String otpBaseUrl) throws RiskifiedError {
+        init(shopUrl, authKey, baseUrl, baseUrlSyncAnalyze, decoBaseUrl, accountBaseUrl, screenBaseUrl, otpBaseUrl, validation);
     }
 
-    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl, Validation validationType) throws RiskifiedError {
+    private void init(String shopUrl, String authKey, String baseUrl, String baseUrlSyncAnalyze, String decoBaseUrl, String accountBaseUrl, String screenBaseUrl, String otpBaseUrl, Validation validationType) throws RiskifiedError {
         this.baseUrl = baseUrl;
         this.baseUrlSyncAnalyze = baseUrlSyncAnalyze;
         this.decoBaseUrl = decoBaseUrl;
         this.accountBaseUrl = accountBaseUrl;
         this.screenBaseUrl = screenBaseUrl;
+        this.otpBaseUrl = otpBaseUrl;
         this.shopUrl = shopUrl;
         this.sha256Handler = new SHA256Handler(authKey);
         this.validation = validationType;
@@ -874,6 +877,22 @@ public class RiskifiedClient {
         return postOrder(recoveryEligibility, url);
     }
 
+    /**
+     * OTP Initiation
+     * Notifies Riskified of the MFA challenge outcome
+     * @param otpInitiate An OtpInitiate object
+     * @see Response
+     * @return 200 if good, exception if bad request
+     * @throws ClientProtocolException in case of a problem or the connection was aborted
+     * @throws IOException in case of a http protocol error
+     * @throws HttpResponseException The server respond status wasn't 200
+     * @throws FieldBadFormatException bad format found on field
+     */
+    public Response InitiateOtp(OtpInitiate otpInitiate) throws IOException{
+        String url = otpBaseUrl + "/recover/v1/otp/initiate";
+        return postOrder(otpInitiate, url);
+    }
+
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
         HttpPost request = createPostRequest(url);
         addDataToRequest(data, request);
@@ -1019,7 +1038,17 @@ public class RiskifiedClient {
 
     private Response getResponseObject(String postBody) throws IOException {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Response res = gson.fromJson(postBody, Response.class);
+        Response res = null;
+        try{
+            res = gson.fromJson(postBody, Response.class);
+        }
+        catch(JsonSyntaxException e){
+            System.out.println(e.getMessage());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         return res;
     }
 
@@ -1043,8 +1072,9 @@ public class RiskifiedClient {
     private HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
+        postRequest.setHeader(HttpHeaders.ACCEPT, "application/json");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.11.0"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/2.12.0"); // TODO: take the version automatically
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }
@@ -1181,5 +1211,6 @@ public class RiskifiedClient {
         this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment);
         this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
         this.accountBaseUrl = Utils.getAccountBaseFromEnvironment(environment);
+        this.otpBaseUrl = Utils.getOtpBaseFromEnvironment(environment);
     }
 }

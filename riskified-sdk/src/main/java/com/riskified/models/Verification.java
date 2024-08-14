@@ -13,11 +13,13 @@ public class Verification implements IValidated {
     private String eventId;
     private VerificationSessionDetails verificationSessionDetails;
     private String vendorName;
+    private String phone;
 
-    public Verification(Date verifiedAt, VerificationStatus status, String eventId) {
+    public Verification(Date verifiedAt, VerificationStatus status, String eventId, String phone) {
         this.verifiedAt = verifiedAt;
         this.status = status;
         this.eventId = eventId;
+        this.phone = phone;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
@@ -67,4 +69,8 @@ public class Verification implements IValidated {
     public String getVendorName() { return vendorName; }
 
     public void setVendorName(String vendorName) { this.vendorName = vendorName; }
+
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getPhone() { return phone; }
 }
