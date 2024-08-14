@@ -888,7 +888,7 @@ public class RiskifiedClient {
      * @throws HttpResponseException The server respond status wasn't 200
      * @throws FieldBadFormatException bad format found on field
      */
-    public Response InitiateOtp(OtpInitiate otpInitiate) throws IOException{
+    public Response InitiateOtp(OtpInitiate otpInitiate) throws IOException, FieldBadFormatException{
         String url = otpBaseUrl + "/recover/v1/otp/initiate";
         return postOrder(otpInitiate, url);
     }
