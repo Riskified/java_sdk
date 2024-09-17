@@ -9,6 +9,8 @@ public class FulfillmentOrder implements IValidated {
     private String id;
     private List<FulfillmentDetails> fulfillments;
 
+    public FulfillmentOrder() {
+    }
 
     public FulfillmentOrder(String id, List<FulfillmentDetails> fulfillments) {
         this.id = id;

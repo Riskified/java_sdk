@@ -22,6 +22,9 @@ public class CancelOrder implements IValidated {
         }
     }
 
+    public CancelOrder() {
+    }
+
     public String getId() {
         return id;
     }
