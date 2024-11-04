@@ -1,5 +1,6 @@
 package com.riskified.notifications;
 
+import com.riskified.models.Context;
 import com.riskified.models.Custom;
 import com.riskified.models.RecoveryEligibility;
 
@@ -29,6 +30,8 @@ public class Notification {
         private String category;
         private Custom custom;
         private RecoveryEligibility recoveryEligibility;
+        private Context context;
+        private String[] decision_reasons;
 
         public String getId() {
             return id;
@@ -87,5 +90,21 @@ public class Notification {
         public RecoveryEligibility getRecoveryEligibility(){ return recoveryEligibility; }
 
         public void setRecoveryEligibility(RecoveryEligibility recoveryEligibility){this.recoveryEligibility = recoveryEligibility;}
+
+        public Context getContext() {
+            return context;
+        }
+
+        public void setContext(Context context) {
+            this.context = context;
+        }
+
+        public String[] getDecisionReasons() {
+            return decision_reasons;
+        }
+
+        public void setDecisionReasons(String[] decisionReasons) {
+            this.decision_reasons = decisionReasons;
+        }
     }
 }
