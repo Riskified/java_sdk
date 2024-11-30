@@ -28,7 +28,10 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String acquirerRegion;
     
 
-    public CreditCardPaymentDetails(String creditCardBin, 
+    public CreditCardPaymentDetails(){};
+
+    public CreditCardPaymentDetails(
+            String creditCardBin,
     		String avsResultCode, 
     		String cvvResultCode, 
     		String creditCardNumber, 
