@@ -8,7 +8,6 @@ public class TravelLineItem extends LineItem {
 
 	private int routeIndex;
 	private int legIndex;
-
 	private String departurePortCode;
 	private String arrivalPortCode;
 	private Date departureDate;
@@ -22,7 +21,7 @@ public class TravelLineItem extends LineItem {
 	private String carrierName;
 	private String carrierCode;
 	private String transportMethod;
-	private Recipient recipient;
+	//private Recipient recipient;
 
 	public TravelLineItem(double price, int quantity, String title,
 			String legId, int legIndex, int routeIndex) {
@@ -193,13 +192,13 @@ public class TravelLineItem extends LineItem {
 		this.transportMethod = transportMethod;
 	}
 
-	public Recipient getRecipient() {
-		return recipient;
-	}
-
-	public void setRecipient(Recipient recipient) {
-		this.recipient = recipient;
-	}
+//	public Recipient getRecipient() {
+//		return recipient;
+//	}
+//
+//	public void setRecipient(Recipient recipient) {
+//		this.recipient = recipient;
+//	}
 
 
 }
