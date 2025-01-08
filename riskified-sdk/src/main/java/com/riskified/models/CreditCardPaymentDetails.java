@@ -26,6 +26,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private AuthorizationType authorizationType;
     private String creditCardCountry;
     private String acquirerRegion;
+    private Integer expiryMonth;
+    private Integer expiryYear;
     
 
     public CreditCardPaymentDetails(String creditCardBin, 
@@ -51,11 +53,21 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
             if (this.acquirerRegion != null && (this.acquirerRegion != "EU" && this.acquirerRegion != "NONEU")) {
                 throw new FieldBadFormatException("Acquirer Region must be 'EU' or 'NONEU'");
             }
+            if (this.expiryMonth != null) {
+                if (this.expiryMonth < 1 || this.expiryMonth > 12) {
+                    throw new FieldBadFormatException("Expiry Month must be between 01 and 12");
+                }
+            }
 
-       //   Validate.notNullOrEmpty(this, this.acquirerBin, "acquirer Bin");
-       //   Validate.notNullOrEmpty(this, this.gateway, "gateway");
-          
-            
+            // Validate expiryYear is a 4-digit integer greater than or equal to the current year
+            if (this.expiryYear != null) {
+                if (this.expiryYear < 1900 || this.expiryYear > 9999) {
+                    throw new FieldBadFormatException("Expiry Year must be a 4-digit integer formatted as YYYY");
+                }
+            }
+
+
+
         }
     }
 
@@ -204,5 +216,13 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public String getAcquirerRegion() { return acquirerRegion; }
 
     public void setAcquirerRegion(String acquirerRegion) { this.acquirerRegion = acquirerRegion; }
+
+    public Integer getExpiryMonth() { return expiryMonth; }
+
+    public void setExpiryMonth(Integer expiryMonth) { this.expiryMonth = expiryMonth; }
+
+    public Integer getExpiryYear() { return expiryYear; }
+
+    public void setExpiryYear(Integer expiryYear) { this.expiryYear = expiryYear; }
 
 }

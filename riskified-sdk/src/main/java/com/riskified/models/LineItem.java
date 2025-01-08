@@ -37,6 +37,8 @@ public class LineItem implements IValidated {
     private String color;
     private RegistryType registryType;
     private Policy policy;
+    private String routingNumber;
+    private String accountNumber;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -308,6 +310,22 @@ public class LineItem implements IValidated {
 	public void setPolicy(Policy policy) {
 		this.policy = policy;
 	}
+
+    public String getRoutingNumber() {
+        return routingNumber;
+    }
+
+    public void setRoutingNumber(String routingNumber) {
+        this.routingNumber = routingNumber;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     
 
