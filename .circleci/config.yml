@@ -45,3 +45,7 @@ workflows:
           filters:
             branches:
               only: master
+      - build_side_release:
+          filters:
+            branches:
+              only: /release-.*/
