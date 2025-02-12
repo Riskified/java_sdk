@@ -123,13 +123,13 @@ public class Client {
             System.out.println("status: " + resCancelOrder.getOrder().getStatus());
             System.out.println("description: " + resCancelOrder.getOrder().getDescription());
 
-            Response resFulfillmentOrder = client.fulfillOrder(fulfillmentOrder);
+            // Response resFulfillmentOrder = client.fulfillOrder(fulfillmentOrder);
 
-            System.out.println("-----------------------------------------");
-            System.out.println("Fulfillment order response:");
-            System.out.println("id: " + resFulfillmentOrder.getOrder().getId());
-            System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
-            System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
+            // System.out.println("-----------------------------------------");
+            // System.out.println("Fulfillment order response:");
+            // System.out.println("id: " + resFulfillmentOrder.getOrder().getId());
+            // System.out.println("status: " + resFulfillmentOrder.getOrder().getStatus());
+            // System.out.println("description: " + resFulfillmentOrder.getOrder().getDescription());
 
 
             Response resDecision = client.decisionOrder(decisionOrder);
