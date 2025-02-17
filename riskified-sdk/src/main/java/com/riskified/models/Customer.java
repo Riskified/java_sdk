@@ -34,6 +34,7 @@ public class Customer implements IValidated {
     private Boolean verifiedPhone;
     private Date verifiedPhoneAt;
     private String userName;
+    private Boolean kycVerified;
     
     public Customer() {
     	
@@ -259,4 +260,10 @@ public class Customer implements IValidated {
     public String getUserName() { return userName; }
 
     public void setUserName(String userName) { this.userName = userName; }
+
+    public Boolean getKycVerified() { return kycVerified; }
+
+    public void setKycVerified(Boolean kycVerified) {
+        this.kycVerified = kycVerified;
+    }
 }

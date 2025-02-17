@@ -1,23 +1,26 @@
 package com.riskified.models;
 
 public class DigitalLineItem extends LineItem {
-	
+
 	// Giftcard industry fields
 	String senderName;
-    	String displayName;
-    	Boolean photoUploaded;
-    	String photoUrl;
-    	String greetingPhotoUrl;
-    	String message;
-    	String greetingMessage;
-    	String cardType;
-    	String cardSubType;
-    	String senderEmail;
-    	Recipient recipient;
-	
+	String displayName;
+	Boolean photoUploaded;
+	String photoUrl;
+	String greetingPhotoUrl;
+	String message;
+	String greetingMessage;
+	String cardType;
+	String cardSubType;
+	String senderEmail;
+	Recipient digitalRecipient;
+
 	public DigitalLineItem(double price, int quantity, String title, Recipient recipient) {
 		super(price, quantity, title);
-		this.recipient = recipient;
+		if (recipient == null) {
+			throw new IllegalArgumentException("Recipient is required for DigitalLineItem");
+		}
+		this.digitalRecipient = recipient;
 	}
 
 	public String getSenderName() {
@@ -101,10 +104,13 @@ public class DigitalLineItem extends LineItem {
 	}
 
 	public Recipient getRecipient() {
-		return recipient;
+		return digitalRecipient;
 	}
 
 	public void setRecipient(Recipient recipient) {
-		this.recipient = recipient;
+		this.digitalRecipient = recipient;
 	}
+
 }
+
+
