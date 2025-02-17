@@ -2,13 +2,18 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.Date;
+
 public class Recipient implements IValidated {
 
 	String email;
 	String phone;
 	SocialDetails social;
-	String accountNumber;
-	String routingNumber;
+	private String accountNumber;
+	private String routingNumber;
+	private Date createdAt;
+	private Date updatedAt;
+	private boolean selfRecipient;
 	
 	public Recipient() {
 	}
@@ -54,4 +59,24 @@ public class Recipient implements IValidated {
 		this.routingNumber = routingNumber;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getUpdatedAt(){
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt){
+		this.updatedAt = updatedAt;
+	}
+
+	public boolean isSelfRecipient() {
+		return selfRecipient;
+	}
+
+	public void setSelfRecipient(boolean selfRecipient) {
+		this.selfRecipient = selfRecipient;
+	}
 }

@@ -39,6 +39,7 @@ public class LineItem implements IValidated {
     private Policy policy;
     private String routingNumber;
     private String accountNumber;
+    private String reasonToTransfer;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -327,6 +328,13 @@ public class LineItem implements IValidated {
         this.accountNumber = accountNumber;
     }
 
+    public String getReasonToTransfer(){
+        return reasonToTransfer;
+    }
+
+    public void setReasonToTransfer(String reasonToTransfer) {
+        this.reasonToTransfer = reasonToTransfer;
+    }
     
 
 
