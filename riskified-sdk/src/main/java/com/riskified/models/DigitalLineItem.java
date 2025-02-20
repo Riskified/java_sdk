@@ -13,14 +13,9 @@ public class DigitalLineItem extends LineItem {
 	String cardType;
 	String cardSubType;
 	String senderEmail;
-	Recipient digitalRecipient;
 
-	public DigitalLineItem(double price, int quantity, String title, Recipient recipient) {
+	public DigitalLineItem(double price, int quantity, String title) {
 		super(price, quantity, title);
-		if (recipient == null) {
-			throw new IllegalArgumentException("Recipient is required for DigitalLineItem");
-		}
-		this.digitalRecipient = recipient;
 	}
 
 	public String getSenderName() {
@@ -103,13 +98,7 @@ public class DigitalLineItem extends LineItem {
 		this.senderEmail = senderEmail;
 	}
 
-	public Recipient getRecipient() {
-		return digitalRecipient;
-	}
 
-	public void setRecipient(Recipient recipient) {
-		this.digitalRecipient = recipient;
-	}
 
 }
 

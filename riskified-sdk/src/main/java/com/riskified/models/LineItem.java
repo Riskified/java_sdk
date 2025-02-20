@@ -37,8 +37,7 @@ public class LineItem implements IValidated {
     private String color;
     private RegistryType registryType;
     private Policy policy;
-    private String routingNumber;
-    private String accountNumber;
+    private Recipient recipient;
     private String reasonToTransfer;
 
 
@@ -312,21 +311,14 @@ public class LineItem implements IValidated {
 		this.policy = policy;
 	}
 
-    public String getRoutingNumber() {
-        return routingNumber;
+    public Recipient getRecipient() {
+        return recipient;
     }
 
-    public void setRoutingNumber(String routingNumber) {
-        this.routingNumber = routingNumber;
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
 
     public String getReasonToTransfer(){
         return reasonToTransfer;
