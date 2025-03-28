@@ -1064,6 +1064,7 @@ public class RiskifiedClient {
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
+        postRequest.setHeader("API-VERSION", "2");
         ByteArrayEntity input;
         input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
 		postRequest.setEntity(input);

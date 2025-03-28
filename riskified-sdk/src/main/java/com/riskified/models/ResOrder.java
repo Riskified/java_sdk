@@ -99,25 +99,6 @@ public class ResOrder {
     public RecoveryEligibility getRecoveryEligibility(){return recoveryEligibility;}
 
     public void setRecoveryEligibility(RecoveryEligibility recoveryEligibility){this.recoveryEligibility = recoveryEligibility;}
-    
-    public class Advice { 
-    	
-    	private boolean in_regulatory_scope;
-    	private boolean safe_order;
-    	private String recommendation;
-    	
-    	
-    	public boolean getRegulatoryScope() {
-    		return in_regulatory_scope;
-    	}
-    	public String getRecommendation() {
-    		return recommendation;
-    	}
-    	
-    	public boolean getSafeOrder() {
-    		return safe_order;
-    	}
-    
-    }
+
     
 }
