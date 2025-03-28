@@ -13,7 +13,8 @@ public class ResOrder {
 	private String action;
 	private Advice advice;
     private RecoveryEligibility recoveryEligibility;
-	
+    private Double riskScore;
+
 	
     public String getId() {
         return id;
@@ -100,5 +101,8 @@ public class ResOrder {
 
     public void setRecoveryEligibility(RecoveryEligibility recoveryEligibility){this.recoveryEligibility = recoveryEligibility;}
 
-    
+    public void setRiskScore(Double riskScore){this.riskScore = riskScore;}
+
+    public Double getRiskScore(){return riskScore;}
+
 }
