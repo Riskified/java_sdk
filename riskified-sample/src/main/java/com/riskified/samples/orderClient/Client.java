@@ -4,14 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.riskified.Environment;
+import com.riskified.*;
+import com.riskified.validations.Validation;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
-import com.riskified.RiskifiedError;
 //import com.riskified.TransStatus;
-import com.riskified._type;
-import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
 import com.riskified.validations.FieldBadFormatException;
 
@@ -26,6 +24,8 @@ public class Client {
 
         Order order = generateOrder();
 
+        Order decideOrder = decideOrder();
+
         Order updateOrder = generateUpdateOrder(order);
 
         CheckoutOrder screenOrder = generateScreenOrder();
@@ -39,42 +39,55 @@ public class Client {
         DecisionOrder decisionOrder = generateDecisionOrder(order);
 
         ArrayOrders orders = generateHistoricalOrders(order);
+        ChargebackOrder chargebackOrder = generateChargebackOrder();
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
             // Or according 'riskified_sdk.properties' configuration file, like this:
-            RiskifiedClient client = new RiskifiedClient();
-            /*
-            Response resAdviseOrder = client.adviseOrder(adviseOrder);
-          
-            System.out.println("Advise order response:");
-            System.out.println("id: " + resAdviseOrder.getOrder().getId());
-            System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
-            System.out.println("advise response rec " + resAdviseOrder.getOrder().getAdvice().getRecommendation());
-            System.out.println("advise response scope " + resAdviseOrder.getOrder().getAdvice().getRegulatoryScope());
-            
-		
-            System.out.println("-----------------------------------------");  
+            //RiskifiedClient client = new RiskifiedClient("www.yossirtest_post.com", "6a21f867852d8a097b46803fa09ea61d", Environment.SANDBOX);
+            RiskifiedClient client = new RiskifiedClient("geringtestAsync.com", "d68531d725768c84748b16749d184592", Environment.SANDBOX);
 
-          */
-            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
+            //RiskifiedClient client = new RiskifiedClient("www.kaorisugado_test_pre.com", "db76c5924368ff011f697a365a9be778", Environment.SANDBOX, Validation.IGNORE_MISSING);
+            //RiskifiedClient.RiskifiedClientBuilder builder = new RiskifiedClient.RiskifiedClientBuilder("www.theory.co.jp_jp", "4f65048287059f4a8aa4a36e0dd36aa5", Environment.SANDBOX);
+            //builder.setRequestTimeout(10);
+            //builder.setConnectionTimeout(5);
+            //RiskifiedClient client = new RiskifiedClient(builder);
 
-            System.out.println("Checkout create order response:");
-            System.out.println("id: " + resCheckoutOrder.getOrder().getId());
-            System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
-            System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
+//            Response resAdviseOrder = client.adviseOrder(adviseOrder);
+//
+//            System.out.println("Advise order response:");
+//            System.out.println("id: " + resAdviseOrder.getOrder().getId());
+//            System.out.println("status: " + resAdviseOrder.getOrder().getStatus());
+//            if (resAdviseOrder.getOrder().getAdvice() != null) {
+//                for(Recommendation recs: resAdviseOrder.getOrder().getAdvice().getRecommendation()){
+//                    System.out.println("rec type: " + recs.getType());
+//                    System.out.println( "recommended: " + recs.getRecommendation());
+//                }
+//
+//            }
 
-
-            Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
 
             System.out.println("-----------------------------------------");
-            System.out.println("Checkout denied order response:");
-            System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
-            System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
-            System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
 
 
+//            Response resCheckoutOrder = client.checkoutOrder(checkoutOrder);
+//
+//            System.out.println("Checkout create order response:");
+//            System.out.println("id: " + resCheckoutOrder.getOrder().getId());
+//            System.out.println("status: " + resCheckoutOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCheckoutOrder.getOrder().getDescription());
+//
+//
+//            Response resCheckoutDeniedOrder = client.checkoutDeniedOrder(checkoutDeniedOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Checkout denied order response:");
+//            System.out.println("id: " + resCheckoutDeniedOrder.getOrder().getId());
+//            System.out.println("status: " + resCheckoutDeniedOrder.getOrder().getStatus());
+//            System.out.println("description: " + resCheckoutDeniedOrder.getOrder().getDescription());
+
+//
             Response resCreateOrder = client.createOrder(order);
 
             System.out.println("-----------------------------------------");
@@ -82,6 +95,40 @@ public class Client {
             System.out.println("id: " + resCreateOrder.getOrder().getId());
             System.out.println("status: " + resCreateOrder.getOrder().getStatus());
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
+            System.out.println("risk score: " + resCreateOrder.getOrder().getRiskScore());
+
+//            Response resChargebackOrder = client.chargebackOrder(chargebackOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Chargeback order response:");
+//            System.out.println("id: " + resChargebackOrder.getOrder().getId());
+//            System.out.println("status: " + resChargebackOrder.getOrder().getStatus());
+//            System.out.println("description: " + resChargebackOrder.getOrder().getDescription());
+//            //System.out.println("risk score: " + resChargebackOrder.getOrder().getRiskScore());
+
+//            Response resDecision = client.decisionOrder(decisionOrder);
+//
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Decision order response:");
+//            System.out.println("id: " + resDecision.getOrder().getId());
+//            System.out.println("status: " + resDecision.getOrder().getStatus());
+//            System.out.println("description: " + resDecision.getOrder().getDescription());
+//            //System.out.println("risk score: " + resDecision.getOrder().getRiskScore());
+//            Response response = client.analyzeOrder(order);
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Create order response:");
+//            System.out.println("id: " + response.getOrder().getId());
+//            System.out.println("status: " + response.getOrder().getStatus());
+//            System.out.println("description: " + response.getOrder().getDescription());
+//            System.out.println("category: " + response.getOrder().getCategory());
+//            System.out.println("risk score: " + response.getOrder().getRiskScore());
+//            if (response.getOrder().getAdvice() != null) {
+//                for(Recommendation recs: response.getOrder().getAdvice().getRecommendation()){
+//                    System.out.println("rec type: " + recs.getType() + "is recommended: " + recs.getIsRecommended());
+//                }
+//
+//            }
+
             /*
             Response resScreenOrder = client.screenOrder(screenOrder);
     
@@ -151,6 +198,41 @@ public class Client {
         	printError(e);
         }
         
+
+    }
+
+    private static Order decideOrder() throws ParseException {
+        Order order = new Order();
+        order.setId("Test_LT2500118405");
+        order.setName("null null");
+        order.setCartToken("5cbbdfa359d38b9d250f7a7c943c7935fab8e28d24b7b1fccd0eabf553f702ac");
+        order.setCreatedAt(parseDate("02-11-2025 00:00:00.0"));
+        order.setCurrency("JPY");
+        order.setUpdatedAt(parseDate("01-23-2025 00:00:00.0"));
+        order.setGateway("gmopg_cc");
+        order.setBrowserIp("113.32.8.18");
+        order.setTotalPrice(6600);
+        order.setSource("web");
+        order.setEmail("3ds_not_recommended@test.com");
+
+
+
+        LineItem lineItem = new LineItem(6000, 1, "セーター sweater", "3913470");
+        lineItem.setColor("black");
+        lineItem.setRequiresShipping(true);
+        lineItem.setProperties(null);
+        lineItem.setTaxLines(null);
+        lineItem.setBrand("Theory luxe");
+        lineItem.setProductType("physical");
+        lineItem.setDeliveredTo("shipping_address");
+
+
+        order.setDiscountCodes(Arrays.asList(new DiscountCode(0, "")));
+
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("5cbbdfa359d38b9d250f7a7c943c7935fab8e28d24b7b1fccd0eabf553f702ac", "", "", "410000******0100", "VISA") ));
+        Customer customer = new Customer("kaori.sugado@riskified.com", "太郎", "佐藤", "1", parseDate("02-11-2025 00:00:00.0"), true, 2);
+        order.setCustomer(customer);
+        return order;
 
     }
     
@@ -307,7 +389,7 @@ public class Client {
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
 
         CreditCardPaymentDetails creditCardPaymentDetails = new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
-        creditCardPaymentDetails.setType(_type.credit_card);
+        //creditCardPaymentDetails.setType(_type.credit_card);
         creditCardPaymentDetails.setAcquirerBin("232323");
         creditCardPaymentDetails.setGateway("goGateway");
         creditCardPaymentDetails.setMid("212212121");
@@ -334,16 +416,47 @@ public class Client {
         return order;
     }
 
+    private static ChargebackOrder generateChargebackOrder() throws ParseException {
+        ChargebackOrder order = new ChargebackOrder();
+        order.setId("#120000000003459");
+        ChargebackDetails cd = new ChargebackDetails();
+        cd.setId("99992328889900");
+        cd.setChargebackAt(parseDate("03-13-2025 00:00:00.0"));
+        cd.setChargebackCurrency("USD");
+        cd.setChargebackAmount(123.23);
+        cd.setReasonCode("ACME Widget");
+        cd.setType("cb");
+        cd.setReasonCode("ACME Spring");
+        cd.setGateway("VNTV");
+        cd.setMid("72395");
+        cd.setArn("2514514541324134");
+        cd.setCreditCardCompany("M/C");
+        //cd.setRespondBy(parseDate("03-14-2025 00:00:00.0"));
+        cd.setCardholder("M/C");
+        cd.setMessage("someMessagee");
+        order.setChargebackDetails(cd);
+
+        //order.setFulfillment(null);
+        DisputeDetails disputeDetails = new DisputeDetails();
+        //disputeDetails.setDisputeType("Fraud");
+        //disputeDetails.setDisputeType("dispute Type");
+        //order.setDisputeDetails(disputeDetails);
+        //System.out.println(order.getDisputeDetails());
+
+        return order;
+
+    }
+
     
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#120000000003451");
+        order.setId("#120000000003460");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("15-12-2016 00:00:00.0"));
-        order.setClosedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setCreatedAt(parseDate("28-03-2025 00:00:00.0"));
+        order.setClosedAt(parseDate("28-03-2025 00:00:00.0"));
         order.setCurrency("CAD");
-        order.setUpdatedAt(parseDate("15-12-2016 00:00:00.0"));
+        order.setUpdatedAt(parseDate("11-03-2025 00:00:00.0"));
         order.setGateway("mypaymentprocessor");
         order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(120.22);
@@ -361,6 +474,11 @@ public class Client {
 
         LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
         lineItem.setColor("black");
+        Recipient recipient = new Recipient();
+        //recipient.setRoutingNumber("CNRB008304");
+        //recipient.setAccountNumber("786868768");
+        recipient.setEmail("regularLineItem@risky.com");
+        //lineItem.setRecipient(recipient);
         
         TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
         travelLineItem.setDeparturePortCode("LLBG");
@@ -375,20 +493,37 @@ public class Client {
         travelLineItem.setCarrierCode("AF");
         travelLineItem.setCarrierName("Air France");
         travelLineItem.setRequiresShipping(false);
-        
+
+        Recipient recipientTravel = new Recipient();
+        //recipientTravel.setRoutingNumber("CNRB008304");
+        //recipientTravel.setAccountNumber("786868768");
+        recipientTravel.setEmail("travelLineItem@risky.com");
+        //travelLineItem.setRecipient(recipientTravel);
+
+        Recipient digitalRecipient = new Recipient();
+        //digitalRecipient.setRoutingNumber("abc123");
+        //digitalRecipient.setAccountNumber("18006868768");
+        digitalRecipient.setEmail("DigitalLineItem2@risky.com");
+
+        //DigitalLineItem digitalLineItem = new DigitalLineItem(12.00, 1, "soap");
+        //digitalLineItem.setRecipient(digitalRecipient);
+       //System.out.println(digitalLineItem.getRecipient().getRoutingNumber());
         order.setShippingLines(Arrays.asList(new ShippingLine(123, "free")));
         CreditCardPaymentDetails cr = new CreditCardPaymentDetails("370010", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA");
         cr.setInstallmentMonths(6);
         cr.setPaymentPlan("at&t");
+        //cr.setExpiryMonth(12);
+        //cr.setExpiryYear(2027);
        
-        /* 
+
         AuthenticationResult authResults = new AuthenticationResult("1");
-        authResults.setTranStatus(TransStatus.A);
-           authResults.set3DChallenge(true);
+        authResults.setTransStatus(TransStatus.A);
+        authResults.set3DChallenge(true);
         authResults.setTRAExemption(true);
-        
+        authResults.setTransStatusReason(TransStatusReason.Eighteen);
+
         cr.setAuthenticationResult(authResults);
-        */
+
         order.setPaymentDetails(Arrays.asList( cr ));
 
         
@@ -418,7 +553,7 @@ public class Client {
         
 
 
-        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA") ));
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
