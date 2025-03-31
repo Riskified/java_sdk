@@ -2,7 +2,7 @@ package com.riskified.models;
 
 public class Recommendation {
     private String type;
-    private boolean recommended;
+    private String recommendation;
 
 
     public String getType() {
@@ -11,10 +11,11 @@ public class Recommendation {
     public void setType(String type) {
         this.type = type;
     }
-    public boolean getIsRecommended() {
-        return recommended;
+
+    public String getRecommendation() {
+        return recommendation;
     }
-    public void setRecommended(boolean recommended) {
-        this.recommended = recommended;
+    public void setRecommendation(String recommended) {
+        this.recommendation = recommendation;
     }
 }
