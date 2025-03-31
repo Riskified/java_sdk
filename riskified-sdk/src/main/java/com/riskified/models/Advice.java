@@ -3,31 +3,33 @@ package com.riskified.models;
 import java.util.List;
 
 public class Advice {
-    private boolean in_regulatory_scope;
-    private boolean safe_order;
+    private boolean inRegulatoryScope;
+    private boolean safeOrder;
     private List<Recommendation> recommendations;
 
 
     public boolean getRegulatoryScope() {
-        return in_regulatory_scope;
+        return inRegulatoryScope;
     }
 
-    public void setRegulatoryScope(boolean in_regulatory_scope) {
-        this.in_regulatory_scope = in_regulatory_scope;
+    public void setRegulatoryScope(boolean inRegulatoryScope) {
+        this.inRegulatoryScope = inRegulatoryScope;
     }
 
     public List<Recommendation> getRecommendation() {
         return recommendations;
     }
+
     public void setRecommendation(List<Recommendation> recommendations) {
         this.recommendations = recommendations;
     }
 
     public boolean getSafeOrder() {
-        return safe_order;
+        return safeOrder;
     }
-    public void setSafeOrder(boolean safe_order) {
-        this.safe_order = safe_order;
+
+    public void setSafeOrder(boolean safeOrder) {
+        this.safeOrder = safeOrder;
     }
 }
 
