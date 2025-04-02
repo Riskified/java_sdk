@@ -34,7 +34,9 @@ public class Customer implements IValidated {
     private Boolean verifiedPhone;
     private Date verifiedPhoneAt;
     private String userName;
-    private Boolean kycVerified;
+    private Boolean hasDefaulted;
+    private Date dateOfBirth;
+    private List<KycDetails> kycDetails;
     
     public Customer() {
     	
@@ -261,9 +263,19 @@ public class Customer implements IValidated {
 
     public void setUserName(String userName) { this.userName = userName; }
 
-    public Boolean getKycVerified() { return kycVerified; }
+    public List<KycDetails> getKycDetails() { return kycDetails; }
 
-    public void setKycVerified(Boolean kycVerified) {
-        this.kycVerified = kycVerified;
+    public void setKycDetails(List<KycDetails> kycDetails) {
+        this.kycDetails = kycDetails;
     }
+
+    public void setHasDefaulted(Boolean hasDefaulted) {
+        this.hasDefaulted = hasDefaulted;
+    }
+
+    public Boolean getHasDefaulted() { return hasDefaulted; }
+
+    public void setDateOfBirth(Date dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+
+    public Date getDateOfBirth() { return dateOfBirth; }
 }
