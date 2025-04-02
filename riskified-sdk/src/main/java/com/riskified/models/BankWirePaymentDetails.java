@@ -5,6 +5,7 @@ import com.riskified.validations.*;
 public class BankWirePaymentDetails implements IPaymentDetails {
     private String accountNumber;
     private String routingNumber;
+    private String token;
 
     public BankWirePaymentDetails(String accountNumber, String routingNumber) {
         this.accountNumber = accountNumber;
@@ -25,6 +26,14 @@ public class BankWirePaymentDetails implements IPaymentDetails {
 
     public void setRoutingNumber(String routingNumber) {
         this.routingNumber = routingNumber;
+    }
+
+    public String getToken(){
+        return token;
+    }
+
+    public void setToken(String token){
+        this.token = token;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
