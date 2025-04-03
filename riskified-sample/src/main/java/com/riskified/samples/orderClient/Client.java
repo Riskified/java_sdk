@@ -44,15 +44,7 @@ public class Client {
         try {
             // Riskified client parameters can be set in the constructor, like this:
             // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
-            // Or according 'riskified_sdk.properties' configuration file, like this:
-            //RiskifiedClient client = new RiskifiedClient("www.yossirtest_post.com", "6a21f867852d8a097b46803fa09ea61d", Environment.SANDBOX);
-            RiskifiedClient client = new RiskifiedClient("geringtestAsync.com", "d68531d725768c84748b16749d184592", Environment.SANDBOX);
 
-            //RiskifiedClient client = new RiskifiedClient("www.kaorisugado_test_pre.com", "db76c5924368ff011f697a365a9be778", Environment.SANDBOX, Validation.IGNORE_MISSING);
-            //RiskifiedClient.RiskifiedClientBuilder builder = new RiskifiedClient.RiskifiedClientBuilder("www.theory.co.jp_jp", "4f65048287059f4a8aa4a36e0dd36aa5", Environment.SANDBOX);
-            //builder.setRequestTimeout(10);
-            //builder.setConnectionTimeout(5);
-            //RiskifiedClient client = new RiskifiedClient(builder);
 
 //            Response resAdviseOrder = client.adviseOrder(adviseOrder);
 //
@@ -213,7 +205,7 @@ public class Client {
         order.setBrowserIp("113.32.8.18");
         order.setTotalPrice(6600);
         order.setSource("web");
-        order.setEmail("3ds_not_recommended@test.com");
+        order.setEmail("test@test.com");
 
 
 
@@ -229,8 +221,8 @@ public class Client {
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(0, "")));
 
-        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("5cbbdfa359d38b9d250f7a7c943c7935fab8e28d24b7b1fccd0eabf553f702ac", "", "", "410000******0100", "VISA") ));
-        Customer customer = new Customer("kaori.sugado@riskified.com", "太郎", "佐藤", "1", parseDate("02-11-2025 00:00:00.0"), true, 2);
+        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("1233434", "", "", "410000******0100", "VISA") ));
+        Customer customer = new Customer("test@test.com", "太郎", "佐藤", "1", parseDate("02-11-2025 00:00:00.0"), true, 2);
         order.setCustomer(customer);
         return order;
 
