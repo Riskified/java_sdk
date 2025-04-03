@@ -1064,6 +1064,7 @@ public class RiskifiedClient {
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
+        postRequest.setHeader("API-VERSION", "2");
         ByteArrayEntity input;
         input = new ByteArrayEntity(body, ContentType.APPLICATION_JSON);
 		postRequest.setEntity(input);
@@ -1074,7 +1075,7 @@ public class RiskifiedClient {
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/json");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/2.15.0"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent","riskified_java_sdk/3.0.0"); // TODO: take the version automatically
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }

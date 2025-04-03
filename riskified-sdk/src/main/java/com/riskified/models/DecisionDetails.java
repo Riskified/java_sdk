@@ -9,7 +9,7 @@ public class DecisionDetails implements IValidated {
     private DecisionType externalStatus;
     private String reason;
     private Date decidedAt;
-    private double amount;
+    private Double amount;
     private String currency;
     private String notes;
 
@@ -51,11 +51,11 @@ public class DecisionDetails implements IValidated {
         this.decidedAt = decidedAt;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

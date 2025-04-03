@@ -2,7 +2,8 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.riskified.TranStatusReason;
+import com.google.gson.annotations.SerializedName;
+import com.riskified.TransStatusReason;
 import com.riskified.TransStatus;
 import com.riskified.validations.*;
 
@@ -11,11 +12,13 @@ public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
-	private TransStatus tranStatus;
-	private TranStatusReason tranStatusReason;
+	private TransStatus transStatus;
+	private TransStatusReason transStatusReason;
 	private Boolean liabilityShift;
-	private Boolean three_d_challenge;
-	private Boolean tra_exemption;
+	private Boolean threeDChallenge;
+
+    @SerializedName("TRA_exemption")
+	private Boolean traExemption;
 	
 	
 
@@ -23,21 +26,21 @@ public class AuthenticationResult implements IValidated {
 	        this.eci = eci;
 	        }
 
-    public TranStatusReason getTranStatusReason() {
-        return tranStatusReason;
+    public TransStatusReason getTransStatusReason() {
+        return transStatusReason;
     }
 
-    public void setTranStatusReason(TranStatusReason tranStatusReason) {
-        this.tranStatusReason = tranStatusReason;
+    public void setTransStatusReason(TransStatusReason transStatusReason) {
+        this.transStatusReason = transStatusReason;
     }
     
 
-    public TransStatus getTranStatus() {
-        return tranStatus;
+    public TransStatus getTransStatus() {
+        return transStatus;
     }
 
-    public void setTranStatus(TransStatus transStatus) {
-        this.tranStatus = transStatus;
+    public void setTransStatus(TransStatus transStatus) {
+        this.transStatus = transStatus;
     }
     
 	
@@ -85,19 +88,19 @@ public class AuthenticationResult implements IValidated {
     }
 
 	public boolean get3DChallenge() {
-		return three_d_challenge;
+		return threeDChallenge;
 	}
 
 	public void set3DChallenge(boolean ThreeDChallenge) {
-		this.three_d_challenge = ThreeDChallenge;
+		this.threeDChallenge = ThreeDChallenge;
 	}
 
 	public boolean getTRAExemption() {
-		return tra_exemption;
+		return traExemption;
 	}
 
 	public void setTRAExemption(boolean TRAExemption) {
-		tra_exemption = TRAExemption;
+        traExemption = TRAExemption;
 	}
     
 }
