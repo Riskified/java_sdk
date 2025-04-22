@@ -2,7 +2,8 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.riskified.TranStatusReason;
+import com.google.gson.annotations.SerializedName;
+import com.riskified.TransStatusReason;
 import com.riskified.TransStatus;
 import com.riskified.validations.*;
 
@@ -11,10 +12,12 @@ public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
-	private TransStatus tranStatus;
-	private TranStatusReason tranStatusReason;
+	private TransStatus transStatus;
+	private TransStatusReason transStatusReason;
 	private Boolean liabilityShift;
 	private Boolean three_d_challenge;
+
+    @SerializedName("TRA_exemption")
 	private Boolean tra_exemption;
 	
 	
@@ -23,21 +26,21 @@ public class AuthenticationResult implements IValidated {
 	        this.eci = eci;
 	        }
 
-    public TranStatusReason getTranStatusReason() {
-        return tranStatusReason;
+    public TransStatusReason getTranStatusReason() {
+        return transStatusReason;
     }
 
-    public void setTranStatusReason(TranStatusReason tranStatusReason) {
-        this.tranStatusReason = tranStatusReason;
+    public void setTranStatusReason(TransStatusReason tranStatusReason) {
+        this.transStatusReason = tranStatusReason;
     }
     
 
     public TransStatus getTranStatus() {
-        return tranStatus;
+        return transStatus;
     }
 
     public void setTranStatus(TransStatus transStatus) {
-        this.tranStatus = transStatus;
+        this.transStatus = transStatus;
     }
     
 	

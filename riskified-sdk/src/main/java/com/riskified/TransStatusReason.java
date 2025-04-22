@@ -1,6 +1,6 @@
 package com.riskified;
 
-public enum TranStatusReason {
+public enum TransStatusReason {
 	Zero_One("01"),
 	Zero_TWO("02"),
 	Zero_Three("03"),
@@ -33,14 +33,14 @@ public enum TranStatusReason {
 	
 	
 
-	private final String tranStatusReason;
+	private final String transStatusReason;
 	
-	TranStatusReason(String tranStatusReason) {
-	        this.tranStatusReason = tranStatusReason;
+	TransStatusReason(String tranStatusReason) {
+	        this.transStatusReason = tranStatusReason;
 	        }
 	
 	public String getValue() {
-	        return tranStatusReason;
+	        return transStatusReason;
 	        }
 	
 }
