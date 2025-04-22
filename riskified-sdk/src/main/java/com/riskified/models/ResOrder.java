@@ -94,19 +94,4 @@ public class ResOrder {
     public void setAction(String action) {
         this.action = action;
     }
-    
-    public class Advice { 
-    	
-    	private boolean in_regulatory_scope;
-    	private String recommendation;
-    	
-    	public boolean getRegulatoryScope() {
-    		return in_regulatory_scope;
-    	}
-    	public String getRecommendation() {
-    		return recommendation;
-    	}
-    
-    }
-    
 }
