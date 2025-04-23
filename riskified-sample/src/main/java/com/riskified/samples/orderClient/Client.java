@@ -9,7 +9,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 
 import com.riskified.RiskifiedError;
-//import com.riskified.TransStatus;
 import com.riskified._type;
 import com.riskified.RiskifiedClient;
 import com.riskified.models.*;
