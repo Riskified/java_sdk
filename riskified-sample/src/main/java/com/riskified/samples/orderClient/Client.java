@@ -58,8 +58,6 @@ public class Client {
             System.out.println("-----------------------------------------");  
 
           */
-         //   checkoutOrder;
-         //   String checkoutOrderString = String.valueof(checkoutOrder);
 
 
 
