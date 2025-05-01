@@ -1,60 +1,73 @@
 Riskified JAVA SDK
 =================
 
-version: 2.3.2
+version: v3.0.0
 ------------------
 
-See http://apiref.riskified.com for full API documentation
+# 📚Documentation
 
-see riskified-sample/ for examples on how to use this SDK.
+For complete API documentation, visit [Riskified API Reference](https://apiref.riskified.com)
 
-Data validation:
 
----------------
-The SDK includes a validation mechanism to help you catch formatting and data issues quickly.
-However, it is possible to control the level of validation, through the SDKs Validation object,
-which is the forth parameter in the SDK's RiskifiedClient constructor.
-For example, you can tell the Validation engine to ignore missing values, by passing the constructor the
-Validations.ignoreMissing
+# 🚀Getting Started
+    
+**Installation**
 
-like this:
+Add this dependency to your project's pom.xml
 
-```text
-RiskifiedClient client = new RiskifiedClient(domain, authToken, Environment.SANDBOX, Validation.IGNORE_MISSING);
+```xml
+    <dependency>
+        <groupId>com.riskified</groupId>
+        <artifactId>riskified-sdk</artifactId>
+        <version>v3.0.0</version>
+    </dependency>
 ```
 
-Or specify the validation type in the config file 'riskified_sdk.properties'.
+You can also import the dependecy through your IDE:
+* **IntelliJ IDEA**: Go to File → Project Structure → Libraries → + → From Maven, then search for "com.riskified:riskified-sdk:v3.0.0"
+* **Eclipse**: Right-click on your project → Maven → Add Dependency, then search for the artifact
 
-Available validation types:
+For Gradle projects, add to your build.gradle file:
+```java
+implementation 'com.riskified:riskified-sdk:v3.0.0' 
+```
 
-* none - disable validations
-* ignoreMissing - validates only the data format
-* all - validates the data format and that required fields are not missing
+# 🛠️Configuration
+```java
+RiskifiedClient client = new RiskifiedClient(<shopUrl>, <authToken>, Environment.SANDBOX);
+```
+**Data Validation**
+The SDK includes a validation mechanism to help you catch formatting and data issues quickly. You can control the validation level through the `Validation` object when creating a `RiskifiedClient`
 
-PSD2: Advise endpoint old response testing:
+```java
+// Initialize with specific validation level
+RiskifiedClient client = new RiskifiedClient(<shopUrl>, <authToken>, Environment.SANDBOX, Validation.IGNORE_MISSING);
+```
 
--------------------------------------------
-Riskified changed the /advice endpoint response. To enable the old response for testing purposes, follow steps below:
+| Type              | Description                               |
+|-------------------|-------------------------------------------|
+| `NONE`            | Disable validations completely            |
+| `IGNORE_MISSING`  | Validate only data format                 |
+| `ALL`             | Validate data format and required fields  |
 
-1. Open riskified_sdk.properties file
-2. Set "enable_old_advise_response" to "true"
+## 🧪 Examples
 
-Riskified SDK will return the old advise response.
+For complete examples on how to use this SDK, refer to the `riskified-sample/` directory in the repository.
 
-Prerequisites:
+### Building the SDK and Samples
+**Build the SDK** 
+```bash 
+bash
+mvn package
+```
+which will build both the SDK and the samples
+# Running the samples:
 
----------------
 
-* Java JDK-1.5 or higher
-
-Running the samples:
-
---------------------------
-
-* **Build the SDK** - Run `mvn package` which will build both the SDK and the samples
-* **Configure your properties** (authKey and shopUrl) - in the riskified-sdk/src/main/resources/riskified_sdk.properties file.
+* **Configure your properties** (authKey and shopUrl) - in the 
+riskified-sdk/src/main/resources/riskified_sdk.properties file.
  Your Riskified's authorization token (authKey) can be found in the [advanced settings section](https://sandbox.riskified.com/main/settings/advanced) of your Riskified sandbox environment.
-
+ 
 ## Simple order creation sample
 
 This samples shows how to construct an Order model and invoke the basic api/create endpoint
@@ -64,10 +77,10 @@ cd riskified-sample
 mvn exec:java -Dexec.mainClass="com.riskified.samples.orderClient.SimpleClient"
 ```
 
-Client sample
-===============
+## Client sample
 
-This samples shows how to construct an Order model and invoke each and every one of our endpoints with it
+
+This sample shows how to construct an Order model and invoke each and every one of our endpoints with it
 
 ```shell
 cd riskified-sample
@@ -94,16 +107,6 @@ mvn exec:java -Dexec.mainClass="com.riskified.samples.notificationServer.servlet
 
 Then you can test the endpoint by running a curl command from another terminal
 
-```sh
-curl -H "Content-Type: application/json" -H  "X-RISKIFIED-HMAC-SHA256: 071ef80d5790011d2f111479b75eed15e907432a4523defb4e627c6725d3b6b3" -X POST -d '{"order":{"id":"123","status":"approved","old_status":"submitted","description":"Approved by Riskified"}}' http://localhost:8080
-```
-
-## Maven dependency excerpt
-
-```xml
-<dependency>
-    <groupId>com.riskified</groupId>
-    <artifactId>riskified-sdk</artifactId>
-    <version>v2.3.0</version>
-</dependency>
+```bash
+curl -H "Content-Type: application/json" \ -H "X-RISKIFIED-HMAC-SHA256:071ef80d5790011d2f111479b75eed15e907432a4523defb4e627c6725d3b6b3" \ -X POST \ -d '{"order":{"id":"123","status":"approved","old_status":"submitted","description":"Approved by Riskified"}}' \ http://localhost:8080
 ```
