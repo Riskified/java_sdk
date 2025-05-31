@@ -65,8 +65,8 @@ public class Customer implements IValidated {
             Validate.notNullOrEmpty(this, this.email, "Email");
             Validate.notNullOrEmpty(this, this.firstName, "First Name");
             Validate.notNullOrEmpty(this, this.lastName, "Last Name");
-            Validate.notNullOrEmpty(this, this.id, "Id");
-            Validate.notNull(this, this.createdAt, "Created At");
+            //Validate.notNullOrEmpty(this, this.id, "Id");
+            //Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNull(this, this.verifiedEmail, "Verified Email");
         }
 
