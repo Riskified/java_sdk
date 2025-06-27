@@ -16,7 +16,7 @@ public class Recommendation {
     public String getRecommendation() {
         return recommendation;
     }
-    public void setRecommendation(String recommended) {
+    public void setRecommendation(String recommendation) {
         this.recommendation = recommendation;
     }
 
