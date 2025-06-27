@@ -543,7 +543,6 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
- //       order.setShippingAddress(Arrays.asList((address)));
 
         return order;
     }
