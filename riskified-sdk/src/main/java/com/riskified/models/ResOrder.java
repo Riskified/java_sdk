@@ -14,6 +14,7 @@ public class ResOrder {
 	private Advice advice;
     private RecoveryEligibility recoveryEligibility;
     private Double riskScore;
+    private PolicyProtect policyProtect;
 
 	
     public String getId() {
@@ -104,5 +105,12 @@ public class ResOrder {
     public void setRiskScore(Double riskScore){this.riskScore = riskScore;}
 
     public Double getRiskScore(){return riskScore;}
+
+    public PolicyProtect getPolicyProtect() {
+        return policyProtect;
+    }
+    public void setPolicyProtect(PolicyProtect policyProtect) {
+        this.policyProtect = policyProtect;
+    }
 
 }

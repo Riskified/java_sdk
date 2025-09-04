@@ -2,6 +2,7 @@ package com.riskified.notifications;
 
 import com.riskified.models.Context;
 import com.riskified.models.Custom;
+import com.riskified.models.PolicyProtect;
 import com.riskified.models.RecoveryEligibility;
 
 // Shop URL may also be added to the API notifications from Riskified depending on your
@@ -32,6 +33,7 @@ public class Notification {
         private RecoveryEligibility recoveryEligibility;
         private Context context;
         private String[] decision_reasons;
+        private PolicyProtect policyProtect;
 
         public String getId() {
             return id;
@@ -106,5 +108,10 @@ public class Notification {
         public void setDecisionReasons(String[] decisionReasons) {
             this.decision_reasons = decisionReasons;
         }
+
+        public PolicyProtect getPolicyProtect() {
+            return policyProtect;
+        }
+        public void setPolicyProtect(PolicyProtect policyProtect) {}
     }
 }
