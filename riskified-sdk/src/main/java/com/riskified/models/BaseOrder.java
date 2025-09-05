@@ -83,10 +83,15 @@ public abstract class BaseOrder implements IValidated {
             Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNull(this, this.updatedAt, "Updated At");
             Validate.notNullOrEmpty(this, this.gateway, "Gateway");
-            Validate.notNullOrEmpty(this, this.browserIp, "Browser IP");
+            if (this.source != null && !this.source.equalsIgnoreCase("phone")){
+                Validate.notNullOrEmpty(this, this.browserIp, "Browser IP");
+            }
+
             Validate.notNull(this, this.totalPrice, "Total Price");
             Validate.notNull(this, this.lineItems, "Line Items");
-            Validate.notNull(this, this.paymentDetails, "Payment Details");
+            if (this.gateway != null && !this.gateway.equalsIgnoreCase("giftcard")){
+                Validate.notNull(this, this.paymentDetails, "Payment Details");
+            }
             Validate.notNull(this, this.customer, "Customer");
             Validate.notNull(this, this.billingAddress, "Billing Address");
         }
