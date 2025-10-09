@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Map;
+
 public class ResOrder {
 
     private String id;
@@ -15,6 +19,9 @@ public class ResOrder {
     private RecoveryEligibility recoveryEligibility;
     private Double riskScore;
     private PolicyProtect policyProtect;
+
+    @SerializedName("risk_indicators")
+    private Map<String, Object> riskIndicatorsMap;
 
 	
     public String getId() {
@@ -111,6 +118,35 @@ public class ResOrder {
     }
     public void setPolicyProtect(PolicyProtect policyProtect) {
         this.policyProtect = policyProtect;
+    }
+
+
+    public Map<String, Object> getRiskIndicatorsMap() {
+        return riskIndicatorsMap;
+    }
+
+    public void setRiskIndicatorsMap(Map<String, Object> riskIndicatorsMap) {
+        this.riskIndicatorsMap = riskIndicatorsMap;
+    }
+
+    // Convenience method to get as RiskIndicators object
+    public RiskIndicators getRiskIndicators() {
+        if (riskIndicatorsMap == null || riskIndicatorsMap.isEmpty()) {
+            return null;
+        }
+
+        RiskIndicators ri = new RiskIndicators();
+        riskIndicatorsMap.forEach(ri::set);
+        return ri;
+    }
+
+    // Convenience method to set from RiskIndicators object
+    public void setRiskIndicators(RiskIndicators riskIndicators) {
+        if (riskIndicators == null) {
+            this.riskIndicatorsMap = null;
+        } else {
+            this.riskIndicatorsMap = riskIndicators.getAllProperties();
+        }
     }
 
 }

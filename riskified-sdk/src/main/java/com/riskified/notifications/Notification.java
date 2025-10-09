@@ -1,9 +1,9 @@
 package com.riskified.notifications;
 
-import com.riskified.models.Context;
-import com.riskified.models.Custom;
-import com.riskified.models.PolicyProtect;
-import com.riskified.models.RecoveryEligibility;
+import com.google.gson.annotations.SerializedName;
+import com.riskified.models.*;
+
+import java.util.Map;
 
 // Shop URL may also be added to the API notifications from Riskified depending on your
 // account configuration (contact your Account Manager or Integration Engineer for details).
@@ -34,6 +34,8 @@ public class Notification {
         private Context context;
         private String[] decision_reasons;
         private PolicyProtect policyProtect;
+        @SerializedName("risk_indicators")
+        private Map<String, Object> riskIndicatorsMap;
 
         public String getId() {
             return id;
@@ -113,5 +115,33 @@ public class Notification {
             return policyProtect;
         }
         public void setPolicyProtect(PolicyProtect policyProtect) {}
+
+        public Map<String, Object> getRiskIndicatorsMap() {
+            return riskIndicatorsMap;
+        }
+
+        public void setRiskIndicatorsMap(Map<String, Object> riskIndicatorsMap) {
+            this.riskIndicatorsMap = riskIndicatorsMap;
+        }
+
+        // Convenience method to get as RiskIndicators object
+        public RiskIndicators getRiskIndicators() {
+            if (riskIndicatorsMap == null || riskIndicatorsMap.isEmpty()) {
+                return null;
+            }
+
+            RiskIndicators ri = new RiskIndicators();
+            riskIndicatorsMap.forEach(ri::set);
+            return ri;
+        }
+
+        // Convenience method to set from RiskIndicators object
+        public void setRiskIndicators(RiskIndicators riskIndicators) {
+            if (riskIndicators == null) {
+                this.riskIndicatorsMap = null;
+            } else {
+                this.riskIndicatorsMap = riskIndicators.getAllProperties();
+            }
+        }
     }
 }
