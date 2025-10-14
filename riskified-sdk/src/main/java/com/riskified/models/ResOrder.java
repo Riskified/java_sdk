@@ -136,7 +136,9 @@ public class ResOrder {
         }
 
         RiskIndicators ri = new RiskIndicators();
-        riskIndicatorsMap.forEach((key, value) -> ri.set(key, value));
+        for (Map.Entry<String, Object> entry : riskIndicatorsMap.entrySet()) {
+            ri.set(entry.getKey(), entry.getValue());
+        }
         return ri;
     }
 
