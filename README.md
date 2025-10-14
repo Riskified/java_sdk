@@ -1,7 +1,7 @@
 Riskified JAVA SDK
 =================
 
-version: 2.3.2
+version: 3.3.0
 ------------------
 
 See http://apiref.riskified.com for full API documentation
@@ -104,6 +104,7 @@ curl -H "Content-Type: application/json" -H  "X-RISKIFIED-HMAC-SHA256: 071ef80d5
 <dependency>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>v2.3.0</version>
+    <version>v3.3.0</version>
 </dependency>
 ```
+
