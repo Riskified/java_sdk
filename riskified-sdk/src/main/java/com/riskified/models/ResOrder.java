@@ -136,7 +136,7 @@ public class ResOrder {
         }
 
         RiskIndicators ri = new RiskIndicators();
-        riskIndicatorsMap.forEach(ri::set);
+        riskIndicatorsMap.forEach((key, value) -> ri.set(key, value));
         return ri;
     }
 
