@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class RiskIndicators {
-    private final Map<String, Object> properties = new HashMap<>();
+    private final Map<String, Object> properties = new HashMap<String, Object>();
 
     // Generic setter - accepts any field name and value
     public RiskIndicators set(String fieldName, Object value) {
@@ -44,7 +44,7 @@ public class RiskIndicators {
 
     // Get all properties
     public Map<String, Object> getAllProperties() {
-        return new HashMap<>(properties);
+        return new HashMap<String, Object>(properties);
     }
 
     @Override

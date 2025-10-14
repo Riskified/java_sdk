@@ -82,10 +82,10 @@ public class Recipient implements IValidated {
 	}
 
 	public String getWalletId(){
-		return self.walletId;
+		return walletId;
 	}
 
 	public void setWalletId(String walletId){
-		self.walletId = walletId
+		this.walletId = walletId;
 	}
 }

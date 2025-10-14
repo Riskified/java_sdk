@@ -2,6 +2,8 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.Date;
+
 public class BankWirePaymentDetails implements IPaymentDetails {
     private String accountNumber;
     private String routingNumber;
@@ -39,19 +41,19 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     }
 
     public Date getStoredPaymentCreatedAt(){
-        return self.storedPaymentCreatedAt;
+        return storedPaymentCreatedAt;
     }
 
     public void setStoredPaymentCreatedAt(Date storedPaymentCreatedAt){
-        this.token = storedPaymentCreatedAt;
+        this.storedPaymentCreatedAt = storedPaymentCreatedAt;
     }
 
     public Date getStoredPaymentUpdateddAt(){
-        return self.storedPaymentUpdatedAt;
+        return storedPaymentUpdatedAt;
     }
 
     public void setStoredPaymentUpdateddAt(Date storedPaymentUpdatedAt){
-        this.token = storedPaymentUpdatedAt;
+        this.storedPaymentUpdatedAt = storedPaymentUpdatedAt;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
