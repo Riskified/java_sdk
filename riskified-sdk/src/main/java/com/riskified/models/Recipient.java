@@ -14,6 +14,7 @@ public class Recipient implements IValidated {
 	private Date createdAt;
 	private Date updatedAt;
 	private boolean selfRecipient;
+	private String walletId;
 	
 	public Recipient() {
 	}
@@ -78,5 +79,13 @@ public class Recipient implements IValidated {
 
 	public void setSelfRecipient(boolean selfRecipient) {
 		this.selfRecipient = selfRecipient;
+	}
+
+	public String getWalletId(){
+		return self.walletId;
+	}
+
+	public void setWalletId(String walletId){
+		self.walletId = walletId
 	}
 }

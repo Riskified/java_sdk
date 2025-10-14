@@ -6,6 +6,8 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     private String accountNumber;
     private String routingNumber;
     private String token;
+    private Date storedPaymentCreatedAt;
+    private Date storedPaymentUpdatedAt;
 
     public BankWirePaymentDetails(String accountNumber, String routingNumber) {
         this.accountNumber = accountNumber;
@@ -34,6 +36,22 @@ public class BankWirePaymentDetails implements IPaymentDetails {
 
     public void setToken(String token){
         this.token = token;
+    }
+
+    public Date getStoredPaymentCreatedAt(){
+        return self.storedPaymentCreatedAt;
+    }
+
+    public void setStoredPaymentCreatedAt(Date storedPaymentCreatedAt){
+        this.token = storedPaymentCreatedAt;
+    }
+
+    public Date getStoredPaymentUpdateddAt(){
+        return self.storedPaymentUpdatedAt;
+    }
+
+    public void setStoredPaymentUpdateddAt(Date storedPaymentUpdatedAt){
+        this.token = storedPaymentUpdatedAt;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
