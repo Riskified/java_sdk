@@ -43,7 +43,7 @@ public class Client {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-            // RiskifiedClient client = new RiskifiedClient("<shop_url>", "<auth_token>", Environment.SANDBOX);
+            RiskifiedClient client = new RiskifiedClient("shopurl", "authtoken", envEnum);
 
 
 //            Response resAdviseOrder = client.adviseOrder(adviseOrder);
@@ -89,6 +89,7 @@ public class Client {
             System.out.println("description: " + resCreateOrder.getOrder().getDescription());
             System.out.println("risk score: " + resCreateOrder.getOrder().getRiskScore());
 
+
 //            Response resChargebackOrder = client.chargebackOrder(chargebackOrder);
 //
 //            System.out.println("-----------------------------------------");
@@ -106,20 +107,35 @@ public class Client {
 //            System.out.println("status: " + resDecision.getOrder().getStatus());
 //            System.out.println("description: " + resDecision.getOrder().getDescription());
 //            //System.out.println("risk score: " + resDecision.getOrder().getRiskScore());
-//            Response response = client.analyzeOrder(order);
-//            System.out.println("-----------------------------------------");
-//            System.out.println("Create order response:");
-//            System.out.println("id: " + response.getOrder().getId());
-//            System.out.println("status: " + response.getOrder().getStatus());
-//            System.out.println("description: " + response.getOrder().getDescription());
-//            System.out.println("category: " + response.getOrder().getCategory());
-//            System.out.println("risk score: " + response.getOrder().getRiskScore());
-//            if (response.getOrder().getAdvice() != null) {
-//                for(Recommendation recs: response.getOrder().getAdvice().getRecommendation()){
-//                    System.out.println("rec type: " + recs.getType() + "is recommended: " + recs.getIsRecommended());
-//                }
-//
-//            }
+            Response response = client.analyzeOrder(order);
+            System.out.println("-----------------------------------------");
+            System.out.println("decide order response:");
+            System.out.println("id: " + response.getOrder().getId());
+            System.out.println("status: " + response.getOrder().getStatus());
+            System.out.println("description: " + response.getOrder().getDescription());
+            System.out.println("category: " + response.getOrder().getCategory());
+            System.out.println("risk score: " + response.getOrder().getRiskScore());
+            System.out.println("risk indicators: " + response.getOrder().getRiskIndicators());
+            if (response.getOrder().getRiskIndicators() != null) {
+                RiskIndicators riskIndicators = response.getOrder().getRiskIndicators();
+
+                System.out.println("\n=== Risk Indicators ===");
+
+                // Option 1: Get all fields and iterate through them
+                System.out.println("All risk indicator fields:");
+                for (String fieldName : riskIndicators.getFields()) {
+                    Object value = riskIndicators.get(fieldName);
+                    System.out.println("  " + fieldName + ": " + value);
+                }
+
+            }
+            if (response.getOrder().getAdvice() != null) {
+                for(Recommendation recs: response.getOrder().getAdvice().getRecommendation()){
+                    System.out.println("rec type: " + recs.getType() + "is recommended: " + recs.getRecommended());
+                }
+
+            }
+
 
             /*
             Response resScreenOrder = client.screenOrder(screenOrder);
@@ -339,7 +355,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setBillingAddress(Arrays.asList(address));
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -398,11 +414,11 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setBillingAddress(Arrays.asList(address));
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
    
-        order.setShippingAddress((address));
+        order.setShippingAddress(Arrays.asList(address));
 
 
         return order;
@@ -442,35 +458,41 @@ public class Client {
     
     private static Order generateOrder() throws ParseException {
         Order order = new Order();
-        order.setId("#120000000003460");
+        order.setId("test_indicator_7");
         order.setName("#12345");
         order.setEmail("great.customer@example.com");
-        order.setCreatedAt(parseDate("28-03-2025 00:00:00.0"));
+        order.setCreatedAt(parseDate("30-09-2025 00:00:00.0"));
         order.setClosedAt(parseDate("28-03-2025 00:00:00.0"));
         order.setCurrency("CAD");
         order.setUpdatedAt(parseDate("11-03-2025 00:00:00.0"));
-        order.setGateway("mypaymentprocessor");
-        order.setBrowserIp("124.185.86.55");
+        order.setGateway("giftcard");
+        order.setSource("phone");
+        //order.setBrowserIp("124.185.86.55");
         order.setTotalPrice(120.22);
         order.setTotalDiscounts(5);
-        order.setCartToken("1sdaf23j212");
+        //order.setCartToken("1sdaf23j212");
         order.setAdditionalEmails(Arrays.asList("my@email.com", "second@email.co.uk"));
         order.setNote("Shipped to my hotel.");
         order.setReferringSite("google.com");
-
-        Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", parseDate("15-12-2016 00:00:00.0"), true, 10);
+        Customer customer = new Customer(null, "john", "doe");
+        //Customer customer = new Customer("great.customer@example.com", "john", "smith", "999", parseDate("15-12-2016 00:00:00.0"), true, 10);
+        customer.setAccountType("guest");
         SocialDetails social = new SocialDetails("Facebook", "john.smith", "http://www.facebook.com/john.smith");
         social.setEmail("john.smith@facebook.com");
-        customer.getSocial().add(social);
+        //customer.getSocial().add(social);
         order.setCustomer(customer);
 
+        Recipient lineItemRecipient = new Recipient();
+        //Wallet wallet = new Wallet();
+        //wallet.setId("wallet123");
         LineItem lineItem = new LineItem(200, 4, "ACME Spring", "AAA2");
         lineItem.setColor("black");
-        Recipient recipient = new Recipient();
-        //recipient.setRoutingNumber("CNRB008304");
-        //recipient.setAccountNumber("786868768");
-        recipient.setEmail("regularLineItem@risky.com");
-        //lineItem.setRecipient(recipient);
+        //lineItemRecipient.setWallet(wallet);
+        lineItemRecipient.setRoutingNumber("CNRB008304");
+        lineItemRecipient.setAccountNumber("786868768");
+        lineItemRecipient.setEmail("regularLineItem@risky.com");
+        lineItem.setRecipient(lineItemRecipient);
+        //System.out.println("lineItemRecipient : " + lineItemRecipient.getWallet().getId());
         
         TravelLineItem travelLineItem = new TravelLineItem(340, 1, "Flight from Israel to France", "211", "B11", 1, 1);
         travelLineItem.setDeparturePortCode("LLBG");
@@ -516,7 +538,7 @@ public class Client {
 
         cr.setAuthenticationResult(authResults);
 
-        order.setPaymentDetails(Arrays.asList( cr ));
+        //order.setPaymentDetails(Arrays.asList( cr ));
 
         
         order.setLineItems(Arrays.asList(new LineItem(100, 1, "ACME Widget", "101"), lineItem, travelLineItem));
@@ -545,7 +567,7 @@ public class Client {
         
 
 
-        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
+        //order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("370002", "y", "n", "xxxx-xxxx-xxxx-1234", "VISA"), cr ));
 
         Address address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -555,7 +577,16 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+
+        Address address2 = new Address("address2", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address2.setCompany("Kansas Computers");
+        address2.setCountryCode("US");
+        address2.setName("John Doe");
+        address2.setAddress2("Second street");
+        address2.setProvince("New York");
+        address2.setProvinceCode("NY");
+        address2.setZip("64155");
+        order.setBillingAddress(Arrays.asList(address, address2));
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
@@ -565,7 +596,17 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setShippingAddress((address));
+
+        address2 = new Address("address2", "Doe", "108 Main Street", "NYC", "1234567", "United States");
+        address2.setCompany("Kansas Computers");
+        address2.setCountryCode("US");
+        address2.setName("John Doe");
+        address2.setAddress2("Second street");
+        address2.setProvince("New York");
+        address2.setProvinceCode("NY");
+        address2.setZip("64155");
+        order.setShippingAddress(Arrays.asList(address, address2));
+
         
         return order;
     }
@@ -658,7 +699,7 @@ public class Client {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setBillingAddress(Arrays.asList(address));
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");

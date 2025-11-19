@@ -84,7 +84,7 @@ public class AccommodationClient {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setBillingAddress(Arrays.asList(address));
 
         return order;
     }
