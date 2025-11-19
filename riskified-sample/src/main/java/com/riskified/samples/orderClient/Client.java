@@ -43,7 +43,7 @@ public class Client {
 
         try {
             // Riskified client parameters can be set in the constructor, like this:
-            RiskifiedClient client = new RiskifiedClient("shopurl", "authtoken", envEnum);
+            RiskifiedClient client = new RiskifiedClient("shopurl", "authtoken", Environment.SANDBOX);
 
 
 //            Response resAdviseOrder = client.adviseOrder(adviseOrder);
