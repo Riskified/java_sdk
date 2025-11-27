@@ -54,8 +54,8 @@ public abstract class BaseOrder implements IValidated {
     private String vendorId;
     private String vendorName;
     private String vendorIntegrationType;
-    private Address shippingAddress;
-    private Address billingAddress;
+    private List<Address> shippingAddress;
+    private List<Address> billingAddress;
     private List<? extends IPaymentDetails> paymentDetails;
     private ClientDetails clientDetails;
     private List<DiscountCode> discountCodes;
@@ -141,13 +141,15 @@ public abstract class BaseOrder implements IValidated {
         }
 
         if (this.billingAddress != null) {
-            this.billingAddress.validate(validationType);
+            for (Address billingAddress : this.billingAddress) {
+                billingAddress.validate(validationType);
+            }
         }
 
         if (this.shippingAddress != null) {
-         //   for (Address shippingAddress : this.shippingAddress) {
+            for (Address shippingAddress : this.shippingAddress) {
                 shippingAddress.validate(validationType);
-       //     }
+            }
         }
         if (this.decision != null) {
             this.decision.validate(validationType);
@@ -534,17 +536,17 @@ public abstract class BaseOrder implements IValidated {
         this.vendorIntegrationType = vendorIntegrationType;
     }
 
-    public Address getShippingAddress() {return shippingAddress;}
+    public List<Address> getShippingAddress() {return shippingAddress;}
 
-    public void setShippingAddress(Address shippingAddress) {
+    public void setShippingAddress(List<Address> shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
-    public Address getBillingAddress() {
+    public List<Address> getBillingAddress() {
         return billingAddress;
     }
 
-    public void setBillingAddress(Address billingAddress) {
+    public void setBillingAddress(List<Address> billingAddress) {
         this.billingAddress = billingAddress;
     }
 

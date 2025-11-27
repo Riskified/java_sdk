@@ -13,4 +13,7 @@ public class UseCase {
     public String getDecision() {
         return decision;
     }
+    public void setDecision(String decision) {
+        this.decision = decision;
+    }
 }

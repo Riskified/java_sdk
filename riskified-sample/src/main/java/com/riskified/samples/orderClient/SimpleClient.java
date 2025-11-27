@@ -132,7 +132,7 @@ public class SimpleClient {
         address.setProvince("New York");
         address.setProvinceCode("NY");
         address.setZip("64155");
-        order.setBillingAddress(address);
+        order.setBillingAddress(Arrays.asList(address));
 
         address = new Address("John", "Doe", "108 Main Street", "NYC", "1234567", "United States");
         address.setCompany("Kansas Computers");
