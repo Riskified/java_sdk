@@ -48,11 +48,11 @@ public class BankWirePaymentDetails implements IPaymentDetails {
         this.storedPaymentCreatedAt = storedPaymentCreatedAt;
     }
 
-    public Date getStoredPaymentUpdateddAt(){
+    public Date getStoredPaymentUpdatedAt(){
         return storedPaymentUpdatedAt;
     }
 
-    public void setStoredPaymentUpdateddAt(Date storedPaymentUpdatedAt){
+    public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt){
         this.storedPaymentUpdatedAt = storedPaymentUpdatedAt;
     }
 
