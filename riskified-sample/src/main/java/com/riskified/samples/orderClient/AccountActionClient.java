@@ -183,7 +183,9 @@ public class AccountActionClient {
     }
 
     private static Verification generateVerification() {
-        Verification verification = new Verification(new Date(2020,06,25,13,53,19), VerificationStatus.success, "12345");
+        Calendar cal = Calendar.getInstance();
+        cal.set(2020, Calendar.JUNE, 25, 13, 53, 19);
+        Verification verification = new Verification(cal.getTime(), VerificationStatus.success, "12345", "555-625-1199");
         verification.setEmail("customer_email@test.com");
         VerificationSessionDetails verificationSessionDetails = new VerificationSessionDetails();
         verificationSessionDetails.setBrowserIp("111.111.111.111");

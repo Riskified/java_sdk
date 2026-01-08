@@ -41,7 +41,7 @@ public class JsonClient {
         billingAddress.setCountryCode("US");
         billingAddress.setProvinceCode("NY");
         billingAddress.setZip("64155");
-        order.setBillingAddress(billingAddress);
+        order.setBillingAddress(Collections.singletonList(billingAddress));
 
 
         
