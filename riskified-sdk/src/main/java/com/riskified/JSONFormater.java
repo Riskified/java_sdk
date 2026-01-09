@@ -12,8 +12,6 @@ import com.riskified.models.IPaymentDetails;
 import com.riskified.models.PaypalPaymentDetails;
 import com.riskified.models.StripePaymentDetails;
 
-import sun.security.x509.IPAddressName;
-
 public class JSONFormater {
 
 	public static String toJson(Object obj) {
