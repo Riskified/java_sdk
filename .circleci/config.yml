@@ -57,7 +57,7 @@ workflows:
       - hold_on_deploy:
           type: approval
           requires:
-            - build
+            - package
           filters:
             tags:
               only: /^v.*/
