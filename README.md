@@ -1,7 +1,7 @@
 Riskified JAVA SDK
 =================
 
-version: 4.0.0
+version: 5.1.0
 ------------------
 
 See http://apiref.riskified.com for full API documentation
