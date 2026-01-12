@@ -53,7 +53,10 @@ jobs:
 workflows:
   main:
     jobs:
-      - package
+      - package:
+          filters:
+            tags:
+              only: /^v.*/
       - hold_on_deploy:
           type: approval
           requires:
