@@ -4,16 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>v4.1.0</version>
+    <version>v5.1.0</version>
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>https://www.riskified.com</url>
 
     <distributionManagement>
-        <!-- <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository> -->
         <snapshotRepository>
             <id>central</id>
             <url>https://central.sonatype.com/api/v1/publisher/deployments/</url>
@@ -29,17 +25,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.14.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <release>8</release>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.8.0</version>
+                <version>0.10.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>
@@ -68,7 +63,7 @@
              <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-javadoc-plugin</artifactId>
-                 <version>2.9</version>
+                 <version>3.6.3</version>
                  <executions>
                      <execution>
                          <id>attach-javadocs</id>

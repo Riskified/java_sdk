@@ -1,47 +1,82 @@
-version: 2.0
-jobs:
-  build:
+version: 2.1
+
+orbs:
+  git-shallow-clone: riskified/git-shallow-clone@2.8.0
+
+executors:
+  java-executor:
     resource_class: riskified/container-agent
     docker:
-      - image: 284309667046.dkr.ecr.us-east-1.amazonaws.com/riskified/images-library/openjdk-cimg:master-8.0
+      - image: 284309667046.dkr.ecr.us-east-1.amazonaws.com/riskified/images-library/openjdk-cimg:master-21.0
 
-    working_directory: ~/repo
+jobs:
+  package:
+    executor: java-executor
+    working_directory: ~/RiskifiedJavaSDK
     steps:
-      - checkout
-
-      # Download and cache dependencies
+      - run:
+          name: Avoid hosts unknown for github
+          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - git-shallow-clone/checkout:
+          depth: 1
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          - v1-dependencies-
-      - run: mvn dependency:go-offline
-          
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
+      - run:
+          command: mvn dependency:go-offline
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: 
-          command: |
-            echo $SERVER_OSSRH_USERNAME
-      - run: 
+      - run:
+          name: Build project with Maven
+          command: mvn -B package --file pom.xml
+  deploy:
+    executor: java-executor
+    working_directory: ~/RiskifiedJavaSDK
+    steps:
+      - run:
+          name: Avoid hosts unknown for github
+          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run:
+          name: "Configure GPG"
           command: |
             mkdir -p ~/.gnupg
-            echo use-agent >> ~/.gnupg/gpg.conf
             echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
-            echo RELOADAGENT | gpg-connect-agent
+            gpg-connect-agent reloadagent /bye
             echo $SECRING_GPG_ASC_BASE64 | base64 --decode | gpg --batch --no-tty --import --yes
             GPG_TTY=$(tty)
             export GPG_TTY
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
       - run:
-          command: |
-            mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true        
-      
+          command: mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
+
 workflows:
-  version: 2
   main:
     jobs:
-      - build:
+      - package:
           filters:
+            tags:
+              only: /^v.*/
+      - hold_on_deploy:
+          type: approval
+          requires:
+            - package
+          filters:
+            tags:
+              only: /^v.*/
             branches:
-              only: [master, /release-.*/]
+              ignore: /.*/
+      - deploy:
+          requires:
+            - hold_on_deploy
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
