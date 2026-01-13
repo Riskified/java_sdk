@@ -97,7 +97,7 @@ public abstract class BaseOrder implements IValidated {
         }
 
         if (this.totalPrice != null) {
-            Validate.isNumberNegativeOrZero(this, this.totalPrice, "Total Price");
+            Validate.isNumberNegative(this, this.totalPrice, "Total Price");
         }
 
         if (this.browserIp != null) {
