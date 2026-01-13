@@ -1,0 +1,63 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "SampleServer",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.notificationServer.servlet.SampleServer",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.notificationServer.socket.Server",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "AccommodationClient",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.orderClient.AccommodationClient",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "AccountActionClient",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.orderClient.AccountActionClient",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "Client",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.orderClient.Client",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "JsonClient",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.orderClient.JsonClient",
+            "projectName": "riskified-sample"
+        },
+        {
+            "type": "java",
+            "name": "SimpleClient",
+            "request": "launch",
+            "mainClass": "com.riskified.samples.orderClient.SimpleClient",
+            "projectName": "riskified-sample"
+        }
+    ]
+}

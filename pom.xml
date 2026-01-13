@@ -4,6 +4,12 @@
     <groupId>riskified-java-sdk</groupId>
     <artifactId>com.riskified</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -15,7 +21,7 @@
             </plugin>
         </plugins>
     </build>
-    <packaging>pom</packaging>
+
     <modules>
         <module>riskified-sdk</module>
         <module>riskified-sample</module>
