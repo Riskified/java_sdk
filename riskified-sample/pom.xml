@@ -5,6 +5,10 @@
     <artifactId>riskified-sample</artifactId>
     <version>0.0.2-SNAPSHOT</version>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.riskified</groupId>
