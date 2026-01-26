@@ -11,7 +11,8 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 /**
- * Unit tests for AddressListAdapter to verify backward compatibility handling.
+ * Unit tests for AddressListAdapterFactory to verify backward compatibility handling.
+ * Tests the factory-created adapter through Order deserialization.
  */
 public class AddressListAdapterTest {
 

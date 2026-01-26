@@ -3,7 +3,7 @@ package com.riskified.models;
 import java.util.*;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.riskified.adapters.AddressListAdapter;
+import com.riskified.adapters.AddressListAdapterFactory;
 import com.riskified.validations.*;
 
 public abstract class BaseOrder implements IValidated {
@@ -56,9 +56,9 @@ public abstract class BaseOrder implements IValidated {
     private String vendorId;
     private String vendorName;
     private String vendorIntegrationType;
-    @JsonAdapter(AddressListAdapter.class)
+    @JsonAdapter(AddressListAdapterFactory.class)
     private List<Address> shippingAddress;
-    @JsonAdapter(AddressListAdapter.class)
+    @JsonAdapter(AddressListAdapterFactory.class)
     private List<Address> billingAddress;
     private List<? extends IPaymentDetails> paymentDetails;
     private ClientDetails clientDetails;
