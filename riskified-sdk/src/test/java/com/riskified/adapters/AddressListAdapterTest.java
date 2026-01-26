@@ -27,7 +27,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testLegacyFormatSingleObject() {
-        // Legacy JSON with single address object
         String json = "{\"id\":\"order-123\",\"email\":\"customer@example.com\"," +
                 "\"shipping_address\":{\"first_name\":\"John\",\"last_name\":\"Doe\"," +
                 "\"address1\":\"123 Main St\",\"city\":\"New York\",\"country\":\"US\",\"phone\":\"555-1234\"}}";
@@ -49,7 +48,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testCurrentFormatArray() {
-        // Current JSON with address array
         String json = "{\"id\":\"order-456\",\"email\":\"customer@example.com\"," +
                 "\"shipping_address\":[{\"first_name\":\"Jane\",\"last_name\":\"Smith\"," +
                 "\"address1\":\"456 Oak Ave\",\"city\":\"Los Angeles\",\"country\":\"US\",\"phone\":\"555-5678\"}]}";
@@ -71,7 +69,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testCurrentFormatMultipleAddresses() {
-        // Current JSON with multiple addresses
         String json = "{\"id\":\"order-789\",\"email\":\"customer@example.com\"," +
                 "\"shipping_address\":[" +
                 "{\"first_name\":\"Alice\",\"last_name\":\"Johnson\",\"address1\":\"789 Pine Rd\",\"city\":\"Chicago\",\"country\":\"US\",\"phone\":\"555-1111\"}," +
@@ -95,7 +92,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testNullShippingAddress() {
-        // JSON with null shipping address
         String json = "{\"id\":\"order-999\",\"email\":\"customer@example.com\",\"shipping_address\":null}";
 
         Order order = gson.fromJson(json, Order.class);
@@ -106,7 +102,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testMissingShippingAddress() {
-        // JSON without shipping_address field
         String json = "{\"id\":\"order-888\",\"email\":\"customer@example.com\"}";
 
         Order order = gson.fromJson(json, Order.class);
@@ -117,7 +112,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testMixedShippingAndbillingAddresses() {
-        // JSON with both shipping and billing addresses in different formats
         String json = "{\"id\":\"order-777\",\"email\":\"customer@example.com\"," +
                 "\"shipping_address\":{\"first_name\":\"Charlie\",\"last_name\":\"Brown\",\"address1\":\"111 Maple Dr\",\"city\":\"Seattle\",\"country\":\"US\",\"phone\":\"555-3333\"}," +
                 "\"billing_address\":[{\"first_name\":\"Diana\",\"last_name\":\"Davis\",\"address1\":\"222 Birch Ln\",\"city\":\"Portland\",\"country\":\"US\",\"phone\":\"555-4444\"}]}";
@@ -126,12 +120,10 @@ public class AddressListAdapterTest {
 
         assertNotNull("Order should not be null", order);
 
-        // Verify shipping address (legacy format - single object)
         assertNotNull("Shipping address should not be null", order.getShippingAddress());
         assertEquals("Shipping address should have exactly 1 element", 1, order.getShippingAddress().size());
         assertEquals("Shipping address first name should match", "Charlie", order.getShippingAddress().get(0).getFirstName());
 
-        // Verify billing address (current format - array)
         assertNotNull("Billing address should not be null", order.getBillingAddress());
         assertEquals("Billing address should have exactly 1 element", 1, order.getBillingAddress().size());
         assertEquals("Billing address first name should match", "Diana", order.getBillingAddress().get(0).getFirstName());
@@ -139,7 +131,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testRoundTripSerialization() {
-        // Create an order with addresses
         Order order = new Order();
         order.setId("order-555");
         order.setEmail("test@example.com");
@@ -148,15 +139,12 @@ public class AddressListAdapterTest {
 
         order.setShippingAddress(Arrays.asList(address));
 
-        // Serialize to JSON
         String json = gson.toJson(order);
 
-        // Verify it's in array format (not object format)
         assertTrue("Serialized JSON should contain shipping_address as array", json.contains("\"shipping_address\":[{"));
         assertFalse("Serialized JSON should NOT have shipping_address as direct object",
                 json.matches(".*\"shipping_address\":\\{\"first_name\".*"));
 
-        // Deserialize back
         Order deserialized = gson.fromJson(json, Order.class);
 
         assertNotNull("Deserialized order should not be null", deserialized);
@@ -167,7 +155,6 @@ public class AddressListAdapterTest {
 
     @Test(expected = JsonParseException.class)
     public void testInvalidTypeThrowsException() {
-        // JSON with invalid type for shipping_address (string instead of object/array)
         String json = "{\"id\":\"order-666\",\"email\":\"customer@example.com\",\"shipping_address\":\"invalid\"}";
 
         // This should throw JsonParseException due to invalid format
@@ -176,7 +163,6 @@ public class AddressListAdapterTest {
 
     @Test(expected = JsonParseException.class)
     public void testInvalidNumberTypeThrowsException() {
-        // JSON with invalid type for shipping_address (number instead of object/array)
         String json = "{\"id\":\"order-333\",\"email\":\"customer@example.com\",\"shipping_address\":12345}";
 
         // This should throw JsonParseException due to invalid format
@@ -185,7 +171,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testEmptyArray() {
-        // JSON with empty array for shipping_address
         String json = "{\"id\":\"order-444\",\"email\":\"customer@example.com\",\"shipping_address\":[]}";
 
         Order order = gson.fromJson(json, Order.class);
@@ -197,7 +182,6 @@ public class AddressListAdapterTest {
 
     @Test
     public void testEmptyObjectInArray() {
-        // JSON with empty address object in array
         String json = "{\"id\":\"order-222\",\"email\":\"customer@example.com\",\"shipping_address\":[{}]}";
 
         Order order = gson.fromJson(json, Order.class);
