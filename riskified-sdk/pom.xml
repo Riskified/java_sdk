@@ -4,21 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>v5.0.0</version>
+    <version>5.0.1-SNAPSHOT</version>
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>https://www.riskified.com</url>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>central</id>
-            <url>https://central.sonatype.com/api/v1/publisher/deployments/</url>
-        </snapshotRepository>
-        <repository>
-            <id>central</id>
-            <url>https://central.sonatype.com/api/v1/publisher/deployments/</url>
-        </repository>
-    </distributionManagement>
 
     <build>
         <plugins>
