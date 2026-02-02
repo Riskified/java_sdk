@@ -2,12 +2,15 @@ package com.riskified.models;
 
 import java.util.Date;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.riskified.TransStatusReason;
 import com.riskified.TransStatus;
+import com.riskified.adapters.AuthenticationResultAdapterFactory;
 import com.riskified.validations.*;
 
 
+@JsonAdapter(AuthenticationResultAdapterFactory.class)
 public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;

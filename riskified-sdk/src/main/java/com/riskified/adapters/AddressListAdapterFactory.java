@@ -30,7 +30,7 @@ import java.util.List;
  * During deserialization, single address objects are automatically wrapped in a list.
  * Serialization always outputs the current array format.
  *
- * @since 5.1.0
+ * @since 5.0.1
  */
 public class AddressListAdapterFactory implements TypeAdapterFactory {
 
