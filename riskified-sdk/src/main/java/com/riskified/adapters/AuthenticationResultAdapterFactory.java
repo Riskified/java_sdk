@@ -7,10 +7,7 @@ import com.google.gson.stream.JsonWriter;
 import com.riskified.models.AuthenticationResult;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Gson TypeAdapterFactory for AuthenticationResult that handles backward
@@ -26,7 +23,7 @@ import java.util.Set;
  * <p>
  * Handles field name changes between legacy and current formats:
  * <ul>
- * <li><b>Legacy:</b> tran_status, tran_status_reason, tra_exemption</li>
+ * <li><b>Legacy:</b> tran_status, tran_status_reason, tra_exemption (or their camelCase equivalents)</li>
  * <li><b>Current:</b> trans_status, trans_status_reason, TRA_exemption</li>
  * </ul>
  *
@@ -54,8 +51,6 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
      */
     private static class AuthenticationResultTypeAdapter extends TypeAdapter<AuthenticationResult> {
         private final TypeAdapter<AuthenticationResult> delegateAdapter;
-        private final Set<String> manuallyHandledKeys = new HashSet<String>(Arrays.asList(new String[] { "tran_status",
-                "trans_status", "tran_status_reason", "trans_status_reason", "tra_exemption", "TRA_exemption" }));
 
         AuthenticationResultTypeAdapter(Gson gson, TypeAdapterFactory skipPast) {
             // Get delegate adapter to avoid infinite recursion
@@ -84,28 +79,30 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
             JsonObject original = element.getAsJsonObject();
             JsonObject transformed = new JsonObject();
 
-            if (original.has("tran_status")) {
-                transformed.add("trans_status", original.get("tran_status"));
-            } else if (original.has("trans_status")) {
-                transformed.add("trans_status", original.get("trans_status"));
-            }
-
-            if (original.has("tran_status_reason")) {
-                transformed.add("trans_status_reason", original.get("tran_status_reason"));
-            } else if (original.has("trans_status_reason")) {
-                transformed.add("trans_status_reason", original.get("trans_status_reason"));
-            }
-
-            if (original.has("tra_exemption")) {
-                transformed.add("TRA_exemption", original.get("tra_exemption"));
-            } else if (original.has("TRA_exemption")) {
-                transformed.add("TRA_exemption", original.get("TRA_exemption"));
-            }
-
             for (Map.Entry<String, JsonElement> entry : original.entrySet()) {
                 String key = entry.getKey();
-                if (!manuallyHandledKeys.contains(key)) {
-                    transformed.add(key, entry.getValue());
+                JsonElement value = entry.getValue();
+
+                if (key.equals("tranStatus") || key.equals("tran_status")) {
+                    transformed.add("trans_status", value);
+                }
+                else if (key.equals("tranStatusReason") || key.equals("tran_status_reason")) {
+                    transformed.add("trans_status_reason", value);
+                }
+                else if (key.equals("threeDChallenge")) {
+                    transformed.add("three_d_challenge", value);
+                }
+                else if (key.equals("traExemption") || key.equals("tra_exemption")) {
+                    transformed.add("TRA_exemption", value);
+                }
+                else if (key.equals("liabilityShift")) {
+                    transformed.add("liability_shift", value);
+                }
+                else if (key.equals("createdAt")) {
+                    transformed.add("created_at", value);
+                }
+                else {
+                    transformed.add(key, value);
                 }
             }
 
