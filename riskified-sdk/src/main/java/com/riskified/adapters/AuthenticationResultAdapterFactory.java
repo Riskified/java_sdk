@@ -7,10 +7,8 @@ import com.google.gson.stream.JsonWriter;
 import com.riskified.models.AuthenticationResult;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Gson TypeAdapterFactory for AuthenticationResult that handles backward
@@ -26,7 +24,7 @@ import java.util.Set;
  * <p>
  * Handles field name changes between legacy and current formats:
  * <ul>
- * <li><b>Legacy:</b> tran_status, tran_status_reason, tra_exemption</li>
+ * <li><b>Legacy:</b> tran_status, tran_status_reason, tra_exemption (or their camelCase equivalents)</li>
  * <li><b>Current:</b> trans_status, trans_status_reason, TRA_exemption</li>
  * </ul>
  *
@@ -54,13 +52,32 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
      */
     private static class AuthenticationResultTypeAdapter extends TypeAdapter<AuthenticationResult> {
         private final TypeAdapter<AuthenticationResult> delegateAdapter;
-        private final Set<String> manuallyHandledKeys = new HashSet<String>(Arrays.asList(new String[] { "tran_status",
-                "trans_status", "tran_status_reason", "trans_status_reason", "tra_exemption", "TRA_exemption" }));
+        private final Map<String, String> propertyMap = new HashMap<>();
 
         AuthenticationResultTypeAdapter(Gson gson, TypeAdapterFactory skipPast) {
             // Get delegate adapter to avoid infinite recursion
             this.delegateAdapter = gson.getDelegateAdapter(skipPast,
                     TypeToken.get(AuthenticationResult.class));
+
+            this.populateMap();
+
+        }
+
+        private void populateMap() {
+            this.propertyMap.put("tranStatus", "trans_status");
+            this.propertyMap.put("tran_status", "trans_status");
+
+            this.propertyMap.put("tranStatusReason", "trans_status_reason");
+            this.propertyMap.put("tran_status_reason", "trans_status_reason");
+
+            this.propertyMap.put("threeDChallenge", "three_d_challenge");
+
+            this.propertyMap.put("tra_exemption", "TRA_exemption");
+            this.propertyMap.put("traExemption", "TRA_exemption");
+
+            this.propertyMap.put("liabilityShift", "liability_shift");
+
+            this.propertyMap.put("createdAt", "created_at");
         }
 
         @Override
@@ -84,28 +101,14 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
             JsonObject original = element.getAsJsonObject();
             JsonObject transformed = new JsonObject();
 
-            if (original.has("tran_status")) {
-                transformed.add("trans_status", original.get("tran_status"));
-            } else if (original.has("trans_status")) {
-                transformed.add("trans_status", original.get("trans_status"));
-            }
-
-            if (original.has("tran_status_reason")) {
-                transformed.add("trans_status_reason", original.get("tran_status_reason"));
-            } else if (original.has("trans_status_reason")) {
-                transformed.add("trans_status_reason", original.get("trans_status_reason"));
-            }
-
-            if (original.has("tra_exemption")) {
-                transformed.add("TRA_exemption", original.get("tra_exemption"));
-            } else if (original.has("TRA_exemption")) {
-                transformed.add("TRA_exemption", original.get("TRA_exemption"));
-            }
-
             for (Map.Entry<String, JsonElement> entry : original.entrySet()) {
                 String key = entry.getKey();
-                if (!manuallyHandledKeys.contains(key)) {
-                    transformed.add(key, entry.getValue());
+                JsonElement value = entry.getValue();
+
+                if (this.propertyMap.containsKey(key)) {
+                    transformed.add(this.propertyMap.get(key), value);
+                } else {
+                    transformed.add(key, value);
                 }
             }
 

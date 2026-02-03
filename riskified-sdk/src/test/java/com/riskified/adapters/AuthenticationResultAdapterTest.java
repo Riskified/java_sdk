@@ -271,4 +271,27 @@ public class AuthenticationResultAdapterTest {
         assertFalse("3D challenge should be false", result.get3DChallenge());
         assertTrue("TRA exemption should be true", result.getTRAExemption());
     }
+
+    @Test
+    public void testLegacyFormatCamelCase() {
+        String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
+                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
+                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tranStatus\":\"Y\"," +
+                "\"tranStatusReason\":\"01\",\"liability_shift\":true," +
+                "\"threeDChallenge\":false,\"traExemption\":true}}";
+
+        CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
+
+        assertNotNull("Payment details should not be null", details);
+        assertNotNull("Authentication result should not be null", details.getAuthenticationResults());
+
+        AuthenticationResult result = details.getAuthenticationResults();
+        assertEquals("ECI should match", "05", result.getEci());
+        assertEquals("CAVV should match", "AAABCZIhcQAAAABZlyFxAAAAAAA=", result.getCavv());
+        assertEquals("TransStatus should be Y", TransStatus.Y, result.getTransStatus());
+        assertEquals("TransStatusReason should be Zero_One", TransStatusReason.Zero_One, result.getTransStatusReason());
+        assertTrue("Liability shift should be true", result.getLiabilityShift());
+        assertFalse("3D challenge should be false", result.get3DChallenge());
+        assertTrue("TRA exemption should be true", result.getTRAExemption());
+    }
 }
