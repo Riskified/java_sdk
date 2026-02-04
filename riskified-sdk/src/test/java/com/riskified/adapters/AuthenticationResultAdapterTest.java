@@ -22,16 +22,15 @@ public class AuthenticationResultAdapterTest {
     @Before
     public void setUp() {
         gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
     }
 
     @Test
     public void testLegacyFormatAllOldFields() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
-                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tran_status\":\"Y\"," +
-                "\"tran_status_reason\":\"01\",\"liability_shift\":true," +
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"eci\":\"05\"," +
+                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tranStatus\":\"Y\"," +
+                "\"tranStatusReason\":\"01\",\"liabilityShift\":true," +
                 "\"three_d_challenge\":false,\"tra_exemption\":true}}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
@@ -52,10 +51,10 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testCurrentFormatAllNewFields() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
-                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"trans_status\":\"Y\"," +
-                "\"trans_status_reason\":\"01\",\"liability_shift\":true," +
-                "\"three_d_challenge\":false,\"TRA_exemption\":true}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"eci\":\"05\"," +
+                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"transStatus\":\"Y\"," +
+                "\"transStatusReason\":\"01\",\"liabilityShift\":true," +
+                "\"threeDChallenge\":false,\"TRA_exemption\":true}}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
 
@@ -75,9 +74,9 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testMixedFormat() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
-                "\"tran_status\":\"N\",\"trans_status_reason\":\"02\"," +
-                "\"liability_shift\":false,\"three_d_challenge\":true,\"tra_exemption\":false}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"eci\":\"05\"," +
+                "\"tranStatus\":\"N\",\"transStatusReason\":\"02\"," +
+                "\"liabilityShift\":false,\"three_d_challenge\":true,\"tra_exemption\":false}}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
 
@@ -96,7 +95,7 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testNullAuthenticationResult() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":null}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":null}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
 
@@ -118,17 +117,17 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testEnumValues() {
         String json1 = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"tran_status\":\"A\"}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"tranStatus\":\"A\"}}";
         CreditCardPaymentDetails details1 = gson.fromJson(json1, CreditCardPaymentDetails.class);
         assertEquals("TransStatus should be A", TransStatus.A, details1.getAuthenticationResults().getTransStatus());
 
         String json2 = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"trans_status\":\"U\"}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"transStatus\":\"U\"}}";
         CreditCardPaymentDetails details2 = gson.fromJson(json2, CreditCardPaymentDetails.class);
         assertEquals("TransStatus should be U", TransStatus.U, details2.getAuthenticationResults().getTransStatus());
 
         String json3 = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"tran_status_reason\":\"03\"}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"tranStatusReason\":\"03\"}}";
         CreditCardPaymentDetails details3 = gson.fromJson(json3, CreditCardPaymentDetails.class);
         assertEquals("TransStatusReason should be Zero_Three", TransStatusReason.Zero_Three,
                 details3.getAuthenticationResults().getTransStatusReason());
@@ -169,7 +168,7 @@ public class AuthenticationResultAdapterTest {
     @Test(expected = JsonParseException.class)
     public void testInvalidTypeString() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":\"invalid\"}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":\"invalid\"}";
 
         gson.fromJson(json, CreditCardPaymentDetails.class);
     }
@@ -177,7 +176,7 @@ public class AuthenticationResultAdapterTest {
     @Test(expected = JsonParseException.class)
     public void testInvalidTypeArray() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":[{\"eci\":\"05\"}]}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":[{\"eci\":\"05\"}]}";
 
         gson.fromJson(json, CreditCardPaymentDetails.class);
     }
@@ -185,7 +184,7 @@ public class AuthenticationResultAdapterTest {
     @Test(expected = JsonParseException.class)
     public void testInvalidTypeNumber() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":12345}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":12345}";
 
         gson.fromJson(json, CreditCardPaymentDetails.class);
     }
@@ -193,7 +192,7 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testEmptyObject() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{}}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
 
@@ -205,9 +204,9 @@ public class AuthenticationResultAdapterTest {
     @Test
     public void testAllFieldsPresent() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
-                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tran_status\":\"Y\"," +
-                "\"tran_status_reason\":\"01\",\"liability_shift\":true," +
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{\"eci\":\"05\"," +
+                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tranStatus\":\"Y\"," +
+                "\"tranStatusReason\":\"01\",\"liabilityShift\":true," +
                 "\"three_d_challenge\":false,\"tra_exemption\":true}}";
 
         CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
@@ -229,8 +228,8 @@ public class AuthenticationResultAdapterTest {
     public void testBooleanFieldTypes() {
         // Test with true values
         String json1 = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{" +
-                "\"liability_shift\":true,\"three_d_challenge\":true,\"tra_exemption\":true}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{" +
+                "\"liabilityShift\":true,\"three_d_challenge\":true,\"tra_exemption\":true}}";
 
         CreditCardPaymentDetails details1 = gson.fromJson(json1, CreditCardPaymentDetails.class);
         AuthenticationResult result1 = details1.getAuthenticationResults();
@@ -240,8 +239,8 @@ public class AuthenticationResultAdapterTest {
 
         // Test with false values
         String json2 = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{" +
-                "\"liability_shift\":false,\"three_d_challenge\":false,\"tra_exemption\":false}}";
+                "\"credit_card_company\":\"Visa\",\"authenticationResult\":{" +
+                "\"liabilityShift\":false,\"three_d_challenge\":false,\"tra_exemption\":false}}";
 
         CreditCardPaymentDetails details2 = gson.fromJson(json2, CreditCardPaymentDetails.class);
         AuthenticationResult result2 = details2.getAuthenticationResults();
@@ -254,8 +253,8 @@ public class AuthenticationResultAdapterTest {
     public void testPaypalPaymentDetails() {
         String json = "{\"payer_email\":\"test@example.com\",\"payer_status\":\"verified\"," +
                 "\"payer_address_status\":\"confirmed\",\"protection_eligibility\":\"eligible\"," +
-                "\"authentication_result\":{\"eci\":\"07\",\"tran_status\":\"Y\"," +
-                "\"tran_status_reason\":\"01\",\"liability_shift\":true," +
+                "\"authenticationResult\":{\"eci\":\"07\",\"tranStatus\":\"Y\"," +
+                "\"tranStatusReason\":\"01\",\"liabilityShift\":true," +
                 "\"three_d_challenge\":false,\"tra_exemption\":true}}";
 
         PaypalPaymentDetails details = gson.fromJson(json, PaypalPaymentDetails.class);
