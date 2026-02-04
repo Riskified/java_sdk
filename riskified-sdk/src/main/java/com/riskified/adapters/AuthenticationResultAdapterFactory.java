@@ -64,20 +64,16 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
         }
 
         private void populateMap() {
-            this.propertyMap.put("tranStatus", "trans_status");
-            this.propertyMap.put("tran_status", "trans_status");
+            this.propertyMap.put("tranStatus", "transStatus");
+            this.propertyMap.put("tran_status", "transStatus");
 
-            this.propertyMap.put("tranStatusReason", "trans_status_reason");
-            this.propertyMap.put("tran_status_reason", "trans_status_reason");
+            this.propertyMap.put("tranStatusReason", "transStatusReason");
+            this.propertyMap.put("tran_status_reason", "transStatusReason");
 
-            this.propertyMap.put("threeDChallenge", "three_d_challenge");
+            this.propertyMap.put("three_d_challenge", "threeDChallenge");
 
             this.propertyMap.put("tra_exemption", "TRA_exemption");
             this.propertyMap.put("traExemption", "TRA_exemption");
-
-            this.propertyMap.put("liabilityShift", "liability_shift");
-
-            this.propertyMap.put("createdAt", "created_at");
         }
 
         @Override
