@@ -52,32 +52,28 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
      */
     private static class AuthenticationResultTypeAdapter extends TypeAdapter<AuthenticationResult> {
         private final TypeAdapter<AuthenticationResult> delegateAdapter;
-        private final Map<String, String> propertyMap = new HashMap<>();
+        private final Map<String, String> keyConversionMap = new HashMap<>();
 
         AuthenticationResultTypeAdapter(Gson gson, TypeAdapterFactory skipPast) {
             // Get delegate adapter to avoid infinite recursion
             this.delegateAdapter = gson.getDelegateAdapter(skipPast,
                     TypeToken.get(AuthenticationResult.class));
 
-            this.populateMap();
+            this.populateKeyConversionMap();
 
         }
 
-        private void populateMap() {
-            this.propertyMap.put("tranStatus", "trans_status");
-            this.propertyMap.put("tran_status", "trans_status");
+        private void populateKeyConversionMap() {
+            this.keyConversionMap.put("tranStatus", "transStatus");
+            this.keyConversionMap.put("tran_status", "transStatus");
 
-            this.propertyMap.put("tranStatusReason", "trans_status_reason");
-            this.propertyMap.put("tran_status_reason", "trans_status_reason");
+            this.keyConversionMap.put("tranStatusReason", "transStatusReason");
+            this.keyConversionMap.put("tran_status_reason", "transStatusReason");
 
-            this.propertyMap.put("threeDChallenge", "three_d_challenge");
+            this.keyConversionMap.put("three_d_challenge", "threeDChallenge");
 
-            this.propertyMap.put("tra_exemption", "TRA_exemption");
-            this.propertyMap.put("traExemption", "TRA_exemption");
-
-            this.propertyMap.put("liabilityShift", "liability_shift");
-
-            this.propertyMap.put("createdAt", "created_at");
+            this.keyConversionMap.put("tra_exemption", "TRA_exemption");
+            this.keyConversionMap.put("traExemption", "TRA_exemption");
         }
 
         @Override
@@ -105,8 +101,8 @@ public class AuthenticationResultAdapterFactory implements TypeAdapterFactory {
                 String key = entry.getKey();
                 JsonElement value = entry.getValue();
 
-                if (this.propertyMap.containsKey(key)) {
-                    transformed.add(this.propertyMap.get(key), value);
+                if (this.keyConversionMap.containsKey(key)) {
+                    transformed.add(this.keyConversionMap.get(key), value);
                 } else {
                     transformed.add(key, value);
                 }
