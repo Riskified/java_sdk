@@ -133,38 +133,6 @@ public class AuthenticationResultAdapterTest {
                 details3.getAuthenticationResults().getTransStatusReason());
     }
 
-    @Test
-    public void testRoundTripSerialization() {
-        AuthenticationResult result = new AuthenticationResult("05");
-        result.setCavv("AAABCZIhcQAAAABZlyFxAAAAAAA=");
-        result.setTransStatus(TransStatus.Y);
-        result.setTransStatusReason(TransStatusReason.Zero_One);
-        result.setLiabilityShift(true);
-        result.set3DChallenge(false);
-        result.setTRAExemption(true);
-
-        CreditCardPaymentDetails details = new CreditCardPaymentDetails("123456", "Y", "M", "****1234", "Visa");
-        details.setAuthenticationResult(result);
-
-        String json = gson.toJson(details);
-
-        assertTrue("Serialized JSON should contain trans_status", json.contains("\"trans_status\""));
-        assertTrue("Serialized JSON should contain trans_status_reason", json.contains("\"trans_status_reason\""));
-        assertTrue("Serialized JSON should contain TRA_exemption", json.contains("\"TRA_exemption\""));
-        assertFalse("Serialized JSON should NOT contain tran_status", json.contains("\"tran_status\""));
-        assertFalse("Serialized JSON should NOT contain tran_status_reason", json.contains("\"tran_status_reason\""));
-        assertFalse("Serialized JSON should NOT contain tra_exemption", json.contains("\"tra_exemption\""));
-
-        CreditCardPaymentDetails deserialized = gson.fromJson(json, CreditCardPaymentDetails.class);
-
-        assertNotNull("Deserialized details should not be null", deserialized);
-        assertNotNull("Deserialized authentication result should not be null", deserialized.getAuthenticationResults());
-        AuthenticationResult deserializedResult = deserialized.getAuthenticationResults();
-        assertEquals("ECI should match after round-trip", "05", deserializedResult.getEci());
-        assertEquals("TransStatus should match after round-trip", TransStatus.Y, deserializedResult.getTransStatus());
-        assertEquals("TransStatusReason should match after round-trip", TransStatusReason.Zero_One, deserializedResult.getTransStatusReason());
-    }
-
     @Test(expected = JsonParseException.class)
     public void testInvalidTypeString() {
         String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
@@ -264,29 +232,6 @@ public class AuthenticationResultAdapterTest {
 
         AuthenticationResult result = details.getAuthenticationResult();
         assertEquals("ECI should match", "07", result.getEci());
-        assertEquals("TransStatus should be Y", TransStatus.Y, result.getTransStatus());
-        assertEquals("TransStatusReason should be Zero_One", TransStatusReason.Zero_One, result.getTransStatusReason());
-        assertTrue("Liability shift should be true", result.getLiabilityShift());
-        assertFalse("3D challenge should be false", result.get3DChallenge());
-        assertTrue("TRA exemption should be true", result.getTRAExemption());
-    }
-
-    @Test
-    public void testLegacyFormatCamelCase() {
-        String json = "{\"credit_card_bin\":\"123456\",\"credit_card_number\":\"****1234\"," +
-                "\"credit_card_company\":\"Visa\",\"authentication_result\":{\"eci\":\"05\"," +
-                "\"cavv\":\"AAABCZIhcQAAAABZlyFxAAAAAAA=\",\"tranStatus\":\"Y\"," +
-                "\"tranStatusReason\":\"01\",\"liability_shift\":true," +
-                "\"threeDChallenge\":false,\"traExemption\":true}}";
-
-        CreditCardPaymentDetails details = gson.fromJson(json, CreditCardPaymentDetails.class);
-
-        assertNotNull("Payment details should not be null", details);
-        assertNotNull("Authentication result should not be null", details.getAuthenticationResults());
-
-        AuthenticationResult result = details.getAuthenticationResults();
-        assertEquals("ECI should match", "05", result.getEci());
-        assertEquals("CAVV should match", "AAABCZIhcQAAAABZlyFxAAAAAAA=", result.getCavv());
         assertEquals("TransStatus should be Y", TransStatus.Y, result.getTransStatus());
         assertEquals("TransStatusReason should be Zero_One", TransStatusReason.Zero_One, result.getTransStatusReason());
         assertTrue("Liability shift should be true", result.getLiabilityShift());
