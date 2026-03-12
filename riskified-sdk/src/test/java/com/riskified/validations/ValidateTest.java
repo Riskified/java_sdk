@@ -129,7 +129,7 @@ public class ValidateTest {
         } catch (FieldBadFormatException e) {
             caughtException = true;
         }
-        assertTrue("Should have caught exception as we are passing string with lower case letters as country code.", caughtException);
+        assertFalse("Should not have caught exception as 'us' is a valid country code.", caughtException);
 
         caughtException = false;
         try {
