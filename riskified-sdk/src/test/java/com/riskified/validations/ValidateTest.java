@@ -129,7 +129,7 @@ public class ValidateTest {
         } catch (FieldBadFormatException e) {
             caughtException = true;
         }
-        assertFalse("Should not have caught exception as 'us' is a valid country code.", caughtException);
+        assertTrue("Should have caught exception as 'us' is not a valid country code.", caughtException);
 
         caughtException = false;
         try {
@@ -138,6 +138,13 @@ public class ValidateTest {
             caughtException = true;
         }
         assertFalse("Should not have caught any exception as 'US' is a valid code.", caughtException);
+
+        try {
+            Validate.countryCode(this, "USA", fieldName);
+        } catch (FieldBadFormatException ignore) {
+            caughtException = false;
+        }
+        assertTrue("Should have caught any exception as 'USA' is not a valid country code.", caughtException);
     }
 
     @Ignore("need to align with server") @Test

@@ -37,7 +37,7 @@ public class Validate {
     }
 
     public static void countryCode(Object source, String countryCode, String fieldName) throws FieldBadFormatException {
-        if (countryCode == null || !Arrays.asList(Locale.getISOCountries()).contains(countryCode.toUpperCase())) {
+        if (countryCode == null || !Arrays.asList(Locale.getISOCountries()).contains(countryCode)) {
             throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + countryCode + " is not a valid country code.");
         }
     }
