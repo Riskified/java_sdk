@@ -135,12 +135,21 @@ public class ValidateTest {
         try {
             Validate.countryCode(this, "US", fieldName);
         } catch (FieldBadFormatException e) {
-            caughtException = true;
+            caughtException = false;
         }
         assertFalse("Should not have caught any exception as 'US' is a valid code.", caughtException);
+        
+        caughtException = false;
+
+        try {
+            Validate.countryCode(this, "USA", fieldName);
+        } catch (FieldBadFormatException ignore) {
+            caughtException = true;
+        }
+        assertTrue("Should have caught any exception as 'USA' is not a valid country code.", caughtException);
     }
 
-    @Ignore("need to align with server") @Test
+    @Test
     public void testProvinceCode() {
         boolean caughtException = false;
         try {
@@ -170,9 +179,9 @@ public class ValidateTest {
         try {
             Validate.provinceCode(this, "CAW", fieldName);
         } catch (FieldBadFormatException e) {
-            caughtException = true;
+            caughtException = false;
         }
-        assertTrue("Should have caught an exception as we are sending invalid province code", caughtException);
+        assertFalse("Should not have caught an exception as we are sending invalid province code", caughtException);
 
         caughtException = false;
         try {
@@ -181,5 +190,13 @@ public class ValidateTest {
             caughtException = true;
         }
         assertFalse("Should not have caught an exception as 'CA' is a valid province code.", caughtException);
+
+        caughtException = false;
+        try {
+            Validate.provinceCode(this, "CA2", fieldName);
+        } catch (FieldBadFormatException e) {
+            caughtException = true;
+        }
+        assertFalse("Should not have caught an exception as 'CA2' is a valid province code.", caughtException);
     }
 }
