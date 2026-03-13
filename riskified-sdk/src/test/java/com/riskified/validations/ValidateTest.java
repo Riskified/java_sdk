@@ -135,14 +135,16 @@ public class ValidateTest {
         try {
             Validate.countryCode(this, "US", fieldName);
         } catch (FieldBadFormatException e) {
-            caughtException = true;
+            caughtException = false;
         }
         assertFalse("Should not have caught any exception as 'US' is a valid code.", caughtException);
+        
+        caughtException = false;
 
         try {
             Validate.countryCode(this, "USA", fieldName);
         } catch (FieldBadFormatException ignore) {
-            caughtException = false;
+            caughtException = true;
         }
         assertTrue("Should have caught any exception as 'USA' is not a valid country code.", caughtException);
     }
