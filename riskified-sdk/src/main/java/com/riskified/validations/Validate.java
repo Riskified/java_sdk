@@ -43,7 +43,7 @@ public class Validate {
     }
 
     public static void provinceCode(Object source, String provinceCode, String fieldName) throws FieldBadFormatException {
-        if (provinceCode == null || provinceCode.length() < 2 || provinceCode.length() > 3 || !provinceCode.matches("[A-Z]+")) {
+        if (provinceCode == null || !provinceCode.matches("^[A-Z0-9]{1,3}")) {
             throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + provinceCode + " is not a valid province code (should be 2 or 3 capital letters).");
         }
     }
