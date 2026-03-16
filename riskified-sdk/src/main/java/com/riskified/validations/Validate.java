@@ -2,6 +2,9 @@ package com.riskified.validations;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
+import java.util.Locale;
+import java.util.Arrays;
+
 public class Validate {
     public static void notNull(Object source, Object obj, String fieldName) throws FieldBadFormatException {
         if (obj == null) {
@@ -34,13 +37,13 @@ public class Validate {
     }
 
     public static void countryCode(Object source, String countryCode, String fieldName) throws FieldBadFormatException {
-        if (countryCode == null || countryCode.length() != 2 || !countryCode.matches("[A-Z]+")) {
-            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + countryCode + " is not a valid country code (should be 2 capital letters).");
+        if (countryCode == null || !Arrays.asList(Locale.getISOCountries()).contains(countryCode)) {
+            throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + countryCode + " is not a valid country code.");
         }
     }
 
     public static void provinceCode(Object source, String provinceCode, String fieldName) throws FieldBadFormatException {
-        if (provinceCode == null || provinceCode.length() < 2 || provinceCode.length() > 3 || !provinceCode.matches("[A-Z]+")) {
+        if (provinceCode == null || !provinceCode.matches("^[A-Z0-9]{1,3}")) {
             throw new FieldBadFormatException(source, "in " + fieldName + " field, value of " + provinceCode + " is not a valid province code (should be 2 or 3 capital letters).");
         }
     }
