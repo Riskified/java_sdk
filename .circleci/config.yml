@@ -58,24 +58,31 @@ jobs:
       - run:
           command: mvn -s .circleci/maven-release-settings.xml clean deploy -DdeployAtEnd=true -DperformRelease=true -DskipTests -Dspotbugs.skip=true
 
+all_events: &all_events
+  tags:
+    only: /.*/
+  branches:
+    only: /.*/
+
+tag_only: &tag_only
+  <<: *all_events
+  branches:
+    ignore: /.*/
+
+# Workflow configuration - Runs package on every push; deploys on tag push. 
 workflows:
   main:
     jobs:
-      - package
+      - package:
+          filters: *all_events
+
       - hold_on_deploy:
           type: approval
           requires:
             - package
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+          filters: *tag_only
+
       - deploy:
           requires:
             - hold_on_deploy
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+          filters: *tag_only
