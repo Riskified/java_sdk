@@ -61,17 +61,14 @@ jobs:
 workflows:
   main:
     jobs:
-      - package:
-          filters:
-            tags:
-              only: /^v.*/
+      - package
       - hold_on_deploy:
           type: approval
           requires:
             - package
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
             branches:
               ignore: /.*/
       - deploy:
@@ -79,6 +76,6 @@ workflows:
             - hold_on_deploy
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
             branches:
               ignore: /.*/
