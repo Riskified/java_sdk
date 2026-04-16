@@ -18,7 +18,7 @@ public class LineItem implements IValidated {
     private String variantId;
     private String variantTitle;
     private String variantInventoryManagement;
-    private String vendor;
+    private Vendor vendor;
     private String name;
     private Boolean requiresShipping;
     private Boolean taxable;
@@ -179,11 +179,11 @@ public class LineItem implements IValidated {
         this.variantInventoryManagement = variantInventoryManagement;
     }
 
-    public String getVendor() {
+    public Vendor getVendor() {
         return vendor;
     }
 
-    public void setVendor(String vendor) {
+    public void setVendor(Vendor vendor) {
         this.vendor = vendor;
     }
 
