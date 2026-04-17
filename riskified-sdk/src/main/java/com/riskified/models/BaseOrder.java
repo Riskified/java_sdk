@@ -74,6 +74,7 @@ public abstract class BaseOrder implements IValidated {
     private CommunicationDetails communicationDetails;
     private String submissionReason;
     private Custom custom;
+    private String partnerSubMerchantId;
 
     public BaseOrder() {
     }
@@ -669,6 +670,14 @@ public abstract class BaseOrder implements IValidated {
 
     public void setCustom(Custom custom) {
         this.custom = custom;
+    }
+
+    public String getPartnerSubMerchantId() {
+        return partnerSubMerchantId;
+    }
+
+    public void setPartnerSubMerchantId(String partnerSubMerchantId) {
+        this.partnerSubMerchantId = partnerSubMerchantId;
     }
 
 }
