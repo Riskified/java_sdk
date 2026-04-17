@@ -10,6 +10,7 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     private String token;
     private Date storedPaymentCreatedAt;
     private Date storedPaymentUpdatedAt;
+    private PaymentType paymentType = PaymentType.BANK_TRANSFER;
 
     public BankWirePaymentDetails(String accountNumber, String routingNumber) {
         this.accountNumber = accountNumber;
@@ -55,6 +56,8 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt){
         this.storedPaymentUpdatedAt = storedPaymentUpdatedAt;
     }
+
+    public PaymentType getPaymentType() { return paymentType; }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {

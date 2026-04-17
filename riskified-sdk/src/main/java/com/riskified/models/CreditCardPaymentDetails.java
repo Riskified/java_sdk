@@ -28,7 +28,8 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String acquirerRegion;
     private Integer expiryMonth;
     private Integer expiryYear;
-    
+    private PaymentType paymentType = PaymentType.CARD;
+
 
     public CreditCardPaymentDetails(String creditCardBin, 
     		String avsResultCode, 
@@ -224,5 +225,7 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public Integer getExpiryYear() { return expiryYear; }
 
     public void setExpiryYear(Integer expiryYear) { this.expiryYear = expiryYear; }
+
+    public PaymentType getPaymentType() { return paymentType; }
 
 }

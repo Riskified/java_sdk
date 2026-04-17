@@ -18,8 +18,8 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     private String acquirerBin;
     private String mid;
     private AuthorizationType authorizationType;
+    private PaymentType paymentType = PaymentType.PAYPAL;
 
-    
 
     public PaypalPaymentDetails(String payerEmail, String payerStatus, String payerAddressStatus, String protectionEligibility) {
         this.payerEmail = payerEmail;
@@ -146,5 +146,7 @@ public class PaypalPaymentDetails implements IPaymentDetails {
     public AuthorizationType getAuthorizationType() {return authorizationType;}
 
     public void setAuthorizationType(AuthorizationType authorizationType) { this.authorizationType = authorizationType; }
-    
+
+    public PaymentType getPaymentType() { return paymentType; }
+
 }
