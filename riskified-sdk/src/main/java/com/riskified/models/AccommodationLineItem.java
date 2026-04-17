@@ -12,7 +12,7 @@ public class AccommodationLineItem extends LineItem {
 	private String countryCode;
 	private Date checkInDate;
 	private Date checkOutDate;
-	private Float rating;
+	private String rating;
 	private Integer numberOfGuests;
 	private String cancellationPolicy;
 	private String accommodationType;
@@ -90,11 +90,11 @@ public class AccommodationLineItem extends LineItem {
 		this.checkOutDate = checkOutDate;
 	}
 
-	public float getRating() {
+	public String getRating() {
 		return rating;
 	}
 
-	public void setRating(float rating) {
+	public void setRating(String rating) {
 		this.rating = rating;
 	}
 

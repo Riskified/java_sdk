@@ -66,7 +66,7 @@ public class AccommodationClient {
 
         AccommodationLineItem accommodationLineItem = new AccommodationLineItem(300, "Holiday Inn", "hotel", "New York City", "US", new Date(114, 01, 10, 11, 00, 00), new Date(114, 01, 10, 11, 00, 00));
         accommodationLineItem.setRoomType("Presidential Suite");
-        accommodationLineItem.setRating(3.9f);
+        accommodationLineItem.setRating("3.9");
         accommodationLineItem.setNumberOfGuests(2);
         accommodationLineItem.setCancellationPolicy("No");
         accommodationLineItem.setAccommodationType("Hotel");
