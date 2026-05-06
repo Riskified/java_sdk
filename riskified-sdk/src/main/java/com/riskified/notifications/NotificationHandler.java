@@ -41,7 +41,7 @@ public class NotificationHandler {
         if (hash.equals(calcHash))
             return gson.fromJson(data, Notification.class);
         else
-            throw new AuthError(hash, calcHash);
+            throw new AuthError();
     }
 
     /**
