@@ -62,7 +62,6 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt){
         this.storedPaymentUpdatedAt = storedPaymentUpdatedAt;
     }
-    
 
     public PaymentType getPaymentType() { return paymentType; }
 
