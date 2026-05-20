@@ -11,6 +11,12 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     private Date storedPaymentCreatedAt;
     private Date storedPaymentUpdatedAt;
     private PaymentType paymentType = PaymentType.BANK_TRANSFER;
+    private int daysSinceAccountOpening;
+    private int daysWithNegativeBalanceCount;
+    private boolean isSavingsOrMoneyMarketAccount;
+    private int nsfOverdraftTransactionsCount;
+    private int unauthorizedTransactionsCount;
+    private PlaidScores plaidScores;
 
     public BankWirePaymentDetails(String accountNumber, String routingNumber) {
         this.accountNumber = accountNumber;
@@ -56,8 +62,57 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     public void setStoredPaymentUpdatedAt(Date storedPaymentUpdatedAt){
         this.storedPaymentUpdatedAt = storedPaymentUpdatedAt;
     }
+    
 
     public PaymentType getPaymentType() { return paymentType; }
+
+    public int getDaysSinceAccountOpening() {
+        return daysSinceAccountOpening;
+    }
+
+    public void setDaysSinceAccountOpening(int daysSinceAccountOpening) {
+        this.daysSinceAccountOpening = daysSinceAccountOpening;
+    }
+
+    public int getDaysWithNegativeBalanceCount() {
+        return daysWithNegativeBalanceCount;
+    }
+
+    public void setDaysWithNegativeBalanceCount(int daysWithNegativeBalanceCount) {
+        this.daysWithNegativeBalanceCount = daysWithNegativeBalanceCount;
+    }
+
+    public boolean getIsSavingsOrMoneyMarketAccount() {
+        return isSavingsOrMoneyMarketAccount;
+    }
+
+    public void setIsSavingsOrMoneyMarketAccount(boolean isSavingsOrMoneyMarketAccount) {
+        this.isSavingsOrMoneyMarketAccount = isSavingsOrMoneyMarketAccount;
+    }
+
+    public int getNsfOverdraftTransactionsCount() {
+        return nsfOverdraftTransactionsCount;
+    }
+
+    public void setNsfOverdraftTransactionsCount(int nsfOverdraftTransactionsCount) {
+        this.nsfOverdraftTransactionsCount = nsfOverdraftTransactionsCount;
+    }
+
+    public int getUnauthorizedTransactionsCount() {
+        return unauthorizedTransactionsCount;
+    }
+
+    public void setUnauthorizedTransactionsCount(int unauthorizedTransactionsCount) {
+        this.unauthorizedTransactionsCount = unauthorizedTransactionsCount;
+    }
+
+    public PlaidScores getPlaidScores() {
+        return plaidScores;
+    }
+
+    public void setPlaidScores(PlaidScores plaidScores) {
+        this.plaidScores = plaidScores;
+    }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
         if (validationType == Validation.ALL) {
@@ -65,4 +120,5 @@ public class BankWirePaymentDetails implements IPaymentDetails {
             Validate.notNullOrEmpty(this, this.routingNumber, "Bank Routing Number");
         }
     }
+    
 }
