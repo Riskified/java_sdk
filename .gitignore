@@ -14,3 +14,5 @@ lib/*
 */target/
 /target/
 /.metadata/
+/.metals/*
+/.vscode/*
