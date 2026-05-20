@@ -1,18 +1,28 @@
-*/.settings/*
-.metadata/*
-.idea/*
-.DS_Store
-bin/*
-target/*
-.settings/*
-doc/*
+# Build output
+bin/
+target/
+lib/
+
+# Documentation
+doc/
+
+# IDE - IntelliJ IDEA
+.idea/
 *.iml
+
+# IDE - Eclipse
 .classpath
 .project
-lib/*
-*/bin/
-*/target/
-/target/
-/.metadata/
-/.metals/*
-/.vscode/*
+.settings/
+
+# IDE - VS Code
+.vscode/
+
+# Metals (Java/Scala LSP)
+.metals/
+
+# Metadata
+.metadata/
+
+# macOS
+.DS_Store
