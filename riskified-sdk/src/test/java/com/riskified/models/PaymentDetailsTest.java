@@ -67,6 +67,20 @@ public class PaymentDetailsTest {
         bankWire.setNsfOverdraftTransactionsCount(31);
         bankWire.setUnauthorizedTransactionsCount(2);
 
+        InitiatedReturnRisk customerRisk = new InitiatedReturnRisk();
+        customerRisk.setScore(9);
+        customerRisk.setRiskTier(1);
+
+        InitiatedReturnRisk bankRisk = new InitiatedReturnRisk();
+        bankRisk.setScore(82);
+        bankRisk.setRiskTier(7);
+
+        PlaidScores plaidScores = new PlaidScores();
+        plaidScores.setCustomerInitiatedReturnRisk(customerRisk);
+        plaidScores.setBankInitiatedReturnRisk(bankRisk);
+
+        bankWire.setPlaidScores(plaidScores);
+
         String json = gson.toJson(bankWire);
 
         assertTrue(json.contains("\"days_since_account_opening\":90"));
@@ -74,52 +88,6 @@ public class PaymentDetailsTest {
         assertTrue(json.contains("\"is_savings_or_money_market_account\":true"));
         assertTrue(json.contains("\"nsf_overdraft_transactions_count\":31"));
         assertTrue(json.contains("\"unauthorized_transactions_count\":2"));
-    }
-
-    @Test
-    public void testBankWirePlaidScoresGetterAndSetter() {
-        BankWirePaymentDetails bankWire = new BankWirePaymentDetails("123456789", "021000021");
-
-        InitiatedReturnRisk customerRisk = new InitiatedReturnRisk();
-        customerRisk.setScore(9);
-        customerRisk.setRiskTier(1);
-
-        InitiatedReturnRisk bankRisk = new InitiatedReturnRisk();
-        bankRisk.setScore(82);
-        bankRisk.setRiskTier(7);
-
-        PlaidScores plaidScores = new PlaidScores();
-        plaidScores.setCustomerInitiatedReturnRisk(customerRisk);
-        plaidScores.setBankInitiatedReturnRisk(bankRisk);
-
-        bankWire.setPlaidScores(plaidScores);
-
-        assertEquals(9, bankWire.getPlaidScores().getCustomerInitiatedReturnRisk().getScore());
-        assertEquals(1, bankWire.getPlaidScores().getCustomerInitiatedReturnRisk().getRiskTier());
-        assertEquals(82, bankWire.getPlaidScores().getBankInitiatedReturnRisk().getScore());
-        assertEquals(7, bankWire.getPlaidScores().getBankInitiatedReturnRisk().getRiskTier());
-    }
-
-    @Test
-    public void testBankWirePlaidScoresSerializeWithCorrectStructure() {
-        BankWirePaymentDetails bankWire = new BankWirePaymentDetails("123456789", "021000021");
-
-        InitiatedReturnRisk customerRisk = new InitiatedReturnRisk();
-        customerRisk.setScore(9);
-        customerRisk.setRiskTier(1);
-
-        InitiatedReturnRisk bankRisk = new InitiatedReturnRisk();
-        bankRisk.setScore(82);
-        bankRisk.setRiskTier(7);
-
-        PlaidScores plaidScores = new PlaidScores();
-        plaidScores.setCustomerInitiatedReturnRisk(customerRisk);
-        plaidScores.setBankInitiatedReturnRisk(bankRisk);
-
-        bankWire.setPlaidScores(plaidScores);
-
-        String json = gson.toJson(bankWire);
-
         assertTrue(json.contains("\"plaid_scores\""));
         assertTrue(json.contains("\"customer_initiated_return_risk\""));
         assertTrue(json.contains("\"bank_initiated_return_risk\""));
@@ -128,7 +96,7 @@ public class PaymentDetailsTest {
         assertTrue(json.contains("\"score\":82"));
         assertTrue(json.contains("\"risk_tier\":7"));
     }
-
+    
     @Test
     public void testBankWirePlaidScoresNullByDefault() {
         BankWirePaymentDetails bankWire = new BankWirePaymentDetails("123456789", "021000021");
