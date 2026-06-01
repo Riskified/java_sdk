@@ -17,6 +17,8 @@ public class BankWirePaymentDetails implements IPaymentDetails {
     private int nsfOverdraftTransactionsCount;
     private int unauthorizedTransactionsCount;
     private PlaidScores plaidScores;
+    private AccountIdentity accountIdentity;
+    private AccountBalance accountBalance;
 
     public BankWirePaymentDetails(String accountNumber, String routingNumber) {
         this.accountNumber = accountNumber;
@@ -111,6 +113,22 @@ public class BankWirePaymentDetails implements IPaymentDetails {
 
     public void setPlaidScores(PlaidScores plaidScores) {
         this.plaidScores = plaidScores;
+    }
+
+    public AccountIdentity getAccountIdentity() {
+        return accountIdentity;
+    }
+
+    public void setAccountIdentity(AccountIdentity accountIdentity) {
+        this.accountIdentity = accountIdentity;
+    }
+
+    public AccountBalance getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(AccountBalance accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
