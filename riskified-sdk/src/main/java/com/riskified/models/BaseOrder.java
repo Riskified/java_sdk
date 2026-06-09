@@ -39,6 +39,7 @@ public abstract class BaseOrder implements IValidated {
     private String landingSiteRef;
     private String locationId;
     private String source;
+    private AiAgent aiAgent;
     private String sourceIdentifier;
     private String sourceName;
     private String sourceUrl;
@@ -678,6 +679,14 @@ public abstract class BaseOrder implements IValidated {
 
     public void setPartnerSubMerchantId(String partnerSubMerchantId) {
         this.partnerSubMerchantId = partnerSubMerchantId;
+    }
+
+    public AiAgent getAiAgent() {
+        return aiAgent;
+    }
+
+    public void setAiAgent(AiAgent aiAgent) {
+        this.aiAgent = aiAgent;
     }
 
 }

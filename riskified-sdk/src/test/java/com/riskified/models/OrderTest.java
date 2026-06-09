@@ -40,4 +40,13 @@ public class OrderTest {
         Order order = gson.fromJson(json, Order.class);
         assertEquals("merchant-xyz", order.getPartnerSubMerchantId());
     }
+
+    @Test
+    public void testAiAgentSerializesWithUnderscores() {
+        Order order = new Order();
+        order.setId("order-1");
+        order.setAiAgent(AiAgent.chatgpt);
+        String json = gson.toJson(order);
+        assertTrue(json.contains("\"ai_agent\":\"chatgpt\""));
+    }
 }
