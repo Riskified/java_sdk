@@ -223,6 +223,7 @@ public class Client {
         order.setBrowserIp("113.32.8.18");
         order.setTotalPrice(6600);
         order.setSource("web");
+        order.setAiAgent(AiAgent.chatgpt);
         order.setEmail("test@test.com");
 
 

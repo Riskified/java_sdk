@@ -25,6 +25,8 @@ public enum Source {
     @SerializedName("unknown")
     unknown,
     @SerializedName("other")
-    other
+    other,
+    @SerializedName("ai_agent")
+    aiAgent
 
 }

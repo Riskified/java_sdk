@@ -29,8 +29,12 @@ public class RiskifiedClientTest {
     public static void runOnceBeforeAnyTestCaseIsRun() throws IOException {
         Properties properties = new Properties();
         properties.load(RiskifiedClientTest.class.getClassLoader().getResourceAsStream("riskified_sdk.properties"));
-        shopUrl = "test.pass.com";
-        authKey = "ad6b6e6376fb1e3521e44ca28451d58b9605d932";
+        shopUrl = resolve("RISKIFIED_SHOP_URL", properties, "shopUrl", "test.pass.com");
+        authKey = resolve("RISKIFIED_AUTH_KEY", properties, "authKey", null);
+        if (StringUtils.isEmpty(authKey)) {
+            throw new IllegalStateException(
+                    "No auth key configured. Set the RISKIFIED_AUTH_KEY environment variable or authKey in riskified_sdk.properties");
+        }
         String validationProperty = properties.getProperty("validation");
         validation = null;
         if (StringUtils.isNotEmpty(validationProperty)) {
@@ -155,6 +159,18 @@ public class RiskifiedClientTest {
         DecisionOrder decisionOrder = new DecisionOrder(order.getId(), decisionDetails);
         response = riskifiedClient.decisionOrder(decisionOrder);
         assertNull(parseResponse(RiskifiedOperation.DECISION, response, order.getId()));
+    }
+
+    private static String resolve(String envName, Properties properties, String propertyName, String defaultValue) {
+        String envValue = System.getenv(envName);
+        if (StringUtils.isNotEmpty(envValue)) {
+            return envValue;
+        }
+        String propertyValue = properties.getProperty(propertyName);
+        if (StringUtils.isNotEmpty(propertyValue)) {
+            return propertyValue;
+        }
+        return defaultValue;
     }
 
     private String parseResponse(RiskifiedOperation riskifiedOperation, Response response, String orderId) {
