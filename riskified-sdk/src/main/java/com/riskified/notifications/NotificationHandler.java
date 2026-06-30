@@ -1,6 +1,7 @@
 package com.riskified.notifications;
 
 import java.io.*;
+import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,7 +39,7 @@ public class NotificationHandler {
      */
     public Notification toObject(String data, String hash) throws AuthError, JsonSyntaxException, IllegalStateException, UnsupportedEncodingException {
         String calcHash = sha256Handler.createSHA256(data.getBytes("UTF-8"));
-        if (hash.equals(calcHash))
+        if (MessageDigest.isEqual(hash.getBytes(), calcHash.getBytes()))
             return gson.fromJson(data, Notification.class);
         else
             throw new AuthError();
