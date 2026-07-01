@@ -19,16 +19,26 @@ public class NotificationServlet extends HttpServlet {
         formatter = new NotificationHandler(authKey);
     }
 
+    private static String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;");
+    }
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
     IOException {
         PrintWriter out = resp.getWriter();
         try {
             NotificationOrder notification = formatter.parseServletPostRequest(req).getOrder();
             System.out.println("got notification for id: '" + notification.getId() + "' with status: '" + notification.getStatus() +"'  ");
-            out.println("<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
-                        + " with status " + notification.getStatus() + " and description " + notification.getDescription()
-                        + " and app_dom_id " + notification.getCustom().getAppDomId()
-                        + " Old Status was " + notification.getOldStatus()
+            out.println("<HTML><BODY>Merchant Received Notification For Order " + escapeHtml(notification.getId())
+                        + " with status " + escapeHtml(notification.getStatus()) + " and description " + escapeHtml(notification.getDescription())
+                        + " and app_dom_id " + escapeHtml(notification.getCustom().getAppDomId())
+                        + " Old Status was " + escapeHtml(notification.getOldStatus())
                         + "</BODY></HTML>");
 
         } catch (Exception e) {
