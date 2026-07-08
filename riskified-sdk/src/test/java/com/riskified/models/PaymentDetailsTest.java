@@ -3,8 +3,15 @@ package com.riskified.models;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.riskified.JSONFormater;
+import com.riskified.validations.FieldBadFormatException;
+import com.riskified.validations.Validation;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -101,5 +108,73 @@ public class PaymentDetailsTest {
     public void testBankWirePlaidScoresNullByDefault() {
         BankWirePaymentDetails bankWire = new BankWirePaymentDetails("123456789", "021000021");
         assertNull(bankWire.getPlaidScores());
+    }
+
+    @Test
+    public void testWalletPaymentTypeSetFromConstructor() {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.APPLE_PAY, "12345", "X");
+        assertEquals(PaymentType.APPLE_PAY, wallet.getPaymentType());
+    }
+
+    @Test
+    public void testWalletPaymentTypeSerializesToWalletValue() {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.APPLE_PAY, "12345", "X");
+        String json = gson.toJson(wallet);
+        assertTrue(json.contains("\"payment_type\":\"apple_pay\""));
+    }
+
+    @Test
+    public void testWalletNewFieldsSerializeWithCorrectKeys() {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.GOOGLE_PAY, "12345", "X");
+        wallet.setCreditCardToken("tok_1A2b3C4d5E6f7G8h9I");
+        wallet.setInitialPaymentAmount(400.0);
+        wallet.setPaymentFrequency(1);
+        wallet.setBillingAddressId("addr_bill_01");
+
+        String json = gson.toJson(wallet);
+
+        assertTrue(json.contains("\"credit_card_token\":\"tok_1A2b3C4d5E6f7G8h9I\""));
+        assertTrue(json.contains("\"initial_payment_amount\":400"));
+        assertTrue(json.contains("\"payment_frequency\":1"));
+        assertTrue(json.contains("\"billing_address_id\":\"addr_bill_01\""));
+    }
+
+    @Test
+    public void testWalletValidatePassesForValidWallet() throws FieldBadFormatException {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.SAMSUNG_PAY, "12345", "X");
+        wallet.setCreditCardCountry("US");
+        wallet.setAcquirerRegion("NONEU");
+        wallet.setExpiryMonth(12);
+        wallet.setExpiryYear(2028);
+        wallet.validate(Validation.ALL);
+    }
+
+    @Test(expected = FieldBadFormatException.class)
+    public void testWalletValidateRejectsNonWalletPaymentType() throws FieldBadFormatException {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.CARD, "12345", "X");
+        wallet.validate(Validation.ALL);
+    }
+
+    @Test(expected = FieldBadFormatException.class)
+    public void testWalletValidateRejectsBadAcquirerRegion() throws FieldBadFormatException {
+        WalletPaymentDetails wallet = new WalletPaymentDetails(PaymentType.ALIPAY, "12345", "X");
+        wallet.setAcquirerRegion("ASIA");
+        wallet.validate(Validation.ALL);
+    }
+
+    @Test
+    public void testWalletSerializesWithMethodDiscriminator() {
+        Gson polymorphicGson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapterFactory(JSONFormater.paymentDetailsSerializer())
+                .create();
+
+        List<IPaymentDetails> paymentDetails = new ArrayList<IPaymentDetails>();
+        paymentDetails.add(new WalletPaymentDetails(PaymentType.WECHAT_PAY, "12345", "X"));
+
+        String json = polymorphicGson.toJson(paymentDetails, new TypeToken<List<IPaymentDetails>>() {}.getType());
+
+        assertTrue(json.contains("\"method\":\"digital_wallet\""));
+        assertTrue(json.contains("\"payment_type\":\"wechat_pay\""));
     }
 }
