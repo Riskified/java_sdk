@@ -1,8 +1,11 @@
 package com.riskified.models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Predicate;
 
 import com.riskified.validations.*;
 
@@ -15,6 +18,27 @@ public class WalletPaymentDetails implements IPaymentDetails {
             PaymentType.WECHAT_PAY,
             PaymentType.AMAZON_PAY,
             PaymentType.ALIPAY);
+
+    private static final List<String> VALID_ACQUIRER_REGIONS = Arrays.asList("EU", "NONEU");
+
+    // A rule = a check plus the message to raise if it fails.
+    // Add new rules here instead of adding branches in validate().
+    private static final List<Rule> RULES = Arrays.asList(
+            new Rule(p -> p.paymentType != null, "Payment Type can't be null."),
+            new Rule(p -> p.paymentType == null || WALLET_PAYMENT_TYPES.contains(p.paymentType),
+                    "Payment Type must be one of: " + supportedPaymentTypes()),
+            new Rule(p -> p.authorizationId != null && !p.authorizationId.isEmpty(),
+                    "Authorization Id can't be null or empty."),
+            new Rule(p -> p.avsResultCode != null && !p.avsResultCode.isEmpty(),
+                    "AVS Result Code can't be null or empty."),
+            new Rule(p -> p.creditCardCountry == null || isValidCountryCode(p.creditCardCountry),
+                    "Credit Card Country is not a valid ISO country code."),
+            new Rule(p -> p.acquirerRegion == null || VALID_ACQUIRER_REGIONS.contains(p.acquirerRegion),
+                    "Acquirer Region must be one of: " + VALID_ACQUIRER_REGIONS),
+            new Rule(p -> p.expiryMonth == null || (p.expiryMonth >= 1 && p.expiryMonth <= 12),
+                    "Expiry Month must be between 01 and 12"),
+            new Rule(p -> p.expiryYear == null || (p.expiryYear >= 1900 && p.expiryYear <= 9999),
+                    "Expiry Year must be a 4-digit integer formatted as YYYY"));
 
     private PaymentType paymentType;
     private String avsResultCode;
@@ -45,28 +69,43 @@ public class WalletPaymentDetails implements IPaymentDetails {
     }
 
     public void validate(Validation validationType) throws FieldBadFormatException {
-        if (validationType == Validation.ALL) {
-            Validate.notNull(this, this.paymentType, "Payment Type");
-            if (!WALLET_PAYMENT_TYPES.contains(this.paymentType)) {
-                throw new FieldBadFormatException(this,
-                        "Payment Type must be one of: apple_pay, google_pay, samsung_pay, wechat_pay, amazon_pay, alipay");
+        if (validationType != Validation.ALL) {
+            return;
+        }
+        for (Rule rule : RULES) {
+            if (!rule.passes(this)) {
+                throw new FieldBadFormatException(this, rule.message());
             }
-            Validate.notNullOrEmpty(this, this.authorizationId, "Authorization Id");
-            Validate.notNullOrEmpty(this, this.avsResultCode, "AVS Result Code");
+        }
+    }
 
-            if (this.creditCardCountry != null) {
-                Validate.countryCode(this, this.creditCardCountry, "Credit Card Country");
-            }
-            if (this.acquirerRegion != null
-                    && !"EU".equals(this.acquirerRegion) && !"NONEU".equals(this.acquirerRegion)) {
-                throw new FieldBadFormatException(this, "Acquirer Region must be 'EU' or 'NONEU'");
-            }
-            if (this.expiryMonth != null && (this.expiryMonth < 1 || this.expiryMonth > 12)) {
-                throw new FieldBadFormatException(this, "Expiry Month must be between 01 and 12");
-            }
-            if (this.expiryYear != null && (this.expiryYear < 1900 || this.expiryYear > 9999)) {
-                throw new FieldBadFormatException(this, "Expiry Year must be a 4-digit integer formatted as YYYY");
-            }
+    private static String supportedPaymentTypes() {
+        List<String> names = new ArrayList<String>(WALLET_PAYMENT_TYPES.size());
+        for (PaymentType type : WALLET_PAYMENT_TYPES) {
+            names.add(type.name().toLowerCase());
+        }
+        return names.toString();
+    }
+
+    private static boolean isValidCountryCode(String countryCode) {
+        return Arrays.asList(Locale.getISOCountries()).contains(countryCode);
+    }
+
+    private static final class Rule {
+        private final Predicate<WalletPaymentDetails> check;
+        private final String message;
+
+        Rule(Predicate<WalletPaymentDetails> check, String message) {
+            this.check = check;
+            this.message = message;
+        }
+
+        boolean passes(WalletPaymentDetails details) {
+            return check.test(details);
+        }
+
+        String message() {
+            return message;
         }
     }
 
