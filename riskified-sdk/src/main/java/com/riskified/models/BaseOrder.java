@@ -7,6 +7,10 @@ import com.riskified.adapters.AddressListAdapterFactory;
 import com.riskified.validations.*;
 
 public abstract class BaseOrder implements IValidated {
+    private static final Set<String> BROWSER_IP_EXCLUDED_SOURCES = new HashSet<>(
+        Arrays.asList("phone", "ai_agent", "chat", "subscription")
+    );
+
     protected String id;
     private String email;
     private Date createdAt;
@@ -89,7 +93,7 @@ public abstract class BaseOrder implements IValidated {
             Validate.notNull(this, this.createdAt, "Created At");
             Validate.notNull(this, this.updatedAt, "Updated At");
             Validate.notNullOrEmpty(this, this.gateway, "Gateway");
-            if (this.source != null && !this.source.equalsIgnoreCase("phone")){
+            if (this.source != null && !BROWSER_IP_EXCLUDED_SOURCES.contains(this.source.toLowerCase())){
                 Validate.notNullOrEmpty(this, this.browserIp, "Browser IP");
             }
 
