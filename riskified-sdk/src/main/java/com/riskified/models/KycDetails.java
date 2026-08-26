@@ -1,5 +1,6 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validation;
@@ -9,6 +10,11 @@ import java.util.Date;
 public class KycDetails implements IValidated {
 
     private String vendorName;
+    // The Java field name is updateAt, which LOWER_CASE_WITH_UNDERSCORES derives as "update_at".
+    // The contract key is "updated_at" (KycDetails.cs:18), so the derived name was a key the API
+    // ignores: KYC update timestamps were silently not arriving. Pinned explicitly rather than
+    // renaming the field, which would break every caller of getUpdateAt()/setUpdateAt().
+    @SerializedName("updated_at")
     private Date updateAt;
     private Boolean kyc_verified;
     private String kycType;

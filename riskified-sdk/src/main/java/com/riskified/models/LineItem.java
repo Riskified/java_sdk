@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.*;
 import java.util.jar.Attributes;
 
@@ -32,6 +36,8 @@ public class LineItem implements IValidated {
     private String brand;
     private String productType;
     private String size;
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date deliveredAt;
     private String deliveredTo;
     private String color;

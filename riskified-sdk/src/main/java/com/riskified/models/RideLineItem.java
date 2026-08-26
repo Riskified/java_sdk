@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.lang.reflect.Field;
 import java.util.Date;
 
@@ -8,11 +12,19 @@ import com.riskified.validations.*;
 public class RideLineItem extends LineItem {
 
 //    Ride Industry fields
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date pickupDate;
     private Float pickupLatitude;
     private Float pickupLongitude;
     private Address pickupAddress;
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date dropoffDate;
+    // Derives to "dropoff_latitude", which is the contract name in both OpenAPI specs.
+    // The reference C# SDK sends a transposed "dropoff_latitiude"
+    // (OrderElements/RideTicketLineItem.cs:100) -- that is a defect in that SDK, not the wire
+    // contract, so no @SerializedName override belongs here.
     private Float dropoffLatitude;
     private Float dropoffLongitude;
     private Address dropoffAddress;

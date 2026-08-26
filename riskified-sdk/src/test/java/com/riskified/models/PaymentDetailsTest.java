@@ -162,19 +162,72 @@ public class PaymentDetailsTest {
         wallet.validate(Validation.ALL);
     }
 
+    /**
+     * {@code payment_details} carries <b>no</b> type discriminator on the wire.
+     *
+     * <p>
+     * The variant is expressed by which keys are present, with the constant {@code payment_type}
+     * acting as the de-facto discriminator — see {@code docs/flows/01-model-catalog.md} section 6.
+     * This SDK used to register a {@code RuntimeTypeAdapterFactory} that injected a {@code "method"}
+     * key whose values ({@code credit_card}, {@code bank_wire}, {@code digital_wallet}) disagreed
+     * with the {@code payment_type} emitted right next to it. No other SDK in the fleet sent it.
+     * Unrecognised keys are dropped rather than rejected, which is why it went unnoticed.
+     */
     @Test
-    public void testWalletSerializesWithMethodDiscriminator() {
-        Gson polymorphicGson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapterFactory(JSONFormater.paymentDetailsSerializer())
-                .create();
+    public void testPaymentDetailsCarryNoMethodDiscriminator() {
+        List<IPaymentDetails> inputPaymentDetails = new ArrayList<IPaymentDetails>();
+        inputPaymentDetails.add(new WalletPaymentDetails(PaymentType.WECHAT_PAY, "12345", "X"));
+        inputPaymentDetails.add(new CreditCardPaymentDetails("411111", "Y", "M", "XXXX-1234", "Visa"));
+        inputPaymentDetails.add(new BankWirePaymentDetails("123456789", "021000021"));
+        inputPaymentDetails.add(new PaypalPaymentDetails("buyer@example.com", "verified", "confirmed", "eligible"));
+        // Java-only variant, present in no other SDK and in no spec. Kept in place deliberately; it
+        // must simply stop emitting "method" like every other variant.
+        inputPaymentDetails.add(new StripePaymentDetails("auth-1"));
 
-        List<IPaymentDetails> paymentDetails = new ArrayList<IPaymentDetails>();
-        paymentDetails.add(new WalletPaymentDetails(PaymentType.WECHAT_PAY, "12345", "X"));
+        String actualJson = JSONFormater.toJson(inputPaymentDetails);
 
-        String json = polymorphicGson.toJson(paymentDetails, new TypeToken<List<IPaymentDetails>>() {}.getType());
+        assertFalse("payment_details must carry no type discriminator: " + actualJson,
+                actualJson.contains("\"method\""));
+        assertFalse(actualJson, actualJson.contains("digital_wallet"));
+        assertFalse(actualJson, actualJson.contains("bank_wire"));
+    }
 
-        assertTrue(json.contains("\"method\":\"digital_wallet\""));
-        assertTrue(json.contains("\"payment_type\":\"wechat_pay\""));
+    /**
+     * Dropping the discriminator must not cost the concrete fields. Gson dispatches on each
+     * element's runtime type inside a {@code List<IPaymentDetails>}, so the variant-specific keys —
+     * and the {@code payment_type} that actually identifies the variant — still ship.
+     */
+    @Test
+    public void testEachVariantStillSerializesItsOwnPaymentType() {
+        List<IPaymentDetails> inputPaymentDetails = new ArrayList<IPaymentDetails>();
+        inputPaymentDetails.add(new WalletPaymentDetails(PaymentType.WECHAT_PAY, "12345", "X"));
+        inputPaymentDetails.add(new CreditCardPaymentDetails("411111", "Y", "M", "XXXX-1234", "Visa"));
+        inputPaymentDetails.add(new BankWirePaymentDetails("123456789", "021000021"));
+        inputPaymentDetails.add(new PaypalPaymentDetails("buyer@example.com", "verified", "confirmed", "eligible"));
+
+        String actualJson = JSONFormater.toJson(inputPaymentDetails);
+
+        assertTrue(actualJson, actualJson.contains("\"payment_type\":\"wechat_pay\""));
+        assertTrue(actualJson, actualJson.contains("\"payment_type\":\"card\""));
+        assertTrue(actualJson, actualJson.contains("\"payment_type\":\"bank_transfer\""));
+        assertTrue(actualJson, actualJson.contains("\"payment_type\":\"paypal\""));
+        assertTrue(actualJson, actualJson.contains("\"credit_card_bin\":\"411111\""));
+        assertTrue(actualJson, actualJson.contains("\"routing_number\":\"021000021\""));
+        assertTrue(actualJson, actualJson.contains("\"authorization_id\":\"12345\""));
+    }
+
+    /** The order payload itself must not carry the injected key either. */
+    @Test
+    public void testOrderPayloadCarriesNoMethodDiscriminator() {
+        List<IPaymentDetails> inputPaymentDetails = new ArrayList<IPaymentDetails>();
+        inputPaymentDetails.add(new CreditCardPaymentDetails("411111", "Y", "M", "XXXX-1234", "Visa"));
+        Order inputOrder = new Order();
+        inputOrder.setPaymentDetails(inputPaymentDetails);
+
+        String actualJson = JSONFormater.toJson(inputOrder);
+
+        assertTrue(actualJson, actualJson.contains("\"payment_details\""));
+        assertFalse(actualJson, actualJson.contains("\"method\""));
+        assertTrue(actualJson, actualJson.contains("\"payment_type\":\"card\""));
     }
 }
