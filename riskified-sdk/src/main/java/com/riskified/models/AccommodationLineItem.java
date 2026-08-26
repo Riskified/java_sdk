@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.Date;
 
 import com.riskified.validations.*;
@@ -10,7 +14,11 @@ public class AccommodationLineItem extends LineItem {
 	private String roomType;
 	private String city;
 	private String countryCode;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date checkInDate;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date checkOutDate;
 	private String rating;
 	private Integer numberOfGuests;

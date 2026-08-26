@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import com.riskified.validations.*;
 
 import java.util.Date;
@@ -7,6 +11,8 @@ import java.util.Date;
 public class Login implements IValidated {
     private String customerId;
     private String email;
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date customerCreatedAt;
     private Boolean loginAtCheckout;
     private SocialType socialLoginType;

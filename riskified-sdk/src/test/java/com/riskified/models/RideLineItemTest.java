@@ -1,0 +1,117 @@
+package com.riskified.models;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.riskified.JSONFormater;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * Wire-name regression tests for {@link RideLineItem}.
+ *
+ * <p>
+ * Java derives wire names from field names via
+ * {@code FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES}, so a field whose Java name does not
+ * snake-case to the contract's key diverges silently. There is no error, no warning, and no
+ * response difference — the data simply stops arriving.
+ */
+public class RideLineItemTest {
+
+    private static RideLineItem fullyPopulatedRideLineItem() {
+        RideLineItem inputItem = new RideLineItem(42.5, 1, "Airport transfer", new Date(0L), 0, 0);
+        inputItem.setPickupLatitude(32.0853f);
+        inputItem.setPickupLongitude(34.7818f);
+        inputItem.setPickupAddress(
+                new Address("Ada", "Lovelace", "1 Rothschild Blvd", "Tel Aviv", "+972500000000", "IL"));
+        inputItem.setDropoffDate(new Date(3600000L));
+        inputItem.setDropoffLatitude(31.7683f);
+        inputItem.setDropoffLongitude(35.2137f);
+        inputItem.setDropoffAddress(
+                new Address("Ada", "Lovelace", "1 Jaffa St", "Jerusalem", "+972500000000", "IL"));
+        inputItem.setTransportMethod("car");
+        inputItem.setPriceBy("distance");
+        inputItem.setVehicleClass("business");
+        inputItem.setCarrierName("Acme Rides");
+        inputItem.setDriverId("driver-1");
+        inputItem.setTariff("flat");
+        inputItem.setNoteToDriver("Second gate");
+        inputItem.setMeetNGreet("yes");
+        inputItem.setCancellationPolicy("free");
+        inputItem.setAuthorizedPayments(42.5f);
+        return inputItem;
+    }
+
+    /**
+     * The live wire name for the dropoff latitude is the transposed {@code dropoff_latitiude}.
+     *
+     * <p>
+     * <b>This misspelling is the contract, not a mistake in this test.</b> The reference C# SDK
+     * sends it ({@code OrderElements/RideTicketLineItem.cs:101}) and the Riskified API expects it.
+     * Java, PHP and JavaScript each independently "corrected" the spelling to
+     * {@code dropoff_latitude}, and the consequence is silent: ride dropoff geolocation stops
+     * arriving and nothing errors. Do not "fix" the spelling here or in {@link RideLineItem}.
+     */
+    @Test
+    public void testDropoffLatitudeUsesTheTransposedLiveWireName() {
+        RideLineItem inputItem = fullyPopulatedRideLineItem();
+
+        String actualJson = JSONFormater.toJson(inputItem);
+
+        assertTrue("expected the transposed live wire name dropoff_latitiude, got: " + actualJson,
+                actualJson.contains("\"dropoff_latitiude\":31.7683"));
+        assertFalse("dropoff_latitude (the corrected spelling) is not the contract and must not ship: "
+                + actualJson, actualJson.contains("\"dropoff_latitude\""));
+    }
+
+    /**
+     * Locks the whole derived wire-name map for this class, so a renamed or newly added field
+     * cannot drift without a failing test. Names come from
+     * {@code docs/flows/01-model-catalog.md} section 8, {@code OrderElements/RideTicketLineItem.cs}.
+     */
+    @Test
+    public void testEveryRideFieldUsesItsContractWireName() {
+        List<String> expectedWireNames = Arrays.asList(
+                "pickup_date",
+                "pickup_latitude",
+                "pickup_longitude",
+                "pickup_address",
+                "dropoff_date",
+                "dropoff_latitiude",
+                "dropoff_longitude",
+                "dropoff_address",
+                "transport_method",
+                "price_by",
+                "vehicle_class",
+                "carrier_name",
+                "driver_id",
+                "tariff",
+                "note_to_driver",
+                "meet_n_greet",
+                "cancellation_policy",
+                "authorized_payments",
+                "route_index",
+                "leg_index");
+
+        JsonObject actualObject = JsonParser.parseString(JSONFormater.toJson(fullyPopulatedRideLineItem()))
+                .getAsJsonObject();
+
+        for (String expectedWireName : expectedWireNames) {
+            assertTrue("missing wire key " + expectedWireName + " in " + actualObject,
+                    actualObject.has(expectedWireName));
+        }
+    }
+
+    /** {@code product_type} is the {@code line_items} discriminator and is set by the constructor. */
+    @Test
+    public void testProductTypeIsRide() {
+        String actualJson = JSONFormater.toJson(fullyPopulatedRideLineItem());
+
+        assertTrue(actualJson, actualJson.contains("\"product_type\":\"ride\""));
+    }
+}

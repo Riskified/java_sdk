@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.Date;
 
 import com.riskified.validations.*;
@@ -8,13 +12,19 @@ public class Passenger implements IValidated {
 
 	private String firstName;
 	private String lastName;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date dateOfBirth;
 	private String nationalityCode;
 	private String insuranceType;
 	private float insurancePrice;
 	private String documentNumber;
 	private String documentType;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date documentIssueDate;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date documentExpirationDate;
 	private String passengerType;
 	

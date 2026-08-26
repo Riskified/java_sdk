@@ -1,5 +1,10 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.lang.reflect.Field;
 import java.util.Date;
 
@@ -8,11 +13,21 @@ import com.riskified.validations.*;
 public class RideLineItem extends LineItem {
 
 //    Ride Industry fields
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date pickupDate;
     private Float pickupLatitude;
     private Float pickupLongitude;
     private Address pickupAddress;
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date dropoffDate;
+    // The live wire name is the transposed "dropoff_latitiude", not "dropoff_latitude".
+    // This is an upstream typo the Riskified API expects: the reference C# SDK sends it
+    // (OrderElements/RideTicketLineItem.cs:101) and the service reads it. "Correcting" the
+    // spelling silently drops ride dropoff geolocation with no error anywhere.
+    // DO NOT "FIX" THE SPELLING. See docs/flows/01-model-catalog.md:289.
+    @SerializedName("dropoff_latitiude")
     private Float dropoffLatitude;
     private Float dropoffLongitude;
     private Address dropoffAddress;
