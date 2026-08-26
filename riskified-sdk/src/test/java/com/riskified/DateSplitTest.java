@@ -159,14 +159,8 @@ public class DateSplitTest {
     }
 
     /**
-     * The 23 offset-bearing fields that have a Java counterpart.
-     *
-     * <p>
-     * Two of the contract's 25 are not modelled by this SDK at all —
-     * {@code Customer.verified_email_at} ({@code Customer.cs:143}) and
-     * {@code Customer.first_purchase_at} ({@code Customer.cs:167}). They are missing fields, not
-     * misformatted ones, and are out of scope here; when they are added they must take the offset
-     * format, which is the default, so no annotation is needed.
+     * All 25 offset-bearing fields of {@code docs/flows/01-model-catalog.md} section 3, plus the one
+     * {@code cancelled_at} that Java declares on the order base and .NET does not.
      */
     private static List<Object[]> offsetBearingFields() {
         return Arrays.asList(new Object[][] {
@@ -181,6 +175,9 @@ public class DateSplitTest {
                 // Customer.cs:113 created_at, :116 updated_at, :149 verified_phone_at, :182 date_of_birth
                 { Customer.class, "createdAt" },
                 { Customer.class, "updatedAt" },
+                // Customer.cs:143 verified_email_at, :167 first_purchase_at
+                { Customer.class, "verifiedEmailAt" },
+                { Customer.class, "firstPurchaseAt" },
                 { Customer.class, "verifiedPhoneAt" },
                 { Customer.class, "dateOfBirth" },
                 // CreditCardPaymentDetails.cs:110/:113, WalletPaymentDetails.cs:106/:109
@@ -237,9 +234,9 @@ public class DateSplitTest {
     public void testOffsetBearingFieldsCarryNoNaiveAdapter() throws NoSuchFieldException {
         List<Object[]> inputFields = offsetBearingFields();
 
-        // 23 of the contract's 25, plus one field Java declares that .NET does not
-        // (cancelled_at on the order base, where .NET has it only on OrderCancellation).
-        assertEquals(24, inputFields.size());
+        // All 25 of the contract's offset-bearing fields, plus one field Java declares that .NET
+        // does not (cancelled_at on the order base, where .NET has it only on OrderCancellation).
+        assertEquals(26, inputFields.size());
         for (Object[] inputField : inputFields) {
             Class<?> declaringClass = (Class<?>) inputField[0];
             String fieldName = (String) inputField[1];
@@ -298,6 +295,38 @@ public class DateSplitTest {
                 com.riskified.models.Recipient.class, RefundDetails.class, RideLineItem.class,
                 SessionDetails.class, TravelLineItem.class, com.riskified.models.Verification.class,
                 com.riskified.models.VerificationData.class, WalletPaymentDetails.class);
+    }
+
+    /**
+     * The two {@link Customer} timestamps that used to be missing from the model derive their
+     * contract wire names, and take the offset format rather than the naive one.
+     */
+    @Test
+    public void testNewlyModelledCustomerTimestampsAreOffsetBearing() {
+        Customer inputCustomer = new Customer("a@b.com", "Ada", "Lovelace");
+        inputCustomer.setVerifiedEmailAt(FIXED_INSTANT);
+        inputCustomer.setFirstPurchaseAt(FIXED_INSTANT);
+
+        String actualJson = JSONFormater.toJson(inputCustomer);
+
+        assertTrue(actualJson,
+                actualJson.contains("\"verified_email_at\":\"" + EXPECTED_OFFSET_RENDERING + "\""));
+        assertTrue(actualJson,
+                actualJson.contains("\"first_purchase_at\":\"" + EXPECTED_OFFSET_RENDERING + "\""));
+    }
+
+    /**
+     * Adding those two boxed fields must not change the payload for a customer that never sets them.
+     * Whether a missing field is equivalent to its .NET default is corpus open question 5 and is
+     * explicitly out of scope, so the default payload has to stay exactly as it was.
+     */
+    @Test
+    public void testNewCustomerTimestampsAreOmittedWhenUnset() {
+        Customer inputCustomer = new Customer("a@b.com", "Ada", "Lovelace");
+
+        String actualJson = JSONFormater.toJson(inputCustomer);
+
+        assertEquals("{\"email\":\"a@b.com\",\"first_name\":\"Ada\",\"last_name\":\"Lovelace\"}", actualJson);
     }
 
     /** A naive date read back yields the instant it was written from. */

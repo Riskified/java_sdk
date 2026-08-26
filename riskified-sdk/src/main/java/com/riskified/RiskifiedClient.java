@@ -1054,7 +1054,11 @@ public class RiskifiedClient {
         HttpResponse response;
         HttpClient client = constructHttpClient();
         response = executeClient(client, request);
-        String postBody = EntityUtils.toString(response.getEntity());
+        // Explicit UTF-8. Without it EntityUtils falls back to ISO-8859-1 whenever the response
+        // omits a charset parameter, which turns any non-ASCII error message into mojibake --
+        // and this body is now preserved verbatim on the exception, so mangling it here would
+        // corrupt the thing the caller is meant to read. postCheckoutOrder already did this.
+        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
 
         String statusText = response.getStatusLine().getReasonPhrase();
