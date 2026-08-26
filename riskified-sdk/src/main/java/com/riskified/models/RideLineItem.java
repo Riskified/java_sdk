@@ -1,7 +1,6 @@
 package com.riskified.models;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
 
 import com.riskified.adapters.NaiveDateTypeAdapter;
 
@@ -22,12 +21,10 @@ public class RideLineItem extends LineItem {
     // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
     @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date dropoffDate;
-    // The live wire name is the transposed "dropoff_latitiude", not "dropoff_latitude".
-    // This is an upstream typo the Riskified API expects: the reference C# SDK sends it
-    // (OrderElements/RideTicketLineItem.cs:101) and the service reads it. "Correcting" the
-    // spelling silently drops ride dropoff geolocation with no error anywhere.
-    // DO NOT "FIX" THE SPELLING. See docs/flows/01-model-catalog.md:289.
-    @SerializedName("dropoff_latitiude")
+    // Derives to "dropoff_latitude", which is the contract name in both OpenAPI specs.
+    // The reference C# SDK sends a transposed "dropoff_latitiude"
+    // (OrderElements/RideTicketLineItem.cs:100) -- that is a defect in that SDK, not the wire
+    // contract, so no @SerializedName override belongs here.
     private Float dropoffLatitude;
     private Float dropoffLongitude;
     private Address dropoffAddress;

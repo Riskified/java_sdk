@@ -16,9 +16,8 @@ import static org.junit.Assert.assertTrue;
  * <p>
  * The Java field is named {@code updateAt}, which {@code LOWER_CASE_WITH_UNDERSCORES} derives as
  * {@code update_at}. The contract key is {@code updated_at} ({@code KycDetails.cs:18}), so the
- * derived name was a key the API ignores and KYC update timestamps were silently not arriving. Same
- * class of failure as {@code dropoff_latitiude}, in the opposite direction: there the SDK
- * "corrected" a wire typo, here it inherited a Java-side one.
+ * derived name was a key the API ignores and KYC update timestamps were silently not arriving.
+ * Derived names are only as good as the field they are derived from.
  */
 public class KycDetailsTest {
 

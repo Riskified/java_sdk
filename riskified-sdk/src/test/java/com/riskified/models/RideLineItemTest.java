@@ -48,25 +48,25 @@ public class RideLineItemTest {
     }
 
     /**
-     * The live wire name for the dropoff latitude is the transposed {@code dropoff_latitiude}.
+     * The contract wire name for the dropoff latitude is {@code dropoff_latitude}.
      *
      * <p>
-     * <b>This misspelling is the contract, not a mistake in this test.</b> The reference C# SDK
-     * sends it ({@code OrderElements/RideTicketLineItem.cs:101}) and the Riskified API expects it.
-     * Java, PHP and JavaScript each independently "corrected" the spelling to
-     * {@code dropoff_latitude}, and the consequence is silent: ride dropoff geolocation stops
-     * arriving and nothing errors. Do not "fix" the spelling here or in {@link RideLineItem}.
+     * Both OpenAPI specs declare that spelling, with a description and an example. The reference C#
+     * SDK sends a transposed {@code dropoff_latitiude}
+     * ({@code OrderElements/RideTicketLineItem.cs:100}); that is a defect in the C# SDK, not the
+     * contract, and this SDK must not copy it. Guarded in both directions, because an earlier
+     * revision of this branch pinned the transposition deliberately.
      */
     @Test
-    public void testDropoffLatitudeUsesTheTransposedLiveWireName() {
+    public void testDropoffLatitudeUsesTheContractWireName() {
         RideLineItem inputItem = fullyPopulatedRideLineItem();
 
         String actualJson = JSONFormater.toJson(inputItem);
 
-        assertTrue("expected the transposed live wire name dropoff_latitiude, got: " + actualJson,
-                actualJson.contains("\"dropoff_latitiude\":31.7683"));
-        assertFalse("dropoff_latitude (the corrected spelling) is not the contract and must not ship: "
-                + actualJson, actualJson.contains("\"dropoff_latitude\""));
+        assertTrue("expected the contract wire name dropoff_latitude, got: " + actualJson,
+                actualJson.contains("\"dropoff_latitude\":31.7683"));
+        assertFalse("dropoff_latitiude is the C# SDK's transposition and must not ship: "
+                + actualJson, actualJson.contains("\"dropoff_latitiude\""));
     }
 
     /**
@@ -82,7 +82,7 @@ public class RideLineItemTest {
                 "pickup_longitude",
                 "pickup_address",
                 "dropoff_date",
-                "dropoff_latitiude",
+                "dropoff_latitude",
                 "dropoff_longitude",
                 "dropoff_address",
                 "transport_method",
