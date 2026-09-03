@@ -1,5 +1,6 @@
 package com.riskified.samples.notificationServer.servlet;
 
+import com.riskified.samples.notificationServer.SampleAuthToken;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -13,7 +14,7 @@ public class SampleServer {
         myContext.setContextPath("/");
         server.setHandler(myContext);
 
-        myContext.addServlet(new ServletHolder(new NotificationServlet("636b3045e083eddf4ea9f0b7f2ed4a26")), "/*");
+        myContext.addServlet(new ServletHolder(new NotificationServlet(SampleAuthToken.fromEnvironment())), "/*");
 
         server.start();
         server.join();
