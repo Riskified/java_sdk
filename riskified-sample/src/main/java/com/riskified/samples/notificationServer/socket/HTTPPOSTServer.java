@@ -63,9 +63,9 @@ public class HTTPPOSTServer extends Thread {
                 }
                 NotificationHandler formatter = new NotificationHandler("26faa0eb6eacf889e300944c297640b68789b11c");
                 NotificationOrder notification = formatter.toObject(body, hash).getOrder();
-                sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
-                + " with status " + notification.getStatus() + " and description " + notification.getDescription()
-                + " Old Status was " + notification.getOldStatus()
+                sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + escapeHtml(notification.getId())
+                + " with status " + escapeHtml(notification.getStatus()) + " and description " + escapeHtml(notification.getDescription())
+                + " Old Status was " + escapeHtml(notification.getOldStatus())
                 + "</BODY></HTML>");
 
             }
@@ -75,6 +75,16 @@ public class HTTPPOSTServer extends Thread {
             e.printStackTrace();
         }
 
+    }
+
+    private static String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;");
     }
 
     public void sendResponse(int statusCode, String responseString) {
