@@ -20,7 +20,7 @@ public class Response {
 
     public Response(CheckoutResponse checkoutResponse) {
         this.order = checkoutResponse.getCheckout();
-        this.received = checkoutResponse.getReceived();
+        this.received = checkoutResponse.getReceivedOrNull();
         this.warnings = checkoutResponse.getWarnings();
         this.error = checkoutResponse.getError();
     }
@@ -45,7 +45,21 @@ public class Response {
         this.decision = decision;
     }
 
+    /**
+     * @return the {@code received} count, or {@code 0} when the response carried no such field.
+     *         Unboxing a null {@link Integer} here used to raise a {@link NullPointerException} on
+     *         every response that omits it — which is every error response and several success
+     *         ones. Use {@link #getReceivedOrNull()} when the difference between absent and zero
+     *         matters; the primitive return type is kept so existing callers still compile.
+     */
     public int getReceived() {
+        return received == null ? 0 : received;
+    }
+
+    /**
+     * @return the {@code received} count, or {@code null} when the response carried no such field.
+     */
+    public Integer getReceivedOrNull() {
         return received;
     }
 

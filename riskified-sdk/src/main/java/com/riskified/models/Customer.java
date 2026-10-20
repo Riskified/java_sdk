@@ -32,6 +32,8 @@ public class Customer implements IValidated {
     private String documentType;
     private String phone;
     private Boolean verifiedPhone;
+    private Date verifiedEmailAt;
+    private Date firstPurchaseAt;
     private Date verifiedPhoneAt;
     private String userName;
     private Boolean hasDefaulted;
@@ -256,6 +258,21 @@ public class Customer implements IValidated {
     public Boolean getVerifiedPhone() { return verifiedPhone; }
 
     public void setVerifiedPhone(Boolean verifiedPhone) { this.verifiedPhone = verifiedPhone; }
+
+    /**
+     * {@code verified_email_at} — {@code Customer.cs:143}, {@code DateTimeOffset?}. Offset-bearing,
+     * which is the default format, so it needs no adapter annotation.
+     */
+    public Date getVerifiedEmailAt() { return verifiedEmailAt; }
+
+    public void setVerifiedEmailAt(Date verifiedEmailAt) { this.verifiedEmailAt = verifiedEmailAt; }
+
+    /**
+     * {@code first_purchase_at} — {@code Customer.cs:167}, {@code DateTimeOffset?}. Offset-bearing.
+     */
+    public Date getFirstPurchaseAt() { return firstPurchaseAt; }
+
+    public void setFirstPurchaseAt(Date firstPurchaseAt) { this.firstPurchaseAt = firstPurchaseAt; }
 
     public Date getVerifiedPhoneAt() { return verifiedPhoneAt; }
 

@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.Date;
 
 public class EventLineItem extends LineItem {
@@ -9,6 +13,8 @@ public class EventLineItem extends LineItem {
     private String city;
     private float latitude;
     private float longitude;
+    // Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+    @JsonAdapter(NaiveDateTypeAdapter.class)
     private Date eventDate;
     
 	public EventLineItem(double price, int quantity, String title,

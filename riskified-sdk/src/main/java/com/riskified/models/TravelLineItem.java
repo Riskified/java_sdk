@@ -1,5 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.JsonAdapter;
+
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.Date;
 
 import com.riskified.validations.*;
@@ -10,7 +14,11 @@ public class TravelLineItem extends LineItem {
 	private int legIndex;
 	private String departurePortCode;
 	private String arrivalPortCode;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date departureDate;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date arrivalDate;
 	private String departureCountryCode;
 	private String arrivalCountryCode;

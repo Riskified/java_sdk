@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.riskified.models.*;
+// Explicit: com.riskified.models.Error would otherwise be ambiguous with java.lang.Error.
+import com.riskified.models.Error;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validation;
@@ -901,22 +903,60 @@ public class RiskifiedClient {
         response = executeClient(client, request);
         String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
-        Response responseObject = getCheckoutResponseObject(postBody);
-        switch (status) {
-            case 200:
-                return responseObject;
-            case 400:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 401:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 404:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());
-            case 429:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());			
-            case 504:
-                throw new HttpResponseException(status, "Temporary error, please retry");
-            default:
-                throw new HttpResponseException(500, "Contact Riskified support");
+        String statusText = response.getStatusLine().getReasonPhrase();
+        if (status == 200) {
+            return getCheckoutResponseObject(postBody);
+        }
+        // Parsing happens only after the 200 check, and never decides whether the call failed.
+        // Previously the body was parsed first and dereferenced unguarded, so any error body that
+        // was not the {"error":{"message":...}} shape raised a NullPointerException in place of the
+        // HTTP error the caller was waiting for.
+        throw buildHttpException(status, statusText, postBody, tryParseCheckoutResponse(postBody));
+    }
+
+    /**
+     * Turns a non-2xx response into an exception that keeps the real status, the raw body and the
+     * parsed error, whatever shape the body turned out to be.
+     *
+     * <p>
+     * There is deliberately no {@code default} case rewriting the status: an unmatched status is
+     * reported as itself. Collapsing 502, 503 and 500 into one substituted 500 with the body
+     * discarded is what used to make retry decisions impossible.
+     */
+    static RiskifiedHttpException buildHttpException(int status, String statusText, String body, Response parsed) {
+        Error error = parsed == null ? null : parsed.getError();
+        String message;
+        if (status == 504) {
+            // Documented by the CBG and Account Secure specs with no content schema.
+            message = "Temporary error, please retry";
+        } else if (error != null && error.getMessage() != null && !error.getMessage().isEmpty()) {
+            message = error.getMessage();
+        } else if (body != null && !body.trim().isEmpty()) {
+            message = body;
+        } else if (statusText != null && !statusText.isEmpty()) {
+            message = statusText;
+        } else {
+            message = "HTTP " + status;
+        }
+        return new RiskifiedHttpException(status, statusText, body, error, message);
+    }
+
+    /**
+     * Best-effort parse of an error body into the common {@code {"error":{"message":...}}} shape.
+     * Returns {@code null} for any of the other six documented shapes, for a bare JSON string, and
+     * for an empty or malformed body. Never throws: the caller already knows the request failed and
+     * the raw body is preserved regardless.
+     */
+    private static Response tryParseCheckoutResponse(String postBody) {
+        try {
+            CheckoutResponse res = new Gson().fromJson(postBody, CheckoutResponse.class);
+            if (res == null) {
+                return null;
+            }
+            res.setOrder(res.getCheckout());
+            return res;
+        } catch (RuntimeException e) {
+            return null;
         }
     }
 
@@ -1014,26 +1054,20 @@ public class RiskifiedClient {
         HttpResponse response;
         HttpClient client = constructHttpClient();
         response = executeClient(client, request);
-        String postBody = EntityUtils.toString(response.getEntity());
+        // Explicit UTF-8. Without it EntityUtils falls back to ISO-8859-1 whenever the response
+        // omits a charset parameter, which turns any non-ASCII error message into mojibake --
+        // and this body is now preserved verbatim on the exception, so mangling it here would
+        // corrupt the thing the caller is meant to read. postCheckoutOrder already did this.
+        String postBody = EntityUtils.toString(response.getEntity(), "UTF-8");
         int status = response.getStatusLine().getStatusCode();
 
-        Response responseObject = getResponseObject(postBody);
-        switch (status) {
-	        case 200:
-	            return responseObject;
-	        case 400:
-	            throw new HttpResponseException(status, postBody);
-	        case 401:
-	            throw new HttpResponseException(status, postBody);
-	        case 404:
-	            throw new HttpResponseException(status, postBody);
-		case 429: 
-		    throw new HttpResponseException(status, postBody);
-	        case 504:
-	            throw new HttpResponseException(status, "Temporary error, please retry");
-	        default:
-	            throw new HttpResponseException(500, "Contact Riskified support");
-	    }
+        String statusText = response.getStatusLine().getReasonPhrase();
+
+        if (status == 200) {
+            return getResponseObject(postBody);
+        }
+        // Same rule as the checkout path: report the status the server sent, keep the body.
+        throw buildHttpException(status, statusText, postBody, getResponseObject(postBody));
     }
 
     private Response getResponseObject(String postBody) throws IOException {

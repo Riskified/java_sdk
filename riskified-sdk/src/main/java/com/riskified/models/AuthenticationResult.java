@@ -1,5 +1,7 @@
 package com.riskified.models;
 
+import com.riskified.adapters.NaiveDateTypeAdapter;
+
 import java.util.Date;
 
 import com.google.gson.annotations.JsonAdapter;
@@ -14,6 +16,8 @@ import com.riskified.validations.*;
 public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
+	// Naive (offset-free) date on the wire; see NaiveDateTypeAdapter.
+	@JsonAdapter(NaiveDateTypeAdapter.class)
 	private Date createdAt;
 	private TransStatus transStatus;
 	private TransStatusReason transStatusReason;

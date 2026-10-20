@@ -5,6 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
 import java.util.Formatter;
 
 public class SHA256Handler {
@@ -21,7 +22,10 @@ public class SHA256Handler {
     }
 
     private Mac createSHA256Key(String authKey) throws RiskifiedError {
-        Key sk = new SecretKeySpec(authKey.getBytes(), "HmacSHA256");
+        // UTF-8, never the platform default charset: the default makes the signature depend on
+        // a JVM locale setting. Riskified tokens are hex, so UTF-8 and the reference
+        // implementation's ASCII (Riskified.SDK/Utils/HttpUtils.cs:152) agree byte for byte.
+        Key sk = new SecretKeySpec(authKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         Mac mac;
         try {
             mac = Mac.getInstance(sk.getAlgorithm());
