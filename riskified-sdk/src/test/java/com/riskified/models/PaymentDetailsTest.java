@@ -53,6 +53,12 @@ public class PaymentDetailsTest {
     }
 
     @Test
+    public void testPaypalValidationPassesWithoutPayerAddressStatus() throws FieldBadFormatException {
+        PaypalPaymentDetails paypal = new PaypalPaymentDetails("buyer@example.com", "verified", null, "eligible");
+        paypal.validate(Validation.ALL);
+    }
+
+    @Test
     public void testBankWireDefaultPaymentType() {
         BankWirePaymentDetails bankWire = new BankWirePaymentDetails("123456789", "021000021");
         assertEquals(PaymentType.BANK_TRANSFER, bankWire.getPaymentType());
