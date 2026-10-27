@@ -1,6 +1,7 @@
 package com.riskified.notifications;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,16 +31,25 @@ public class NotificationHandler {
     /**
      * Convert string to notification object
      * @param data the string to convert
-     * @param hash the sha256 of the string
+     * @param hash the sha256 of the string, as received on the X-Riskified-Hmac-Sha256 header
      * @return Notification
-     * @throws AuthError the hash doesn't match the was calced sha256 for the string
+     * @throws AuthError the hash is absent, or doesn't match the sha256 calculated for the string
      * @throws UnsupportedEncodingException unsupported encoding exception
      * @throws IllegalStateException illegal state exception
      * @throws JsonSyntaxException json syntax exception
      */
     public Notification toObject(String data, String hash) throws AuthError, JsonSyntaxException, IllegalStateException, UnsupportedEncodingException {
+        if (hash == null) {
+            // An unsigned request is unauthorized, not a programming error. Without this guard
+            // hash.getBytes() throws NullPointerException, which is not AuthError and so escapes
+            // every caller that catches the documented exception. Fails closed either way; the
+            // type is what matters. Matches the .NET reference (Utils/HttpUtils.cs).
+            throw new AuthError();
+        }
         String calcHash = sha256Handler.createSHA256(data.getBytes("UTF-8"));
-        if (MessageDigest.isEqual(hash.getBytes(), calcHash.getBytes()))
+        // Both operands are hex ASCII, so pin the charset rather than inheriting whatever the
+        // platform default happens to be on the deployment host.
+        if (MessageDigest.isEqual(hash.getBytes(StandardCharsets.US_ASCII), calcHash.getBytes(StandardCharsets.US_ASCII)))
             return gson.fromJson(data, Notification.class);
         else
             throw new AuthError();

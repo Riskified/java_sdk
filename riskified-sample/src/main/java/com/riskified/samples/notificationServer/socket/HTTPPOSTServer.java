@@ -16,9 +16,11 @@ public class HTTPPOSTServer extends Thread {
     Socket connectedClient = null;
     BufferedReader inFromClient = null;
     BufferedWriter outToClient = null;
+    private final String authKey;
 
-    public HTTPPOSTServer(Socket client) {
+    public HTTPPOSTServer(Socket client, String authKey) {
         connectedClient = client;
+        this.authKey = authKey;
     }
 
     public void run() {
@@ -61,7 +63,7 @@ public class HTTPPOSTServer extends Thread {
                         break;
                     }
                 }
-                NotificationHandler formatter = new NotificationHandler("26faa0eb6eacf889e300944c297640b68789b11c");
+                NotificationHandler formatter = new NotificationHandler(authKey);
                 NotificationOrder notification = formatter.toObject(body, hash).getOrder();
                 sendResponse(200, "<HTML><BODY>Merchant Received Notification For Order " + notification.getId()
                 + " with status " + notification.getStatus() + " and description " + notification.getDescription()
