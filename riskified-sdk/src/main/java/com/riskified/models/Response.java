@@ -1,5 +1,7 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Response {
@@ -8,9 +10,12 @@ public class Response {
     private Integer received;
     private List<String> warnings;
     private Error error;
+    @SerializedName(value = "login_id", alternate = "loginId")
     private String loginId;
     private String message;
+    @SerializedName(value = "verification_data", alternate = "verificationData")
     private VerificationData verificationData;
+    @SerializedName(value = "widget_token", alternate = "WidgetToken")
     private String WidgetToken;
 
 

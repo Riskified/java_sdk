@@ -1036,7 +1036,8 @@ public class RiskifiedClient {
 	    }
     }
 
-    private Response getResponseObject(String postBody) throws IOException {
+    // Package-private so tests can check response parsing.
+    Response getResponseObject(String postBody) throws IOException {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Response res = null;
         try{
@@ -1052,8 +1053,10 @@ public class RiskifiedClient {
         return res;
     }
 
-    private CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
-        Gson gson = new Gson();
+    // Package-private so tests can check response parsing.
+    CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
+        // Multi-word response fields declare both spellings, so camelCase keys that bound before still bind.
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         CheckoutResponse res = gson.fromJson(postBody, CheckoutResponse.class);
         res.setOrder(res.getCheckout());
         return res;
