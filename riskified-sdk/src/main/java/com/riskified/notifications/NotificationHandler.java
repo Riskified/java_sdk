@@ -1,6 +1,7 @@
 package com.riskified.notifications;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,34 +39,43 @@ public class NotificationHandler {
      * @throws JsonSyntaxException json syntax exception
      */
     public Notification toObject(String data, String hash) throws AuthError, JsonSyntaxException, IllegalStateException, UnsupportedEncodingException {
-        String calcHash = sha256Handler.createSHA256(data.getBytes("UTF-8"));
-        if (MessageDigest.isEqual(hash.getBytes(), calcHash.getBytes()))
-            return gson.fromJson(data, Notification.class);
-        else
-            throw new AuthError();
+        return toObject(data.getBytes("UTF-8"), hash);
     }
 
     /**
-     * Convert servlet to notification object 
+     * Convert servlet to notification object.
+     * The signature is checked against the raw request body, so the body is read with
+     * {@code req.getInputStream()}; nothing may have read it with {@code req.getReader()} before.
      * @param req the servlet request
      * @return Notification
      * @throws IOException error reading the post body
      * @throws AuthError the hash doesn't match the was calced sha256 for the string
      */
     public Notification parseServletPostRequest(HttpServletRequest req) throws AuthError, IOException {
-        StringBuffer jb = getPostBody(req);
+        byte[] body = readBody(req);
         String hash = req.getHeader("X-Riskified-Hmac-Sha256");
-        return this.toObject(jb.toString(), hash);
+        return toObject(body, hash);
     }
 
-    private StringBuffer getPostBody(HttpServletRequest req) throws IOException {
-        StringBuffer jb = new StringBuffer();
-        String line;
-        BufferedReader reader = req.getReader();
-        while ((line = reader.readLine()) != null) {
-            jb.append(line);
+    private Notification toObject(byte[] body, String hash) throws AuthError {
+        String calcHash = sha256Handler.createSHA256(body);
+        if (MessageDigest.isEqual(hash.getBytes(), calcHash.getBytes()))
+            return gson.fromJson(new String(body, StandardCharsets.UTF_8), Notification.class);
+        else
+            throw new AuthError();
+    }
+
+    // Reads the exact bytes Riskified signed. Reading lines would drop newlines, and getReader()
+    // decodes with the request charset (ISO-8859-1 when none is declared), so either breaks the signature.
+    private static byte[] readBody(HttpServletRequest req) throws IOException {
+        InputStream in = req.getInputStream();
+        ByteArrayOutputStream body = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            body.write(buffer, 0, read);
         }
-        return jb;
+        return body.toByteArray();
     }
 
 }

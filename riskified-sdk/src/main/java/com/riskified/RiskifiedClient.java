@@ -92,7 +92,7 @@ public class RiskifiedClient {
         if (enableAdvise) {
         	versionHeaderValue = "V1";
         }
-        
+
         String proxyUrl = properties.getProperty("proxyUrl");
         String proxyPort = properties.getProperty("proxyPort");
         String proxyUserName = properties.getProperty("proxyUsername");
@@ -116,7 +116,7 @@ public class RiskifiedClient {
         	environment = Environment.CHINA_PRODUCTION;
         }
 
-        
+
         init(shopUrl, authKey, Utils.getBaseUrlFromEnvironment(environment), Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment), Utils.getDecoBaseFromEnvironment(environment), Utils.getAccountBaseFromEnvironment(environment), Utils.getScreenBaseFromEnvironment(environment), Utils.getOtpBaseFromEnvironment(environment), validation);
 
         if (proxyUrl != null) {
@@ -240,11 +240,11 @@ public class RiskifiedClient {
 
         return postCheckoutOrder(new CheckoutOrderWrapper<CheckoutOrder>(order), url);
     }
-    
+
     // TODO add other paramaters Riskified server will return 
     /**
      * Send a new advise order to Riskified
-     * @param order The advise order to create 
+     * @param order The advise order to create
      * @see Response
      * @return Response object, including the status from Riskified server
      * @throws ClientProtocolException in case of a problem or the connection was aborted
@@ -403,7 +403,7 @@ public class RiskifiedClient {
         // Validation.ALL is not relevant when updating.
         	if(validation != validation.NONE) {
             validate(order, Validation.IGNORE_MISSING);
-        } 
+        }
 
         return postOrder(new OrderWrapper<Order>(order), url);
     }
@@ -912,7 +912,7 @@ public class RiskifiedClient {
             case 404:
                 throw new HttpResponseException(status, responseObject.getError().getMessage());
             case 429:
-                throw new HttpResponseException(status, responseObject.getError().getMessage());			
+                throw new HttpResponseException(status, responseObject.getError().getMessage());
             case 504:
                 throw new HttpResponseException(status, "Temporary error, please retry");
             default:
@@ -1027,7 +1027,7 @@ public class RiskifiedClient {
 	            throw new HttpResponseException(status, postBody);
 	        case 404:
 	            throw new HttpResponseException(status, postBody);
-		case 429: 
+		case 429:
 		    throw new HttpResponseException(status, postBody);
 	        case 504:
 	            throw new HttpResponseException(status, "Temporary error, please retry");
@@ -1036,7 +1036,8 @@ public class RiskifiedClient {
 	    }
     }
 
-    private Response getResponseObject(String postBody) throws IOException {
+    // Package-private so tests can check response parsing.
+    Response getResponseObject(String postBody) throws IOException {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Response res = null;
         try{
@@ -1052,8 +1053,10 @@ public class RiskifiedClient {
         return res;
     }
 
-    private CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
-        Gson gson = new Gson();
+    // Package-private so tests can check response parsing.
+    CheckoutResponse getCheckoutResponseObject(String postBody) throws IOException {
+        // Multi-word response fields declare both spellings, so camelCase keys that bound before still bind.
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         CheckoutResponse res = gson.fromJson(postBody, CheckoutResponse.class);
         res.setOrder(res.getCheckout());
         return res;
@@ -1070,12 +1073,12 @@ public class RiskifiedClient {
 		postRequest.setEntity(input);
     }
 
-    private HttpPost createPostRequest(String url) {
+    HttpPost createPostRequest(String url) {
         HttpPost postRequest = new HttpPost(url);
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
         postRequest.setHeader(HttpHeaders.ACCEPT, "application/json");
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
-        postRequest.setHeader("User-Agent","riskified_java_sdk/6.3.1"); // TODO: take the version automatically
+        postRequest.setHeader("User-Agent", "riskified_java_sdk/" + SdkVersion.VALUE);
         postRequest.setHeader("Version",versionHeaderValue);
         return postRequest;
     }
@@ -1116,6 +1119,11 @@ public class RiskifiedClient {
 
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    // Package-private so tests can check it.
+    String getScreenBaseUrl() {
+        return screenBaseUrl;
     }
 
     public String getAuthKey() {
@@ -1212,6 +1220,7 @@ public class RiskifiedClient {
         this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment);
         this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
         this.accountBaseUrl = Utils.getAccountBaseFromEnvironment(environment);
+        this.screenBaseUrl = Utils.getScreenBaseFromEnvironment(environment);
         this.otpBaseUrl = Utils.getOtpBaseFromEnvironment(environment);
     }
 }

@@ -9,15 +9,20 @@ public class ResOrder {
     private String id;
     private String status;
     private String description;
+    @SerializedName(value = "old_status", alternate = "oldStatus")
     private String oldStatus;
+    @SerializedName(value = "decision_code", alternate = "decisionCode")
     private String decisionCode;
     private String category;
 	private int score;
 	private AuthenticationType authentication_type;
 	private String action;
 	private Advice advice;
+    @SerializedName(value = "recovery_eligibility", alternate = "recoveryEligibility")
     private RecoveryEligibility recoveryEligibility;
+    @SerializedName(value = "risk_score", alternate = "riskScore")
     private Double riskScore;
+    @SerializedName(value = "policy_protect", alternate = "policyProtect")
     private PolicyProtect policyProtect;
 
     @SerializedName("risk_indicators")
