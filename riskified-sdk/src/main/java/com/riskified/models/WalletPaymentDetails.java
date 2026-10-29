@@ -61,6 +61,7 @@ public class WalletPaymentDetails implements IPaymentDetails {
     private Integer paymentFrequency;
     private String billingAddressId;
     private AuthenticationResult authenticationResult;
+    private AuthorizationError authorizationError;
 
     public WalletPaymentDetails(PaymentType paymentType, String authorizationId, String avsResultCode) {
         this.paymentType = paymentType;
@@ -275,6 +276,14 @@ public class WalletPaymentDetails implements IPaymentDetails {
 
     public void setAuthenticationResult(AuthenticationResult authenticationResult) {
         this.authenticationResult = authenticationResult;
+    }
+
+    public AuthorizationError getAuthorizationError() {
+        return authorizationError;
+    }
+
+    public void setAuthorizationError(AuthorizationError authorizationError) {
+        this.authorizationError = authorizationError;
     }
 
 }
