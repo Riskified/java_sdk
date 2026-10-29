@@ -1118,6 +1118,11 @@ public class RiskifiedClient {
         return baseUrl;
     }
 
+    // Package-private so tests can check it.
+    String getScreenBaseUrl() {
+        return screenBaseUrl;
+    }
+
     public String getAuthKey() {
         return authKey;
     }
@@ -1212,6 +1217,7 @@ public class RiskifiedClient {
         this.baseUrlSyncAnalyze = Utils.getBaseUrlSyncAnalyzeFromEnvironment(environment);
         this.decoBaseUrl = Utils.getDecoBaseFromEnvironment(environment);
         this.accountBaseUrl = Utils.getAccountBaseFromEnvironment(environment);
+        this.screenBaseUrl = Utils.getScreenBaseFromEnvironment(environment);
         this.otpBaseUrl = Utils.getOtpBaseFromEnvironment(environment);
     }
 }
