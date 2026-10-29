@@ -149,8 +149,8 @@ public final class GoldenOrders {
         order.setTags("vip,repeat");
         order.setVendorId("vendor-1");
         order.setVendorName("Example Vendor");
-        order.setVendorIntegrationType("plugin");
-        order.setOrderType("standard");
+        order.setVendorIntegrationType("api");
+        order.setOrderType("test");
         order.setSubmissionReason("failed_verification");
         order.setPartnerSubMerchantId("sub-merchant-1");
         order.setAiAgent(AiAgent.chatgpt);
@@ -299,6 +299,7 @@ public final class GoldenOrders {
     static DigitalLineItem digitalLineItem() {
         DigitalLineItem item = new DigitalLineItem(50.0, 1, "Gift card");
         populateLineItem(item);
+        item.setProductId("product-digital");
         item.setProductType("digital");
         item.setSenderName("John Doe");
         item.setSenderEmail("john.doe@example.com");
@@ -335,6 +336,7 @@ public final class GoldenOrders {
     static RideLineItem rideLineItem() {
         RideLineItem item = new RideLineItem(42.5, 1, "Airport ride", date("2024-03-02T07:00:00Z"), 0, 1);
         populateLineItem(item);
+        item.setProductId("product-ride");
         item.setProductType("ride");
         item.setPickupLatitude(40.6413f);
         item.setPickupLongitude(-73.7781f);
@@ -548,7 +550,9 @@ public final class GoldenOrders {
     }
 
     static Seller seller() {
-        Seller seller = new Seller(new Customer("seller@example.com", "Sam", "Seller"));
+        Customer customer = new Customer("seller@example.com", "Sam", "Seller");
+        customer.setCreatedAt(date("2021-03-01T00:00:00Z"));
+        Seller seller = new Seller(customer);
         seller.setCorrespondence(3);
         seller.setPriceNegotiated(true);
         seller.setStartingPrice(99.5f);

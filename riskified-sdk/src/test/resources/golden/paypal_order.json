@@ -137,7 +137,8 @@
           "customer": {
             "email": "seller@example.com",
             "first_name": "Sam",
-            "last_name": "Seller"
+            "last_name": "Seller",
+            "created_at": "2021-03-01T00:00:00Z"
           },
           "correspondence": 3,
           "price_negotiated": true,
@@ -220,7 +221,7 @@
     "tags": "vip,repeat",
     "vendor_id": "vendor-1",
     "vendor_name": "Example Vendor",
-    "vendor_integration_type": "plugin",
+    "vendor_integration_type": "api",
     "shipping_address": [
       {
         "first_name": "Jane",
@@ -362,7 +363,7 @@
       "loyalty_tier": "gold",
       "visits": 12
     },
-    "order_type": "standard",
+    "order_type": "test",
     "charge_free_payment_details": [
       {
         "gateway": "gift_card",
