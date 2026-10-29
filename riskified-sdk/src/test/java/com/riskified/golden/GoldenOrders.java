@@ -38,6 +38,9 @@ public final class GoldenOrders {
         samples.put("accommodation_line_item_order", new OrderWrapper<Order>(lineItemOrder("accommodation", accommodationLineItem())));
         samples.put("checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedOrder()));
         samples.put("decision_order", new OrderWrapper<DecisionOrder>(decisionOrder()));
+        // 6.6.0 additions. New samples rather than changes to the ones above, so those snapshots stay identical.
+        samples.put("card_order_tokenized", new OrderWrapper<Order>(cardOrderTokenized()));
+        samples.put("wallet_checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(walletCheckoutDeniedOrder()));
         return samples;
     }
 
@@ -100,6 +103,32 @@ public final class GoldenOrders {
         order.setGateway("stripe");
         order.setSubmissionReason("manual_decision");
         order.setPaymentDetails(Collections.singletonList(creditCardPaymentDetails()));
+        return order;
+    }
+
+    static Order cardOrderTokenized() {
+        CreditCardPaymentDetails details = creditCardPaymentDetails();
+        details.setCreditCardToken("card-token-1");
+        details.setBillingAddressId("address-billing");
+        details.setInitialPaymentAmount(50.0);
+        details.setPaymentFrequency(30);
+
+        Order order = new Order();
+        order.setId("golden-card-tokenized-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
+        return order;
+    }
+
+    static CheckoutDeniedOrder walletCheckoutDeniedOrder() {
+        WalletPaymentDetails details = walletPaymentDetails();
+        details.setAuthorizationError(authorizationError());
+
+        CheckoutDeniedOrder order = new CheckoutDeniedOrder("golden-wallet-checkout-denied-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
         return order;
     }
 

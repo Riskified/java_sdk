@@ -105,6 +105,13 @@ public class SchemaConformanceTest {
         checks.add(new Check("checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
                 "credit_card_payment_details_pre_auth_checkout_denied"));
         checks.add(new Check("decision_order", payment, PRE_DECISION, "credit_card_payment_details_pre_auth_decision"));
+        checks.add(new Check("card_order_tokenized", payment, POST_SUBMIT, "credit_card_payment_details_post_auth"));
+        checks.add(new Check("card_order_tokenized", payment, POST_DECIDE, "credit_card_payment_details_post_auth"));
+        checks.add(new Check("card_order_tokenized", payment, PRE_DECIDE, "credit_card_payment_details_pre_auth"));
+        checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", POST_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_post_auth_checkout_denied"));
+        checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_pre_auth_checkout_denied"));
 
         String lineItem = "/order/line_items/0";
         checks.add(new Check("card_order", lineItem, POST_SUBMIT, "physical_line_item"));

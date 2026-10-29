@@ -1,0 +1,48 @@
+{
+  "checkout": {
+    "id": "golden-wallet-checkout-denied-1",
+    "currency": "USD",
+    "total_price": 129.99,
+    "payment_details": [
+      {
+        "method": "digital_wallet",
+        "payment_type": "apple_pay",
+        "avs_result_code": "Y",
+        "credit_card_company": "Visa",
+        "credit_card_country": "US",
+        "credit_card_token": "wallet-token-1",
+        "cardholder_name": "Jane Doe",
+        "authorization_id": "auth-3",
+        "mid": "mid-3",
+        "id": "payment-3",
+        "stored_payment_created_at": "2023-06-01T08:00:00Z",
+        "stored_payment_updated_at": "2023-12-01T08:00:00Z",
+        "installments": 1,
+        "acquirer_bin": "123456",
+        "acquirer_region": "NONEU",
+        "authorization_type": "authorization",
+        "expiry_month": 11,
+        "expiry_year": 2029,
+        "initial_payment_amount": 50.0,
+        "payment_frequency": 30,
+        "billing_address_id": "address-billing",
+        "authentication_result": {
+          "eci": "05",
+          "cavv": "cavv-1",
+          "created_at": "2024-01-15T10:30:30Z",
+          "trans_status": "Y",
+          "trans_status_reason": "01",
+          "liability_shift": true,
+          "three_d_challenge": true,
+          "TRA_exemption": false
+        },
+        "authorization_error": {
+          "message": "Card was declined",
+          "error_code": "card_declined",
+          "created_at": "2024-01-15T10:31:00Z",
+          "drop_off": false
+        }
+      }
+    ]
+  }
+}
