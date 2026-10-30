@@ -43,6 +43,7 @@ public final class GoldenOrders {
         samples.put("wallet_checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(walletCheckoutDeniedOrder()));
         samples.put("alternative_payments_order", new OrderWrapper<Order>(alternativePaymentsOrder()));
         samples.put("customer_profile_order", new OrderWrapper<Order>(customerProfileOrder()));
+        samples.put("invoice_and_address_fields_order", new OrderWrapper<Order>(invoiceAndAddressFieldsOrder()));
         return samples;
     }
 
@@ -169,6 +170,27 @@ public final class GoldenOrders {
         order.setCurrency("USD");
         order.setTotalPrice(129.99);
         order.setCustomer(customer);
+        return order;
+    }
+
+    /** The order's invoice ID and the address fields added in 6.6.0. */
+    static Order invoiceAndAddressFieldsOrder() {
+        Address shipping = address("shipping");
+        shipping.setId("address-shipping");
+        shipping.setAdditionalPhone("+15555550101");
+        shipping.setNeighborhood("Chelsea");
+        Address billing = address("billing");
+        billing.setId("address-billing");
+        billing.setAdditionalPhone("+15555550102");
+        billing.setNeighborhood("Midtown");
+
+        Order order = new Order();
+        order.setId("golden-invoice-and-address-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setInvoiceId("invoice-1");
+        order.setShippingAddress(Collections.singletonList(shipping));
+        order.setBillingAddress(Collections.singletonList(billing));
         return order;
     }
 
