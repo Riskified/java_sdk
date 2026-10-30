@@ -7,7 +7,7 @@ Alignment plan step (if any): <!-- e.g. 2.3 — Customer -->
 
 ## Change type
 
-<!-- Pick one. See API_ALIGNMENT_PLAN.md for the definitions. -->
+<!-- Pick one. See JAVA_API_ALIGNMENT_PLAN.md for the definitions. -->
 
 - [ ] **Patch:** fixes the SDK's own behavior; no public API change and no change to what's sent
 - [ ] **Additive:** new types, fields, getters/setters or enum values only; existing payloads unchanged
@@ -33,11 +33,11 @@ For bridge PRs, explain each change; the changelog lists it under "Wire changes"
 
 Empty
 
-## Schema gaps
+## Accepted schema differences
 
 <!--
-Did riskified-sdk/src/test/resources/schema/known-gaps.json change? List the entries removed
-(gaps this PR fixes) or added (and why), or write "No change".
+Did riskified-sdk/src/test/resources/schema/accepted-differences.json change? List each entry added
+or removed, with the reason, or write "No change".
 -->
 
 No change
