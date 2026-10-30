@@ -50,6 +50,7 @@ import static org.junit.Assert.fail;
 public class SchemaConformanceTest {
 
     private static final Path KNOWN_GAPS = Paths.get("src", "test", "resources", "schema", "known-gaps.json");
+    private static final Path ACCEPTED_DIFFERENCES = Paths.get("src", "test", "resources", "schema", "accepted-differences.json");
     private static final boolean UPDATE = Boolean.getBoolean("schema.gaps.update");
 
     private static final String POST_SUBMIT = "post-auth-flow-submit";
@@ -65,6 +66,8 @@ public class SchemaConformanceTest {
 
     private static final Map<String, Set<String>> actualGaps = new TreeMap<String, Set<String>>();
     private static Map<String, Set<String>> knownGaps;
+    // Docs mismatches kept on purpose (schema/accepted-differences.json), by doc. Left out before comparing.
+    private static Map<String, Set<String>> acceptedDifferences;
     private static TimeZone originalTimeZone;
 
     private final Check check;
@@ -165,6 +168,7 @@ public class SchemaConformanceTest {
         originalTimeZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         knownGaps = readKnownGaps();
+        acceptedDifferences = readAcceptedDifferences();
     }
 
     @AfterClass
@@ -192,6 +196,10 @@ public class SchemaConformanceTest {
             if (check.pointer.isEmpty() && message.getEvaluationPath().toString().contains("anyOf")) {
                 continue;
             }
+            Set<String> accepted = acceptedDifferences.get(check.doc);
+            if (accepted != null && accepted.contains(message.getMessage())) {
+                continue;
+            }
             actual.add(message.getMessage());
         }
         if (!actual.isEmpty()) {
@@ -212,6 +220,18 @@ public class SchemaConformanceTest {
                     + (fixed.isEmpty() ? "" : "\nNo longer happening, remove from the list: " + fixed)
                     + "\nIf intended, run with -Dschema.gaps.update=true.");
         }
+    }
+
+    private static Map<String, Set<String>> readAcceptedDifferences() throws IOException {
+        Map<String, Set<String>> accepted = new TreeMap<String, Set<String>>();
+        for (JsonNode entry : MAPPER.readTree(ACCEPTED_DIFFERENCES.toFile())) {
+            String doc = entry.path("doc").asText();
+            if (!accepted.containsKey(doc)) {
+                accepted.put(doc, new TreeSet<String>());
+            }
+            accepted.get(doc).add(entry.path("message").asText());
+        }
+        return accepted;
     }
 
     private static Map<String, Set<String>> readKnownGaps() throws IOException {
