@@ -18,6 +18,13 @@ import com.riskified.models.WalletPaymentDetails;
 public class JSONFormater {
 
 	public static String toJson(Object obj) {
+        return toJson(obj, false);
+    }
+
+    // legacyWireFormat restores the 6.6.x request format for the changes 6.7.0 makes toward the documented API
+    // (RiskifiedClientBuilder.setLegacyWireFormat). Each of those changes registers its serializer here based on
+    // the flag; until then both formats are the same.
+    static String toJson(Object obj, boolean legacyWireFormat) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, new DateTimeSerializer())
                 .registerTypeAdapterFactory(paymentDetailsSerializer())
