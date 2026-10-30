@@ -70,6 +70,11 @@ public class RiskifiedClient {
     // Restores the 6.6.x request format; see RiskifiedClientBuilder.setLegacyWireFormat.
     private boolean legacyWireFormat;
 
+    // The documented Accept value. The OTP endpoint keeps application/json, as it has since it was added, and the legacy
+    // wire format sends application/json everywhere, as 6.6.x did.
+    static final String DOCUMENTED_ACCEPT = "application/vnd.riskified.com; version=2";
+    static final String JSON_ACCEPT = "application/json";
+
     /**
      * Riskified API client
      * use configuration file: "src/main/resources/riskified_sdk.properties"
@@ -893,7 +898,7 @@ public class RiskifiedClient {
      */
     public Response InitiateOtp(OtpInitiate otpInitiate) throws IOException, FieldBadFormatException{
         String url = otpBaseUrl + "/recover/v1/otp/initiate";
-        return postOrder(otpInitiate, url);
+        return postOrder(otpInitiate, url, JSON_ACCEPT);
     }
 
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
@@ -1012,7 +1017,11 @@ public class RiskifiedClient {
     }
 
     private Response postOrder(Object data, String url) throws IOException {
-        HttpPost request = createPostRequest(url);
+        return postOrder(data, url, DOCUMENTED_ACCEPT);
+    }
+
+    private Response postOrder(Object data, String url, String accept) throws IOException {
+        HttpPost request = createPostRequest(url, accept);
         addDataToRequest(data, request);
         HttpResponse response;
         HttpClient client = constructHttpClient();
@@ -1076,10 +1085,14 @@ public class RiskifiedClient {
 		postRequest.setEntity(input);
     }
 
+    // Package-private so tests can check the headers.
     HttpPost createPostRequest(String url) {
+        return createPostRequest(url, DOCUMENTED_ACCEPT);
+    }
+
+    HttpPost createPostRequest(String url, String accept) {
         HttpPost postRequest = new HttpPost(url);
-        postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
-        postRequest.setHeader(HttpHeaders.ACCEPT, "application/json");
+        postRequest.setHeader(HttpHeaders.ACCEPT, legacyWireFormat ? JSON_ACCEPT : accept);
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
         postRequest.setHeader("User-Agent", "riskified_java_sdk/" + SdkVersion.VALUE);
         postRequest.setHeader("Version",versionHeaderValue);
