@@ -120,6 +120,12 @@ public class SchemaConformanceTest {
             checks.add(new Check("invoice_and_address_fields_order", "/order/billing_address/0", doc, "address"));
             // A property schema of its own, because the minimal order shell lacks the order's required fields.
             checks.add(new Check("invoice_and_address_fields_order", "/order/invoice_id", doc, "base_order/properties/invoice_id"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer", doc, "customer"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer/crypto_wallets/0", doc, "crypto_wallet"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer/social/0", doc, "social_details"));
+            checks.add(new Check("crypto_and_social_order", "/order/line_items/0/recipient", doc, "recipient_ACH"));
+            checks.add(new Check("crypto_and_social_order", "/order/line_items/1/recipient", doc, "recipient_crypto"));
+            checks.add(new Check("crypto_and_social_order", "/order/shipping_lines/0", doc, "shipping_line"));
         }
 
         String lineItem = "/order/line_items/0";

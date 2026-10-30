@@ -45,6 +45,7 @@ public final class GoldenOrders {
         samples.put("customer_profile_order", new OrderWrapper<Order>(customerProfileOrder()));
         samples.put("invoice_and_address_fields_order", new OrderWrapper<Order>(invoiceAndAddressFieldsOrder()));
         samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
+        samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
         return samples;
     }
 
@@ -232,6 +233,52 @@ public final class GoldenOrders {
         order.setCurrency("USD");
         order.setTotalPrice(572.5);
         order.setLineItems(Arrays.<LineItem>asList(physical, event, travel, ride));
+        return order;
+    }
+
+    /** Crypto wallets, recipients, shipping line and social details fields added in 6.6.0. */
+    static Order cryptoAndSocialOrder() {
+        CryptoWallet customerWallet = new CryptoWallet("0xc0ffee254729296a45a3885639AC7E10F9d54979", "ethereum");
+        customerWallet.setType("custodial");
+
+        Map<String, Object> socialData = new LinkedHashMap<String, Object>();
+        socialData.put("verified", true);
+        socialData.put("account_age_days", 1200);
+        SocialDetails social = new SocialDetails("google", "janedoe");
+        social.setId("google-123");
+        social.setAuthToken("social-token-1");
+        social.setSocialData(socialData);
+
+        Customer customer = new Customer("jane.doe@example.com", "Jane", "Doe");
+        customer.setCreatedAt(date("2022-05-01T12:00:00Z"));
+        customer.setCryptoWallets(Collections.singletonList(customerWallet));
+        customer.setSocial(Collections.singletonList(social));
+
+        Recipient achRecipient = new Recipient();
+        achRecipient.setAccountNumber("000987654321");
+        achRecipient.setRoutingNumber("110000000");
+        achRecipient.setBankCode("021000021");
+        LineItem remittance = new LineItem(200.0, 1, "Money transfer", "product-remittance");
+        remittance.setProductType("remittance");
+        remittance.setRecipient(achRecipient);
+
+        Recipient cryptoRecipient = new Recipient();
+        cryptoRecipient.setCryptoWallet(new CryptoWallet("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", "bitcoin"));
+        LineItem crypto = new LineItem(300.0, 1, "Bitcoin purchase", "product-crypto");
+        crypto.setProductType("crypto");
+        crypto.setRecipient(cryptoRecipient);
+
+        ShippingLine shippingLine = new ShippingLine(5.0, "Standard");
+        shippingLine.setCompany("UPS");
+        shippingLine.setShippingAddressId("address-shipping");
+
+        Order order = new Order();
+        order.setId("golden-crypto-and-social-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(505.0);
+        order.setCustomer(customer);
+        order.setLineItems(Arrays.asList(remittance, crypto));
+        order.setShippingLines(Collections.singletonList(shippingLine));
         return order;
     }
 
