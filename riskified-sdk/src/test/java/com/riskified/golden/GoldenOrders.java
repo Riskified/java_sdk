@@ -47,6 +47,8 @@ public final class GoldenOrders {
         samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
         samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
         samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
+        // 6.7.0 changes. Samples whose documented output differs from 6.6.x also have a frozen copy in golden-6.6/.
+        samples.put("rewards_points_order", new OrderWrapper<Order>(rewardsPointsOrder()));
         return samples;
     }
 
@@ -298,6 +300,18 @@ public final class GoldenOrders {
         return order;
     }
 
+    /** Reward points through both constants: the documented REWARDS_POINTS and the deprecated REWARD_POINTS. */
+    @SuppressWarnings("deprecation")
+    static Order rewardsPointsOrder() {
+        Order order = new Order();
+        order.setId("golden-rewards-points-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(40.0);
+        order.setPaymentDetails(Arrays.asList(new NonChbPaymentDetails(PaymentType.REWARDS_POINTS),
+                new NonChbPaymentDetails(PaymentType.REWARD_POINTS)));
+        return order;
+    }
+
     static void requiredLineItemFields(LineItem item, String productType, boolean requiresShipping) {
         item.setCategory("general");
         item.setProductType(productType);
@@ -534,6 +548,7 @@ public final class GoldenOrders {
         return item;
     }
 
+    @SuppressWarnings("deprecation") // setAuthorizedPayments: the 6.6.x setter keeps working
     static RideLineItem rideLineItem() {
         RideLineItem item = new RideLineItem(42.5, 1, "Airport ride", date("2024-03-02T07:00:00Z"), 0, 1);
         populateLineItem(item);

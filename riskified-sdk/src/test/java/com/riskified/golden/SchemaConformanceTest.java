@@ -126,6 +126,8 @@ public class SchemaConformanceTest {
             checks.add(new Check("crypto_and_social_order", "/order/line_items/0/recipient", doc, "recipient_ACH"));
             checks.add(new Check("crypto_and_social_order", "/order/line_items/1/recipient", doc, "recipient_crypto"));
             checks.add(new Check("crypto_and_social_order", "/order/shipping_lines/0", doc, "shipping_line"));
+            checks.add(new Check("rewards_points_order", "/order/payment_details/0", doc, "non_chb_payment_details"));
+            checks.add(new Check("rewards_points_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
         }
         // Pre-auth /decide doesn't define authentication_result as a schema of its own.
         for (String doc : new String[]{POST_SUBMIT, POST_DECIDE}) {

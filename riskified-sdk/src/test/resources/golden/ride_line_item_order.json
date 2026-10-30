@@ -56,7 +56,6 @@
         "note_to_driver": "terminal 4",
         "meet_n_greet": "yes",
         "cancellation_policy": "free until 1h before",
-        "authorized_payments": 50.0,
         "route_index": 0,
         "leg_index": 1,
         "price": 42.5,
@@ -134,7 +133,9 @@
             "id": "wallet-1"
           }
         },
-        "reason_to_transfer": "gift"
+        "reason_to_transfer": "gift",
+        "authorized_payment": 50.0,
+        "authorized_payments": 50.0
       }
     ]
   }
