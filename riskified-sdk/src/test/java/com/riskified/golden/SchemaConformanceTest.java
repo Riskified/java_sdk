@@ -116,6 +116,10 @@ public class SchemaConformanceTest {
             checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
             checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
             checks.add(new Check("customer_profile_order", "/order/customer", doc, "customer"));
+            checks.add(new Check("invoice_and_address_fields_order", "/order/shipping_address/0", doc, "address"));
+            checks.add(new Check("invoice_and_address_fields_order", "/order/billing_address/0", doc, "address"));
+            // A property schema of its own, because the minimal order shell lacks the order's required fields.
+            checks.add(new Check("invoice_and_address_fields_order", "/order/invoice_id", doc, "base_order/properties/invoice_id"));
         }
 
         String lineItem = "/order/line_items/0";
