@@ -37,6 +37,16 @@ public class Customer implements IValidated {
     private Boolean hasDefaulted;
     private Date dateOfBirth;
     private List<KycDetails> kycDetails;
+    private Integer buyAttempts;
+    private Integer sellAttempts;
+    private String buyerAnonymousId;
+    private String referrerCustomerId;
+    private Date firstPurchaseAt;
+    private Date verifiedEmailAt;
+    private Boolean kycVerified;
+    private Boolean phoneMandatory;
+    private Double spendingLimit;
+    private SocialType socialSignupType;
     
     public Customer() {
     	
@@ -280,4 +290,54 @@ public class Customer implements IValidated {
     public void setDateOfBirth(Date dateOfBirth) { this.dateOfBirth = dateOfBirth; }
 
     public Date getDateOfBirth() { return dateOfBirth; }
+
+    /** Number of purchase attempts the customer made in the merchant's system. */
+    public Integer getBuyAttempts() { return buyAttempts; }
+
+    public void setBuyAttempts(Integer buyAttempts) { this.buyAttempts = buyAttempts; }
+
+    /** Number of sell attempts the customer made in the merchant's system. */
+    public Integer getSellAttempts() { return sellAttempts; }
+
+    public void setSellAttempts(Integer sellAttempts) { this.sellAttempts = sellAttempts; }
+
+    /** An alternative unique identifier for the customer. */
+    public String getBuyerAnonymousId() { return buyerAnonymousId; }
+
+    public void setBuyerAnonymousId(String buyerAnonymousId) { this.buyerAnonymousId = buyerAnonymousId; }
+
+    /** Customer ID of the customer who referred this one. */
+    public String getReferrerCustomerId() { return referrerCustomerId; }
+
+    public void setReferrerCustomerId(String referrerCustomerId) { this.referrerCustomerId = referrerCustomerId; }
+
+    /** When the customer first purchased on the merchant's website. */
+    public Date getFirstPurchaseAt() { return firstPurchaseAt; }
+
+    public void setFirstPurchaseAt(Date firstPurchaseAt) { this.firstPurchaseAt = firstPurchaseAt; }
+
+    /** When the customer's email was verified. */
+    public Date getVerifiedEmailAt() { return verifiedEmailAt; }
+
+    public void setVerifiedEmailAt(Date verifiedEmailAt) { this.verifiedEmailAt = verifiedEmailAt; }
+
+    /** Outcome of a KYC check. */
+    public Boolean getKycVerified() { return kycVerified; }
+
+    public void setKycVerified(Boolean kycVerified) { this.kycVerified = kycVerified; }
+
+    /** Whether a phone number was required at registration. */
+    public Boolean getPhoneMandatory() { return phoneMandatory; }
+
+    public void setPhoneMandatory(Boolean phoneMandatory) { this.phoneMandatory = phoneMandatory; }
+
+    /** Credit limit allocated or approved for the customer, if any. */
+    public Double getSpendingLimit() { return spendingLimit; }
+
+    public void setSpendingLimit(Double spendingLimit) { this.spendingLimit = spendingLimit; }
+
+    /** The social network the customer signed up with, if any. */
+    public SocialType getSocialSignupType() { return socialSignupType; }
+
+    public void setSocialSignupType(SocialType socialSignupType) { this.socialSignupType = socialSignupType; }
 }

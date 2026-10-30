@@ -42,6 +42,7 @@ public final class GoldenOrders {
         samples.put("card_order_tokenized", new OrderWrapper<Order>(cardOrderTokenized()));
         samples.put("wallet_checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(walletCheckoutDeniedOrder()));
         samples.put("alternative_payments_order", new OrderWrapper<Order>(alternativePaymentsOrder()));
+        samples.put("customer_profile_order", new OrderWrapper<Order>(customerProfileOrder()));
         return samples;
     }
 
@@ -145,6 +146,29 @@ public final class GoldenOrders {
         order.setCurrency("USD");
         order.setTotalPrice(150.0);
         order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.GIFT_CARD)));
+        return order;
+    }
+
+    /** A customer with the documented fields added in 6.6.0, plus the ones the docs require. */
+    static Order customerProfileOrder() {
+        Customer customer = new Customer("jane.doe@example.com", "Jane", "Doe");
+        customer.setCreatedAt(date("2022-05-01T12:00:00Z"));
+        customer.setBuyAttempts(3);
+        customer.setSellAttempts(1);
+        customer.setBuyerAnonymousId("anon-1");
+        customer.setReferrerCustomerId("customer-0");
+        customer.setFirstPurchaseAt(date("2022-05-02T09:00:00Z"));
+        customer.setVerifiedEmailAt(date("2022-05-01T12:05:00Z"));
+        customer.setKycVerified(true);
+        customer.setPhoneMandatory(false);
+        customer.setSpendingLimit(5000.0);
+        customer.setSocialSignupType(SocialType.google);
+
+        Order order = new Order();
+        order.setId("golden-customer-profile-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setCustomer(customer);
         return order;
     }
 
