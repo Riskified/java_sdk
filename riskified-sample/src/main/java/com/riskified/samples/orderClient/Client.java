@@ -222,9 +222,10 @@ public class Client {
         order.setGateway("gmopg_cc");
         order.setBrowserIp("113.32.8.18");
         order.setTotalPrice(6600);
-        order.setSource("web");
+        order.setSource(OrderSource.WEB);
         order.setAiAgent(AiAgent.chatgpt);
         order.setEmail("test@test.com");
+        order.setInvoiceId("INV-2500118405");
 
 
 
@@ -240,8 +241,14 @@ public class Client {
 
         order.setDiscountCodes(Arrays.asList(new DiscountCode(0, "")));
 
-        order.setPaymentDetails(Arrays.asList(new CreditCardPaymentDetails("1233434", "", "", "410000******0100", "VISA") ));
+        CreditCardPaymentDetails creditCard = new CreditCardPaymentDetails("1233434", "", "", "410000******0100", "VISA");
+        creditCard.setCreditCardToken("tok_2500118405");
+        creditCard.setBillingAddressId("address-1");
+        order.setPaymentDetails(Arrays.asList(creditCard));
         Customer customer = new Customer("test@test.com", "太郎", "佐藤", "1", parseDate("02-11-2025 00:00:00.0"), true, 2);
+        customer.setBuyAttempts(2);
+        customer.setFirstPurchaseAt(parseDate("02-11-2025 00:00:00.0"));
+        customer.setKycVerified(true);
         order.setCustomer(customer);
         return order;
 
