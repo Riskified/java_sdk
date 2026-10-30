@@ -44,6 +44,7 @@ public final class GoldenOrders {
         samples.put("alternative_payments_order", new OrderWrapper<Order>(alternativePaymentsOrder()));
         samples.put("customer_profile_order", new OrderWrapper<Order>(customerProfileOrder()));
         samples.put("invoice_and_address_fields_order", new OrderWrapper<Order>(invoiceAndAddressFieldsOrder()));
+        samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
         return samples;
     }
 
@@ -192,6 +193,52 @@ public final class GoldenOrders {
         order.setShippingAddress(Collections.singletonList(shipping));
         order.setBillingAddress(Collections.singletonList(billing));
         return order;
+    }
+
+    /**
+     * One line item per class that gained a field in 6.6.0. Each sets only what the docs require plus the new
+     * fields, so its schema check isn't mixed up with the known gaps of the fully populated samples.
+     */
+    static Order lineItemFieldsOrder() {
+        LineItem physical = new LineItem(20.0, 1, "Widget", "product-physical");
+        requiredLineItemFields(physical, "physical", true);
+        physical.setDropPoint("locker-17");
+        physical.setShippingAddressId("address-shipping");
+
+        EventLineItem event = new EventLineItem(80.0, 2, "Concert ticket", "product-event");
+        requiredLineItemFields(event, "event", false);
+        event.setEventDate(date("2024-04-10T19:30:00Z"));
+        event.setCity("New York");
+        event.setCountryCode("US");
+        event.setCancellationPolicy("refundable until 24h before");
+
+        TravelLineItem travel = new TravelLineItem(350.0, 1, "Flight TLV-JFK", "product-travel", "leg-1", 1, 0);
+        requiredLineItemFields(travel, "travel", false);
+        travel.setDepartureDate(date("2024-03-01T06:00:00Z"));
+        travel.setDepartureCity("Tel Aviv");
+        travel.setDepartureCountryCode("IL");
+        travel.setArrivalCity("New York");
+        travel.setArrivalCountryCode("US");
+        travel.setTransportMethod("plane");
+        travel.setCancellationPolicy("non refundable");
+
+        RideLineItem ride = new RideLineItem(42.5, 1, "Airport ride", date("2024-03-02T07:00:00Z"), 0, 1);
+        ride.setProductId("product-ride");
+        requiredLineItemFields(ride, "ride", false);
+        ride.setDamageExcess(500.0);
+
+        Order order = new Order();
+        order.setId("golden-line-item-fields-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(572.5);
+        order.setLineItems(Arrays.<LineItem>asList(physical, event, travel, ride));
+        return order;
+    }
+
+    static void requiredLineItemFields(LineItem item, String productType, boolean requiresShipping) {
+        item.setCategory("general");
+        item.setProductType(productType);
+        item.setRequiresShipping(requiresShipping);
     }
 
     static void populateBaseOrder(BaseOrder order, String id) {

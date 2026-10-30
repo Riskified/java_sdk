@@ -26,6 +26,7 @@ public class RideLineItem extends LineItem {
     private String meetNGreet;
     private String cancellationPolicy;
     private Float authorizedPayments;
+    private Double damageExcess;
     private int routeIndex;
     private int legIndex;
 
@@ -128,4 +129,8 @@ public class RideLineItem extends LineItem {
     public int getLegIndex() { return legIndex; }
 
     public void setLegIndex(int legIndex) { this.legIndex = legIndex; }
+
+    public Double getDamageExcess() { return damageExcess; }
+
+    public void setDamageExcess(Double damageExcess) { this.damageExcess = damageExcess; }
 }

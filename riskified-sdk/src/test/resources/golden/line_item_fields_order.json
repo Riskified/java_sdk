@@ -1,0 +1,75 @@
+{
+  "order": {
+    "id": "golden-line-item-fields-1",
+    "currency": "USD",
+    "total_price": 572.5,
+    "line_items": [
+      {
+        "price": 20.0,
+        "quantity": 1,
+        "title": "Widget",
+        "product_id": "product-physical",
+        "requires_shipping": true,
+        "properties": [],
+        "tax_lines": [],
+        "category": "general",
+        "product_type": "physical",
+        "drop_point": "locker-17",
+        "shipping_address_id": "address-shipping"
+      },
+      {
+        "country_code": "US",
+        "city": "New York",
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "event_date": "2024-04-10T19:30:00Z",
+        "cancellation_policy": "refundable until 24h before",
+        "price": 80.0,
+        "quantity": 2,
+        "title": "Concert ticket",
+        "product_id": "product-event",
+        "requires_shipping": false,
+        "properties": [],
+        "tax_lines": [],
+        "category": "general",
+        "product_type": "event"
+      },
+      {
+        "route_index": 0,
+        "leg_index": 1,
+        "departure_date": "2024-03-01T06:00:00Z",
+        "departure_country_code": "IL",
+        "arrival_country_code": "US",
+        "departure_city": "Tel Aviv",
+        "arrival_city": "New York",
+        "leg_id": "leg-1",
+        "transport_method": "plane",
+        "cancellation_policy": "non refundable",
+        "price": 350.0,
+        "quantity": 1,
+        "title": "Flight TLV-JFK",
+        "product_id": "product-travel",
+        "requires_shipping": false,
+        "properties": [],
+        "tax_lines": [],
+        "category": "general",
+        "product_type": "travel"
+      },
+      {
+        "pickup_date": "2024-03-02T07:00:00Z",
+        "damage_excess": 500.0,
+        "route_index": 0,
+        "leg_index": 1,
+        "price": 42.5,
+        "quantity": 1,
+        "title": "Airport ride",
+        "product_id": "product-ride",
+        "requires_shipping": false,
+        "properties": [],
+        "tax_lines": [],
+        "category": "general",
+        "product_type": "ride"
+      }
+    ]
+  }
+}
