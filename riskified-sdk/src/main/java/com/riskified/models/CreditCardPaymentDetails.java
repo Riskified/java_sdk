@@ -28,6 +28,10 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     private String acquirerRegion;
     private Integer expiryMonth;
     private Integer expiryYear;
+    private String creditCardToken;
+    private String billingAddressId;
+    private Double initialPaymentAmount;
+    private Integer paymentFrequency;
     private PaymentType paymentType = PaymentType.CARD;
 
 
@@ -225,6 +229,22 @@ public class CreditCardPaymentDetails implements IPaymentDetails {
     public Integer getExpiryYear() { return expiryYear; }
 
     public void setExpiryYear(Integer expiryYear) { this.expiryYear = expiryYear; }
+
+    public String getCreditCardToken() { return creditCardToken; }
+
+    public void setCreditCardToken(String creditCardToken) { this.creditCardToken = creditCardToken; }
+
+    public String getBillingAddressId() { return billingAddressId; }
+
+    public void setBillingAddressId(String billingAddressId) { this.billingAddressId = billingAddressId; }
+
+    public Double getInitialPaymentAmount() { return initialPaymentAmount; }
+
+    public void setInitialPaymentAmount(Double initialPaymentAmount) { this.initialPaymentAmount = initialPaymentAmount; }
+
+    public Integer getPaymentFrequency() { return paymentFrequency; }
+
+    public void setPaymentFrequency(Integer paymentFrequency) { this.paymentFrequency = paymentFrequency; }
 
     public PaymentType getPaymentType() { return paymentType; }
 

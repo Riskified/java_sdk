@@ -183,4 +183,52 @@ public class PaymentDetailsTest {
         assertTrue(json.contains("\"method\":\"digital_wallet\""));
         assertTrue(json.contains("\"payment_type\":\"wechat_pay\""));
     }
+
+    @Test
+    public void testBuyNowPayLaterDefaultPaymentType() {
+        BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
+        assertEquals(PaymentType.BNPL, bnpl.getPaymentType());
+    }
+
+    @Test
+    public void testBuyNowPayLaterSerializesOnlySetFields() {
+        BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
+        bnpl.setInstallments(4);
+
+        String json = gson.toJson(bnpl);
+
+        assertEquals("{\"payment_type\":\"bnpl\",\"installments\":4}", json);
+    }
+
+    @Test
+    public void testNonChbSerializesPaymentType() {
+        String json = gson.toJson(new NonChbPaymentDetails(PaymentType.GIFT_CARD));
+        assertEquals("{\"payment_type\":\"gift_card\"}", json);
+    }
+
+    @Test
+    public void testNewPaymentDetailsRoundTripWithMethodDiscriminator() {
+        Gson polymorphicGson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapterFactory(JSONFormater.paymentDetailsSerializer())
+                .create();
+        BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
+        bnpl.setInitialPaymentAmount(25.0);
+        bnpl.setInstallments(4);
+        bnpl.setPaymentFrequency(14);
+
+        List<IPaymentDetails> paymentDetails = new ArrayList<IPaymentDetails>();
+        paymentDetails.add(bnpl);
+        paymentDetails.add(new NonChbPaymentDetails(PaymentType.STORE_CREDIT));
+
+        String json = polymorphicGson.toJson(paymentDetails, new TypeToken<List<IPaymentDetails>>() {}.getType());
+        assertTrue(json.contains("\"method\":\"bnpl\""));
+        assertTrue(json.contains("\"method\":\"non_chb\""));
+
+        List<IPaymentDetails> parsed = polymorphicGson.fromJson(json, new TypeToken<List<IPaymentDetails>>() {}.getType());
+        BuyNowPayLaterPaymentDetails parsedBnpl = (BuyNowPayLaterPaymentDetails) parsed.get(0);
+        assertEquals(Double.valueOf(25.0), parsedBnpl.getInitialPaymentAmount());
+        assertEquals(Integer.valueOf(14), parsedBnpl.getPaymentFrequency());
+        assertEquals(PaymentType.STORE_CREDIT, ((NonChbPaymentDetails) parsed.get(1)).getPaymentType());
+    }
 }
