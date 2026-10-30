@@ -3,6 +3,7 @@ package com.riskified.models;
 import java.lang.reflect.Field;
 import java.util.Date;
 
+import com.google.gson.annotations.SerializedName;
 import com.riskified.validations.*;
 
 public class RideLineItem extends LineItem {
@@ -25,7 +26,9 @@ public class RideLineItem extends LineItem {
     private String noteToDriver;
     private String meetNGreet;
     private String cancellationPolicy;
-    private Float authorizedPayments;
+    // Reads either key; JSONFormater sends both until 7.0.0 (only authorized_payments in the legacy wire format).
+    @SerializedName(value = "authorized_payment", alternate = "authorized_payments")
+    private Float authorizedPayment;
     private Double damageExcess;
     private int routeIndex;
     private int legIndex;
@@ -118,9 +121,17 @@ public class RideLineItem extends LineItem {
 
     public void setCancellationPolicy(String cancellationPolicy) { this.cancellationPolicy = cancellationPolicy; }
 
-    public Float getAuthorizedPayments() { return authorizedPayments; }
+    public Float getAuthorizedPayment() { return authorizedPayment; }
 
-    public void setAuthorizedPayments(Float authorizedPayments) { this.authorizedPayments = authorizedPayments; }
+    public void setAuthorizedPayment(Float authorizedPayment) { this.authorizedPayment = authorizedPayment; }
+
+    /** @deprecated The documented key is {@code authorized_payment}; use {@link #getAuthorizedPayment()}. */
+    @Deprecated
+    public Float getAuthorizedPayments() { return authorizedPayment; }
+
+    /** @deprecated The documented key is {@code authorized_payment}; use {@link #setAuthorizedPayment(Float)}. */
+    @Deprecated
+    public void setAuthorizedPayments(Float authorizedPayments) { this.authorizedPayment = authorizedPayments; }
 
     public int getRouteIndex() { return routeIndex; }
 
