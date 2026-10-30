@@ -1,6 +1,8 @@
 package com.riskified;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,10 +17,12 @@ import com.riskified.models.BankWirePaymentDetails;
 import com.riskified.models.BuyNowPayLaterPaymentDetails;
 import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CreditCardPaymentDetails;
+import com.riskified.models.DigitalLineItem;
 import com.riskified.models.IPaymentDetails;
 import com.riskified.models.NonChbPaymentDetails;
 import com.riskified.models.PaymentType;
 import com.riskified.models.RideLineItem;
+import com.riskified.models.Seller;
 import com.riskified.models.PaypalPaymentDetails;
 import com.riskified.models.StripePaymentDetails;
 import com.riskified.models.WalletPaymentDetails;
@@ -39,6 +43,8 @@ public class JSONFormater {
                 .registerTypeAdapterFactory(rewardPointsSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(rideLineItemSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(checkoutDeniedOrderSerializer(legacyWireFormat))
+                .registerTypeAdapterFactory(sellerSerializer(legacyWireFormat))
+                .registerTypeAdapterFactory(digitalLineItemSerializer(legacyWireFormat))
                 .create();
         return gson.toJson(obj);
     }
@@ -149,6 +155,89 @@ public class JSONFormater {
                 element.getAsJsonObject().add("authorization_error", error.deepCopy());
             }
         }
+    }
+
+    // Seller.starting_price is documented as a float-formatted string; it's sent with two decimals, e.g. "99.50". The
+    // legacy wire format sends the number, as 6.6.x did.
+    static TypeAdapterFactory sellerSerializer(final boolean legacyWireFormat) {
+        return new TypeAdapterFactory() {
+            @SuppressWarnings("unchecked")
+            public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+                if (legacyWireFormat || type.getRawType() != Seller.class) {
+                    return null;
+                }
+                final TypeAdapter<Seller> delegate = (TypeAdapter<Seller>) gson.getDelegateAdapter(this, type);
+                final TypeAdapter<JsonElement> elements = gson.getAdapter(JsonElement.class);
+                return (TypeAdapter<T>) new TypeAdapter<Seller>() {
+                    @Override
+                    public void write(JsonWriter out, Seller value) throws IOException {
+                        if (value == null) {
+                            out.nullValue();
+                            return;
+                        }
+                        JsonObject json = delegate.toJsonTree(value).getAsJsonObject();
+                        float startingPrice = value.getStartingPrice();
+                        if (!Float.isNaN(startingPrice) && !Float.isInfinite(startingPrice)) {
+                            json.addProperty("starting_price", twoDecimals(startingPrice));
+                        }
+                        elements.write(out, json);
+                    }
+
+                    @Override
+                    public Seller read(JsonReader in) throws IOException {
+                        return delegate.read(in);
+                    }
+                };
+            }
+        };
+    }
+
+    // DigitalLineItem: the docs define only card_type. When only one of card_type and card_sub_type is set, its value is
+    // sent under both keys; when both are set, each keeps its own. The legacy wire format sends them as set, as 6.6.x did.
+    static TypeAdapterFactory digitalLineItemSerializer(final boolean legacyWireFormat) {
+        return new TypeAdapterFactory() {
+            @SuppressWarnings("unchecked")
+            public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+                if (legacyWireFormat || type.getRawType() != DigitalLineItem.class) {
+                    return null;
+                }
+                final TypeAdapter<DigitalLineItem> delegate = (TypeAdapter<DigitalLineItem>) gson.getDelegateAdapter(this, type);
+                final TypeAdapter<JsonElement> elements = gson.getAdapter(JsonElement.class);
+                return (TypeAdapter<T>) new TypeAdapter<DigitalLineItem>() {
+                    @Override
+                    public void write(JsonWriter out, DigitalLineItem value) throws IOException {
+                        if (value == null) {
+                            out.nullValue();
+                            return;
+                        }
+                        JsonObject json = delegate.toJsonTree(value).getAsJsonObject();
+                        mirror(json, "card_type", "card_sub_type");
+                        mirror(json, "card_sub_type", "card_type");
+                        elements.write(out, json);
+                    }
+
+                    @Override
+                    public DigitalLineItem read(JsonReader in) throws IOException {
+                        return delegate.read(in);
+                    }
+                };
+            }
+        };
+    }
+
+    // Copies from's value to to when to is unset. toJsonTree keeps unset fields as JSON nulls.
+    private static void mirror(JsonObject json, String from, String to) {
+        JsonElement source = json.get(from);
+        JsonElement target = json.get(to);
+        if (source != null && !source.isJsonNull() && (target == null || target.isJsonNull())) {
+            json.add(to, source.deepCopy());
+        }
+    }
+
+    // From the float's own decimal form (Float.toString), so 99.995f gives "100.00", never an artifact of the binary
+    // value, and large values never use an exponent.
+    static String twoDecimals(float value) {
+        return new BigDecimal(Float.toString(value)).setScale(2, RoundingMode.HALF_UP).toPlainString();
     }
 
     private static void firstAddressOnly(JsonObject json, String key) {
