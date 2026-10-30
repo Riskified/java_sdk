@@ -112,6 +112,11 @@ public class SchemaConformanceTest {
                 "digital_wallets_payment_details_post_auth_checkout_denied"));
         checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
                 "digital_wallets_payment_details_pre_auth_checkout_denied"));
+        // Pre-auth /checkout_denied requires authorization_error on card and wallet details; these get it from the root.
+        checks.add(new Check("checkout_denied_root_error_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
+                "credit_card_payment_details_pre_auth_checkout_denied"));
+        checks.add(new Check("checkout_denied_root_error_order", "/checkout/payment_details/1", PRE_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_pre_auth_checkout_denied"));
         for (String doc : new String[]{POST_SUBMIT, POST_DECIDE, PRE_DECIDE}) {
             checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
             checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));

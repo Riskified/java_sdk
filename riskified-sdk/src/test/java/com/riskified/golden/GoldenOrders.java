@@ -49,6 +49,7 @@ public final class GoldenOrders {
         samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
         // 6.7.0 changes. Samples whose documented output differs from 6.6.x also have a frozen copy in golden-6.6/.
         samples.put("rewards_points_order", new OrderWrapper<Order>(rewardsPointsOrder()));
+        samples.put("checkout_denied_root_error_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedRootErrorOrder()));
         return samples;
     }
 
@@ -94,6 +95,7 @@ public final class GoldenOrders {
         return order;
     }
 
+    @SuppressWarnings("deprecation") // the root-level authorization error, as 6.6.x merchants set it
     static CheckoutDeniedOrder checkoutDeniedOrder() {
         CheckoutDeniedOrder order = new CheckoutDeniedOrder("golden-checkout-denied-1", authorizationError());
         populateBaseOrder(order, "golden-checkout-denied-1");
@@ -309,6 +311,28 @@ public final class GoldenOrders {
         order.setTotalPrice(40.0);
         order.setPaymentDetails(Arrays.asList(new NonChbPaymentDetails(PaymentType.REWARDS_POINTS),
                 new NonChbPaymentDetails(PaymentType.REWARD_POINTS)));
+        return order;
+    }
+
+    /**
+     * A root-level authorization error (deprecated). It's copied into the card, wallet and PayPal details that have none
+     * of their own; the card with its own error keeps it, and the bank wire (not documented to have one) gets none.
+     */
+    @SuppressWarnings("deprecation")
+    static CheckoutDeniedOrder checkoutDeniedRootErrorOrder() {
+        AuthorizationError ownError = new AuthorizationError("insufficient_funds", date("2024-01-15T10:32:00Z"));
+        CreditCardPaymentDetails cardWithOwnError = new CreditCardPaymentDetails("555555", "Y", "M", "XXXX-XXXX-XXXX-4444", "Mastercard");
+        cardWithOwnError.setAuthorizationError(ownError);
+
+        CheckoutDeniedOrder order = new CheckoutDeniedOrder("golden-checkout-denied-root-error-1", authorizationError());
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Arrays.asList(
+                new CreditCardPaymentDetails("411111", "Y", "M", "XXXX-XXXX-XXXX-1111", "Visa"),
+                new WalletPaymentDetails(PaymentType.APPLE_PAY, "auth-wallet", "Y"),
+                new PaypalPaymentDetails("payer@example.com", "verified", "confirmed", "Eligible"),
+                cardWithOwnError,
+                new BankWirePaymentDetails("000123456789", "110000000")));
         return order;
     }
 

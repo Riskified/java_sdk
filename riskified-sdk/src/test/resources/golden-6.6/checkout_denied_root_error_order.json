@@ -1,0 +1,66 @@
+{
+  "checkout": {
+    "authorization_error": {
+      "message": "Card was declined",
+      "error_code": "card_declined",
+      "created_at": "2024-01-15T10:31:00Z",
+      "drop_off": false
+    },
+    "id": "golden-checkout-denied-root-error-1",
+    "currency": "USD",
+    "total_price": 129.99,
+    "payment_details": [
+      {
+        "method": "credit_card",
+        "credit_card_bin": "411111",
+        "avs_result_code": "Y",
+        "cvv_result_code": "M",
+        "credit_card_number": "XXXX-XXXX-XXXX-1111",
+        "credit_card_company": "Visa",
+        "installment_months": 0,
+        "installments": 0,
+        "payment_type": "card"
+      },
+      {
+        "method": "digital_wallet",
+        "payment_type": "apple_pay",
+        "avs_result_code": "Y",
+        "authorization_id": "auth-wallet"
+      },
+      {
+        "method": "paypal",
+        "payer_email": "payer@example.com",
+        "payer_status": "verified",
+        "payer_address_status": "confirmed",
+        "protection_eligibility": "Eligible",
+        "payment_type": "paypal"
+      },
+      {
+        "method": "credit_card",
+        "credit_card_bin": "555555",
+        "avs_result_code": "Y",
+        "cvv_result_code": "M",
+        "credit_card_number": "XXXX-XXXX-XXXX-4444",
+        "credit_card_company": "Mastercard",
+        "authorization_error": {
+          "error_code": "insufficient_funds",
+          "created_at": "2024-01-15T10:32:00Z"
+        },
+        "installment_months": 0,
+        "installments": 0,
+        "payment_type": "card"
+      },
+      {
+        "method": "bank_wire",
+        "account_number": "000123456789",
+        "routing_number": "110000000",
+        "payment_type": "bank_transfer",
+        "days_since_account_opening": 0,
+        "days_with_negative_balance_count": 0,
+        "is_savings_or_money_market_account": false,
+        "nsf_overdraft_transactions_count": 0,
+        "unauthorized_transactions_count": 0
+      }
+    ]
+  }
+}

@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +13,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.riskified.models.BankWirePaymentDetails;
 import com.riskified.models.BuyNowPayLaterPaymentDetails;
+import com.riskified.models.CheckoutDeniedOrder;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.IPaymentDetails;
 import com.riskified.models.NonChbPaymentDetails;
@@ -36,6 +38,7 @@ public class JSONFormater {
                 .registerTypeAdapterFactory(paymentDetailsSerializer())
                 .registerTypeAdapterFactory(rewardPointsSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(rideLineItemSerializer(legacyWireFormat))
+                .registerTypeAdapterFactory(checkoutDeniedOrderSerializer(legacyWireFormat))
                 .create();
         return gson.toJson(obj);
     }
@@ -85,6 +88,67 @@ public class JSONFormater {
                 };
             }
         };
+    }
+
+    // CheckoutDeniedOrder: the docs put authorization_error inside card, wallet and PayPal payment details, not at the
+    // root. A root-level error is copied into each of those payment details that has none of its own, and stays at the
+    // root too, until 7.0.0. Only the JSON changes, never the merchant's objects. The legacy wire format sends it at the
+    // root only, as 6.6.x did.
+    static TypeAdapterFactory checkoutDeniedOrderSerializer(final boolean legacyWireFormat) {
+        return new TypeAdapterFactory() {
+            @SuppressWarnings("unchecked")
+            public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+                if (type.getRawType() != CheckoutDeniedOrder.class) {
+                    return null;
+                }
+                final TypeAdapter<CheckoutDeniedOrder> delegate = (TypeAdapter<CheckoutDeniedOrder>) gson.getDelegateAdapter(this, type);
+                final TypeAdapter<JsonElement> elements = gson.getAdapter(JsonElement.class);
+                return (TypeAdapter<T>) new TypeAdapter<CheckoutDeniedOrder>() {
+                    @Override
+                    public void write(JsonWriter out, CheckoutDeniedOrder value) throws IOException {
+                        if (value == null) {
+                            out.nullValue();
+                            return;
+                        }
+                        JsonObject json = delegate.toJsonTree(value).getAsJsonObject();
+                        if (!legacyWireFormat) {
+                            copyAuthorizationErrorIntoPaymentDetails(json, value.getPaymentDetails());
+                        }
+                        elements.write(out, json);
+                    }
+
+                    @Override
+                    public CheckoutDeniedOrder read(JsonReader in) throws IOException {
+                        return delegate.read(in);
+                    }
+                };
+            }
+        };
+    }
+
+    // The JSON array and the order's list have the same order, so element i is paymentDetails.get(i).
+    private static void copyAuthorizationErrorIntoPaymentDetails(JsonObject order, List<? extends IPaymentDetails> paymentDetails) {
+        JsonElement error = order.get("authorization_error");
+        JsonElement details = order.get("payment_details");
+        if (error == null || error.isJsonNull() || details == null || !details.isJsonArray() || paymentDetails == null) {
+            return;
+        }
+        JsonArray array = details.getAsJsonArray();
+        for (int i = 0; i < array.size() && i < paymentDetails.size(); i++) {
+            IPaymentDetails paymentDetail = paymentDetails.get(i);
+            boolean documented = paymentDetail instanceof CreditCardPaymentDetails
+                    || paymentDetail instanceof WalletPaymentDetails
+                    || paymentDetail instanceof PaypalPaymentDetails;
+            JsonElement element = array.get(i);
+            if (!documented || !element.isJsonObject()) {
+                continue;
+            }
+            // toJsonTree keeps unset fields as JSON nulls (dropped only when written), so null means "none of its own".
+            JsonElement own = element.getAsJsonObject().get("authorization_error");
+            if (own == null || own.isJsonNull()) {
+                element.getAsJsonObject().add("authorization_error", error.deepCopy());
+            }
+        }
     }
 
     private static void firstAddressOnly(JsonObject json, String key) {
