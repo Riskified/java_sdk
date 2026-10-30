@@ -47,6 +47,7 @@ public class Customer implements IValidated {
     private Boolean phoneMandatory;
     private Double spendingLimit;
     private SocialType socialSignupType;
+    private List<CryptoWallet> cryptoWallets;
     
     public Customer() {
     	
@@ -340,4 +341,9 @@ public class Customer implements IValidated {
     public SocialType getSocialSignupType() { return socialSignupType; }
 
     public void setSocialSignupType(SocialType socialSignupType) { this.socialSignupType = socialSignupType; }
+
+    /** Crypto wallets associated with the customer's account. */
+    public List<CryptoWallet> getCryptoWallets() { return cryptoWallets; }
+
+    public void setCryptoWallets(List<CryptoWallet> cryptoWallets) { this.cryptoWallets = cryptoWallets; }
 }
