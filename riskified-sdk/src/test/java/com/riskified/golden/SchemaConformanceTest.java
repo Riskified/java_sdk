@@ -129,6 +129,10 @@ public class SchemaConformanceTest {
         checks.add(new Check("ride_line_item_order", lineItem, POST_SUBMIT, "rides_line_item"));
         checks.add(new Check("event_line_item_order", lineItem, POST_SUBMIT, "events_line_item"));
         checks.add(new Check("accommodation_line_item_order", lineItem, POST_SUBMIT, "accommodation_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/0", POST_SUBMIT, "physical_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/1", POST_SUBMIT, "events_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/2", POST_SUBMIT, "travel_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/3", POST_SUBMIT, "rides_line_item"));
 
         Collection<Object[]> parameters = new ArrayList<Object[]>();
         for (Check c : checks) {
