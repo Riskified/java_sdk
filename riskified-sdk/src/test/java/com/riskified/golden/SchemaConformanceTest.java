@@ -115,6 +115,7 @@ public class SchemaConformanceTest {
         for (String doc : new String[]{POST_SUBMIT, POST_DECIDE, PRE_DECIDE}) {
             checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
             checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
+            checks.add(new Check("customer_profile_order", "/order/customer", doc, "customer"));
         }
 
         String lineItem = "/order/line_items/0";
