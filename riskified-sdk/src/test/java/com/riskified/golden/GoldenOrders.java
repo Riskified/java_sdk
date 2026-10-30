@@ -46,6 +46,7 @@ public final class GoldenOrders {
         samples.put("invoice_and_address_fields_order", new OrderWrapper<Order>(invoiceAndAddressFieldsOrder()));
         samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
         samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
+        samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
         return samples;
     }
 
@@ -279,6 +280,21 @@ public final class GoldenOrders {
         order.setCustomer(customer);
         order.setLineItems(Arrays.asList(remittance, crypto));
         order.setShippingLines(Collections.singletonList(shippingLine));
+        return order;
+    }
+
+    /** 3-D Secure with trans_status "S" (challenge abandoned), added in 6.6.0. */
+    static Order cardOrderTransStatusS() {
+        AuthenticationResult authentication = authenticationResult();
+        authentication.setTransStatus(TransStatus.S);
+        CreditCardPaymentDetails details = creditCardPaymentDetails();
+        details.setAuthenticationResult(authentication);
+
+        Order order = new Order();
+        order.setId("golden-card-trans-status-s-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
         return order;
     }
 
