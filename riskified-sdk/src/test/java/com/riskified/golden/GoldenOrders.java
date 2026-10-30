@@ -41,6 +41,7 @@ public final class GoldenOrders {
         // 6.6.0 additions. New samples rather than changes to the ones above, so those snapshots stay identical.
         samples.put("card_order_tokenized", new OrderWrapper<Order>(cardOrderTokenized()));
         samples.put("wallet_checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(walletCheckoutDeniedOrder()));
+        samples.put("alternative_payments_order", new OrderWrapper<Order>(alternativePaymentsOrder()));
         return samples;
     }
 
@@ -129,6 +130,21 @@ public final class GoldenOrders {
         order.setCurrency("USD");
         order.setTotalPrice(129.99);
         order.setPaymentDetails(Collections.singletonList(details));
+        return order;
+    }
+
+    /** A buy-now-pay-later payment plus a gift card, which can't be charged back. */
+    static Order alternativePaymentsOrder() {
+        BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
+        bnpl.setInitialPaymentAmount(32.5);
+        bnpl.setInstallments(4);
+        bnpl.setPaymentFrequency(14);
+
+        Order order = new Order();
+        order.setId("golden-alternative-payments-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(150.0);
+        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.GIFT_CARD)));
         return order;
     }
 

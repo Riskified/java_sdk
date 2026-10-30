@@ -112,6 +112,10 @@ public class SchemaConformanceTest {
                 "digital_wallets_payment_details_post_auth_checkout_denied"));
         checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
                 "digital_wallets_payment_details_pre_auth_checkout_denied"));
+        for (String doc : new String[]{POST_SUBMIT, POST_DECIDE, PRE_DECIDE}) {
+            checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
+            checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
+        }
 
         String lineItem = "/order/line_items/0";
         checks.add(new Check("card_order", lineItem, POST_SUBMIT, "physical_line_item"));
