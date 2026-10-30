@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.riskified</groupId>
             <artifactId>riskified-sdk</artifactId>
-            <version>6.6.0</version>
+            <version>6.7.0</version>
         </dependency>
 
         <dependency>

@@ -1,0 +1,12 @@
+[
+  {
+    "doc": "post-auth-flow-checkout_denied",
+    "message": "/checkout/billing_address: array found, object expected",
+    "reason": "Question 10, decided 2026-10-30: keep arrays. Only this page documents an object; every other order page documents an array, and Java has sent arrays everywhere since 5.0.1."
+  },
+  {
+    "doc": "post-auth-flow-checkout_denied",
+    "message": "/checkout/shipping_address: array found, object expected",
+    "reason": "Question 10, decided 2026-10-30: keep arrays. Only this page documents an object; every other order page documents an array, and Java has sent arrays everywhere since 5.0.1."
+  }
+]

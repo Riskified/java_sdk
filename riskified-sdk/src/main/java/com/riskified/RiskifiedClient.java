@@ -67,6 +67,13 @@ public class RiskifiedClient {
     private boolean enableAdvise;
     // value of the versionHeaderValue property can be overwritten by the properties file
     private String versionHeaderValue = "V2";
+    // Restores the 6.6.x request format; see RiskifiedClientBuilder.setLegacyWireFormat.
+    private boolean legacyWireFormat;
+
+    // The documented Accept value. The OTP endpoint keeps application/json, as it has since it was added, and the legacy
+    // wire format sends application/json everywhere, as 6.6.x did.
+    static final String DOCUMENTED_ACCEPT = "application/vnd.riskified.com; version=2";
+    static final String JSON_ACCEPT = "application/json";
 
     /**
      * Riskified API client
@@ -88,6 +95,7 @@ public class RiskifiedClient {
         String environmentType = properties.getProperty("environment");
         String validationType = properties.getProperty("validation");
         enableAdvise = Boolean.parseBoolean(properties.getProperty("enable_old_advise_response"));
+        legacyWireFormat = Boolean.parseBoolean(properties.getProperty("legacy_wire_format"));
         // this is temporary  
         if (enableAdvise) {
         	versionHeaderValue = "V1";
@@ -890,7 +898,7 @@ public class RiskifiedClient {
      */
     public Response InitiateOtp(OtpInitiate otpInitiate) throws IOException, FieldBadFormatException{
         String url = otpBaseUrl + "/recover/v1/otp/initiate";
-        return postOrder(otpInitiate, url);
+        return postOrder(otpInitiate, url, JSON_ACCEPT);
     }
 
     private Response postCheckoutOrder(Object data, String url) throws IOException, FieldBadFormatException {
@@ -1009,7 +1017,11 @@ public class RiskifiedClient {
     }
 
     private Response postOrder(Object data, String url) throws IOException {
-        HttpPost request = createPostRequest(url);
+        return postOrder(data, url, DOCUMENTED_ACCEPT);
+    }
+
+    private Response postOrder(Object data, String url, String accept) throws IOException {
+        HttpPost request = createPostRequest(url, accept);
         addDataToRequest(data, request);
         HttpResponse response;
         HttpClient client = constructHttpClient();
@@ -1063,7 +1075,7 @@ public class RiskifiedClient {
     }
 
     private void addDataToRequest(Object data, HttpPost postRequest) throws IllegalStateException, UnsupportedEncodingException {
-        String jsonData = JSONFormater.toJson(data);
+        String jsonData = JSONFormater.toJson(data, legacyWireFormat);
         byte[] body = jsonData.getBytes("UTF-8");
     	String hmac = sha256Handler.createSHA256(body);
         postRequest.setHeader("X-RISKIFIED-HMAC-SHA256", hmac);
@@ -1073,10 +1085,14 @@ public class RiskifiedClient {
 		postRequest.setEntity(input);
     }
 
+    // Package-private so tests can check the headers.
     HttpPost createPostRequest(String url) {
+        return createPostRequest(url, DOCUMENTED_ACCEPT);
+    }
+
+    HttpPost createPostRequest(String url, String accept) {
         HttpPost postRequest = new HttpPost(url);
-        postRequest.setHeader(HttpHeaders.ACCEPT, "application/vnd.riskified.com; version=2");
-        postRequest.setHeader(HttpHeaders.ACCEPT, "application/json");
+        postRequest.setHeader(HttpHeaders.ACCEPT, legacyWireFormat ? JSON_ACCEPT : accept);
         postRequest.setHeader("X-RISKIFIED-SHOP-DOMAIN", shopUrl);
         postRequest.setHeader("User-Agent", "riskified_java_sdk/" + SdkVersion.VALUE);
         postRequest.setHeader("Version",versionHeaderValue);
@@ -1126,6 +1142,11 @@ public class RiskifiedClient {
         return screenBaseUrl;
     }
 
+    // Package-private so tests can check it.
+    boolean isLegacyWireFormat() {
+        return legacyWireFormat;
+    }
+
     public String getAuthKey() {
         return authKey;
     }
@@ -1156,6 +1177,7 @@ public class RiskifiedClient {
 
         private Integer socketTimeout;
         private Validation validation;
+        private boolean legacyWireFormat;
 
         /**
          * Required arguments to build a RiskifiedClient
@@ -1189,6 +1211,20 @@ public class RiskifiedClient {
             return this;
         }
 
+        /**
+         * Sends requests in the 6.6.x format instead of the documented one, for the changes 6.7.0 makes toward the
+         * documented API. Use it only to roll back without downgrading the SDK if the new format causes a problem.
+         * Can also be set with {@code legacy_wire_format=true} in riskified_sdk.properties.
+         * @param legacyWireFormat true to send the 6.6.x format
+         * @return this builder
+         * @deprecated The 6.6.x format and this option are removed in 7.0.0. Use the default format.
+         */
+        @Deprecated
+        public RiskifiedClientBuilder setLegacyWireFormat(boolean legacyWireFormat) {
+            this.legacyWireFormat = legacyWireFormat;
+            return this;
+        }
+
         public RiskifiedClient build() throws RiskifiedError {
             return new RiskifiedClient(this);
         }
@@ -1214,6 +1250,8 @@ public class RiskifiedClient {
         if(riskifiedClientBuilder.socketTimeout != null){
             this.socketTimeout = riskifiedClientBuilder.socketTimeout;
         }
+
+        this.legacyWireFormat = riskifiedClientBuilder.legacyWireFormat;
 
         this.sha256Handler = new SHA256Handler(authKey);
         this.baseUrl = Utils.getBaseUrlFromEnvironment(environment);
