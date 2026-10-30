@@ -2,9 +2,6 @@ package com.riskified.golden;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaLocation;
@@ -20,19 +17,14 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import static org.junit.Assert.assertTrue;
@@ -42,16 +34,14 @@ import static org.junit.Assert.fail;
  * Validates the {@link GoldenOrders} samples against the OpenAPI definitions from the API docs
  * (vendored in {@code src/test/resources/schema/}). Undocumented keys are allowed.
  *
- * <p>Known violations are listed in {@code schema/known-gaps.json}. The test fails on a violation
- * that isn't listed, and on a listed one that no longer happens, so the list always matches the
- * current gaps. Run with {@code -Dschema.gaps.update=true} to rewrite the list on purpose.
+ * <p>Any violation fails the test, except deliberate docs differences listed, with a reason, in
+ * {@code schema/accepted-differences.json}. For a new violation, fix the SDK, or, if the difference is
+ * decided, add it there.
  */
 @RunWith(Parameterized.class)
 public class SchemaConformanceTest {
 
-    private static final Path KNOWN_GAPS = Paths.get("src", "test", "resources", "schema", "known-gaps.json");
     private static final Path ACCEPTED_DIFFERENCES = Paths.get("src", "test", "resources", "schema", "accepted-differences.json");
-    private static final boolean UPDATE = Boolean.getBoolean("schema.gaps.update");
 
     private static final String POST_SUBMIT = "post-auth-flow-submit";
     private static final String POST_DECIDE = "post-auth-flow-decide";
@@ -60,14 +50,12 @@ public class SchemaConformanceTest {
     private static final String PRE_CHECKOUT_DENIED = "pre-auth-flow-checkout_denied";
     private static final String PRE_DECISION = "pre-auth-flow-decision";
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final JsonSchemaFactory FACTORY = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
     private static final SchemaValidatorsConfig CONFIG = SchemaValidatorsConfig.builder().locale(Locale.ENGLISH).build();
 
-    private static final Map<String, Set<String>> actualGaps = new TreeMap<String, Set<String>>();
-    private static Map<String, Set<String>> knownGaps;
-    // Docs mismatches kept on purpose (schema/accepted-differences.json), by doc. Left out before comparing.
-    private static Map<String, Set<String>> acceptedDifferences;
+    // Docs mismatches kept on purpose (schema/accepted-differences.json). Left out before comparing.
+    private static List<AcceptedDifference> acceptedDifferences;
     private static TimeZone originalTimeZone;
 
     private final Check check;
@@ -167,20 +155,16 @@ public class SchemaConformanceTest {
     public static void setUp() throws IOException {
         originalTimeZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        knownGaps = readKnownGaps();
         acceptedDifferences = readAcceptedDifferences();
     }
 
     @AfterClass
-    public static void tearDown() throws IOException {
+    public static void tearDown() {
         TimeZone.setDefault(originalTimeZone);
-        if (UPDATE) {
-            writeKnownGaps(actualGaps);
-        }
     }
 
     @Test
-    public void matchesKnownGaps() throws IOException {
+    public void conformsToTheDocs() throws IOException {
         Object payload = GoldenOrders.all().get(check.sample);
         assertTrue("Unknown sample " + check.sample, payload != null);
 
@@ -196,71 +180,53 @@ public class SchemaConformanceTest {
             if (check.pointer.isEmpty() && message.getEvaluationPath().toString().contains("anyOf")) {
                 continue;
             }
-            Set<String> accepted = acceptedDifferences.get(check.doc);
-            if (accepted != null && accepted.contains(message.getMessage())) {
+            if (isAccepted(check.doc, message.getMessage())) {
                 continue;
             }
             actual.add(message.getMessage());
         }
         if (!actual.isEmpty()) {
-            actualGaps.put(check.id(), actual);
-        }
-        if (UPDATE) {
-            return;
-        }
-
-        Set<String> expected = knownGaps.containsKey(check.id()) ? knownGaps.get(check.id()) : new TreeSet<String>();
-        Set<String> unexpected = new TreeSet<String>(actual);
-        unexpected.removeAll(expected);
-        Set<String> fixed = new TreeSet<String>(expected);
-        fixed.removeAll(actual);
-        if (!unexpected.isEmpty() || !fixed.isEmpty()) {
-            fail(check.id() + " doesn't match schema/known-gaps.json."
-                    + (unexpected.isEmpty() ? "" : "\nNew violations: " + unexpected)
-                    + (fixed.isEmpty() ? "" : "\nNo longer happening, remove from the list: " + fixed)
-                    + "\nIf intended, run with -Dschema.gaps.update=true.");
+            fail(check.id() + " doesn't conform to the docs: " + actual
+                    + "\nFix the SDK, or, if the difference is decided, add it to schema/accepted-differences.json"
+                    + " with the reason.");
         }
     }
 
-    private static Map<String, Set<String>> readAcceptedDifferences() throws IOException {
-        Map<String, Set<String>> accepted = new TreeMap<String, Set<String>>();
+    private static List<AcceptedDifference> readAcceptedDifferences() throws IOException {
+        List<AcceptedDifference> accepted = new ArrayList<AcceptedDifference>();
         for (JsonNode entry : MAPPER.readTree(ACCEPTED_DIFFERENCES.toFile())) {
-            String doc = entry.path("doc").asText();
-            if (!accepted.containsKey(doc)) {
-                accepted.put(doc, new TreeSet<String>());
-            }
-            accepted.get(doc).add(entry.path("message").asText());
+            accepted.add(new AcceptedDifference(entry.path("doc").asText(), entry.path("message").asText()));
         }
         return accepted;
     }
 
-    private static Map<String, Set<String>> readKnownGaps() throws IOException {
-        Map<String, Set<String>> gaps = new TreeMap<String, Set<String>>();
-        if (!Files.exists(KNOWN_GAPS)) {
-            return gaps;
-        }
-        JsonNode root = MAPPER.readTree(KNOWN_GAPS.toFile());
-        Iterator<Map.Entry<String, JsonNode>> fields = root.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> field = fields.next();
-            Set<String> messages = new TreeSet<String>();
-            for (JsonNode message : field.getValue()) {
-                messages.add(message.asText());
+    private static boolean isAccepted(String doc, String message) {
+        for (AcceptedDifference accepted : acceptedDifferences) {
+            if (accepted.matches(doc, message)) {
+                return true;
             }
-            gaps.put(field.getKey(), messages);
         }
-        return gaps;
+        return false;
     }
 
-    private static void writeKnownGaps(Map<String, Set<String>> gaps) throws IOException {
-        ObjectNode root = MAPPER.createObjectNode();
-        for (Map.Entry<String, Set<String>> gap : gaps.entrySet()) {
-            ArrayNode messages = root.putArray(gap.getKey());
-            for (String message : gap.getValue()) {
-                messages.add(message);
-            }
+    // doc "*" matches every doc; a message starting with "*" matches any message that ends with the rest, so
+    // "*/date_of_birth: ..." covers /order/customer/date_of_birth and /checkout/passengers/0/date_of_birth.
+    static final class AcceptedDifference {
+        final String doc;
+        final String message;
+
+        AcceptedDifference(String doc, String message) {
+            this.doc = doc;
+            this.message = message;
         }
-        Files.write(KNOWN_GAPS, (MAPPER.writeValueAsString(root) + "\n").getBytes(StandardCharsets.UTF_8));
+
+        boolean matches(String doc, String message) {
+            boolean docMatches = this.doc.equals("*") || this.doc.equals(doc);
+            boolean messageMatches = this.message.startsWith("*")
+                    ? message.endsWith(this.message.substring(1))
+                    : this.message.equals(message);
+            return docMatches && messageMatches;
+        }
     }
 
     static final class Check {
