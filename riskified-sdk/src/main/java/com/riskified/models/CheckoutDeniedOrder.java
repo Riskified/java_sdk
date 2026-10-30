@@ -24,8 +24,9 @@ public class CheckoutDeniedOrder extends BaseOrder {
     }
 
     /**
-     * @deprecated The docs put authorization_error inside the card, wallet and PayPal payment details; read it from
-     * there.
+     * @deprecated The docs put authorization_error inside the card, wallet and PayPal payment details; use
+     * {@link CreditCardPaymentDetails#getAuthorizationError()}, {@link WalletPaymentDetails#getAuthorizationError()} or
+     * {@link PaypalPaymentDetails#getAuthorizationError()}.
      */
     @Deprecated
     public AuthorizationError getAuthorizationError() {
