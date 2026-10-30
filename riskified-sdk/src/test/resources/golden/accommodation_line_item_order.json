@@ -53,7 +53,7 @@
           },
           "correspondence": 3,
           "price_negotiated": true,
-          "starting_price": 99.5
+          "starting_price": "99.50"
         },
         "brand": "Example Brand",
         "product_type": "accommodation",

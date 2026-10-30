@@ -50,6 +50,7 @@ public final class GoldenOrders {
         // 6.7.0 changes. Samples whose documented output differs from 6.6.x also have a frozen copy in golden-6.6/.
         samples.put("rewards_points_order", new OrderWrapper<Order>(rewardsPointsOrder()));
         samples.put("checkout_denied_root_error_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedRootErrorOrder()));
+        samples.put("digital_card_type_order", new OrderWrapper<Order>(digitalCardTypeOrder()));
         return samples;
     }
 
@@ -333,6 +334,25 @@ public final class GoldenOrders {
                 new PaypalPaymentDetails("payer@example.com", "verified", "confirmed", "Eligible"),
                 cardWithOwnError,
                 new BankWirePaymentDetails("000123456789", "110000000")));
+        return order;
+    }
+
+    /** Digital line items with only one of card_type and card_sub_type set; the other is sent with the same value. */
+    static Order digitalCardTypeOrder() {
+        DigitalLineItem subTypeOnly = new DigitalLineItem(50.0, 1, "Birthday gift card");
+        subTypeOnly.setProductId("product-giftcard-1");
+        subTypeOnly.setProductType(ProductType.GIFTCARD);
+        subTypeOnly.setCardSubType("birthday");
+        DigitalLineItem typeOnly = new DigitalLineItem(25.0, 1, "Gift card");
+        typeOnly.setProductId("product-giftcard-2");
+        typeOnly.setProductType(ProductType.GIFTCARD);
+        typeOnly.setCardType("gift");
+
+        Order order = new Order();
+        order.setId("golden-digital-card-type-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(75.0);
+        order.setLineItems(Arrays.<LineItem>asList(subTypeOnly, typeOnly));
         return order;
     }
 
