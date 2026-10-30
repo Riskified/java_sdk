@@ -42,8 +42,11 @@ public class JSONFormater {
 
     // PaymentType.REWARD_POINTS (deprecated) and REWARDS_POINTS both send the documented "rewards_points". The legacy
     // wire format sends "reward_points", as 6.6.x did. Reading is unchanged: each spelling maps to its own constant.
-    // RideLineItem sends the amount under both the documented authorized_payment and the 6.6.x authorized_payments,
-    // until 7.0.0. The legacy wire format sends only authorized_payments, as 6.6.x did.
+    // RideLineItem, until 7.0.0:
+    // - the amount goes under both the documented authorized_payment and the 6.6.x authorized_payments;
+    // - pickup_address and dropoff_address are lists, as documented.
+    // The legacy wire format sends what 6.6.x did: only authorized_payments, and each address as a single object
+    // (the first one in the list).
     static TypeAdapterFactory rideLineItemSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
             @SuppressWarnings("unchecked")
@@ -68,6 +71,10 @@ public class JSONFormater {
                             }
                             json.add("authorized_payments", amount);
                         }
+                        if (legacyWireFormat) {
+                            firstAddressOnly(json, "pickup_address");
+                            firstAddressOnly(json, "dropoff_address");
+                        }
                         elements.write(out, json);
                     }
 
@@ -78,6 +85,13 @@ public class JSONFormater {
                 };
             }
         };
+    }
+
+    private static void firstAddressOnly(JsonObject json, String key) {
+        JsonElement addresses = json.remove(key);
+        if (addresses != null && addresses.isJsonArray() && addresses.getAsJsonArray().size() > 0) {
+            json.add(key, addresses.getAsJsonArray().get(0));
+        }
     }
 
     @SuppressWarnings("deprecation")
