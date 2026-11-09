@@ -33,7 +33,7 @@ public class JSONFormater {
         return toJson(obj, false);
     }
 
-    // legacyWireFormat restores the 6.6.x request format for the changes 6.7.0 makes toward the documented API
+    // legacyWireFormat restores the 6.5.x request format for the changes 6.6.0 makes toward the documented API
     // (RiskifiedClientBuilder.setLegacyWireFormat). Each of those changes registers its serializer here based on
     // the flag; until then both formats are the same.
     static String toJson(Object obj, boolean legacyWireFormat) {
@@ -50,11 +50,11 @@ public class JSONFormater {
     }
 
     // PaymentType.REWARD_POINTS (deprecated) and REWARDS_POINTS both send the documented "rewards_points". The legacy
-    // wire format sends "reward_points", as 6.6.x did. Reading is unchanged: each spelling maps to its own constant.
+    // wire format sends "reward_points", as 6.5.x did. Reading is unchanged: each spelling maps to its own constant.
     // RideLineItem, until 7.0.0:
-    // - the amount goes under both the documented authorized_payment and the 6.6.x authorized_payments;
+    // - the amount goes under both the documented authorized_payment and the 6.5.x authorized_payments;
     // - pickup_address and dropoff_address are lists, as documented.
-    // The legacy wire format sends what 6.6.x did: only authorized_payments, and each address as a single object
+    // The legacy wire format sends what 6.5.x did: only authorized_payments, and each address as a single object
     // (the first one in the list).
     static TypeAdapterFactory rideLineItemSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
@@ -99,7 +99,7 @@ public class JSONFormater {
     // CheckoutDeniedOrder: the docs put authorization_error inside card, wallet and PayPal payment details, not at the
     // root. A root-level error is copied into each of those payment details that has none of its own, and stays at the
     // root too, until 7.0.0. Only the JSON changes, never the merchant's objects. The legacy wire format sends it at the
-    // root only, as 6.6.x did.
+    // root only, as 6.5.x did.
     static TypeAdapterFactory checkoutDeniedOrderSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
             @SuppressWarnings("unchecked")
@@ -158,7 +158,7 @@ public class JSONFormater {
     }
 
     // Seller.starting_price is documented as a float-formatted string; it's sent with two decimals, e.g. "99.50". The
-    // legacy wire format sends the number, as 6.6.x did.
+    // legacy wire format sends the number, as 6.5.x did.
     static TypeAdapterFactory sellerSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
             @SuppressWarnings("unchecked")
@@ -193,7 +193,7 @@ public class JSONFormater {
     }
 
     // DigitalLineItem: the docs define only card_type. When only one of card_type and card_sub_type is set, its value is
-    // sent under both keys; when both are set, each keeps its own. The legacy wire format sends them as set, as 6.6.x did.
+    // sent under both keys; when both are set, each keeps its own. The legacy wire format sends them as set, as 6.5.x did.
     static TypeAdapterFactory digitalLineItemSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
             @SuppressWarnings("unchecked")

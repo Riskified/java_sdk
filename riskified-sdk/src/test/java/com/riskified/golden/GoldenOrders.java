@@ -47,7 +47,7 @@ public final class GoldenOrders {
         samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
         samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
         samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
-        // 6.7.0 changes. Samples whose documented output differs from 6.6.x also have a frozen copy in golden-6.6/.
+        // 6.6.0 changes. Samples whose documented output differs from 6.5.x also have a frozen copy in golden-6.5/.
         samples.put("rewards_points_order", new OrderWrapper<Order>(rewardsPointsOrder()));
         samples.put("checkout_denied_root_error_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedRootErrorOrder()));
         samples.put("digital_card_type_order", new OrderWrapper<Order>(digitalCardTypeOrder()));
@@ -96,7 +96,7 @@ public final class GoldenOrders {
         return order;
     }
 
-    @SuppressWarnings("deprecation") // the root-level authorization error, as 6.6.x merchants set it
+    @SuppressWarnings("deprecation") // the root-level authorization error, as 6.5.x merchants set it
     static CheckoutDeniedOrder checkoutDeniedOrder() {
         CheckoutDeniedOrder order = new CheckoutDeniedOrder("golden-checkout-denied-1", authorizationError());
         populateBaseOrder(order, "golden-checkout-denied-1");
@@ -592,7 +592,7 @@ public final class GoldenOrders {
         return item;
     }
 
-    @SuppressWarnings("deprecation") // setAuthorizedPayments: the 6.6.x setter keeps working
+    @SuppressWarnings("deprecation") // setAuthorizedPayments: the 6.5.x setter keeps working
     static RideLineItem rideLineItem() {
         RideLineItem item = new RideLineItem(42.5, 1, "Airport ride", date("2024-03-02T07:00:00Z"), 0, 1);
         populateLineItem(item);

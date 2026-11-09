@@ -67,11 +67,11 @@ public class RiskifiedClient {
     private boolean enableAdvise;
     // value of the versionHeaderValue property can be overwritten by the properties file
     private String versionHeaderValue = "V2";
-    // Restores the 6.6.x request format; see RiskifiedClientBuilder.setLegacyWireFormat.
+    // Restores the 6.5.x request format; see RiskifiedClientBuilder.setLegacyWireFormat.
     private boolean legacyWireFormat;
 
     // The documented Accept value. The OTP endpoint keeps application/json, as it has since it was added, and the legacy
-    // wire format sends application/json everywhere, as 6.6.x did.
+    // wire format sends application/json everywhere, as 6.5.x did.
     static final String DOCUMENTED_ACCEPT = "application/vnd.riskified.com; version=2";
     static final String JSON_ACCEPT = "application/json";
 
@@ -1212,12 +1212,12 @@ public class RiskifiedClient {
         }
 
         /**
-         * Sends requests in the 6.6.x format instead of the documented one, for the changes 6.7.0 makes toward the
+         * Sends requests in the 6.5.x format instead of the documented one, for the changes 6.6.0 makes toward the
          * documented API. Use it only to roll back without downgrading the SDK if the new format causes a problem.
          * Can also be set with {@code legacy_wire_format=true} in riskified_sdk.properties.
-         * @param legacyWireFormat true to send the 6.6.x format
+         * @param legacyWireFormat true to send the 6.5.x format
          * @return this builder
-         * @deprecated The 6.6.x format and this option are removed in 7.0.0. Use the default format.
+         * @deprecated The 6.5.x format and this option are removed in 7.0.0. Use the default format.
          */
         @Deprecated
         public RiskifiedClientBuilder setLegacyWireFormat(boolean legacyWireFormat) {

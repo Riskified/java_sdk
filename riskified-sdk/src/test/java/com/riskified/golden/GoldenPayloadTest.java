@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 public class GoldenPayloadTest {
 
     private static final Path GOLDEN_DIR = Paths.get("src", "test", "resources", "golden");
-    private static final Path LEGACY_66_DIR = Paths.get("src", "test", "resources", "golden-6.6");
+    private static final Path LEGACY_65_DIR = Paths.get("src", "test", "resources", "golden-6.5");
     private static final boolean UPDATE = Boolean.getBoolean("golden.update");
 
     private static TimeZone originalTimeZone;
@@ -91,9 +91,9 @@ public class GoldenPayloadTest {
     }
 
     /**
-     * The legacy wire format (RiskifiedClientBuilder.setLegacyWireFormat) must keep sending exactly what 6.6.x sent.
-     * Snapshots in golden-6.6/ are frozen and never regenerated. A sample without one is unchanged since 6.6.x, so
-     * its current snapshot applies; when a 6.7.0 change alters a current snapshot, copy the old one to golden-6.6/
+     * The legacy wire format (RiskifiedClientBuilder.setLegacyWireFormat) must keep sending exactly what 6.5.x sent.
+     * Snapshots in golden-6.5/ are frozen and never regenerated. A sample without one is unchanged since 6.5.x, so
+     * its current snapshot applies; when a 6.6.0 change alters a current snapshot, copy the old one to golden-6.5/
      * first, or this test fails.
      */
     @Test
@@ -102,14 +102,14 @@ public class GoldenPayloadTest {
             return;
         }
         JsonElement actual = JsonParser.parseString(JSONFormaterTestAccess.toJson(payload, true));
-        Path frozen = LEGACY_66_DIR.resolve(name + ".json");
+        Path frozen = LEGACY_65_DIR.resolve(name + ".json");
         Path snapshot = Files.exists(frozen) ? frozen : GOLDEN_DIR.resolve(name + ".json");
         assertTrue("Missing snapshot " + snapshot, Files.exists(snapshot));
 
         JsonElement expected = JsonParser.parseString(new String(Files.readAllBytes(snapshot), StandardCharsets.UTF_8));
         if (!expected.equals(actual)) {
-            assertEquals("Legacy (6.6.x) payload for '" + name + "' doesn't match " + snapshot + ". If the documented "
-                            + "format changed on purpose, copy the previous snapshot to " + LEGACY_66_DIR + " first.",
+            assertEquals("Legacy (6.5.x) payload for '" + name + "' doesn't match " + snapshot + ". If the documented "
+                            + "format changed on purpose, copy the previous snapshot to " + LEGACY_65_DIR + " first.",
                     pretty(expected), pretty(actual));
         }
     }

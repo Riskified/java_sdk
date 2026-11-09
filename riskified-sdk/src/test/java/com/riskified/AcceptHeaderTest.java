@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * The documented Accept value goes to every endpoint except OTP, which keeps application/json. The legacy wire format
- * sends application/json everywhere, as 6.6.x did.
+ * sends application/json everywhere, as 6.5.x did.
  */
 public class AcceptHeaderTest {
 

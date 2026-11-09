@@ -35,7 +35,7 @@ public enum PaymentType {
     @SerializedName("invoice")
     INVOICE,
     /**
-     * @deprecated The documented value is {@code rewards_points}; use {@link #REWARDS_POINTS}. Since 6.7.0 both send
+     * @deprecated The documented value is {@code rewards_points}; use {@link #REWARDS_POINTS}. Since 6.6.0 both send
      * {@code rewards_points} (or {@code reward_points} with the legacy wire format).
      */
     @Deprecated
