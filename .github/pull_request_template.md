@@ -37,6 +37,7 @@ Empty
 
 <!--
 Did riskified-sdk/src/test/resources/schema/known-gaps.json change? List the entries removed
+(gaps this PR fixes) or added (and why), or write "No change".
 -->
 
 No change
