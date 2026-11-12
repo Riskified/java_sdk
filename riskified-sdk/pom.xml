@@ -4,12 +4,29 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.riskified</groupId>
     <artifactId>riskified-sdk</artifactId>
-    <version>6.5.1</version>
+    <version>6.5.2</version>
     <name>Riskified SDK</name>
     <description>Riskified rest api SDK for java</description>
     <url>https://www.riskified.com</url>
 
     <build>
+        <!-- Fill in ${project.version} in sdk.properties only; copy everything else as-is. -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>com/riskified/sdk.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>com/riskified/sdk.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
