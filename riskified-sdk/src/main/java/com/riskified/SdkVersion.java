@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 final class SdkVersion {
 
-    static final String FALLBACK = "6.3.1";
+    static final String FALLBACK = "6.6.0";
     static final String VALUE = load();
 
     private SdkVersion() {
