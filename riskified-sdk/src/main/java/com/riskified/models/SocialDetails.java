@@ -2,6 +2,8 @@ package com.riskified.models;
 
 import com.riskified.validations.*;
 
+import java.util.Map;
+
 public class SocialDetails implements IValidated {
 
     private String network;
@@ -14,6 +16,9 @@ public class SocialDetails implements IValidated {
     private int following;
     private int followed;
     private int posts;
+    private String id;
+    private String authToken;
+    private Map<String, Object> socialData;
 
     public SocialDetails(String network, String publicUserName) {
         this.network = network;
@@ -114,6 +119,32 @@ public class SocialDetails implements IValidated {
 
     public void setPosts(int posts) {
         this.posts = posts;
+    }
+
+    /** The customer's ID on the social network. */
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    /** Any additional data from the social network, sent as a JSON object. */
+    public Map<String, Object> getSocialData() {
+        return socialData;
+    }
+
+    public void setSocialData(Map<String, Object> socialData) {
+        this.socialData = socialData;
     }
 
 

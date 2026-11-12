@@ -7,8 +7,10 @@ import java.util.Date;
 
 import com.google.gson.*;
 import com.riskified.models.BankWirePaymentDetails;
+import com.riskified.models.BuyNowPayLaterPaymentDetails;
 import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.IPaymentDetails;
+import com.riskified.models.NonChbPaymentDetails;
 import com.riskified.models.PaypalPaymentDetails;
 import com.riskified.models.StripePaymentDetails;
 import com.riskified.models.WalletPaymentDetails;
@@ -36,7 +38,9 @@ public class JSONFormater {
                 .registerSubtype(StripePaymentDetails.class, "stripe")
                 .registerSubtype(CreditCardPaymentDetails.class, "credit_card")
                 .registerSubtype(BankWirePaymentDetails.class, "bank_wire")
-                .registerSubtype(WalletPaymentDetails.class, "digital_wallet");
+                .registerSubtype(WalletPaymentDetails.class, "digital_wallet")
+                .registerSubtype(BuyNowPayLaterPaymentDetails.class, "bnpl")
+                .registerSubtype(NonChbPaymentDetails.class, "non_chb");
     }
    
 }

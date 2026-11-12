@@ -105,6 +105,33 @@ public class SchemaConformanceTest {
         checks.add(new Check("checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
                 "credit_card_payment_details_pre_auth_checkout_denied"));
         checks.add(new Check("decision_order", payment, PRE_DECISION, "credit_card_payment_details_pre_auth_decision"));
+        checks.add(new Check("card_order_tokenized", payment, POST_SUBMIT, "credit_card_payment_details_post_auth"));
+        checks.add(new Check("card_order_tokenized", payment, POST_DECIDE, "credit_card_payment_details_post_auth"));
+        checks.add(new Check("card_order_tokenized", payment, PRE_DECIDE, "credit_card_payment_details_pre_auth"));
+        checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", POST_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_post_auth_checkout_denied"));
+        checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_pre_auth_checkout_denied"));
+        for (String doc : new String[]{POST_SUBMIT, POST_DECIDE, PRE_DECIDE}) {
+            checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
+            checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
+            checks.add(new Check("customer_profile_order", "/order/customer", doc, "customer"));
+            checks.add(new Check("invoice_and_address_fields_order", "/order/shipping_address/0", doc, "address"));
+            checks.add(new Check("invoice_and_address_fields_order", "/order/billing_address/0", doc, "address"));
+            // A property schema of its own, because the minimal order shell lacks the order's required fields.
+            checks.add(new Check("invoice_and_address_fields_order", "/order/invoice_id", doc, "base_order/properties/invoice_id"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer", doc, "customer"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer/crypto_wallets/0", doc, "crypto_wallet"));
+            checks.add(new Check("crypto_and_social_order", "/order/customer/social/0", doc, "social_details"));
+            checks.add(new Check("crypto_and_social_order", "/order/line_items/0/recipient", doc, "recipient_ACH"));
+            checks.add(new Check("crypto_and_social_order", "/order/line_items/1/recipient", doc, "recipient_crypto"));
+            checks.add(new Check("crypto_and_social_order", "/order/shipping_lines/0", doc, "shipping_line"));
+        }
+        // Pre-auth /decide doesn't define authentication_result as a schema of its own.
+        for (String doc : new String[]{POST_SUBMIT, POST_DECIDE}) {
+            checks.add(new Check("card_order_trans_status_s", "/order/payment_details/0/authentication_result", doc,
+                    "authentication_result"));
+        }
 
         String lineItem = "/order/line_items/0";
         checks.add(new Check("card_order", lineItem, POST_SUBMIT, "physical_line_item"));
@@ -113,6 +140,10 @@ public class SchemaConformanceTest {
         checks.add(new Check("ride_line_item_order", lineItem, POST_SUBMIT, "rides_line_item"));
         checks.add(new Check("event_line_item_order", lineItem, POST_SUBMIT, "events_line_item"));
         checks.add(new Check("accommodation_line_item_order", lineItem, POST_SUBMIT, "accommodation_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/0", POST_SUBMIT, "physical_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/1", POST_SUBMIT, "events_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/2", POST_SUBMIT, "travel_line_item"));
+        checks.add(new Check("line_item_fields_order", "/order/line_items/3", POST_SUBMIT, "rides_line_item"));
 
         Collection<Object[]> parameters = new ArrayList<Object[]>();
         for (Check c : checks) {

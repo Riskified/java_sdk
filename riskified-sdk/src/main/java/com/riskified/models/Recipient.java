@@ -15,6 +15,8 @@ public class Recipient implements IValidated {
 	private Date updatedAt;
 	private boolean selfRecipient;
 	private Wallet wallet;
+	private CryptoWallet cryptoWallet;
+	private String bankCode;
 	
 	public Recipient() {
 	}
@@ -87,5 +89,22 @@ public class Recipient implements IValidated {
 
 	public void setWallet(Wallet wallet){
 		this.wallet = wallet;
+	}
+
+	public CryptoWallet getCryptoWallet() {
+		return cryptoWallet;
+	}
+
+	public void setCryptoWallet(CryptoWallet cryptoWallet) {
+		this.cryptoWallet = cryptoWallet;
+	}
+
+	/** The bank code, for ACH recipients. */
+	public String getBankCode() {
+		return bankCode;
+	}
+
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
 	}
 }
