@@ -1,0 +1,17 @@
+{
+  "order": {
+    "id": "golden-rewards-points-1",
+    "currency": "USD",
+    "total_price": 40.0,
+    "payment_details": [
+      {
+        "method": "non_chb",
+        "payment_type": "rewards_points"
+      },
+      {
+        "method": "non_chb",
+        "payment_type": "rewards_points"
+      }
+    ]
+  }
+}

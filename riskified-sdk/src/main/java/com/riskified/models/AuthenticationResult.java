@@ -2,25 +2,28 @@ package com.riskified.models;
 
 import java.util.Date;
 
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.riskified.TransStatusReason;
 import com.riskified.TransStatus;
-import com.riskified.adapters.AuthenticationResultAdapterFactory;
 import com.riskified.validations.*;
 
 
-@JsonAdapter(AuthenticationResultAdapterFactory.class)
+/**
+ * The 3-D Secure authentication result. Older key spellings (tran_status, tranStatus, tra_exemption and so on) are
+ * still read through {@link SerializedName#alternate()}, with or without a field naming policy on the Gson instance.
+ */
 public class AuthenticationResult implements IValidated {
 	private String eci;
 	private String cavv;
 	private Date createdAt;
+	@SerializedName(value = "trans_status", alternate = {"transStatus", "tranStatus", "tran_status"})
 	private TransStatus transStatus;
+	@SerializedName(value = "trans_status_reason", alternate = {"transStatusReason", "tranStatusReason", "tran_status_reason"})
 	private TransStatusReason transStatusReason;
 	private Boolean liabilityShift;
+	@SerializedName(value = "three_d_challenge", alternate = {"threeDChallenge"})
 	private Boolean threeDChallenge;
-
-    @SerializedName("TRA_exemption")
+	@SerializedName(value = "TRA_exemption", alternate = {"tra_exemption", "traExemption"})
 	private Boolean traExemption;
 	
 	
