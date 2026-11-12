@@ -33,18 +33,17 @@ for page in glob.glob("path/to/api_docs/*-flow-*.md"):
 EOF
 ```
 
-Then update the table above and run
-`mvn test -Dtest=SchemaConformanceTest -Dschema.gaps.update=true` to refresh `known-gaps.json`.
-Review that diff: every entry should be a gap the alignment plan tracks.
-
-## `known-gaps.json`
-
-The violations each check is expected to report today. The test fails on a violation that isn't
-listed, and on a listed one that no longer happens, so remove entries as the plan's steps fix them.
+Then update the table above and run `mvn test -Dtest=SchemaConformanceTest`. A refresh can surface
+new violations: fix the SDK, or, if the difference is decided, add it to `accepted-differences.json`.
 
 ## `accepted-differences.json`
 
 Places where the SDK deliberately differs from the docs, each with the doc, the exact violation and
-the reason (usually a docs inconsistency). The test leaves these out before comparing, so
-`known-gaps.json` only lists real SDK gaps. Add an entry only for a decided difference, not for a
-gap still to fix.
+the reason (usually a docs inconsistency, or a value the server accepts anyway). The test fails on
+any other violation. Add an entry only for a decided difference, never to silence a gap still to
+fix.
+
+`"doc": "*"` matches every doc, and a message starting with `*` matches any message ending with the
+rest, so `*/date_of_birth: <violation>` covers `/order/customer/date_of_birth` and
+`/checkout/passengers/0/date_of_birth`. Keep the full violation text after the path so a wildcard
+can't hide a different kind of problem.
