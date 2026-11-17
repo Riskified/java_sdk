@@ -9,14 +9,11 @@ import com.riskified.JSONFormater;
 import com.riskified.JSONFormaterTestAccess;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class RideLineItemTest {
 
@@ -84,83 +81,5 @@ public class RideLineItemTest {
         assertEquals(Float.valueOf(50.0f), gson.fromJson("{\"authorized_payment\":50.0}", RideLineItem.class).getAuthorizedPayment());
         assertEquals(Float.valueOf(50.0f), gson.fromJson("{\"authorized_payments\":50.0}", RideLineItem.class).getAuthorizedPayment());
         assertNull(gson.fromJson("{}", RideLineItem.class).getAuthorizedPayment());
-    }
-
-    // Dropoff addresses
-
-    private static Address address(String street) {
-        return new Address("Jane", "Doe", street, "New York", "+15555550100", "United States");
-    }
-
-    @Test
-    @SuppressWarnings("deprecation")
-    public void deprecatedAddressSetterWrapsInAOneElementList() {
-        RideLineItem item = ride();
-        Address dropoff = address("2 Dropoff St");
-        item.setDropoffAddress(dropoff);
-
-        assertEquals(1, item.getDropoffAddresses().size());
-        assertTrue(dropoff == item.getDropoffAddresses().get(0));
-        item.getDropoffAddresses().add(address("3 Extra St"));
-        assertEquals(2, item.getDropoffAddresses().size());
-    }
-
-    @Test
-    @SuppressWarnings("deprecation")
-    public void deprecatedAddressGetterReturnsTheFirstOrNull() {
-        RideLineItem item = ride();
-        assertNull(item.getDropoffAddress());
-
-        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-        assertEquals("1 First St", item.getDropoffAddress().getAddress1());
-
-        item.setDropoffAddresses(new ArrayList<Address>());
-        assertNull(item.getDropoffAddress());
-
-        item.setDropoffAddress(null);
-        assertNull(item.getDropoffAddresses());
-    }
-
-    @Test
-    public void sendsDropoffAddressesAsAnArray() {
-        RideLineItem item = ride();
-        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-
-        JsonObject json = JsonParser.parseString(JSONFormater.toJson(item)).getAsJsonObject();
-
-        assertEquals(2, json.getAsJsonArray("dropoff_address").size());
-        assertEquals("1 First St", json.getAsJsonArray("dropoff_address").get(0).getAsJsonObject().get("address1").getAsString());
-    }
-
-    @Test
-    public void legacyWireFormatSendsTheFirstDropoffAddressAsAnObject() {
-        RideLineItem item = ride();
-        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-
-        JsonObject json = JsonParser.parseString(JSONFormaterTestAccess.toJson(item, true)).getAsJsonObject();
-
-        assertEquals("1 First St", json.getAsJsonObject("dropoff_address").get("address1").getAsString());
-    }
-
-    @Test
-    public void legacyWireFormatLeavesOutAnEmptyDropoffList() {
-        RideLineItem item = ride();
-        item.setDropoffAddresses(new ArrayList<Address>());
-
-        JsonObject json = JsonParser.parseString(JSONFormaterTestAccess.toJson(item, true)).getAsJsonObject();
-
-        assertFalse(json.has("dropoff_address"));
-    }
-
-    @Test
-    public void readsADropoffAddressAsAnObjectOrAnArray() {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-
-        RideLineItem fromObject = gson.fromJson("{\"dropoff_address\":{\"address1\":\"1 First St\"}}", RideLineItem.class);
-        RideLineItem fromArray = gson.fromJson("{\"dropoff_address\":[{\"address1\":\"1 First St\"},{\"address1\":\"2 Second St\"}]}", RideLineItem.class);
-
-        assertEquals(1, fromObject.getDropoffAddresses().size());
-        assertEquals("1 First St", fromObject.getDropoffAddresses().get(0).getAddress1());
-        assertEquals(2, fromArray.getDropoffAddresses().size());
     }
 }

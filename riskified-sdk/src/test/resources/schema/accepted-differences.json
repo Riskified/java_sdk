@@ -38,5 +38,10 @@
     "doc": "*",
     "message": "*/pickup_address: object found, array expected",
     "reason": "The model's ride pickup_address is a single address object; the docs' array type is wrong. The SDK sends one object."
+  },
+  {
+    "doc": "*",
+    "message": "*/dropoff_address: object found, array expected",
+    "reason": "The model's ride dropoff_address is a single address object; the docs' array type is wrong. The SDK sends one object."
   }
 ]

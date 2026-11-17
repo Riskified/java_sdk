@@ -1,13 +1,9 @@
 package com.riskified.models;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.riskified.adapters.AddressListAdapterFactory;
 import com.riskified.validations.*;
 
 public class RideLineItem extends LineItem {
@@ -20,8 +16,7 @@ public class RideLineItem extends LineItem {
     private Date dropoffDate;
     private Float dropoffLatitude;
     private Float dropoffLongitude;
-    @JsonAdapter(AddressListAdapterFactory.class)
-    private List<Address> dropoffAddress;
+    private Address dropoffAddress;
     private String transportMethod;
     private String priceBy;
     private String vehicleClass;
@@ -86,23 +81,9 @@ public class RideLineItem extends LineItem {
 
     public void setDropoffLongitude(Float dropoffLongitude) { this.dropoffLongitude = dropoffLongitude; }
 
-    public List<Address> getDropoffAddresses() { return dropoffAddress; }
+    public Address getDropoffAddress() { return dropoffAddress; }
 
-    public void setDropoffAddresses(List<Address> dropoffAddresses) { this.dropoffAddress = dropoffAddresses; }
-
-    /**
-     * @return the first dropoff address, or null
-     * @deprecated The documented dropoff_address is a list; use {@link #getDropoffAddresses()}.
-     */
-    @Deprecated
-    public Address getDropoffAddress() { return firstOrNull(dropoffAddress); }
-
-    /**
-     * Replaces the dropoff addresses with this one address.
-     * @deprecated The documented dropoff_address is a list; use {@link #setDropoffAddresses(List)}.
-     */
-    @Deprecated
-    public void setDropoffAddress(Address dropoffAddress) { this.dropoffAddress = listOf(dropoffAddress); }
+    public void setDropoffAddress(Address dropoffAddress) { this.dropoffAddress = dropoffAddress; }
 
     public String getTransportMethod() { return transportMethod; }
 
@@ -163,18 +144,4 @@ public class RideLineItem extends LineItem {
     public Double getDamageExcess() { return damageExcess; }
 
     public void setDamageExcess(Double damageExcess) { this.damageExcess = damageExcess; }
-
-    private static Address firstOrNull(List<Address> addresses) {
-        return addresses == null || addresses.isEmpty() ? null : addresses.get(0);
-    }
-
-    // A mutable list, so callers can still add to what getDropoffAddresses() returns.
-    private static List<Address> listOf(Address address) {
-        if (address == null) {
-            return null;
-        }
-        List<Address> addresses = new ArrayList<Address>();
-        addresses.add(address);
-        return addresses;
-    }
 }

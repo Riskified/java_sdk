@@ -43,11 +43,8 @@ public class JSONFormater {
         return gson.toJson(obj);
     }
 
-    // RideLineItem, until 7.0.0:
-    // - the amount goes under both the documented authorized_payment and the 6.5.x authorized_payments;
-    // - dropoff_address is a list, as documented.
-    // The legacy wire format sends what 6.5.x did: only authorized_payments, and dropoff_address as a single object
-    // (the first one in the list).
+    // RideLineItem sends the amount under both the documented authorized_payment and the 6.5.x authorized_payments,
+    // until 7.0.0. The legacy wire format sends only authorized_payments, as 6.5.x did.
     static TypeAdapterFactory rideLineItemSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
             @SuppressWarnings("unchecked")
@@ -71,9 +68,6 @@ public class JSONFormater {
                                 json.add("authorized_payment", amount);
                             }
                             json.add("authorized_payments", amount);
-                        }
-                        if (legacyWireFormat) {
-                            firstAddressOnly(json, "dropoff_address");
                         }
                         elements.write(out, json);
                     }
@@ -187,13 +181,6 @@ public class JSONFormater {
         JsonElement target = json.get(to);
         if (source != null && !source.isJsonNull() && (target == null || target.isJsonNull())) {
             json.add(to, source.deepCopy());
-        }
-    }
-
-    private static void firstAddressOnly(JsonObject json, String key) {
-        JsonElement addresses = json.remove(key);
-        if (addresses != null && addresses.isJsonArray() && addresses.getAsJsonArray().size() > 0) {
-            json.add(key, addresses.getAsJsonArray().get(0));
         }
     }
 
