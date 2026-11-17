@@ -48,7 +48,6 @@ public final class GoldenOrders {
         samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
         samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
         // 6.6.0 changes. Samples whose documented output differs from 6.5.x also have a frozen copy in golden-6.5/.
-        samples.put("rewards_points_order", new OrderWrapper<Order>(rewardsPointsOrder()));
         samples.put("checkout_denied_root_error_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedRootErrorOrder()));
         samples.put("digital_card_type_order", new OrderWrapper<Order>(digitalCardTypeOrder()));
         return samples;
@@ -143,7 +142,7 @@ public final class GoldenOrders {
         return order;
     }
 
-    /** A buy-now-pay-later payment plus a gift card, which can't be charged back. */
+    /** A buy-now-pay-later payment plus store credit, which can't be charged back. */
     static Order alternativePaymentsOrder() {
         BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
         bnpl.setInitialPaymentAmount(32.5);
@@ -154,7 +153,7 @@ public final class GoldenOrders {
         order.setId("golden-alternative-payments-1");
         order.setCurrency("USD");
         order.setTotalPrice(150.0);
-        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.GIFT_CARD)));
+        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.STORE_CREDIT)));
         return order;
     }
 
@@ -300,18 +299,6 @@ public final class GoldenOrders {
         order.setCurrency("USD");
         order.setTotalPrice(129.99);
         order.setPaymentDetails(Collections.singletonList(details));
-        return order;
-    }
-
-    /** Reward points through both constants: the documented REWARDS_POINTS and the deprecated REWARD_POINTS. */
-    @SuppressWarnings("deprecation")
-    static Order rewardsPointsOrder() {
-        Order order = new Order();
-        order.setId("golden-rewards-points-1");
-        order.setCurrency("USD");
-        order.setTotalPrice(40.0);
-        order.setPaymentDetails(Arrays.asList(new NonChbPaymentDetails(PaymentType.REWARDS_POINTS),
-                new NonChbPaymentDetails(PaymentType.REWARD_POINTS)));
         return order;
     }
 

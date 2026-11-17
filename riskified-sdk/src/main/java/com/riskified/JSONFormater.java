@@ -20,7 +20,6 @@ import com.riskified.models.CreditCardPaymentDetails;
 import com.riskified.models.DigitalLineItem;
 import com.riskified.models.IPaymentDetails;
 import com.riskified.models.NonChbPaymentDetails;
-import com.riskified.models.PaymentType;
 import com.riskified.models.RideLineItem;
 import com.riskified.models.Seller;
 import com.riskified.models.PaypalPaymentDetails;
@@ -40,7 +39,6 @@ public class JSONFormater {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, new DateTimeSerializer())
                 .registerTypeAdapterFactory(paymentDetailsSerializer())
-                .registerTypeAdapterFactory(rewardPointsSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(rideLineItemSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(checkoutDeniedOrderSerializer(legacyWireFormat))
                 .registerTypeAdapterFactory(sellerSerializer(legacyWireFormat))
@@ -49,8 +47,6 @@ public class JSONFormater {
         return gson.toJson(obj);
     }
 
-    // PaymentType.REWARD_POINTS (deprecated) and REWARDS_POINTS both send the documented "rewards_points". The legacy
-    // wire format sends "reward_points", as 6.5.x did. Reading is unchanged: each spelling maps to its own constant.
     // RideLineItem, until 7.0.0:
     // - the amount goes under both the documented authorized_payment and the 6.5.x authorized_payments;
     // - pickup_address and dropoff_address are lists, as documented.
@@ -245,34 +241,6 @@ public class JSONFormater {
         if (addresses != null && addresses.isJsonArray() && addresses.getAsJsonArray().size() > 0) {
             json.add(key, addresses.getAsJsonArray().get(0));
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    static TypeAdapterFactory rewardPointsSerializer(final boolean legacyWireFormat) {
-        return new TypeAdapterFactory() {
-            @SuppressWarnings("unchecked")
-            public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-                if (type.getRawType() != PaymentType.class) {
-                    return null;
-                }
-                final TypeAdapter<PaymentType> delegate = (TypeAdapter<PaymentType>) gson.getDelegateAdapter(this, type);
-                return (TypeAdapter<T>) new TypeAdapter<PaymentType>() {
-                    @Override
-                    public void write(JsonWriter out, PaymentType value) throws IOException {
-                        if (value == PaymentType.REWARD_POINTS || value == PaymentType.REWARDS_POINTS) {
-                            out.value(legacyWireFormat ? "reward_points" : "rewards_points");
-                        } else {
-                            delegate.write(out, value);
-                        }
-                    }
-
-                    @Override
-                    public PaymentType read(JsonReader in) throws IOException {
-                        return delegate.read(in);
-                    }
-                };
-            }
-        };
     }
 
     public static class DateTimeSerializer implements JsonSerializer<Date> {
