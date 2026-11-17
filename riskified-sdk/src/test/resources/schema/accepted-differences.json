@@ -28,5 +28,10 @@
     "doc": "pre-auth-flow-decide",
     "message": "/account_balance/available_balance: number found, integer expected",
     "reason": "Question 11, answered: only this page types available_balance as integer; the server accepts the decimal the SDK sends (a double); no change."
+  },
+  {
+    "doc": "*",
+    "message": "*/starting_price: number found, string expected",
+    "reason": "The model's seller.starting_price is a decimal; the docs' string type is wrong. The SDK sends the number (e.g. 99.5)."
   }
 ]
