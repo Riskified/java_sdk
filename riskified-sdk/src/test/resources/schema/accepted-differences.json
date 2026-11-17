@@ -33,5 +33,10 @@
     "doc": "*",
     "message": "*/starting_price: number found, string expected",
     "reason": "The model's seller.starting_price is a decimal; the docs' string type is wrong. The SDK sends the number (e.g. 99.5)."
+  },
+  {
+    "doc": "*",
+    "message": "*/pickup_address: object found, array expected",
+    "reason": "The model's ride pickup_address is a single address object; the docs' array type is wrong. The SDK sends one object."
   }
 ]

@@ -16,9 +16,7 @@ public class RideLineItem extends LineItem {
     private Date pickupDate;
     private Float pickupLatitude;
     private Float pickupLongitude;
-    // Lists, as documented; a single address object still parses. JSONFormater sends one object in the legacy wire format.
-    @JsonAdapter(AddressListAdapterFactory.class)
-    private List<Address> pickupAddress;
+    private Address pickupAddress;
     private Date dropoffDate;
     private Float dropoffLatitude;
     private Float dropoffLongitude;
@@ -72,23 +70,9 @@ public class RideLineItem extends LineItem {
 
     public void setPickupLongitude(Float pickupLongitude) { this.pickupLongitude = pickupLongitude; }
 
-    public List<Address> getPickupAddresses() { return pickupAddress; }
+    public Address getPickupAddress() { return pickupAddress; }
 
-    public void setPickupAddresses(List<Address> pickupAddresses) { this.pickupAddress = pickupAddresses; }
-
-    /**
-     * @return the first pickup address, or null
-     * @deprecated The documented pickup_address is a list; use {@link #getPickupAddresses()}.
-     */
-    @Deprecated
-    public Address getPickupAddress() { return firstOrNull(pickupAddress); }
-
-    /**
-     * Replaces the pickup addresses with this one address.
-     * @deprecated The documented pickup_address is a list; use {@link #setPickupAddresses(List)}.
-     */
-    @Deprecated
-    public void setPickupAddress(Address pickupAddress) { this.pickupAddress = listOf(pickupAddress); }
+    public void setPickupAddress(Address pickupAddress) { this.pickupAddress = pickupAddress; }
 
     public Date getDropoffDate() { return dropoffDate; }
 
@@ -184,7 +168,7 @@ public class RideLineItem extends LineItem {
         return addresses == null || addresses.isEmpty() ? null : addresses.get(0);
     }
 
-    // A mutable list, so callers can still add to what getPickupAddresses() / getDropoffAddresses() return.
+    // A mutable list, so callers can still add to what getDropoffAddresses() returns.
     private static List<Address> listOf(Address address) {
         if (address == null) {
             return null;

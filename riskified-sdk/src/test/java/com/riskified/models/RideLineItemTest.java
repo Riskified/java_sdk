@@ -86,7 +86,7 @@ public class RideLineItemTest {
         assertNull(gson.fromJson("{}", RideLineItem.class).getAuthorizedPayment());
     }
 
-    // Pickup and dropoff addresses
+    // Dropoff addresses
 
     private static Address address(String street) {
         return new Address("Jane", "Doe", street, "New York", "+15555550100", "United States");
@@ -96,78 +96,71 @@ public class RideLineItemTest {
     @SuppressWarnings("deprecation")
     public void deprecatedAddressSetterWrapsInAOneElementList() {
         RideLineItem item = ride();
-        Address pickup = address("1 Pickup St");
-        item.setPickupAddress(pickup);
-        item.setDropoffAddress(address("2 Dropoff St"));
+        Address dropoff = address("2 Dropoff St");
+        item.setDropoffAddress(dropoff);
 
-        assertEquals(1, item.getPickupAddresses().size());
-        assertTrue(pickup == item.getPickupAddresses().get(0));
-        assertEquals("2 Dropoff St", item.getDropoffAddresses().get(0).getAddress1());
-        item.getPickupAddresses().add(address("3 Extra St"));
-        assertEquals(2, item.getPickupAddresses().size());
+        assertEquals(1, item.getDropoffAddresses().size());
+        assertTrue(dropoff == item.getDropoffAddresses().get(0));
+        item.getDropoffAddresses().add(address("3 Extra St"));
+        assertEquals(2, item.getDropoffAddresses().size());
     }
 
     @Test
     @SuppressWarnings("deprecation")
     public void deprecatedAddressGetterReturnsTheFirstOrNull() {
         RideLineItem item = ride();
-        assertNull(item.getPickupAddress());
+        assertNull(item.getDropoffAddress());
 
-        item.setPickupAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-        assertEquals("1 First St", item.getPickupAddress().getAddress1());
+        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
+        assertEquals("1 First St", item.getDropoffAddress().getAddress1());
 
         item.setDropoffAddresses(new ArrayList<Address>());
         assertNull(item.getDropoffAddress());
 
-        item.setPickupAddress(null);
-        assertNull(item.getPickupAddresses());
+        item.setDropoffAddress(null);
+        assertNull(item.getDropoffAddresses());
     }
 
     @Test
-    public void sendsAddressesAsArrays() {
+    public void sendsDropoffAddressesAsAnArray() {
         RideLineItem item = ride();
-        item.setPickupAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-        item.setDropoffAddresses(Arrays.asList(address("3 Third St")));
+        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
 
         JsonObject json = JsonParser.parseString(JSONFormater.toJson(item)).getAsJsonObject();
 
-        assertEquals(2, json.getAsJsonArray("pickup_address").size());
-        assertEquals("1 First St", json.getAsJsonArray("pickup_address").get(0).getAsJsonObject().get("address1").getAsString());
-        assertEquals(1, json.getAsJsonArray("dropoff_address").size());
+        assertEquals(2, json.getAsJsonArray("dropoff_address").size());
+        assertEquals("1 First St", json.getAsJsonArray("dropoff_address").get(0).getAsJsonObject().get("address1").getAsString());
     }
 
     @Test
-    public void legacyWireFormatSendsTheFirstAddressAsAnObject() {
+    public void legacyWireFormatSendsTheFirstDropoffAddressAsAnObject() {
         RideLineItem item = ride();
-        item.setPickupAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
-        item.setDropoffAddresses(Arrays.asList(address("3 Third St")));
+        item.setDropoffAddresses(Arrays.asList(address("1 First St"), address("2 Second St")));
 
         JsonObject json = JsonParser.parseString(JSONFormaterTestAccess.toJson(item, true)).getAsJsonObject();
 
-        assertEquals("1 First St", json.getAsJsonObject("pickup_address").get("address1").getAsString());
-        assertEquals("3 Third St", json.getAsJsonObject("dropoff_address").get("address1").getAsString());
+        assertEquals("1 First St", json.getAsJsonObject("dropoff_address").get("address1").getAsString());
     }
 
     @Test
-    public void legacyWireFormatLeavesOutAnEmptyAddressList() {
+    public void legacyWireFormatLeavesOutAnEmptyDropoffList() {
         RideLineItem item = ride();
-        item.setPickupAddresses(new ArrayList<Address>());
+        item.setDropoffAddresses(new ArrayList<Address>());
 
         JsonObject json = JsonParser.parseString(JSONFormaterTestAccess.toJson(item, true)).getAsJsonObject();
 
-        assertFalse(json.has("pickup_address"));
         assertFalse(json.has("dropoff_address"));
     }
 
     @Test
-    public void readsAnAddressAsAnObjectOrAnArray() {
+    public void readsADropoffAddressAsAnObjectOrAnArray() {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-        RideLineItem fromObject = gson.fromJson("{\"pickup_address\":{\"address1\":\"1 First St\"}}", RideLineItem.class);
-        RideLineItem fromArray = gson.fromJson("{\"pickup_address\":[{\"address1\":\"1 First St\"},{\"address1\":\"2 Second St\"}]}", RideLineItem.class);
+        RideLineItem fromObject = gson.fromJson("{\"dropoff_address\":{\"address1\":\"1 First St\"}}", RideLineItem.class);
+        RideLineItem fromArray = gson.fromJson("{\"dropoff_address\":[{\"address1\":\"1 First St\"},{\"address1\":\"2 Second St\"}]}", RideLineItem.class);
 
-        assertEquals(1, fromObject.getPickupAddresses().size());
-        assertEquals("1 First St", fromObject.getPickupAddresses().get(0).getAddress1());
-        assertEquals(2, fromArray.getPickupAddresses().size());
+        assertEquals(1, fromObject.getDropoffAddresses().size());
+        assertEquals("1 First St", fromObject.getDropoffAddresses().get(0).getAddress1());
+        assertEquals(2, fromArray.getDropoffAddresses().size());
     }
 }

@@ -45,8 +45,8 @@ public class JSONFormater {
 
     // RideLineItem, until 7.0.0:
     // - the amount goes under both the documented authorized_payment and the 6.5.x authorized_payments;
-    // - pickup_address and dropoff_address are lists, as documented.
-    // The legacy wire format sends what 6.5.x did: only authorized_payments, and each address as a single object
+    // - dropoff_address is a list, as documented.
+    // The legacy wire format sends what 6.5.x did: only authorized_payments, and dropoff_address as a single object
     // (the first one in the list).
     static TypeAdapterFactory rideLineItemSerializer(final boolean legacyWireFormat) {
         return new TypeAdapterFactory() {
@@ -73,7 +73,6 @@ public class JSONFormater {
                             json.add("authorized_payments", amount);
                         }
                         if (legacyWireFormat) {
-                            firstAddressOnly(json, "pickup_address");
                             firstAddressOnly(json, "dropoff_address");
                         }
                         elements.write(out, json);
