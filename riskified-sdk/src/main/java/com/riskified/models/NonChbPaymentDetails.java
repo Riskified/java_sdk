@@ -3,15 +3,15 @@ package com.riskified.models;
 import com.riskified.validations.*;
 
 /**
- * Payment details for payments that can't be charged back: store credit and reward points. Only the payment type is
- * sent, e.g. {@code payment_type: "store_credit"}.
+ * Payment details for payments that can't be charged back, such as reward points. Only the payment type is sent,
+ * e.g. {@code payment_type: "reward_points"}.
  */
 public class NonChbPaymentDetails implements IPaymentDetails {
 
     private PaymentType paymentType;
 
     /**
-     * @param paymentType {@link PaymentType#STORE_CREDIT} or {@link PaymentType#REWARD_POINTS}
+     * @param paymentType {@link PaymentType#REWARD_POINTS}
      */
     public NonChbPaymentDetails(PaymentType paymentType) {
         this.paymentType = paymentType;

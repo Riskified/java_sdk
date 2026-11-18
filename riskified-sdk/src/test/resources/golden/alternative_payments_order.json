@@ -13,7 +13,7 @@
       },
       {
         "method": "non_chb",
-        "payment_type": "store_credit"
+        "payment_type": "cash_on_delivery"
       }
     ]
   }

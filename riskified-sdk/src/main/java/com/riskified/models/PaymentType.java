@@ -27,12 +27,15 @@ public enum PaymentType {
     @SerializedName("crypto")
     CRYPTO,
     /**
-     * @deprecated The API doesn't accept {@code gift_card} as a payment type. For a payment that can't be charged
-     * back, use {@link #STORE_CREDIT} or {@link #REWARD_POINTS}.
+     * @deprecated The API doesn't accept {@code gift_card} as a payment type.
      */
     @Deprecated
     @SerializedName("gift_card")
     GIFT_CARD,
+    /**
+     * @deprecated The API doesn't accept {@code store_credit} as a payment type.
+     */
+    @Deprecated
     @SerializedName("store_credit")
     STORE_CREDIT,
     @SerializedName("cash_on_delivery")

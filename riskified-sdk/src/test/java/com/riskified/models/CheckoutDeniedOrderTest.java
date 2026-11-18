@@ -61,7 +61,7 @@ public class CheckoutDeniedOrderTest {
     public void doesNotCopyIntoTypesWithoutTheField() {
         CheckoutDeniedOrder order = new CheckoutDeniedOrder("1", ROOT_ERROR);
         order.setPaymentDetails(Arrays.asList(new BankWirePaymentDetails("000123", "110000000"),
-                new BuyNowPayLaterPaymentDetails(), new NonChbPaymentDetails(PaymentType.STORE_CREDIT)));
+                new BuyNowPayLaterPaymentDetails(), new NonChbPaymentDetails(PaymentType.CASH_ON_DELIVERY)));
 
         JsonArray details = paymentDetails(JSONFormater.toJson(order));
 

@@ -142,7 +142,7 @@ public final class GoldenOrders {
         return order;
     }
 
-    /** A buy-now-pay-later payment plus store credit, which can't be charged back. */
+    /** A buy-now-pay-later payment plus a cash-on-delivery payment. */
     static Order alternativePaymentsOrder() {
         BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
         bnpl.setInitialPaymentAmount(32.5);
@@ -153,7 +153,7 @@ public final class GoldenOrders {
         order.setId("golden-alternative-payments-1");
         order.setCurrency("USD");
         order.setTotalPrice(150.0);
-        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.STORE_CREDIT)));
+        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.CASH_ON_DELIVERY)));
         return order;
     }
 

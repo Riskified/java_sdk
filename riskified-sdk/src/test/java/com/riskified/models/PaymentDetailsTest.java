@@ -219,7 +219,7 @@ public class PaymentDetailsTest {
 
         List<IPaymentDetails> paymentDetails = new ArrayList<IPaymentDetails>();
         paymentDetails.add(bnpl);
-        paymentDetails.add(new NonChbPaymentDetails(PaymentType.STORE_CREDIT));
+        paymentDetails.add(new NonChbPaymentDetails(PaymentType.CASH_ON_DELIVERY));
 
         String json = polymorphicGson.toJson(paymentDetails, new TypeToken<List<IPaymentDetails>>() {}.getType());
         assertTrue(json.contains("\"method\":\"bnpl\""));
@@ -229,6 +229,6 @@ public class PaymentDetailsTest {
         BuyNowPayLaterPaymentDetails parsedBnpl = (BuyNowPayLaterPaymentDetails) parsed.get(0);
         assertEquals(Double.valueOf(25.0), parsedBnpl.getInitialPaymentAmount());
         assertEquals(Integer.valueOf(14), parsedBnpl.getPaymentFrequency());
-        assertEquals(PaymentType.STORE_CREDIT, ((NonChbPaymentDetails) parsed.get(1)).getPaymentType());
+        assertEquals(PaymentType.CASH_ON_DELIVERY, ((NonChbPaymentDetails) parsed.get(1)).getPaymentType());
     }
 }
