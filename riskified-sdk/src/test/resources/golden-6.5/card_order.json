@@ -1,0 +1,409 @@
+{
+  "order": {
+    "id": "golden-card-1",
+    "email": "jane.doe@example.com",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:35:00Z",
+    "currency": "USD",
+    "gateway": "stripe",
+    "total_price": 129.99,
+    "nocharge_amount": {
+      "refund_id": "refund-1",
+      "amount": 5.0,
+      "currency": "USD",
+      "reason": "goodwill"
+    },
+    "browser_ip": "203.0.113.10",
+    "customer": {
+      "email": "jane.doe@example.com",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "created_at": "2022-05-01T12:00:00Z",
+      "updated_at": "2024-01-10T12:00:00Z",
+      "id": "customer-1",
+      "group_id": "group-1",
+      "group_name": "vip",
+      "note": "loyal customer",
+      "orders_count": 7,
+      "verified_email": true,
+      "accepts_marketing": true,
+      "last_order_id": "order-0",
+      "last_order_name": "#1000",
+      "state": "enabled",
+      "total_spent": 1500.5,
+      "tags": "vip",
+      "default_address": {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "city": "New York",
+        "phone": "+15555550100",
+        "verified_phone": true,
+        "country": "United States",
+        "country_code": "US",
+        "name": "Jane Doe",
+        "company": "Example Inc",
+        "address1": "1 default St",
+        "address2": "Apt 4",
+        "province": "New York",
+        "province_code": "NY",
+        "zip": "10001",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "social": [
+        {
+          "network": "facebook",
+          "public_username": "janedoe",
+          "community_score": 80,
+          "profile_picture": "https://cdn.example.com/jane.jpg",
+          "email": "jane.doe@example.com",
+          "bio": "Hello",
+          "account_url": "https://facebook.com/janedoe",
+          "following": 100,
+          "followed": 200,
+          "posts": 50
+        }
+      ],
+      "address": {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "city": "New York",
+        "phone": "+15555550100",
+        "verified_phone": true,
+        "country": "United States",
+        "country_code": "US",
+        "name": "Jane Doe",
+        "company": "Example Inc",
+        "address1": "1 customer St",
+        "address2": "Apt 4",
+        "province": "New York",
+        "province_code": "NY",
+        "zip": "10001",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "account_type": "premium",
+      "linked_accounts": 2,
+      "document_id": "doc-1",
+      "document_type": "passport",
+      "phone": "+15555550100",
+      "verified_phone": true,
+      "verified_phone_at": "2022-05-02T12:00:00Z",
+      "user_name": "janedoe",
+      "has_defaulted": false,
+      "date_of_birth": "1990-07-04T00:00:00Z",
+      "kyc_details": [
+        {
+          "vendor_name": "Example KYC",
+          "update_at": "2023-02-01T00:00:00Z",
+          "kyc_verified": true,
+          "kyc_type": "strong"
+        }
+      ]
+    },
+    "line_items": [
+      {
+        "price": 119.99,
+        "quantity": 1,
+        "title": "Widget",
+        "sku": "sku-1",
+        "product_id": "product-1",
+        "fulfillment_service": "manual",
+        "fulfillment_status": "unfulfilled",
+        "grams": 500.0,
+        "variant_id": "variant-1",
+        "variant_title": "Blue / Large",
+        "variant_inventory_management": "shopify",
+        "vendor": {
+          "vendor_name": "Example Vendor",
+          "vendor_id": "vendor-1"
+        },
+        "name": "Item name",
+        "requires_shipping": true,
+        "taxable": true,
+        "product_exists": true,
+        "properties": [],
+        "tax_lines": [
+          {
+            "price": 10.0,
+            "rate": 0.17,
+            "title": "VAT"
+          }
+        ],
+        "category": "electronics",
+        "sub_category": "accessories",
+        "condition": "new",
+        "seller": {
+          "customer": {
+            "email": "seller@example.com",
+            "first_name": "Sam",
+            "last_name": "Seller",
+            "created_at": "2021-03-01T00:00:00Z"
+          },
+          "correspondence": 3,
+          "price_negotiated": true,
+          "starting_price": 99.5
+        },
+        "brand": "Example Brand",
+        "product_type": "physical",
+        "size": "L",
+        "delivered_at": "2024-01-20T12:00:00Z",
+        "delivered_to": "shipping_address",
+        "color": "blue",
+        "registry_type": "wedding",
+        "policy": {
+          "evaluate": true
+        },
+        "recipient": {
+          "email": "recipient@example.com",
+          "phone": "+15555550111",
+          "social": {
+            "network": "facebook",
+            "public_username": "janedoe",
+            "community_score": 80,
+            "profile_picture": "https://cdn.example.com/jane.jpg",
+            "email": "jane.doe@example.com",
+            "bio": "Hello",
+            "account_url": "https://facebook.com/janedoe",
+            "following": 100,
+            "followed": 200,
+            "posts": 50
+          },
+          "account_number": "000987654321",
+          "routing_number": "110000000",
+          "created_at": "2023-01-01T00:00:00Z",
+          "updated_at": "2023-06-01T00:00:00Z",
+          "self_recipient": false,
+          "wallet": {
+            "id": "wallet-1"
+          }
+        },
+        "reason_to_transfer": "gift"
+      }
+    ],
+    "name": "#golden-card-1",
+    "additional_emails": [
+      "jane.alt@example.com"
+    ],
+    "note": "leave at the door",
+    "number": "1001",
+    "order_number": "1001",
+    "cancel_reason": "customer",
+    "cancelled_at": "2024-01-16T09:00:00Z",
+    "closed_at": "2024-01-15T10:40:00Z",
+    "cart_token": "cart-token-1",
+    "device_id": "device-1",
+    "checkout_token": "checkout-token-1",
+    "token": "token-1",
+    "referring_site": "https://www.google.com",
+    "confirmed": true,
+    "buyer_accepts_marketing": false,
+    "financial_status": "authorized",
+    "fulfillment_status": "unfulfilled",
+    "landing_site": "/products/widget",
+    "landing_site_ref": "campaign-1",
+    "location_id": "location-1",
+    "source": "desktop_web",
+    "ai_agent": "chatgpt",
+    "source_identifier": "source-id-1",
+    "source_name": "web",
+    "source_url": "https://shop.example.com",
+    "subtotal_price": 119.99,
+    "taxes_included": true,
+    "total_discounts": 10.0,
+    "total_line_items_price": 129.99,
+    "total_price_usd": 129.99,
+    "total_tax": 10.0,
+    "total_weight": 500.0,
+    "user_id": "user-1",
+    "processing_method": "direct",
+    "checkout_id": "checkout-1",
+    "tags": "vip,repeat",
+    "vendor_id": "vendor-1",
+    "vendor_name": "Example Vendor",
+    "vendor_integration_type": "api",
+    "shipping_address": [
+      {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "city": "New York",
+        "phone": "+15555550100",
+        "verified_phone": true,
+        "country": "United States",
+        "country_code": "US",
+        "name": "Jane Doe",
+        "company": "Example Inc",
+        "address1": "1 shipping St",
+        "address2": "Apt 4",
+        "province": "New York",
+        "province_code": "NY",
+        "zip": "10001",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      }
+    ],
+    "billing_address": [
+      {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "city": "New York",
+        "phone": "+15555550100",
+        "verified_phone": true,
+        "country": "United States",
+        "country_code": "US",
+        "name": "Jane Doe",
+        "company": "Example Inc",
+        "address1": "1 billing St",
+        "address2": "Apt 4",
+        "province": "New York",
+        "province_code": "NY",
+        "zip": "10001",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      }
+    ],
+    "payment_details": [
+      {
+        "method": "credit_card",
+        "credit_card_bin": "411111",
+        "avs_result_code": "Y",
+        "cvv_result_code": "M",
+        "credit_card_number": "XXXX-XXXX-XXXX-1111",
+        "credit_card_company": "Visa",
+        "authorization_id": "auth-1",
+        "stored_payment_created_at": "2023-06-01T08:00:00Z",
+        "stored_payment_updated_at": "2023-12-01T08:00:00Z",
+        "authorization_error": {
+          "message": "Card was declined",
+          "error_code": "card_declined",
+          "created_at": "2024-01-15T10:31:00Z",
+          "drop_off": false
+        },
+        "authentication_result": {
+          "eci": "05",
+          "cavv": "cavv-1",
+          "created_at": "2024-01-15T10:30:30Z",
+          "trans_status": "Y",
+          "trans_status_reason": "01",
+          "liability_shift": true,
+          "three_d_challenge": true,
+          "TRA_exemption": false
+        },
+        "cardholder_name": "Jane Doe",
+        "id": "payment-1",
+        "gateway": "stripe",
+        "acquirer_bin": "123456",
+        "mid": "mid-1",
+        "payment_plan": "monthly",
+        "installment_months": 3,
+        "installments": 3,
+        "authorization_type": "authorization",
+        "credit_card_country": "US",
+        "acquirer_region": "EU",
+        "expiry_month": 12,
+        "expiry_year": 2030,
+        "payment_type": "card"
+      }
+    ],
+    "client_details": {
+      "accept_language": "en-US",
+      "browser_ip": "203.0.113.10",
+      "user_agent": "Mozilla/5.0",
+      "session_hash": "session-hash-1"
+    },
+    "discount_codes": [
+      {
+        "code": "SAVE10",
+        "amount": 10.0,
+        "policy": {
+          "evaluate": false
+        }
+      }
+    ],
+    "shipping_lines": [
+      {
+        "price": 5.0,
+        "title": "Standard",
+        "code": "std",
+        "source": "ups",
+        "tax_lines": [
+          {
+            "price": 10.0,
+            "rate": 0.17,
+            "title": "VAT"
+          }
+        ]
+      }
+    ],
+    "note_attributes": [
+      {
+        "name": "gift_wrap",
+        "value": "yes"
+      }
+    ],
+    "tax_lines": [
+      {
+        "price": 10.0,
+        "rate": 0.17,
+        "title": "VAT"
+      }
+    ],
+    "decision": {
+      "external_status": "approved",
+      "reason": "auto",
+      "decided_at": "2024-01-15T10:36:00Z"
+    },
+    "passengers": [
+      {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "date_of_birth": "1990-07-04T00:00:00Z",
+        "nationality_code": "US",
+        "insurance_type": "full",
+        "insurance_price": 25.0,
+        "document_number": "P1234567",
+        "document_type": "passport",
+        "document_issue_date": "2020-01-01T00:00:00Z",
+        "document_expiration_date": "2030-01-01T00:00:00Z",
+        "passenger_type": "adult"
+      }
+    ],
+    "additional_data": {
+      "loyalty_tier": "gold",
+      "visits": 12
+    },
+    "order_type": "test",
+    "charge_free_payment_details": [
+      {
+        "gateway": "gift_card",
+        "amount": 5.0
+      }
+    ],
+    "communication_details": {
+      "contact_type": "email",
+      "email": "support@example.com",
+      "phone": "+15555550199",
+      "facebook_account_url": "https://facebook.com/example",
+      "agent_name": "Agent Smith",
+      "agent_id": "agent-1",
+      "conversation_duration": 300,
+      "waiting_duration": 30,
+      "conversation_language": "en",
+      "agent_impression": "positive",
+      "outbound_communication": false,
+      "customer_verified_by": "otp",
+      "agent_country_code": "US"
+    },
+    "submission_reason": "failed_verification",
+    "custom": {
+      "app_dom_id": "app-dom-1",
+      "custom_obj_two": "two",
+      "custom_obj_three": "three",
+      "custom_obj_four": "four",
+      "custom_obj_five": "five",
+      "custom_obj_six": "six",
+      "custom_obj_seven": "seven"
+    },
+    "partner_sub_merchant_id": "sub-merchant-1"
+  }
+}

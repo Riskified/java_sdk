@@ -1,8 +1,13 @@
 package com.riskified.models;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.riskified.adapters.AddressListAdapterFactory;
 import com.riskified.validations.*;
 
 public class RideLineItem extends LineItem {
@@ -11,11 +16,14 @@ public class RideLineItem extends LineItem {
     private Date pickupDate;
     private Float pickupLatitude;
     private Float pickupLongitude;
-    private Address pickupAddress;
+    // Lists, as documented; a single address object still parses. JSONFormater sends one object in the legacy wire format.
+    @JsonAdapter(AddressListAdapterFactory.class)
+    private List<Address> pickupAddress;
     private Date dropoffDate;
     private Float dropoffLatitude;
     private Float dropoffLongitude;
-    private Address dropoffAddress;
+    @JsonAdapter(AddressListAdapterFactory.class)
+    private List<Address> dropoffAddress;
     private String transportMethod;
     private String priceBy;
     private String vehicleClass;
@@ -25,7 +33,9 @@ public class RideLineItem extends LineItem {
     private String noteToDriver;
     private String meetNGreet;
     private String cancellationPolicy;
-    private Float authorizedPayments;
+    // Reads either key; JSONFormater sends both until 7.0.0 (only authorized_payments in the legacy wire format).
+    @SerializedName(value = "authorized_payment", alternate = "authorized_payments")
+    private Float authorizedPayment;
     private Double damageExcess;
     private int routeIndex;
     private int legIndex;
@@ -62,9 +72,23 @@ public class RideLineItem extends LineItem {
 
     public void setPickupLongitude(Float pickupLongitude) { this.pickupLongitude = pickupLongitude; }
 
-    public Address getPickupAddress() { return pickupAddress; }
+    public List<Address> getPickupAddresses() { return pickupAddress; }
 
-    public void setPickupAddress(Address pickupAddress) { this.pickupAddress = pickupAddress; }
+    public void setPickupAddresses(List<Address> pickupAddresses) { this.pickupAddress = pickupAddresses; }
+
+    /**
+     * @return the first pickup address, or null
+     * @deprecated The documented pickup_address is a list; use {@link #getPickupAddresses()}.
+     */
+    @Deprecated
+    public Address getPickupAddress() { return firstOrNull(pickupAddress); }
+
+    /**
+     * Replaces the pickup addresses with this one address.
+     * @deprecated The documented pickup_address is a list; use {@link #setPickupAddresses(List)}.
+     */
+    @Deprecated
+    public void setPickupAddress(Address pickupAddress) { this.pickupAddress = listOf(pickupAddress); }
 
     public Date getDropoffDate() { return dropoffDate; }
 
@@ -78,9 +102,23 @@ public class RideLineItem extends LineItem {
 
     public void setDropoffLongitude(Float dropoffLongitude) { this.dropoffLongitude = dropoffLongitude; }
 
-    public Address getDropoffAddress() { return dropoffAddress; }
+    public List<Address> getDropoffAddresses() { return dropoffAddress; }
 
-    public void setDropoffAddress(Address dropoffAddress) { this.dropoffAddress = dropoffAddress; }
+    public void setDropoffAddresses(List<Address> dropoffAddresses) { this.dropoffAddress = dropoffAddresses; }
+
+    /**
+     * @return the first dropoff address, or null
+     * @deprecated The documented dropoff_address is a list; use {@link #getDropoffAddresses()}.
+     */
+    @Deprecated
+    public Address getDropoffAddress() { return firstOrNull(dropoffAddress); }
+
+    /**
+     * Replaces the dropoff addresses with this one address.
+     * @deprecated The documented dropoff_address is a list; use {@link #setDropoffAddresses(List)}.
+     */
+    @Deprecated
+    public void setDropoffAddress(Address dropoffAddress) { this.dropoffAddress = listOf(dropoffAddress); }
 
     public String getTransportMethod() { return transportMethod; }
 
@@ -118,9 +156,17 @@ public class RideLineItem extends LineItem {
 
     public void setCancellationPolicy(String cancellationPolicy) { this.cancellationPolicy = cancellationPolicy; }
 
-    public Float getAuthorizedPayments() { return authorizedPayments; }
+    public Float getAuthorizedPayment() { return authorizedPayment; }
 
-    public void setAuthorizedPayments(Float authorizedPayments) { this.authorizedPayments = authorizedPayments; }
+    public void setAuthorizedPayment(Float authorizedPayment) { this.authorizedPayment = authorizedPayment; }
+
+    /** @deprecated The documented key is {@code authorized_payment}; use {@link #getAuthorizedPayment()}. */
+    @Deprecated
+    public Float getAuthorizedPayments() { return authorizedPayment; }
+
+    /** @deprecated The documented key is {@code authorized_payment}; use {@link #setAuthorizedPayment(Float)}. */
+    @Deprecated
+    public void setAuthorizedPayments(Float authorizedPayments) { this.authorizedPayment = authorizedPayments; }
 
     public int getRouteIndex() { return routeIndex; }
 
@@ -133,4 +179,18 @@ public class RideLineItem extends LineItem {
     public Double getDamageExcess() { return damageExcess; }
 
     public void setDamageExcess(Double damageExcess) { this.damageExcess = damageExcess; }
+
+    private static Address firstOrNull(List<Address> addresses) {
+        return addresses == null || addresses.isEmpty() ? null : addresses.get(0);
+    }
+
+    // A mutable list, so callers can still add to what getPickupAddresses() / getDropoffAddresses() return.
+    private static List<Address> listOf(Address address) {
+        if (address == null) {
+            return null;
+        }
+        List<Address> addresses = new ArrayList<Address>();
+        addresses.add(address);
+        return addresses;
+    }
 }

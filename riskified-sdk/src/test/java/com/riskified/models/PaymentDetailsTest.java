@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.riskified.JSONFormater;
+import com.riskified.JSONFormaterTestAccess;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.Validation;
 import org.junit.Before;
@@ -230,5 +231,32 @@ public class PaymentDetailsTest {
         assertEquals(Double.valueOf(25.0), parsedBnpl.getInitialPaymentAmount());
         assertEquals(Integer.valueOf(14), parsedBnpl.getPaymentFrequency());
         assertEquals(PaymentType.STORE_CREDIT, ((NonChbPaymentDetails) parsed.get(1)).getPaymentType());
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testBothRewardPointsConstantsSendDocumentedValue() {
+        assertTrue(JSONFormater.toJson(new NonChbPaymentDetails(PaymentType.REWARDS_POINTS)).contains("\"payment_type\":\"rewards_points\""));
+        assertTrue(JSONFormater.toJson(new NonChbPaymentDetails(PaymentType.REWARD_POINTS)).contains("\"payment_type\":\"rewards_points\""));
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testLegacyWireFormatSendsRewardPoints() {
+        assertTrue(JSONFormaterTestAccess.toJson(new NonChbPaymentDetails(PaymentType.REWARDS_POINTS), true).contains("\"payment_type\":\"reward_points\""));
+        assertTrue(JSONFormaterTestAccess.toJson(new NonChbPaymentDetails(PaymentType.REWARD_POINTS), true).contains("\"payment_type\":\"reward_points\""));
+    }
+
+    @Test
+    public void testOtherPaymentTypesUnaffectedByLegacyWireFormat() {
+        String json = JSONFormaterTestAccess.toJson(new NonChbPaymentDetails(PaymentType.GIFT_CARD), true);
+        assertTrue(json.contains("\"payment_type\":\"gift_card\""));
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testEachRewardPointsSpellingParsesToItsOwnConstant() {
+        assertEquals(PaymentType.REWARD_POINTS, gson.fromJson("\"reward_points\"", PaymentType.class));
+        assertEquals(PaymentType.REWARDS_POINTS, gson.fromJson("\"rewards_points\"", PaymentType.class));
     }
 }

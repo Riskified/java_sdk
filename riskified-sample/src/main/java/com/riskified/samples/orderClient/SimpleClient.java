@@ -92,7 +92,7 @@ public class SimpleClient {
         travelLineItem.setRequiresShipping(false);
 
         RideLineItem rideLineItem = new RideLineItem(75, 1, "Ride from Airport", new Date(2019, 01, 15, 12, 00, 00), 1, 1);
-        rideLineItem.setPickupAddress(new Address(null, null, "123 Farewell St., 12345", "New York", "1227560912", "USA"));
+        rideLineItem.setPickupAddresses(Arrays.asList(new Address(null, null, "123 Farewell St., 12345", "New York", "1227560912", "USA")));
         rideLineItem.setTransportMethod("car");
         rideLineItem.setVehicleClass("executive");
         rideLineItem.setNoteToDriver("Wait in back entrance");

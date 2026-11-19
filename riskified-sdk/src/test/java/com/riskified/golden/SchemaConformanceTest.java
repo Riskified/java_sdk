@@ -50,6 +50,7 @@ import static org.junit.Assert.fail;
 public class SchemaConformanceTest {
 
     private static final Path KNOWN_GAPS = Paths.get("src", "test", "resources", "schema", "known-gaps.json");
+    private static final Path ACCEPTED_DIFFERENCES = Paths.get("src", "test", "resources", "schema", "accepted-differences.json");
     private static final boolean UPDATE = Boolean.getBoolean("schema.gaps.update");
 
     private static final String POST_SUBMIT = "post-auth-flow-submit";
@@ -65,6 +66,8 @@ public class SchemaConformanceTest {
 
     private static final Map<String, Set<String>> actualGaps = new TreeMap<String, Set<String>>();
     private static Map<String, Set<String>> knownGaps;
+    // Docs mismatches kept on purpose (schema/accepted-differences.json), by doc. Left out before comparing.
+    private static Map<String, Set<String>> acceptedDifferences;
     private static TimeZone originalTimeZone;
 
     private final Check check;
@@ -112,6 +115,11 @@ public class SchemaConformanceTest {
                 "digital_wallets_payment_details_post_auth_checkout_denied"));
         checks.add(new Check("wallet_checkout_denied_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
                 "digital_wallets_payment_details_pre_auth_checkout_denied"));
+        // Pre-auth /checkout_denied requires authorization_error on card and wallet details; these get it from the root.
+        checks.add(new Check("checkout_denied_root_error_order", "/checkout/payment_details/0", PRE_CHECKOUT_DENIED,
+                "credit_card_payment_details_pre_auth_checkout_denied"));
+        checks.add(new Check("checkout_denied_root_error_order", "/checkout/payment_details/1", PRE_CHECKOUT_DENIED,
+                "digital_wallets_payment_details_pre_auth_checkout_denied"));
         for (String doc : new String[]{POST_SUBMIT, POST_DECIDE, PRE_DECIDE}) {
             checks.add(new Check("alternative_payments_order", payment, doc, "buy_now_pay_later_payment_details"));
             checks.add(new Check("alternative_payments_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
@@ -126,6 +134,8 @@ public class SchemaConformanceTest {
             checks.add(new Check("crypto_and_social_order", "/order/line_items/0/recipient", doc, "recipient_ACH"));
             checks.add(new Check("crypto_and_social_order", "/order/line_items/1/recipient", doc, "recipient_crypto"));
             checks.add(new Check("crypto_and_social_order", "/order/shipping_lines/0", doc, "shipping_line"));
+            checks.add(new Check("rewards_points_order", "/order/payment_details/0", doc, "non_chb_payment_details"));
+            checks.add(new Check("rewards_points_order", "/order/payment_details/1", doc, "non_chb_payment_details"));
         }
         // Pre-auth /decide doesn't define authentication_result as a schema of its own.
         for (String doc : new String[]{POST_SUBMIT, POST_DECIDE}) {
@@ -158,6 +168,7 @@ public class SchemaConformanceTest {
         originalTimeZone = TimeZone.getDefault();
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         knownGaps = readKnownGaps();
+        acceptedDifferences = readAcceptedDifferences();
     }
 
     @AfterClass
@@ -185,6 +196,10 @@ public class SchemaConformanceTest {
             if (check.pointer.isEmpty() && message.getEvaluationPath().toString().contains("anyOf")) {
                 continue;
             }
+            Set<String> accepted = acceptedDifferences.get(check.doc);
+            if (accepted != null && accepted.contains(message.getMessage())) {
+                continue;
+            }
             actual.add(message.getMessage());
         }
         if (!actual.isEmpty()) {
@@ -205,6 +220,18 @@ public class SchemaConformanceTest {
                     + (fixed.isEmpty() ? "" : "\nNo longer happening, remove from the list: " + fixed)
                     + "\nIf intended, run with -Dschema.gaps.update=true.");
         }
+    }
+
+    private static Map<String, Set<String>> readAcceptedDifferences() throws IOException {
+        Map<String, Set<String>> accepted = new TreeMap<String, Set<String>>();
+        for (JsonNode entry : MAPPER.readTree(ACCEPTED_DIFFERENCES.toFile())) {
+            String doc = entry.path("doc").asText();
+            if (!accepted.containsKey(doc)) {
+                accepted.put(doc, new TreeSet<String>());
+            }
+            accepted.get(doc).add(entry.path("message").asText());
+        }
+        return accepted;
     }
 
     private static Map<String, Set<String>> readKnownGaps() throws IOException {

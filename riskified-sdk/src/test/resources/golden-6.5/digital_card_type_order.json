@@ -1,0 +1,29 @@
+{
+  "order": {
+    "id": "golden-digital-card-type-1",
+    "currency": "USD",
+    "total_price": 75.0,
+    "line_items": [
+      {
+        "card_sub_type": "birthday",
+        "price": 50.0,
+        "quantity": 1,
+        "title": "Birthday gift card",
+        "product_id": "product-giftcard-1",
+        "properties": [],
+        "tax_lines": [],
+        "product_type": "giftcard"
+      },
+      {
+        "card_type": "gift",
+        "price": 25.0,
+        "quantity": 1,
+        "title": "Gift card",
+        "product_id": "product-giftcard-2",
+        "properties": [],
+        "tax_lines": [],
+        "product_type": "giftcard"
+      }
+    ]
+  }
+}

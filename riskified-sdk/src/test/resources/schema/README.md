@@ -41,3 +41,10 @@ Review that diff: every entry should be a gap the alignment plan tracks.
 
 The violations each check is expected to report today. The test fails on a violation that isn't
 listed, and on a listed one that no longer happens, so remove entries as the plan's steps fix them.
+
+## `accepted-differences.json`
+
+Places where the SDK deliberately differs from the docs, each with the doc, the exact violation and
+the reason (usually a docs inconsistency). The test leaves these out before comparing, so
+`known-gaps.json` only lists real SDK gaps. Add an entry only for a decided difference, not for a
+gap still to fix.

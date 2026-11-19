@@ -1,0 +1,93 @@
+{
+  "order": {
+    "id": "golden-event-line-item-1",
+    "currency": "USD",
+    "total_price": 80.0,
+    "line_items": [
+      {
+        "section": "A12",
+        "country_code": "US",
+        "city": "New York",
+        "latitude": 40.7505,
+        "longitude": -73.9934,
+        "event_date": "2024-04-10T19:30:00Z",
+        "price": 80.0,
+        "quantity": 2,
+        "title": "Concert ticket",
+        "sku": "sku-1",
+        "product_id": "product-event",
+        "fulfillment_service": "manual",
+        "fulfillment_status": "unfulfilled",
+        "grams": 500.0,
+        "variant_id": "variant-1",
+        "variant_title": "Blue / Large",
+        "variant_inventory_management": "shopify",
+        "vendor": {
+          "vendor_name": "Example Vendor",
+          "vendor_id": "vendor-1"
+        },
+        "name": "Item name",
+        "requires_shipping": true,
+        "taxable": true,
+        "product_exists": true,
+        "properties": [],
+        "tax_lines": [
+          {
+            "price": 10.0,
+            "rate": 0.17,
+            "title": "VAT"
+          }
+        ],
+        "category": "electronics",
+        "sub_category": "accessories",
+        "condition": "new",
+        "seller": {
+          "customer": {
+            "email": "seller@example.com",
+            "first_name": "Sam",
+            "last_name": "Seller",
+            "created_at": "2021-03-01T00:00:00Z"
+          },
+          "correspondence": 3,
+          "price_negotiated": true,
+          "starting_price": 99.5
+        },
+        "brand": "Example Brand",
+        "product_type": "event",
+        "size": "L",
+        "delivered_at": "2024-01-20T12:00:00Z",
+        "delivered_to": "shipping_address",
+        "color": "blue",
+        "registry_type": "wedding",
+        "policy": {
+          "evaluate": true
+        },
+        "recipient": {
+          "email": "recipient@example.com",
+          "phone": "+15555550111",
+          "social": {
+            "network": "facebook",
+            "public_username": "janedoe",
+            "community_score": 80,
+            "profile_picture": "https://cdn.example.com/jane.jpg",
+            "email": "jane.doe@example.com",
+            "bio": "Hello",
+            "account_url": "https://facebook.com/janedoe",
+            "following": 100,
+            "followed": 200,
+            "posts": 50
+          },
+          "account_number": "000987654321",
+          "routing_number": "110000000",
+          "created_at": "2023-01-01T00:00:00Z",
+          "updated_at": "2023-06-01T00:00:00Z",
+          "self_recipient": false,
+          "wallet": {
+            "id": "wallet-1"
+          }
+        },
+        "reason_to_transfer": "gift"
+      }
+    ]
+  }
+}

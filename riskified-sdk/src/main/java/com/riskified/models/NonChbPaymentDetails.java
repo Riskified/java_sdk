@@ -12,7 +12,7 @@ public class NonChbPaymentDetails implements IPaymentDetails {
 
     /**
      * @param paymentType {@link PaymentType#GIFT_CARD}, {@link PaymentType#STORE_CREDIT} or
-     *                    {@link PaymentType#REWARD_POINTS}
+     *                    {@link PaymentType#REWARDS_POINTS}
      */
     public NonChbPaymentDetails(PaymentType paymentType) {
         this.paymentType = paymentType;
