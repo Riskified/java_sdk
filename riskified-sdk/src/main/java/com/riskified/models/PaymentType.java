@@ -26,19 +26,22 @@ public enum PaymentType {
     ACH,
     @SerializedName("crypto")
     CRYPTO,
+    /**
+     * @deprecated The API doesn't accept {@code gift_card} as a payment type.
+     */
+    @Deprecated
     @SerializedName("gift_card")
     GIFT_CARD,
+    /**
+     * @deprecated The API doesn't accept {@code store_credit} as a payment type.
+     */
+    @Deprecated
     @SerializedName("store_credit")
     STORE_CREDIT,
     @SerializedName("cash_on_delivery")
     CASH_ON_DELIVERY,
     @SerializedName("invoice")
     INVOICE,
-    /**
-     * @deprecated The documented value is {@code rewards_points}; use {@link #REWARDS_POINTS}. Since 6.6.0 both send
-     * {@code rewards_points} (or {@code reward_points} with the legacy wire format).
-     */
-    @Deprecated
     @SerializedName("reward_points")
     REWARD_POINTS,
     @SerializedName("mobile_carrier")
@@ -55,8 +58,5 @@ public enum PaymentType {
     ALIPAY,
     @SerializedName("other")
     OTHER,
-    // Added at the end so no existing constant changes position.
-    @SerializedName("rewards_points")
-    REWARDS_POINTS,
 
 }

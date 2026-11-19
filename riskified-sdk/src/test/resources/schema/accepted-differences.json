@@ -28,5 +28,25 @@
     "doc": "pre-auth-flow-decide",
     "message": "/account_balance/available_balance: number found, integer expected",
     "reason": "Question 11, answered: only this page types available_balance as integer; the server accepts the decimal the SDK sends (a double); no change."
+  },
+  {
+    "doc": "*",
+    "message": "*/starting_price: number found, string expected",
+    "reason": "The model's seller.starting_price is a decimal; the docs' string type is wrong. The SDK sends the number (e.g. 99.5)."
+  },
+  {
+    "doc": "*",
+    "message": "*/pickup_address: object found, array expected",
+    "reason": "The model's ride pickup_address is a single address object; the docs' array type is wrong. The SDK sends one object."
+  },
+  {
+    "doc": "*",
+    "message": "*/dropoff_address: object found, array expected",
+    "reason": "The model's ride dropoff_address is a single address object; the docs' array type is wrong. The SDK sends one object."
+  },
+  {
+    "doc": "*",
+    "message": "*/payment_type: does not have a value in the enumeration [\"gift_card\", \"store_credit\", \"rewards_points\"]",
+    "reason": "The model's non-chargeback payment_type accepts reward_points; the docs' enum (gift_card, store_credit, rewards_points) is wrong. The SDK sends reward_points."
   }
 ]
