@@ -10,6 +10,7 @@ public class EventLineItem extends LineItem {
     private float latitude;
     private float longitude;
     private Date eventDate;
+    private String cancellationPolicy;
     
 	public EventLineItem(double price, int quantity, String title,
 			String productId) {
@@ -62,6 +63,14 @@ public class EventLineItem extends LineItem {
 
 	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
+	}
+
+	public String getCancellationPolicy() {
+		return cancellationPolicy;
+	}
+
+	public void setCancellationPolicy(String cancellationPolicy) {
+		this.cancellationPolicy = cancellationPolicy;
 	}
 
 }

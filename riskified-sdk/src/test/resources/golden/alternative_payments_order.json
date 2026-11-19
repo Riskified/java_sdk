@@ -1,0 +1,20 @@
+{
+  "order": {
+    "id": "golden-alternative-payments-1",
+    "currency": "USD",
+    "total_price": 150.0,
+    "payment_details": [
+      {
+        "method": "bnpl",
+        "payment_type": "bnpl",
+        "initial_payment_amount": 32.5,
+        "installments": 4,
+        "payment_frequency": 14
+      },
+      {
+        "method": "non_chb",
+        "payment_type": "gift_card"
+      }
+    ]
+  }
+}

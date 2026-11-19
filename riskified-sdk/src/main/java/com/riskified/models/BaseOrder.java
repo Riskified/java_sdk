@@ -80,6 +80,7 @@ public abstract class BaseOrder implements IValidated {
     private String submissionReason;
     private Custom custom;
     private String partnerSubMerchantId;
+    private String invoiceId;
 
     public BaseOrder() {
     }
@@ -683,6 +684,14 @@ public abstract class BaseOrder implements IValidated {
 
     public void setPartnerSubMerchantId(String partnerSubMerchantId) {
         this.partnerSubMerchantId = partnerSubMerchantId;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public AiAgent getAiAgent() {

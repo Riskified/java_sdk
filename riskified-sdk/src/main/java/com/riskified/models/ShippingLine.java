@@ -10,6 +10,8 @@ public class ShippingLine implements IValidated {
     private String code;
     private String source;
     private List<TaxLine> taxLines;
+    private String company;
+    private String shippingAddressId;
 
     public ShippingLine(double price, String title) {
         this.price = price;
@@ -62,5 +64,22 @@ public class ShippingLine implements IValidated {
 
     public void setTaxLines(List<TaxLine> taxLines) {
         this.taxLines = taxLines;
+    }
+
+    /** The shipping company. */
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getShippingAddressId() {
+        return shippingAddressId;
+    }
+
+    public void setShippingAddressId(String shippingAddressId) {
+        this.shippingAddressId = shippingAddressId;
     }
 }

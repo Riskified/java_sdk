@@ -21,6 +21,7 @@ public class TravelLineItem extends LineItem {
 	private String carrierName;
 	private String carrierCode;
 	private String transportMethod;
+	private String cancellationPolicy;
 
 	public TravelLineItem(double price, int quantity, String title,
 			String legId, int legIndex, int routeIndex) {
@@ -189,6 +190,14 @@ public class TravelLineItem extends LineItem {
 
 	public void setTransportMethod(String transportMethod) {
 		this.transportMethod = transportMethod;
+	}
+
+	public String getCancellationPolicy() {
+		return cancellationPolicy;
+	}
+
+	public void setCancellationPolicy(String cancellationPolicy) {
+		this.cancellationPolicy = cancellationPolicy;
 	}
 
 

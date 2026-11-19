@@ -19,6 +19,9 @@ public class Address implements IValidated {
     private String zip;
     private Float latitude;
     private Float longitude;
+    private String id;
+    private String additionalPhone;
+    private String neighborhood;
 
     public Address(String firstName, String lastName, String address1, String city, String phone, String country) {
         this.firstName = firstName;
@@ -161,6 +164,30 @@ public class Address implements IValidated {
 
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAdditionalPhone() {
+        return additionalPhone;
+    }
+
+    public void setAdditionalPhone(String additionalPhone) {
+        this.additionalPhone = additionalPhone;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
 	public Boolean getVerifiedPhone() {

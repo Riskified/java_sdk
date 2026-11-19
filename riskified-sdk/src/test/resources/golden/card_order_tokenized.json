@@ -1,0 +1,54 @@
+{
+  "order": {
+    "id": "golden-card-tokenized-1",
+    "currency": "USD",
+    "total_price": 129.99,
+    "payment_details": [
+      {
+        "method": "credit_card",
+        "credit_card_bin": "411111",
+        "avs_result_code": "Y",
+        "cvv_result_code": "M",
+        "credit_card_number": "XXXX-XXXX-XXXX-1111",
+        "credit_card_company": "Visa",
+        "authorization_id": "auth-1",
+        "stored_payment_created_at": "2023-06-01T08:00:00Z",
+        "stored_payment_updated_at": "2023-12-01T08:00:00Z",
+        "authorization_error": {
+          "message": "Card was declined",
+          "error_code": "card_declined",
+          "created_at": "2024-01-15T10:31:00Z",
+          "drop_off": false
+        },
+        "authentication_result": {
+          "eci": "05",
+          "cavv": "cavv-1",
+          "created_at": "2024-01-15T10:30:30Z",
+          "trans_status": "Y",
+          "trans_status_reason": "01",
+          "liability_shift": true,
+          "three_d_challenge": true,
+          "TRA_exemption": false
+        },
+        "cardholder_name": "Jane Doe",
+        "id": "payment-1",
+        "gateway": "stripe",
+        "acquirer_bin": "123456",
+        "mid": "mid-1",
+        "payment_plan": "monthly",
+        "installment_months": 3,
+        "installments": 3,
+        "authorization_type": "authorization",
+        "credit_card_country": "US",
+        "acquirer_region": "EU",
+        "expiry_month": 12,
+        "expiry_year": 2030,
+        "credit_card_token": "card-token-1",
+        "billing_address_id": "address-billing",
+        "initial_payment_amount": 50.0,
+        "payment_frequency": 30,
+        "payment_type": "card"
+      }
+    ]
+  }
+}

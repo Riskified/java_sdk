@@ -38,6 +38,15 @@ public final class GoldenOrders {
         samples.put("accommodation_line_item_order", new OrderWrapper<Order>(lineItemOrder("accommodation", accommodationLineItem())));
         samples.put("checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(checkoutDeniedOrder()));
         samples.put("decision_order", new OrderWrapper<DecisionOrder>(decisionOrder()));
+        // 6.6.0 additions. New samples rather than changes to the ones above, so those snapshots stay identical.
+        samples.put("card_order_tokenized", new OrderWrapper<Order>(cardOrderTokenized()));
+        samples.put("wallet_checkout_denied_order", new CheckoutOrderWrapper<CheckoutDeniedOrder>(walletCheckoutDeniedOrder()));
+        samples.put("alternative_payments_order", new OrderWrapper<Order>(alternativePaymentsOrder()));
+        samples.put("customer_profile_order", new OrderWrapper<Order>(customerProfileOrder()));
+        samples.put("invoice_and_address_fields_order", new OrderWrapper<Order>(invoiceAndAddressFieldsOrder()));
+        samples.put("line_item_fields_order", new OrderWrapper<Order>(lineItemFieldsOrder()));
+        samples.put("crypto_and_social_order", new OrderWrapper<Order>(cryptoAndSocialOrder()));
+        samples.put("card_order_trans_status_s", new OrderWrapper<Order>(cardOrderTransStatusS()));
         return samples;
     }
 
@@ -101,6 +110,198 @@ public final class GoldenOrders {
         order.setSubmissionReason("manual_decision");
         order.setPaymentDetails(Collections.singletonList(creditCardPaymentDetails()));
         return order;
+    }
+
+    static Order cardOrderTokenized() {
+        CreditCardPaymentDetails details = creditCardPaymentDetails();
+        details.setCreditCardToken("card-token-1");
+        details.setBillingAddressId("address-billing");
+        details.setInitialPaymentAmount(50.0);
+        details.setPaymentFrequency(30);
+
+        Order order = new Order();
+        order.setId("golden-card-tokenized-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
+        return order;
+    }
+
+    static CheckoutDeniedOrder walletCheckoutDeniedOrder() {
+        WalletPaymentDetails details = walletPaymentDetails();
+        details.setAuthorizationError(authorizationError());
+
+        CheckoutDeniedOrder order = new CheckoutDeniedOrder("golden-wallet-checkout-denied-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
+        return order;
+    }
+
+    /** A buy-now-pay-later payment plus a gift card, which can't be charged back. */
+    static Order alternativePaymentsOrder() {
+        BuyNowPayLaterPaymentDetails bnpl = new BuyNowPayLaterPaymentDetails();
+        bnpl.setInitialPaymentAmount(32.5);
+        bnpl.setInstallments(4);
+        bnpl.setPaymentFrequency(14);
+
+        Order order = new Order();
+        order.setId("golden-alternative-payments-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(150.0);
+        order.setPaymentDetails(Arrays.asList(bnpl, new NonChbPaymentDetails(PaymentType.GIFT_CARD)));
+        return order;
+    }
+
+    /** A customer with the documented fields added in 6.6.0, plus the ones the docs require. */
+    static Order customerProfileOrder() {
+        Customer customer = new Customer("jane.doe@example.com", "Jane", "Doe");
+        customer.setCreatedAt(date("2022-05-01T12:00:00Z"));
+        customer.setBuyAttempts(3);
+        customer.setSellAttempts(1);
+        customer.setBuyerAnonymousId("anon-1");
+        customer.setReferrerCustomerId("customer-0");
+        customer.setFirstPurchaseAt(date("2022-05-02T09:00:00Z"));
+        customer.setVerifiedEmailAt(date("2022-05-01T12:05:00Z"));
+        customer.setKycVerified(true);
+        customer.setPhoneMandatory(false);
+        customer.setSpendingLimit(5000.0);
+        customer.setSocialSignupType(SocialType.google);
+
+        Order order = new Order();
+        order.setId("golden-customer-profile-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setCustomer(customer);
+        return order;
+    }
+
+    /** The order's invoice ID and the address fields added in 6.6.0. */
+    static Order invoiceAndAddressFieldsOrder() {
+        Address shipping = address("shipping");
+        shipping.setId("address-shipping");
+        shipping.setAdditionalPhone("+15555550101");
+        shipping.setNeighborhood("Chelsea");
+        Address billing = address("billing");
+        billing.setId("address-billing");
+        billing.setAdditionalPhone("+15555550102");
+        billing.setNeighborhood("Midtown");
+
+        Order order = new Order();
+        order.setId("golden-invoice-and-address-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setInvoiceId("invoice-1");
+        order.setShippingAddress(Collections.singletonList(shipping));
+        order.setBillingAddress(Collections.singletonList(billing));
+        return order;
+    }
+
+    /**
+     * One line item per class that gained a field in 6.6.0. Each sets only what the docs require plus the new
+     * fields, so its schema check isn't mixed up with the known gaps of the fully populated samples.
+     */
+    static Order lineItemFieldsOrder() {
+        LineItem physical = new LineItem(20.0, 1, "Widget", "product-physical");
+        requiredLineItemFields(physical, "physical", true);
+        physical.setDropPoint("locker-17");
+        physical.setShippingAddressId("address-shipping");
+
+        EventLineItem event = new EventLineItem(80.0, 2, "Concert ticket", "product-event");
+        requiredLineItemFields(event, "event", false);
+        event.setEventDate(date("2024-04-10T19:30:00Z"));
+        event.setCity("New York");
+        event.setCountryCode("US");
+        event.setCancellationPolicy("refundable until 24h before");
+
+        TravelLineItem travel = new TravelLineItem(350.0, 1, "Flight TLV-JFK", "product-travel", "leg-1", 1, 0);
+        requiredLineItemFields(travel, "travel", false);
+        travel.setDepartureDate(date("2024-03-01T06:00:00Z"));
+        travel.setDepartureCity("Tel Aviv");
+        travel.setDepartureCountryCode("IL");
+        travel.setArrivalCity("New York");
+        travel.setArrivalCountryCode("US");
+        travel.setTransportMethod("plane");
+        travel.setCancellationPolicy("non refundable");
+
+        RideLineItem ride = new RideLineItem(42.5, 1, "Airport ride", date("2024-03-02T07:00:00Z"), 0, 1);
+        ride.setProductId("product-ride");
+        requiredLineItemFields(ride, "ride", false);
+        ride.setDamageExcess(500.0);
+
+        Order order = new Order();
+        order.setId("golden-line-item-fields-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(572.5);
+        order.setLineItems(Arrays.<LineItem>asList(physical, event, travel, ride));
+        return order;
+    }
+
+    /** Crypto wallets, recipients, shipping line and social details fields added in 6.6.0. */
+    static Order cryptoAndSocialOrder() {
+        CryptoWallet customerWallet = new CryptoWallet("0xc0ffee254729296a45a3885639AC7E10F9d54979", "ethereum");
+        customerWallet.setType("custodial");
+
+        Map<String, Object> socialData = new LinkedHashMap<String, Object>();
+        socialData.put("verified", true);
+        socialData.put("account_age_days", 1200);
+        SocialDetails social = new SocialDetails("google", "janedoe");
+        social.setId("google-123");
+        social.setAuthToken("social-token-1");
+        social.setSocialData(socialData);
+
+        Customer customer = new Customer("jane.doe@example.com", "Jane", "Doe");
+        customer.setCreatedAt(date("2022-05-01T12:00:00Z"));
+        customer.setCryptoWallets(Collections.singletonList(customerWallet));
+        customer.setSocial(Collections.singletonList(social));
+
+        Recipient achRecipient = new Recipient();
+        achRecipient.setAccountNumber("000987654321");
+        achRecipient.setRoutingNumber("110000000");
+        achRecipient.setBankCode("021000021");
+        LineItem remittance = new LineItem(200.0, 1, "Money transfer", "product-remittance");
+        remittance.setProductType("remittance");
+        remittance.setRecipient(achRecipient);
+
+        Recipient cryptoRecipient = new Recipient();
+        cryptoRecipient.setCryptoWallet(new CryptoWallet("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", "bitcoin"));
+        LineItem crypto = new LineItem(300.0, 1, "Bitcoin purchase", "product-crypto");
+        crypto.setProductType("crypto");
+        crypto.setRecipient(cryptoRecipient);
+
+        ShippingLine shippingLine = new ShippingLine(5.0, "Standard");
+        shippingLine.setCompany("UPS");
+        shippingLine.setShippingAddressId("address-shipping");
+
+        Order order = new Order();
+        order.setId("golden-crypto-and-social-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(505.0);
+        order.setCustomer(customer);
+        order.setLineItems(Arrays.asList(remittance, crypto));
+        order.setShippingLines(Collections.singletonList(shippingLine));
+        return order;
+    }
+
+    /** 3-D Secure with trans_status "S" (challenge abandoned), added in 6.6.0. */
+    static Order cardOrderTransStatusS() {
+        AuthenticationResult authentication = authenticationResult();
+        authentication.setTransStatus(TransStatus.S);
+        CreditCardPaymentDetails details = creditCardPaymentDetails();
+        details.setAuthenticationResult(authentication);
+
+        Order order = new Order();
+        order.setId("golden-card-trans-status-s-1");
+        order.setCurrency("USD");
+        order.setTotalPrice(129.99);
+        order.setPaymentDetails(Collections.singletonList(details));
+        return order;
+    }
+
+    static void requiredLineItemFields(LineItem item, String productType, boolean requiresShipping) {
+        item.setCategory("general");
+        item.setProductType(productType);
+        item.setRequiresShipping(requiresShipping);
     }
 
     static void populateBaseOrder(BaseOrder order, String id) {

@@ -39,6 +39,8 @@ public class LineItem implements IValidated {
     private Policy policy;
     private Recipient recipient;
     private String reasonToTransfer;
+    private String dropPoint;
+    private String shippingAddressId;
 
 
     public LineItem(double price, int quantity, String title) {
@@ -326,6 +328,22 @@ public class LineItem implements IValidated {
 
     public void setReasonToTransfer(String reasonToTransfer) {
         this.reasonToTransfer = reasonToTransfer;
+    }
+
+    public String getDropPoint() {
+        return dropPoint;
+    }
+
+    public void setDropPoint(String dropPoint) {
+        this.dropPoint = dropPoint;
+    }
+
+    public String getShippingAddressId() {
+        return shippingAddressId;
+    }
+
+    public void setShippingAddressId(String shippingAddressId) {
+        this.shippingAddressId = shippingAddressId;
     }
     
 
