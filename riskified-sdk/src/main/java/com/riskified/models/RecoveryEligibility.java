@@ -1,4 +1,6 @@
 package com.riskified.models;
+
+import com.google.gson.annotations.SerializedName;
 import com.riskified.validations.FieldBadFormatException;
 import com.riskified.validations.IValidated;
 import com.riskified.validations.Validate;
@@ -11,11 +13,15 @@ import java.util.Date;
 public class RecoveryEligibility {
     private String id;
     private String status;
+    @SerializedName(value = "verified_at", alternate = "verifiedAt")
     private String verifiedAt;
+    @SerializedName(value = "verification_method", alternate = "verificationMethod")
     private VerificationMethod verificationMethod;
 
+    @SerializedName(value = "challenge_type", alternate = "challengeType")
     private String challengeType;
 
+    @SerializedName(value = "verification_session_details", alternate = "verificationSessionDetails")
     private VerificationSessionDetails verificationSessionDetails;
 
     public RecoveryEligibility(String id, String status, String verifiedAt, VerificationMethod verificationMethod){

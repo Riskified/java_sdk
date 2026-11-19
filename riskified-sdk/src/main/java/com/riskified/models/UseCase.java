@@ -1,6 +1,9 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UseCase {
+    @SerializedName(value = "use_case", alternate = "useCase")
     private String useCase;
     private String decision;
     private Double score;

@@ -1,8 +1,11 @@
 package com.riskified.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class PolicyProtect {
+    @SerializedName(value = "use_cases", alternate = "useCases")
     private List<UseCase> useCases;
     private String business_decision;
 
