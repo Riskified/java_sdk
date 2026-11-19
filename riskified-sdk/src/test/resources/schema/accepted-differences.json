@@ -8,5 +8,25 @@
     "doc": "post-auth-flow-checkout_denied",
     "message": "/checkout/shipping_address: array found, object expected",
     "reason": "Question 10, decided 2026-10-30: keep arrays. Only this page documents an object; every other order page documents an array, and Java has sent arrays everywhere since 5.0.1."
+  },
+  {
+    "doc": "*",
+    "message": "*/date_of_birth: does not match the date pattern must be a valid RFC 3339 full-date",
+    "reason": "Question 9, answered: the server accepts the full date-time the SDK sends for these date-only fields (customer and passenger date_of_birth, passenger document dates); no change."
+  },
+  {
+    "doc": "*",
+    "message": "*/document_issue_date: does not match the date pattern must be a valid RFC 3339 full-date",
+    "reason": "Question 9, answered: the server accepts the full date-time the SDK sends for these date-only fields (customer and passenger date_of_birth, passenger document dates); no change."
+  },
+  {
+    "doc": "*",
+    "message": "*/document_expiration_date: does not match the date pattern must be a valid RFC 3339 full-date",
+    "reason": "Question 9, answered: the server accepts the full date-time the SDK sends for these date-only fields (customer and passenger date_of_birth, passenger document dates); no change."
+  },
+  {
+    "doc": "pre-auth-flow-decide",
+    "message": "/account_balance/available_balance: number found, integer expected",
+    "reason": "Question 11, answered: only this page types available_balance as integer; the server accepts the decimal the SDK sends (a double); no change."
   }
 ]
